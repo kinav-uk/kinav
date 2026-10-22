@@ -22,8 +22,8 @@
   };
 
   /* ---------- Screens ---------- */
-  var SCREENS = ["home", "plan", "appts", "care", "costs", "benefits", "help", "kit", "privacy", "terms", "articles", "article"];
-  var TAB_FOR = { costs: "home", benefits: "home", kit: "help", privacy: "home", terms: "home", articles: "home", article: "home" };
+  var SCREENS = ["home", "plan", "appts", "care", "costs", "benefits", "help", "kit", "privacy", "terms", "articles", "article", "questions"];
+  var TAB_FOR = { costs: "home", benefits: "home", kit: "help", questions: "help", privacy: "home", terms: "home", articles: "home", article: "home" };
 
   function show() {
     var hash = (location.hash || "#home").slice(1);
@@ -38,6 +38,7 @@
     if (name === "article") renderArticle(hash.slice(8));
     if (name === "home") renderHome();
     if (name === "care") initCare();
+    if (name === "questions") renderQuestions();
     window.scrollTo(0, 0);
     track(hash);
   }
@@ -266,6 +267,73 @@
   }
   $("segAppt").addEventListener("click", function (e) { e.preventDefault(); calMode(false); });
   $("segRem").addEventListener("click", function (e) { e.preventDefault(); calMode(true); });
+
+  /* ---------- Questions to ask ---------- */
+  var qMine = false;
+  $("qTopic").innerHTML = KC.questions.map(function (t) { return '<option value="' + t.id + '">' + esc(t.name) + "</option>"; }).join("");
+  $("qTopic").value = store.get("qtopic", KC.questions[0].id);
+  function qTopic() { var id = $("qTopic").value; return KC.questions.filter(function (t) { return t.id === id; })[0] || KC.questions[0]; }
+  function qState() { return store.get("q." + qTopic().id, { picked: [], notes: {} }); }
+  function qSave(st) { store.set("q." + qTopic().id, st); }
+
+  function renderQuestions() {
+    var t = qTopic(), st = qState();
+    $("qModeMine").textContent = "My questions (" + st.picked.length + ")";
+    $("qModeChoose").removeAttribute("aria-current"); $("qModeMine").removeAttribute("aria-current");
+    if (qMine) $("qModeMine").setAttribute("aria-current", "page"); else $("qModeChoose").setAttribute("aria-current", "page");
+    $("qChoose").hidden = qMine; $("qQuick").hidden = qMine; $("qMine").hidden = !qMine; $("qCopied").hidden = true;
+    $("qChoose").innerHTML = t.items.map(function (q, i) {
+      var on = st.picked.indexOf(i) >= 0;
+      return '<button class="qpick" type="button" data-i="' + i + '" aria-pressed="' + on + '"><span class="mark" aria-hidden="true">' + (on ? "✓" : "") + "</span><span>" + esc(q) + "</span></button>";
+    }).join("");
+    var mine = t.items.map(function (q, i) { return { q: q, i: i }; }).filter(function (x) { return st.picked.indexOf(x.i) >= 0; });
+    $("qTable").querySelector("tbody").innerHTML = mine.map(function (x) {
+      return '<tr><td>' + esc(x.q) + '</td><td><label class="sr-only" for="qn' + x.i + '">Answer or note</label><textarea id="qn' + x.i + '" data-i="' + x.i + '" rows="2" placeholder="Write the answer here">' + esc(st.notes[x.i] || "") + "</textarea></td></tr>";
+    }).join("");
+    $("qTable").hidden = !mine.length; $("qEmpty").hidden = !!mine.length;
+  }
+
+  $("qTopic").addEventListener("change", function () { store.set("qtopic", $("qTopic").value); renderQuestions(); });
+  $("qModeChoose").addEventListener("click", function (e) { e.preventDefault(); qMine = false; renderQuestions(); });
+  $("qModeMine").addEventListener("click", function (e) { e.preventDefault(); qMine = true; renderQuestions(); });
+  $("qChoose").addEventListener("click", function (e) {
+    var b = e.target.closest(".qpick");
+    if (!b) return;
+    var st = qState(), i = parseInt(b.dataset.i, 10), at = st.picked.indexOf(i);
+    if (at >= 0) st.picked.splice(at, 1); else st.picked.push(i);
+    st.picked.sort(function (a, c) { return a - c; });
+    qSave(st); renderQuestions();
+  });
+  $("qTable").addEventListener("input", function (e) {
+    var ta = e.target.closest("textarea");
+    if (!ta) return;
+    var st = qState(); st.notes[ta.dataset.i] = ta.value; qSave(st);
+  });
+  function qText(withNotes) {
+    var t = qTopic(), st = qState();
+    return t.name + "\n\n" + st.picked.map(function (i) {
+      var n = (st.notes[i] || "").trim();
+      return "- " + t.items[i] + (withNotes && n ? "\n  " + n : "");
+    }).join("\n");
+  }
+  $("qCopy").addEventListener("click", function () {
+    var text = qText(true);
+    var done = function () { $("qCopied").hidden = false; };
+    try { navigator.clipboard.writeText(text).then(done, done); } catch (e) { done(); }
+  });
+  $("qToAppt").addEventListener("click", function () {
+    var st = qState(), t = qTopic();
+    $("apAsk").value = st.picked.map(function (i) { return t.items[i]; }).join("\n");
+    location.hash = "appts";
+    updateAppt();
+  });
+  // One tap for busy carers: the first five questions in each list are the most important
+  $("qQuick").addEventListener("click", function () {
+    var st = qState(), t = qTopic();
+    st.picked = t.items.slice(0, 5).map(function (q, i) { return i; });
+    qSave(st); qMine = true; renderQuestions();
+  });
+  $("qClear").addEventListener("click", function () { qSave({ picked: [], notes: {} }); qMine = false; renderQuestions(); });
 
   /* ---------- Find care ---------- */
   var care = { index: null, rows: [], pool: [], council: null, point: null, place: "", files: {}, type: "H", shown: 0 };

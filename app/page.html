@@ -196,6 +196,25 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 .privacy svg { flex: none; }
 .note { font-size: 13px; color: var(--muted); }
 .legal { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.qpick { display: flex; gap: 10px; align-items: flex-start; text-align: left; width: 100%; padding: 12px 14px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); font: inherit; font-size: 15px; cursor: pointer; }
+.qpick .mark { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-size: 13px; font-weight: 800; }
+.qpick[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--surface)); }
+.qpick[aria-pressed="true"] .mark { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+.qtable-wrap { overflow-x: auto; }
+.qtable { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+.qtable th { text-align: left; font-size: 12.5px; color: var(--muted); font-weight: 600; padding: 0 4px; }
+.qtable td { vertical-align: top; background: var(--surface); padding: 10px 12px; }
+.qtable td:first-child { border-radius: 14px 0 0 14px; font-weight: 600; font-size: 14.5px; width: 45%; }
+.qtable td:last-child { border-radius: 0 14px 14px 0; }
+.qtable textarea { width: 100%; min-height: 64px; }
+@media (max-width: 520px) {
+  .qtable thead { display: none; }
+  .qtable tr, .qtable td { display: block; width: 100%; }
+  .qtable td:first-child { border-radius: 14px 14px 0 0; width: 100%; }
+  .qtable td:last-child { border-radius: 0 0 14px 14px; padding-top: 0; }
+}
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.linkbtn { background: none; border: 0; padding: 0; color: var(--accent); font: inherit; text-decoration: underline; cursor: pointer; align-self: flex-start; }
 
 .tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--tab-bg); box-shadow: 0 -4px 16px rgba(15, 30, 40, 0.18);
   padding-bottom: env(safe-area-inset-bottom, 0px); padding-left: max(4px, env(safe-area-inset-left, 0px)); padding-right: max(4px, env(safe-area-inset-right, 0px)); }
@@ -308,7 +327,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
     </div>
     <div class="field"><label for="apWhere">Where</label><input type="text" id="apWhere" placeholder="Surgery, hospital or at home"></div>
     <div class="field"><label for="apWho">Who's going</label><input type="text" id="apWho" placeholder="e.g. Sarah"></div>
-    <div class="field"><label for="apAsk">Questions to ask</label><textarea id="apAsk" rows="3" placeholder="e.g. Review sleep medication"></textarea></div>
+    <div class="field"><label for="apAsk">Questions to ask <a class="small" href="#questions">Pick from question lists ›</a></label><textarea id="apAsk" rows="3" placeholder="e.g. Review sleep medication"></textarea></div>
     <div class="field"><label for="apNotes">Notes</label><textarea id="apNotes" rows="3" placeholder="e.g. Bring the hospital letter. Parking at the back. Ask for a copy of the report."></textarea>
       <p class="tiny muted">Notes go into your calendar with the appointment. Kinav doesn't keep them.</p></div>
     <p class="hint" id="apError" hidden>Choose a date first.</p>
@@ -571,6 +590,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
     <div class="stack-sm" id="helplines"></div>
     <p class="small muted">In an emergency, call 999.</p>
   </div>
+  <a class="card" href="#questions" style="text-decoration:none;color:inherit"><h3>Questions to ask ›</h3><span class="small muted">Pick the questions for a care home visit, home care agency, council assessment, hospital discharge or appointment, then write the answers.</span></a>
   <div class="stack-sm">
     <h1>Step-by-step kits</h1>
     <p class="lede">What a care advisor would do, broken into steps you can follow, with what to say on each call.</p>
@@ -584,6 +604,33 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
     <a class="card" style="text-decoration:none;color:inherit" href="https://societyoflaterlifeadvisers.co.uk/" target="_blank" rel="noopener"><h3>Society of Later Life Advisers ›</h3><span class="small muted">Find an accredited adviser for paying for care (paid)</span></a>
   </div>
   <p class="note">Kinav doesn't give health advice. For health questions, speak to the GP, a pharmacist or NHS 111, and call 999 in an emergency. It gives general information only, not medical, legal or financial advice. <a href="#privacy">Privacy notice</a> · <a href="#terms">Terms of use</a></p>
+</section>
+
+<!-- Questions to ask -->
+<section class="screen" id="s-questions" hidden>
+  <a class="back" href="#help">‹ Help</a>
+  <div class="stack-sm">
+    <h1>Questions to ask</h1>
+    <p class="lede">Tap the questions you want to ask, or let Kinav pick the most important. Then write the answers as you go.</p>
+  </div>
+  <div class="field"><label for="qTopic">Questions for</label><select id="qTopic"></select></div>
+  <div class="seg" role="group" aria-label="Show">
+    <a href="#questions" id="qModeChoose" aria-current="page">Choose questions</a>
+    <a href="#questions" id="qModeMine">My questions</a>
+  </div>
+  <button class="btn btn-primary" type="button" id="qQuick">Choose the most important for me</button>
+  <div class="stack-sm" id="qChoose"></div>
+  <div class="stack" id="qMine" hidden>
+    <div class="qtable-wrap"><table class="qtable" id="qTable"><thead><tr><th scope="col">Question</th><th scope="col">Answer or note</th></tr></thead><tbody></tbody></table></div>
+    <p class="small muted" id="qEmpty" hidden>No questions chosen yet. Go to Choose questions and tap the ones you want.</p>
+    <div class="actions">
+      <button class="btn btn-primary" type="button" id="qCopy">Copy questions and notes</button>
+      <button class="btn btn-ghost" type="button" id="qToAppt">Add to an appointment</button>
+    </div>
+    <p class="small" id="qCopied" hidden>Copied. Paste it into an email or message.</p>
+    <button class="linkbtn small" type="button" id="qClear">Clear this list</button>
+  </div>
+  <p class="note">Your chosen questions and notes are saved only on this phone. Kinav doesn't see them. Questions to ask, not health advice.</p>
 </section>
 
 <!-- Articles -->
@@ -612,7 +659,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
   </div>
   <div class="card stack-sm">
     <h2>What stays on your phone</h2>
-    <p class="small">Your postcode, which 30-day plan you chose, your plan ticks and kit progress are saved in your phone's browser so the app remembers them. They are never sent to us. To find care and work out distances, the app downloads the listings for the council and the postcode area (for example BR1); your full postcode stays on your phone. You can delete them at any time below, or by clearing your browser's data for this site.</p>
+    <p class="small">Your postcode, which 30-day plan you chose, your plan ticks, kit progress, and question lists and notes are saved in your phone's browser so the app remembers them. They are never sent to us. To find care and work out distances, the app downloads the listings for the council and the postcode area (for example BR1); your full postcode stays on your phone. You can delete them at any time below, or by clearing your browser's data for this site.</p>
     <p class="small">We count visits with GoatCounter, which uses no cookies and collects no personal details. It records which screen was opened (for example "Find care"), the type of device and browser, the country, and the website you came from, so we know how many people Kinav helps. Your postcode, plan and anything you type are never included.</p>
   </div>
   <div class="card stack-sm">
