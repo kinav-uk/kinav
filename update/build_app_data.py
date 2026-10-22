@@ -14,6 +14,7 @@ import shutil
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import build_pages  # noqa: E402
 import postcodes  # noqa: E402
 
 # The Kincircle folder: this script's parent, so it runs the same on a Mac or on GitHub.
@@ -124,6 +125,15 @@ def main(codepoint_zip=None):
     shutil.rmtree(OUT, ignore_errors=True)
     os.replace(tmp, OUT)
     print("App data: %d councils, %d listings" % (len(councils), len(rows)))
+
+    # Readable pages for search engines, built from the same rows
+    regions = {}
+    for r in rows:
+        regions.setdefault(r["Local authority"] or "Unknown", r["Region"] or "England")
+    app_dir = os.path.dirname(OUT)
+    urls = build_pages.write(by_la, regions, os.path.join(app_dir, "care"), index["updated"])
+    build_pages.write_sitemap(app_dir, urls)
+    print("Area pages: %d" % len(urls))
 
 
 if __name__ == "__main__":

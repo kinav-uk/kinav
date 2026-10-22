@@ -34,7 +34,7 @@ jobs:
         run: |
           git config user.name "kinav-bot"
           git config user.email "kinav-bot@users.noreply.github.com"
-          git add app/data
+          git add app/data app/care app/sitemap.xml app/robots.txt
           if git diff --cached --quiet; then
             echo "No changes in CQC data this week."
           else

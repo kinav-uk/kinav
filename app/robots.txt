@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kinav.co.uk/sitemap.xml
