@@ -748,18 +748,16 @@
     if (left > 0) { $("shPlan").innerHTML = '<p class="small muted">' + left + " more to answer.</p>"; return; }
     var steps = [];
     var add = function (tag, title, why, href, link) { steps.push({ tag: tag, title: title, why: why, href: href, link: link }); };
+    // Steps in priority order, so the free top five mix practical help and money.
     add("Free", "Ask the council for a needs assessment", "Anyone can ask, whatever their savings. Ask for a carer's assessment for yourself too.", "#kit-home-care", "How to ask");
-    if (a.move || a.wash || a.fall) {
-      add("Free", "Ask for an occupational therapy (OT) assessment", "An OT visits the home and recommends equipment and changes, such as rails or a bath seat.", "#kit-safety", "Home safety and grants guide");
-      add("Free", "Equipment and small changes under £1,000", "After an assessment, the council provides these free.", "#kit-safety", "Find out more");
-      add("Grant", "Disabled Facilities Grant, up to £30,000", "For bigger changes such as a stairlift or level-access shower. Means-tested; the council decides.", "https://www.gov.uk/disabled-facilities-grants", "GOV.UK guide");
-    }
-    if (a.fall || a.alone) add("Help", "A fall alarm", "A pendant or watch that calls for help at the press of a button.", "#kit-alarms", "Fall alarms guide");
-    if (a.alone) add("Free", "A free fire safety visit", "Your local fire and rescue service can check the home and fit smoke alarms.", "#kit-safety", "Home safety guide");
-    if (a.wash || a.meals) add("Care", "Help at home, rated Good or Outstanding", "Home care can help with washing, dressing and meals.", "#care", "Find care at home near them");
-    if (a.meals) add("Help", "Meals and shopping support", "Ask the council or Age UK about meal deliveries, shopping help and lunch clubs.", "https://www.ageuk.org.uk/services/in-your-area/", "Find local Age UK");
+    if (a.move || a.wash || a.fall) add("Free", "Ask for an occupational therapy (OT) assessment", "An OT visits the home and recommends changes. Equipment and small changes under £1,000 are then free.", "#kit-safety", "Home safety and grants guide");
     if (a.move || a.wash || a.fall || a.meals) add("Money", "Check Attendance Allowance", "If they're over State Pension age and need help, it's £76.70 or £114.60 a week and isn't means-tested.", "#benefits", "Check what they could get");
+    if (a.wash || a.meals) add("Care", "Help at home, rated Good or Outstanding", "Home care can help with washing, dressing and meals.", "#care", "Find care at home near them");
+    if (a.fall || a.alone) add("Help", "A fall alarm", "A pendant or watch that calls for help at the press of a button.", "#kit-alarms", "Fall alarms guide");
+    if (a.move || a.wash) add("Grant", "Disabled Facilities Grant, up to £30,000", "For bigger changes such as a stairlift or level-access shower. Means-tested; the council decides.", "https://www.gov.uk/disabled-facilities-grants", "GOV.UK guide");
     if (a.alone) add("Money", "Council tax discount for living alone", "Usually 25% off the bill. More off is possible in some situations, such as dementia.", "https://www.gov.uk/council-tax/discounts-for-people-living-alone", "GOV.UK guide");
+    if (a.alone) add("Free", "A free fire safety visit", "Your local fire and rescue service can check the home and fit smoke alarms.", "#kit-safety", "Home safety guide");
+    if (a.meals) add("Help", "Meals and shopping support", "Ask the council or Age UK about meal deliveries, shopping help and lunch clubs.", "https://www.ageuk.org.uk/services/in-your-area/", "Find local Age UK");
     add("Plan", "Home or care home: the real cost", "See what staying at home with help costs compared with a care home.", "#costs", "Compare costs");
     // Free version: the five most important steps, in order of priority.
     steps = steps.slice(0, 5);
