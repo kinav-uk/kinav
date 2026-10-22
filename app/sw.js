@@ -1,5 +1,5 @@
 // Offline support: keep the app shell cached; care data is fetched fresh, falling back to the cache.
-var SHELL = "kinav-shell-v7";
+var SHELL = "kinav-shell-v8";
 var FILES = ["./", "index.html", "content.js", "app.js", "manifest.webmanifest", "icon.svg", "data/index.json"];
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(SHELL).then(function (c) { return c.addAll(FILES); }));
@@ -12,7 +12,7 @@ self.addEventListener("activate", function (e) {
 self.addEventListener("fetch", function (e) {
   var url = new URL(e.request.url);
   if (e.request.method !== "GET" || url.origin !== location.origin) return;
-  e.respondWith(fetch(e.request).then(function (res) {
+  e.respondWith(fetch(e.request, { cache: "no-cache" }).then(function (res) {
     var copy = res.clone();
     caches.open(url.pathname.indexOf("/data/") >= 0 ? "kinav-data" : SHELL).then(function (c) { c.put(e.request, copy); });
     return res;
