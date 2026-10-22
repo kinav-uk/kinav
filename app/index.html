@@ -205,6 +205,15 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 .privacy svg { flex: none; }
 .note { font-size: 13px; color: var(--muted); }
 .legal { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.qbar { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
+.qitem { border: 1.5px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; }
+.qitem.on { border-color: var(--accent); }
+.qitem .qpick { border: 0; border-radius: 0; }
+.qanswer { display: flex; flex-direction: column; gap: 6px; padding: 0 14px 12px 46px; }
+.qlabel { font-size: 12.5px; font-weight: 700; color: var(--muted); }
+.qnote { width: 100%; min-height: 72px; font-size: 16px; line-height: 1.45; resize: none; overflow: hidden; }
+.qitem.done .mark { background: var(--good); border-color: var(--good); color: var(--accent-fg); }
+@media (max-width: 420px) { .qanswer { padding-left: 14px; } }
 .qpick { display: flex; gap: 10px; align-items: flex-start; text-align: left; width: 100%; padding: 12px 14px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); font: inherit; font-size: 15px; cursor: pointer; }
 .qpick .mark { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-size: 13px; font-weight: 800; }
 .qpick[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--surface)); }
@@ -622,25 +631,21 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
   <a class="back" href="#help">‹ Help</a>
   <div class="stack-sm">
     <h1>Questions to ask</h1>
-    <p class="lede">Tap the questions you want to ask, or let Kinav pick the most important. Then write the answers as you go.</p>
+    <p class="lede">Tap a question to add it, then write the answer underneath as you go.</p>
   </div>
   <div class="field"><label for="qTopic">Questions for</label><select id="qTopic"></select></div>
-  <div class="seg" role="group" aria-label="Show">
-    <a href="#questions" id="qModeChoose" aria-current="page">Choose questions</a>
-    <a href="#questions" id="qModeMine">My questions</a>
+  <div class="qbar">
+    <button class="btn btn-ghost btn-sm" type="button" id="qQuick">Choose all for me</button>
+    <label class="check"><input type="checkbox" id="qOnly"> <span id="qOnlyLabel">Show only my questions</span></label>
   </div>
-  <button class="btn btn-primary" type="button" id="qQuick">Choose all of these for me</button>
-  <div class="stack-sm" id="qChoose"></div>
-  <div class="stack" id="qMine" hidden>
-    <div class="qtable-wrap"><table class="qtable" id="qTable"><thead><tr><th scope="col">Question</th><th scope="col">Answer or note</th></tr></thead><tbody></tbody></table></div>
-    <p class="small muted" id="qEmpty" hidden>No questions chosen yet. Go to Choose questions and tap the ones you want.</p>
-    <div class="actions">
-      <button class="btn btn-primary" type="button" id="qCopy">Copy questions and notes</button>
-      <button class="btn btn-ghost" type="button" id="qToAppt">Add to an appointment</button>
-    </div>
-    <p class="small" id="qCopied" hidden>Copied. Paste it into an email or message.</p>
-    <button class="linkbtn small" type="button" id="qClear">Clear this list</button>
+  <div class="stack-sm" id="qList"></div>
+  <p class="small muted" id="qEmpty" hidden>No questions chosen yet. Untick "Show only my questions" and tap the ones you want.</p>
+  <div class="actions">
+    <button class="btn btn-primary" type="button" id="qCopy">Copy questions and notes</button>
+    <button class="btn btn-ghost" type="button" id="qToAppt">Add to an appointment</button>
   </div>
+  <p class="small" id="qCopied" hidden>Copied. Paste it into an email or message.</p>
+  <button class="linkbtn small" type="button" id="qClear">Clear this list</button>
   <p class="small muted">More detailed question lists are coming soon.</p>
   <p class="note">Your chosen questions and notes are saved only on this phone. Kinav doesn't see them. Questions to ask, not health advice.</p>
 </section>
@@ -782,7 +787,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 
 <script id="gcScript" data-goatcounter="https://kinav.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="https://gc.zgo.at/count.js"></script>
 <script src="content.js?v=d92513702d"></script>
-<script src="app.js?v=b13cece18a"></script>
+<script src="app.js?v=f65f7e0331"></script>
 
 </body>
 </html>

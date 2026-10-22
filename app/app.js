@@ -304,7 +304,7 @@
   $("segRem").addEventListener("click", function (e) { e.preventDefault(); calMode(true); });
 
   /* ---------- Questions to ask ---------- */
-  var qMine = false;
+  // One list: tapping a question adds it and opens a note box underneath; a switch hides the rest.
   $("qTopic").innerHTML = KC.questions.map(function (t) { return '<option value="' + t.id + '">' + esc(t.name) + "</option>"; }).join("");
   $("qTopic").value = store.get("qtopic", KC.questions[0].id);
   function qTopic() { var id = $("qTopic").value; return KC.questions.filter(function (t) { return t.id === id; })[0] || KC.questions[0]; }
@@ -315,50 +315,62 @@
   }
   function qSave(st) { store.set("q." + qTopic().id, st); }
 
-  function renderQuestions() {
-    var t = qTopic(), st = qState();
-    $("qModeMine").textContent = "My questions (" + st.picked.length + ")";
-    $("qModeChoose").removeAttribute("aria-current"); $("qModeMine").removeAttribute("aria-current");
-    if (qMine) $("qModeMine").setAttribute("aria-current", "page"); else $("qModeChoose").setAttribute("aria-current", "page");
-    $("qChoose").hidden = qMine; $("qQuick").hidden = qMine; $("qMine").hidden = !qMine; $("qCopied").hidden = true;
-    $("qChoose").innerHTML = t.items.map(function (q, i) {
-      var on = st.picked.indexOf(i) >= 0;
-      return '<button class="qpick" type="button" data-i="' + i + '" aria-pressed="' + on + '"><span class="mark" aria-hidden="true">' + (on ? "✓" : "") + "</span><span>" + esc(q) + "</span></button>";
+  function renderQuestions(focusIndex) {
+    var t = qTopic(), st = qState(), only = $("qOnly").checked;
+    $("qOnlyLabel").textContent = "Show only my questions (" + st.picked.length + ")";
+    $("qCopied").hidden = true;
+    var shown = t.items.map(function (q, i) { return { q: q, i: i, on: st.picked.indexOf(i) >= 0 }; }).filter(function (x) { return !only || x.on; });
+    $("qList").innerHTML = shown.map(function (x) {
+      var note = st.notes[x.i] || "";
+      return '<div class="qitem' + (x.on ? " on" : "") + (note.trim() ? " done" : "") + '"><button class="qpick" type="button" data-i="' + x.i + '" aria-pressed="' + x.on + '">' +
+        '<span class="mark" aria-hidden="true">' + (x.on ? "✓" : "+") + "</span><span>" + esc(x.q) + "</span></button>" +
+        (x.on ? '<div class="qanswer"><label class="qlabel" for="qn' + x.i + '">Answer</label><textarea class="qnote" id="qn' + x.i + '" data-i="' + x.i + '" rows="2" placeholder="Type the answer here">' + esc(note) + '</textarea>' +
+          '<button class="linkbtn tiny qremove" type="button" data-i="' + x.i + '">Remove this question</button></div>' : "") + "</div>";
     }).join("");
-    var mine = t.items.map(function (q, i) { return { q: q, i: i }; }).filter(function (x) { return st.picked.indexOf(x.i) >= 0; });
-    $("qTable").querySelector("tbody").innerHTML = mine.map(function (x) {
-      return '<tr><td>' + esc(x.q) + '</td><td><label class="sr-only" for="qn' + x.i + '">Answer or note</label><textarea id="qn' + x.i + '" data-i="' + x.i + '" rows="2" placeholder="Write the answer here">' + esc(st.notes[x.i] || "") + "</textarea></td></tr>";
-    }).join("");
-    $("qTable").hidden = !mine.length; $("qEmpty").hidden = !!mine.length;
+    $("qEmpty").hidden = shown.length > 0;
+    document.querySelectorAll("#qList .qnote").forEach(grow);
+    if (focusIndex != null && $("qn" + focusIndex)) $("qn" + focusIndex).focus();
   }
 
   $("qTopic").addEventListener("change", function () { store.set("qtopic", $("qTopic").value); renderQuestions(); });
-  $("qModeChoose").addEventListener("click", function (e) { e.preventDefault(); qMine = false; renderQuestions(); });
-  $("qModeMine").addEventListener("click", function (e) { e.preventDefault(); qMine = true; renderQuestions(); });
-  $("qChoose").addEventListener("click", function (e) {
-    var b = e.target.closest(".qpick");
+  $("qOnly").addEventListener("change", function () { renderQuestions(); });
+  // Answer boxes grow with the text, so nothing is hidden behind a scroll bar.
+  function grow(ta) { ta.style.height = "auto"; ta.style.height = (ta.scrollHeight + 2) + "px"; }
+
+  $("qList").addEventListener("click", function (e) {
+    var rm = e.target.closest(".qremove"), b = e.target.closest(".qpick"), st = qState();
+    if (rm) {
+      var r = parseInt(rm.dataset.i, 10);
+      st.picked = st.picked.filter(function (x) { return x !== r; });
+      qSave(st); renderQuestions();
+      return;
+    }
     if (!b) return;
-    var st = qState(), i = parseInt(b.dataset.i, 10), at = st.picked.indexOf(i);
-    if (at >= 0) st.picked.splice(at, 1); else st.picked.push(i);
+    var i = parseInt(b.dataset.i, 10);
+    // Tapping a chosen question just jumps to its answer box, so nothing is removed by accident.
+    if (st.picked.indexOf(i) >= 0) { $("qn" + i).focus(); return; }
+    st.picked.push(i);
     st.picked.sort(function (a, c) { return a - c; });
-    qSave(st); renderQuestions();
+    qSave(st);
+    renderQuestions(i);
   });
-  $("qTable").addEventListener("input", function (e) {
+  $("qList").addEventListener("input", function (e) {
     var ta = e.target.closest("textarea");
     if (!ta) return;
+    grow(ta);
+    ta.closest(".qitem").classList.toggle("done", ta.value.trim().length > 0);
     var st = qState(); st.notes[ta.dataset.i] = ta.value; qSave(st);
   });
-  function qText(withNotes) {
+  function qText() {
     var t = qTopic(), st = qState();
     return t.name + "\n\n" + st.picked.map(function (i) {
       var n = (st.notes[i] || "").trim();
-      return "- " + t.items[i] + (withNotes && n ? "\n  " + n : "");
+      return "- " + t.items[i] + (n ? "\n  " + n : "");
     }).join("\n");
   }
   $("qCopy").addEventListener("click", function () {
-    var text = qText(true);
     var done = function () { $("qCopied").hidden = false; };
-    try { navigator.clipboard.writeText(text).then(done, done); } catch (e) { done(); }
+    try { navigator.clipboard.writeText(qText()).then(done, done); } catch (e) { done(); }
   });
   $("qToAppt").addEventListener("click", function () {
     var st = qState(), t = qTopic();
@@ -367,13 +379,11 @@
     location.hash = "appts";
     updateAppt();
   });
-  // One tap for busy carers: pick every question in the list
   $("qQuick").addEventListener("click", function () {
-    var st = qState(), t = qTopic();
-    st.picked = t.items.map(function (q, i) { return i; });
-    qSave(st); qMine = true; renderQuestions();
+    var st = qState(); st.picked = qTopic().items.map(function (q, i) { return i; });
+    qSave(st); $("qOnly").checked = true; renderQuestions();
   });
-  $("qClear").addEventListener("click", function () { qSave({ picked: [], notes: {} }); qMine = false; renderQuestions(); });
+  $("qClear").addEventListener("click", function () { qSave({ picked: [], notes: {} }); $("qOnly").checked = false; renderQuestions(); });
 
   /* ---------- Find care ---------- */
   var care = { index: null, rows: [], pool: [], council: null, point: null, place: "", files: {}, type: "H", shown: 0 };
