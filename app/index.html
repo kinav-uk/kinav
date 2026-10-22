@@ -191,6 +191,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 .privacy { display: flex; gap: 8px; align-items: center; background: var(--sunk); color: var(--accent); border-radius: 12px; padding: 10px 12px; font-size: 14px; }
 .privacy svg { flex: none; }
 .note { font-size: 13px; color: var(--muted); }
+.legal { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
 
 .tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--tab-bg); box-shadow: 0 -4px 16px rgba(15, 30, 40, 0.18);
   padding-bottom: env(safe-area-inset-bottom, 0px); padding-left: max(4px, env(safe-area-inset-left, 0px)); padding-right: max(4px, env(safe-area-inset-right, 0px)); }
@@ -400,6 +401,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
   <p class="small muted" id="careStatus" aria-live="polite">Search by postcode or council to see care near them.</p>
   <div class="stack" id="careList"></div>
   <button class="btn btn-ghost" type="button" id="careMore" hidden>Show more</button>
+  <p class="note">Kinav doesn't recommend or inspect care services. A specialism listed by CQC doesn't mean a service suits the person's needs: visit, read the CQC report and ask for a needs assessment from the council. <a href="#terms">Terms of use</a></p>
   <p class="note" id="careNote">We only list care homes and care at home services rated Good or Outstanding by CQC. We have removed those rated Requires improvement or Inadequate. Details and ratings are as CQC publishes them. Distances are in a straight line, not by road. Contains CQC data. Contains OS data © Crown copyright and database right 2026. Contains Royal Mail data © Royal Mail copyright and database right 2026. Contains National Statistics data © Crown copyright and database right 2026.</p>
 </section>
 
@@ -507,6 +509,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
   <form class="stack" id="benForm" novalidate></form>
   <div class="stack" id="benResults" aria-live="polite"></div>
   <p class="note">These are possibilities, not decisions. For free help to claim, contact Age UK or Citizens Advice.</p>
+  <p class="note">This is a guide to what may be worth checking, not benefits or financial advice. The Department for Work and Pensions and the council decide what someone gets. <a href="#terms">Terms of use</a></p>
 </section>
 
 <!-- Help and kits -->
@@ -538,11 +541,13 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
     <p class="lede">Each month, one health issue and how you can cope with it.</p>
   </div>
   <div class="stack-sm" id="articleList"></div>
+  <p class="note">General information only, not health or medical advice. For health questions, speak to the GP, a pharmacist or NHS 111. In an emergency, call 999. <a href="#terms">Terms of use</a></p>
 </section>
 
 <section class="screen" id="s-article" hidden>
   <a class="back" href="#articles">‹ All articles</a>
   <article class="stack" id="articleBody"></article>
+  <p class="note">General information only, not health or medical advice. For health questions, speak to the GP, a pharmacist or NHS 111. In an emergency, call 999. <a href="#terms">Terms of use</a></p>
 </section>
 
 <!-- Privacy notice -->
@@ -600,8 +605,17 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
   </div>
   <div class="card stack-sm">
     <h2>No health or medical advice</h2>
-    <p class="small">Kinav gives general information to help carers organise care. It does not give health or medical advice, and it doesn't diagnose, treat or assess anyone. Nothing in the app replaces advice from a doctor, nurse, pharmacist or other professional.</p>
-    <p class="small">For health questions, speak to a GP, pharmacist or NHS 111. In an emergency, call 999.</p>
+    <p class="small">Kinav gives general information to help carers organise care. It does not give health or medical advice, and it doesn't diagnose, treat, monitor or assess anyone. Nothing in the app replaces advice from a doctor, nurse, pharmacist, occupational therapist or other professional who knows the person.</p>
+    <ul class="small legal">
+      <li><b>Emergencies:</b> don't use Kinav in an emergency or to decide whether someone needs urgent help. Call 999 if someone is seriously ill or injured, or their life is at risk. For urgent advice, call NHS 111.</li>
+      <li><b>Health questions:</b> speak to the GP, a pharmacist or NHS 111. Never ignore, delay or change professional advice, medicines or treatment because of something you read in Kinav.</li>
+      <li><b>Conditions:</b> plans and articles that name a condition, such as dementia or COPD, are about organising care and looking after yourself as a carer. They don't describe symptoms, treatments or what to expect for any one person, and choosing a plan isn't a diagnosis.</li>
+      <li><b>Equipment and home safety:</b> information about fall alarms, cameras, pill dispensers and other aids is general. It doesn't mean a product is safe or suitable for the person. Ask an occupational therapist, pharmacist or the council's adult social care team, and follow the maker's instructions.</li>
+      <li><b>Care services:</b> a care service listing a specialism, such as dementia, is CQC's published information. It doesn't mean the service is right for the person's needs. A needs assessment from the council, and talking to the provider, will help decide.</li>
+      <li><b>Worried someone is at risk of harm or neglect:</b> contact the council's adult social care team. If they are in immediate danger, call 999.</li>
+      <li><b>Your own wellbeing:</b> articles about coping are general support, not counselling or therapy. If you're struggling, talk to your GP, or call Samaritans free on 116 123, day or night.</li>
+      <li><b>Kinav isn't monitored:</b> nobody at Kinav sees what you type or can respond to an individual situation. Anything you add, such as appointment notes, goes only to your own calendar or stays on your phone.</li>
+    </ul>
   </div>
   <div class="card stack-sm">
     <h2>General information only</h2>
@@ -639,6 +653,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
   <div class="stack-sm"><h1 id="kitTitle"></h1><p class="lede" id="kitWhat"></p></div>
   <div class="stack" id="kitSteps"></div>
   <p class="note">Tap a step to mark it done. Saved on this phone only.</p>
+  <p class="note">General information only, not health or medical advice. For health questions, speak to the GP, a pharmacist or NHS 111. In an emergency, call 999. <a href="#terms">Terms of use</a></p>
 </section>
 
 </div>

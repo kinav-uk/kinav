@@ -63,7 +63,7 @@ def page(path, title, description, body, updated):
 {body}
 <footer class="tiny muted">
   <p>We only list care services rated Good or Outstanding by CQC. Services rated Requires improvement or Inadequate are left out. Details and ratings are as CQC publishes them, updated every week. Last updated {updated}.</p>
-  <p>Kinav doesn't give medical, legal or financial advice. Always visit, read the full CQC report and ask questions before choosing care.</p>
+  <p>Kinav gives general information only, not medical, legal or financial advice, and doesn't recommend or inspect care services. A specialism listed by CQC doesn't mean a service suits the person's needs. Always visit, read the full CQC report and ask the council for a needs assessment. For health questions, speak to the GP, a pharmacist or NHS 111. In an emergency, call 999.</p>
   <p>{credit}</p>
   <p><a href="/#privacy">Privacy</a> · <a href="/#terms">Terms</a> · <a href="/care/">All areas</a></p>
 </footer>
