@@ -22,8 +22,8 @@
   };
 
   /* ---------- Screens ---------- */
-  var SCREENS = ["home", "plan", "appts", "care", "costs", "benefits", "help", "kit", "privacy", "terms", "articles", "article", "questions"];
-  var TAB_FOR = { costs: "home", benefits: "home", kit: "help", questions: "help", privacy: "home", terms: "home", articles: "home", article: "home" };
+  var SCREENS = ["home", "plan", "appts", "care", "costs", "benefits", "help", "kit", "privacy", "terms", "articles", "article", "questions", "stayhome"];
+  var TAB_FOR = { stayhome: "home", costs: "home", benefits: "home", kit: "help", questions: "help", privacy: "home", terms: "home", articles: "home", article: "home" };
 
   function show() {
     var hash = (location.hash || "#home").slice(1);
@@ -722,6 +722,75 @@
   });
   $("calc").addEventListener("submit", function (e) { e.preventDefault(); });
 
+  /* ---------- Stay at home plan ---------- */
+  // Five yes/no questions build a list of practical next steps. Nothing is saved.
+  var SH_Q = [
+    { id: "alone", q: "Do they live alone?" },
+    { id: "move", q: "Are stairs or getting around the home getting harder?" },
+    { id: "wash", q: "Do they need help washing or bathing?" },
+    { id: "fall", q: "Have they had a fall in the last year, or are they worried about falling?" },
+    { id: "meals", q: "Do they need help with meals or shopping?" }
+  ];
+  var shAns = {};
+  $("shForm").innerHTML = SH_Q.map(function (q) {
+    return '<fieldset class="card" style="border:0;margin:0"><legend class="label" style="padding:0;margin-bottom:8px">' + esc(q.q) + "</legend>" +
+      '<div class="seg" style="grid-template-columns:repeat(2,minmax(0,1fr))">' +
+      ["Yes", "No"].map(function (o) {
+        var id = "sh-" + q.id + "-" + o;
+        return '<input type="radio" name="' + q.id + '" id="' + id + '" value="' + o + '"><label for="' + id + '">' + o + "</label>";
+      }).join("") + "</div></fieldset>";
+  }).join("");
+  $("shForm").addEventListener("change", function (e) { shAns[e.target.name] = e.target.value === "Yes"; renderStayHome(); });
+  $("shForm").addEventListener("submit", function (e) { e.preventDefault(); });
+
+  function renderStayHome() {
+    var a = shAns, left = SH_Q.length - Object.keys(a).length;
+    if (left > 0) { $("shPlan").innerHTML = '<p class="small muted">' + left + " more to answer.</p>"; return; }
+    var steps = [];
+    var add = function (tag, title, why, href, link) { steps.push({ tag: tag, title: title, why: why, href: href, link: link }); };
+    add("Free", "Ask the council for a needs assessment", "Anyone can ask, whatever their savings. Ask for a carer's assessment for yourself too.", "#kit-home-care", "How to ask");
+    if (a.move || a.wash || a.fall) {
+      add("Free", "Ask for an occupational therapy (OT) assessment", "An OT visits the home and recommends equipment and changes, such as rails or a bath seat.", "#kit-safety", "Home safety and grants guide");
+      add("Free", "Equipment and small changes under £1,000", "After an assessment, the council provides these free.", "#kit-safety", "Find out more");
+      add("Grant", "Disabled Facilities Grant, up to £30,000", "For bigger changes such as a stairlift or level-access shower. Means-tested; the council decides.", "https://www.gov.uk/disabled-facilities-grants", "GOV.UK guide");
+    }
+    if (a.fall || a.alone) add("Help", "A fall alarm", "A pendant or watch that calls for help at the press of a button.", "#kit-alarms", "Fall alarms guide");
+    if (a.alone) add("Free", "A free fire safety visit", "Your local fire and rescue service can check the home and fit smoke alarms.", "#kit-safety", "Home safety guide");
+    if (a.wash || a.meals) add("Care", "Help at home, rated Good or Outstanding", "Home care can help with washing, dressing and meals.", "#care", "Find care at home near them");
+    if (a.meals) add("Help", "Meals and shopping support", "Ask the council or Age UK about meal deliveries, shopping help and lunch clubs.", "https://www.ageuk.org.uk/services/in-your-area/", "Find local Age UK");
+    if (a.move || a.wash || a.fall || a.meals) add("Money", "Check Attendance Allowance", "If they're over State Pension age and need help, it's £76.70 or £114.60 a week and isn't means-tested.", "#benefits", "Check what they could get");
+    if (a.alone) add("Money", "Council tax discount for living alone", "Usually 25% off the bill. More off is possible in some situations, such as dementia.", "https://www.gov.uk/council-tax/discounts-for-people-living-alone", "GOV.UK guide");
+    add("Plan", "Home or care home: the real cost", "See what staying at home with help costs compared with a care home.", "#costs", "Compare costs");
+    var pill = { Free: "pill-good", Grant: "pill-sun", Money: "pill-sun", Help: "pill-quiet", Care: "pill-good", Plan: "pill-quiet" };
+    $("shPlan").innerHTML = "<h2>Their plan: " + steps.length + " steps</h2>" + steps.map(function (st, i) {
+      var ext = /^https?:/.test(st.href);
+      return '<div class="card shstep"><div class="head"><h3>' + (i + 1) + ". " + esc(st.title) + '</h3><span class="pill ' + pill[st.tag] + '">' + st.tag + "</span></div>" +
+        '<p class="small">' + esc(st.why) + '</p><a class="small" style="font-weight:600" href="' + st.href + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + ">" + esc(st.link) + " ›</a></div>";
+    }).join("");
+  }
+
+  /* ---------- Home or care home ---------- */
+  var SAVINGS_LIMIT = 23250;
+  function cmpLasts(weeklyCost, income, savings) {
+    var fromSavings = weeklyCost - income, usable = Math.max(0, savings - SAVINGS_LIMIT);
+    if (fromSavings <= 0) return "Income covers it";
+    if (!usable) return "Council help now";
+    var weeks = usable / fromSavings;
+    if (weeks < 104) return "About " + Math.max(1, Math.round(weeks / 4.33)) + " months";
+    return weeks / 52 >= 20 ? "Over 20 years" : "About " + Math.round(weeks / 52) + " years";
+  }
+  function renderCompare() {
+    var num = function (id) { var v = parseFloat($(id).value); return isNaN(v) || v < 0 ? 0 : v; };
+    var home = num("cmpHours") * num("cmpRate"), ch = num("cmpHome"), inc = num("cmpIncome"), sav = num("cmpSavings");
+    var gbp = function (v) { return "£" + Math.round(v).toLocaleString("en-GB"); };
+    $("cmpOut").innerHTML =
+      '<div class="cmp-box home"><span>At home with care</span><b>' + gbp(home) + '</b><span>a week</span><span>Savings: ' + cmpLasts(home, inc, sav) + "</span></div>" +
+      '<div class="cmp-box"><span>Care home</span><b>' + gbp(ch) + '</b><span>a week</span><span>Savings: ' + cmpLasts(ch, inc, sav) + "</span></div>";
+  }
+  $("cmp").addEventListener("input", renderCompare);
+  $("cmp").addEventListener("submit", function (e) { e.preventDefault(); });
+  renderCompare();
+
   /* ---------- Benefits calculator ---------- */
   var answers = {};
   $("benForm").innerHTML = KC.benefits.questions.map(function (q) {
@@ -740,7 +809,7 @@
     var need = KC.benefits.questions.length - Object.keys(a).length;
     if (need > 0) { $("benResults").innerHTML = '<p class="small muted">' + need + " more to answer.</p>"; return; }
     var spa = a.age === "Yes";
-    if (spa && a.help === "Yes") out.push(["Attendance Allowance", "Them", "Likely", "They're over State Pension age and have needed help for 6 months. Not means-tested.", "https://www.gov.uk/attendance-allowance"]);
+    if (spa && a.help === "Yes") out.push(["Attendance Allowance", "Them", "Likely", "They're over State Pension age and have needed help for 6 months. £76.70 or £114.60 a week, and not means-tested.", "https://www.gov.uk/attendance-allowance"]);
     else if (spa && a.help === "Not yet") out.push(["Attendance Allowance", "Them", "Worth checking", "They can usually claim once they've needed help for 6 months, or straight away if terminally ill.", "https://www.gov.uk/attendance-allowance"]);
     else if (!spa) out.push(["Personal Independence Payment", "Them", "Worth checking", "Under State Pension age, PIP is the benefit for extra daily living or mobility needs.", "https://www.gov.uk/pip"]);
     if (a.income !== "No" && spa) out.push(["Pension Credit", "Them", "Worth checking", "Tops up a low income. Getting Attendance Allowance can increase it.", "https://www.gov.uk/pension-credit"]);
@@ -756,7 +825,12 @@
     var order = { Likely: 0, "Worth checking": 1, Unlikely: 2 };
     out.sort(function (x, y) { return order[x[2]] - order[y[2]]; });
     var likely = out.filter(function (o) { return o[2] === "Likely"; }).length;
-    $("benResults").innerHTML = '<h2>' + likely + " likely, " + out.filter(function (o) { return o[2] === "Worth checking"; }).length + " worth checking</h2>" +
+    // A yearly "could be missing" figure from the two benefits with fixed rates (2026 to 2027 rates).
+    var yearly = 0, maybe = function (name) { return out.some(function (o) { return o[0] === name && o[2] !== "Unlikely"; }); };
+    if (maybe("Attendance Allowance")) yearly += 114.60 * 52;
+    if (maybe("Carer's Allowance")) yearly += 86.45 * 52;
+    var headline = yearly ? '<div class="money-head"><span class="small">Your family could be missing up to</span><b>£' + Math.round(yearly / 100) * 100 + ' a year</b><span class="tiny">From Attendance Allowance and Carer\'s Allowance at 2026 to 2027 rates, plus any council tax or Pension Credit. The Department for Work and Pensions decides.</span></div>' : "";
+    $("benResults").innerHTML = headline + '<h2>' + likely + " likely, " + out.filter(function (o) { return o[2] === "Worth checking"; }).length + " worth checking</h2>" +
       out.map(function (o) {
         return '<div class="card"><div class="head"><h3>' + esc(o[0]) + '</h3><span class="pill ' + pill[o[2]] + '">' + esc(o[2]) + "</span></div>" +
           '<p class="tiny muted">For ' + esc(o[1].toLowerCase()) + "</p><p class=\"small\">" + esc(o[3]) + "</p>" +
