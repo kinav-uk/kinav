@@ -188,7 +188,8 @@ window.KC = {
       { t: "Check deposits and payment in advance", d: "How much, and when is it returned?" },
       { t: "Check notice terms", d: "How much notice is needed to leave, and how many days of fees are charged after a death?" },
       { t: "Check when a resident can be asked to leave", d: "Ask what the reasons are and what notice they give." },
-      { t: "Know how to complain", d: "Ask for the complaints process. If it isn't resolved, you can go to the Local Government and Social Care Ombudsman." }
+      { t: "Know how to complain", d: "Ask for the complaints process. If it isn't resolved, you can go to the Local Government and Social Care Ombudsman." },
+      { t: "Get free help if anything is unclear", d: "Citizens Advice (CAB) can explain your rights on fees, notice and unfair terms. Call the Citizens Advice consumer helpline on 0808 223 1133, or the Adviceline (England) on 0800 144 8848." }
     ]}
   ],
 

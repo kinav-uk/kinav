@@ -148,8 +148,10 @@ def paying(council):
             '<p>In England, the council may help pay for care if the person has less than £23,250 in savings and other assets. '
             'Below £14,250, these don\'t count at all. The value of their home is usually ignored for the first 12 weeks in a care home, '
             'and always if a partner or certain relatives still live there.</p>'
+            '<p>For free help with the financial assessment or a council charging decision, contact Citizens Advice (CAB) on 0800 144 8848.</p>'
             '<p class="links"><a href="/#costs">Work out care costs</a><a href="/#benefits">Check benefits</a>'
-            '<a href="/#kit-home-choice">Choosing a care home: step by step</a></p></section>') % e(council)
+            '<a href="/#kit-home-choice">Choosing a care home: step by step</a>'
+            '<a href="https://www.citizensadvice.org.uk/family/looking-after-people/carers-help-and-support/" rel="noopener" target="_blank">Citizens Advice: help for carers</a></p></section>') % e(council)
 
 
 def write(by_la, regions, out_dir, updated):
