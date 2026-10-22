@@ -5,6 +5,8 @@ window.KC = {
     { name: "Admiral Nurse Dementia Helpline", number: "0800 888 6678", note: "Dementia UK. Specialist dementia nurses." },
     { name: "Alzheimer's Society Dementia Support Line", number: "0333 150 3456", note: "Advice and someone to talk to." },
     { name: "Parkinson's UK Helpline", number: "0808 800 0303", note: "Free advice from Parkinson's nurses and advisers." },
+    { name: "Stroke Association Helpline", number: "0303 3033 100", note: "For stroke survivors and their families." },
+    { name: "British Heart Foundation Heart Helpline", number: "0808 802 1234", note: "Cardiac nurses for patients and families." },
     { name: "Samaritans", number: "116 123", note: "Any time, day or night. Free." }
   ],
 

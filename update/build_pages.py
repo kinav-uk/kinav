@@ -29,6 +29,11 @@ LOGO = ('<svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height=
 CREDIT = ("Contains CQC data. Contains OS data © Crown copyright and database right {y}. "
           "Contains Royal Mail data © Royal Mail copyright and database right {y}.")
 
+CARE_FOOTER = """<p>We only list care services rated Good or Outstanding by CQC. Services rated Requires improvement or Inadequate are left out. Details and ratings are as CQC publishes them, updated every week. Last updated {updated}.</p>
+  <p>Kinav gives general information only, not medical, legal or financial advice, and doesn't recommend or inspect care services. A specialism listed by CQC doesn't mean a service suits the person's needs. Always visit, read the full CQC report and ask the council for a needs assessment. For health questions, speak to the GP, a pharmacist or NHS 111. In an emergency, call 999.</p>
+  <p>{credit}</p>"""
+GUIDE_FOOTER = """<p>Kinav gives general information about care in England. It doesn't give health, medical, legal or financial advice. For health questions, speak to the GP, a pharmacist or NHS 111. In an emergency, call 999. Last updated {updated}.</p>"""
+
 e = html.escape
 
 
@@ -37,7 +42,7 @@ def rated(d):
     return "%s %s" % (MONTHS[int(p[1]) - 1], p[2]) if len(p) == 3 else ""
 
 
-def page(path, title, description, body, updated):
+def page(path, title, description, body, updated, kind="care"):
     """A full HTML page. `path` is the URL path, e.g. /care/bromley/."""
     return """<!doctype html>
 <html lang="en-GB">
@@ -62,17 +67,17 @@ def page(path, title, description, body, updated):
 </header>
 {body}
 <footer class="tiny muted">
-  <p>We only list care services rated Good or Outstanding by CQC. Services rated Requires improvement or Inadequate are left out. Details and ratings are as CQC publishes them, updated every week. Last updated {updated}.</p>
-  <p>Kinav gives general information only, not medical, legal or financial advice, and doesn't recommend or inspect care services. A specialism listed by CQC doesn't mean a service suits the person's needs. Always visit, read the full CQC report and ask the council for a needs assessment. For health questions, speak to the GP, a pharmacist or NHS 111. In an emergency, call 999.</p>
-  <p>{credit}</p>
-  <p><a href="/#privacy">Privacy</a> · <a href="/#terms">Terms</a> · <a href="/care/">All areas</a></p>
+  {footer}
+  <p><a href="/">Kinav app</a> · <a href="/care/">Care by area</a> · <a href="/guides/">Guides</a> · <a href="/ask-a-specialist/">Ask a specialist</a> · <a href="/#privacy">Privacy</a> · <a href="/#terms">Terms</a></p>
+  <p>© {y} Kinav</p>
 </footer>
 </div>
 <script data-goatcounter="https://kinav.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
 """.format(title=e(title), desc=e(description), site=SITE, path=path, logo=LOGO, body=body,
-           updated=e(updated), credit=CREDIT.format(y=datetime.date.today().year))
+           footer=(CARE_FOOTER if kind == "care" else GUIDE_FOOTER).format(updated=e(updated), credit=CREDIT.format(y=datetime.date.today().year)),
+           y=datetime.date.today().year)
 
 
 def card(r, show_type):
@@ -117,7 +122,7 @@ def card(r, show_type):
 
 
 def tabs(slug, current, counts):
-    items = [("", "Overview")] + [(t[1], t[3]) for t in TYPES] + [("dementia", "Dementia care")]
+    items = [("", "Overview")] + [(t[1], t[3]) for t in TYPES] + [("dementia-care", "Dementia care")]
     out = []
     for path, label in items:
         n = counts.get(path)
@@ -168,7 +173,7 @@ def write(by_la, regions, out_dir, updated):
         region = regions.get(council, "England")
         by_region[region].append((council, slug, len(rows)))
         groups = {t[1]: [r for r in rows if t[0] in r[5]] for t in TYPES}
-        groups["dementia"] = [r for r in rows if "D" in (r[13] or "")]
+        groups["dementia-care"] = [r for r in rows if "D" in (r[13] or "")]
         counts = {k: len(v) for k, v in groups.items()}
         counts[""] = None
         os.makedirs(os.path.join(out_dir, slug))
@@ -176,7 +181,7 @@ def write(by_la, regions, out_dir, updated):
         # Overview
         outstanding = [r for r in rows if r[8] == "Outstanding"]
         stats = "".join('<a href="/care/%s/%s/"><b>%d</b><span>%s</span></a>' % (slug, t[1], counts[t[1]], e(t[2]))
-                        for t in TYPES) + '<a href="/care/%s/dementia/"><b>%d</b><span>Offer dementia care</span></a>' % (slug, counts["dementia"])
+                        for t in TYPES) + '<a href="/care/%s/dementia-care/"><b>%d</b><span>Offer dementia care</span></a>' % (slug, counts["dementia-care"])
         body = [crumbs(region),
                 '<div class="stack-sm"><h1>Care homes and care at home in %s</h1>'
                 '<p class="lede">%d care services in %s are rated Good or Outstanding by CQC, including %d rated Outstanding.</p></div>' % (
@@ -192,9 +197,9 @@ def write(by_la, regions, out_dir, updated):
         urls.append("/care/%s/" % slug)
 
         # One page per type of care, plus dementia
-        for code, path, plural, _ in TYPES + [("D", "dementia", "Dementia care services", "")]:
+        for code, path, plural, _ in TYPES + [("D", "dementia-care", "Dementia care services", "")]:
             items = groups[path]
-            if path == "dementia":
+            if path == "dementia-care":
                 h1 = "Dementia care in %s" % council
                 lede = "%d care services in %s rated Good or Outstanding by CQC list dementia as a specialism." % (len(items), council)
             else:
@@ -202,7 +207,7 @@ def write(by_la, regions, out_dir, updated):
                 lede = "%d %s in %s are rated Good or Outstanding by CQC, best rated first." % (len(items), plural.lower(), council)
             body = [crumbs(region, council, slug), '<div class="stack-sm"><h1>%s</h1><p class="lede">%s</p></div>' % (e(h1), e(lede)),
                     tabs(slug, path, counts), cta(council)]
-            body.append('<div class="list">%s</div>' % "".join(card(r, path == "dementia") for r in items) if items
+            body.append('<div class="list">%s</div>' % "".join(card(r, path == "dementia-care") for r in items) if items
                         else '<p class="panel">No services of this type in %s are currently rated Good or Outstanding. Try a nearby area or search by postcode in the app.</p>' % e(council))
             body.append(paying(council))
             title = "%s rated Good or Outstanding | Kinav" % h1
@@ -237,12 +242,21 @@ def save(out_dir, slug, path, text):
         f.write(text)
 
 
-def write_sitemap(app_dir, urls):
+def write_sitemap(app_dir, urls=None):
+    """List every page under the app folder: the app itself, area pages and guides."""
+    found = []
+    for root, dirs, files in os.walk(app_dir):
+        dirs[:] = sorted(d for d in dirs if d not in ("data", "fonts"))
+        if "index.html" in files:
+            rel = os.path.relpath(root, app_dir)
+            found.append("/" if rel == "." else "/" + rel.replace(os.sep, "/") + "/")
+    found.sort(key=lambda u: (u != "/", u.count("/"), u))
     today = datetime.date.today().isoformat()
     lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    lines += ["<url><loc>%s%s</loc><lastmod>%s</lastmod></url>" % (SITE, u, today) for u in urls]
+    lines += ["<url><loc>%s%s</loc><lastmod>%s</lastmod></url>" % (SITE, u, today) for u in found]
     lines.append("</urlset>")
     with open(os.path.join(app_dir, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
     with open(os.path.join(app_dir, "robots.txt"), "w", encoding="utf-8") as f:
         f.write("User-agent: *\nAllow: /\nSitemap: %s/sitemap.xml\n" % SITE)
+    return len(found)

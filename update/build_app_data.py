@@ -133,8 +133,7 @@ def main(codepoint_zip=None):
         regions.setdefault(r["Local authority"] or "Unknown", r["Region"] or "England")
     app_dir = os.path.dirname(OUT)
     urls = build_pages.write(by_la, regions, os.path.join(app_dir, "care"), index["updated"])
-    build_pages.write_sitemap(app_dir, urls)
-    print("Area pages: %d" % len(urls))
+    print("Area pages: %d, sitemap pages: %d" % (len(urls), build_pages.write_sitemap(app_dir)))
 
 
 if __name__ == "__main__":

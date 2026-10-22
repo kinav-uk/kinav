@@ -20,3 +20,19 @@ for name in ("content.js", "app.js"):
     html = html.replace('src="%s"' % name, 'src="%s?v=%s"' % (name, digest))
 open(os.path.join(HERE, "index.html"), "w", encoding="utf-8").write(html)
 print("Built index.html")
+
+# Export the app's content for the search-friendly guide pages, then rebuild them and the sitemap.
+# Needs JavaScriptCore (on every Mac); elsewhere the committed pages are left as they are.
+JSC = "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc"
+if os.path.exists(JSC):
+    import subprocess
+    import sys
+    out = subprocess.run([JSC, "-e", "var window = {}; load(%r); print(JSON.stringify(window.KC));" % os.path.join(HERE, "content.js")],
+                         check=True, capture_output=True, text=True).stdout
+    update = os.path.join(os.path.dirname(HERE), "update")
+    open(os.path.join(update, "content.json"), "w", encoding="utf-8").write(out)
+    sys.path.insert(0, update)
+    import build_guides
+    import build_pages
+    build_guides.main(today.strftime("%-d %B %Y"))
+    print("Sitemap pages: %d" % build_pages.write_sitemap(HERE))
