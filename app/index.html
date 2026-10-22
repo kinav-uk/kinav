@@ -42,19 +42,20 @@
   --bad-line: #b3261e;
   --font-display: "Bricolage Grotesque", Figtree, system-ui, sans-serif;
   --font-body: Figtree, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --tabbar: 64px;
+  --tabbar: 74px;
+  --tab-bg: #1f5f7a; --tab-fg: #d3e4eb; --tab-on: #ffffff; --tab-pill: #f2c14e; --tab-pill-fg: #18232e;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0f171c; --surface: #18232b; --sunk: #1f313b; --fg: #e8eef1; --muted: #9fb0ba; --line: #2a3a44;
-    --accent: #7cc0dc; --accent-fg: #0f171c; --sun: #f2c14e; --sun-soft: #3a2f14; --sun-fg: #f2c14e;
+    --accent: #7cc0dc; --accent-fg: #0f171c; --sun: #f2c14e; --sun-soft: #3a2f14; --sun-fg: #f2c14e; --tab-bg: #143f52; --tab-fg: #b5cfd9; --tab-on: #ffffff;
     --good: #8fd3a8; --good-soft: #1c3226; --good-strong: #25432f; --warn-soft: #43331a; --warn-line: #e0a93a;
     --bad-soft: #45201d; --bad-line: #f08b82; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0f171c; --surface: #18232b; --sunk: #1f313b; --fg: #e8eef1; --muted: #9fb0ba; --line: #2a3a44;
-  --accent: #7cc0dc; --accent-fg: #0f171c; --sun: #f2c14e; --sun-soft: #3a2f14; --sun-fg: #f2c14e;
+  --accent: #7cc0dc; --accent-fg: #0f171c; --sun: #f2c14e; --sun-soft: #3a2f14; --sun-fg: #f2c14e; --tab-bg: #143f52; --tab-fg: #b5cfd9; --tab-on: #ffffff;
   --good: #8fd3a8; --good-soft: #1c3226; --good-strong: #25432f; --warn-soft: #43331a; --warn-line: #e0a93a;
   --bad-soft: #45201d; --bad-line: #f08b82; color-scheme: dark;
 }
@@ -184,11 +185,14 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 .privacy svg { flex: none; }
 .note { font-size: 13px; color: var(--muted); }
 
-.tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--surface); border-top: 1px solid var(--line);
-  padding-bottom: env(safe-area-inset-bottom, 0px); padding-left: max(8px, env(safe-area-inset-left, 0px)); padding-right: max(8px, env(safe-area-inset-right, 0px)); }
+.tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--tab-bg); box-shadow: 0 -4px 16px rgba(15, 30, 40, 0.18);
+  padding-bottom: env(safe-area-inset-bottom, 0px); padding-left: max(4px, env(safe-area-inset-left, 0px)); padding-right: max(4px, env(safe-area-inset-right, 0px)); }
 .tabbar nav { max-width: 560px; margin: 0 auto; display: flex; justify-content: space-around; height: var(--tabbar); }
-.tabbar a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; color: var(--muted); font-size: 11.5px; font-weight: 500; min-width: 60px; }
-.tabbar a[aria-current="page"] { color: var(--accent); font-weight: 700; }
+.tabbar a { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--tab-fg); font-size: 12.5px; font-weight: 600; }
+.tabbar .ico { display: grid; place-items: center; width: 52px; height: 32px; border-radius: 999px; }
+.tabbar svg { width: 25px; height: 25px; }
+.tabbar a[aria-current="page"] { color: var(--tab-on); font-weight: 700; }
+.tabbar a[aria-current="page"] .ico { background: var(--tab-pill); color: var(--tab-pill-fg); }
 </style>
 
 <div class="app">
@@ -625,11 +629,11 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 
 <div class="tabbar">
   <nav aria-label="Main">
-    <a href="#home" data-tab="home"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v9H4z"/></svg>Home</a>
-    <a href="#plan" data-tab="plan"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>Plan</a>
-    <a href="#appts" data-tab="appts"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Appointments</a>
-    <a href="#care" data-tab="care"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>Find care</a>
-    <a href="#help" data-tab="help"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18v-5a8 8 0 0 1 16 0v5"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg>Help</a>
+    <a href="#home" data-tab="home"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v9H4z"/></svg></span>Home</a>
+    <a href="#plan" data-tab="plan"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span>Plan</a>
+    <a href="#appts" data-tab="appts"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span>Calendar</a>
+    <a href="#care" data-tab="care"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></span>Find care</a>
+    <a href="#help" data-tab="help"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18v-5a8 8 0 0 1 16 0v5"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></svg></span>Help</a>
   </nav>
 </div>
 
