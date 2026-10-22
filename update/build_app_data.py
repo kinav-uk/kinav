@@ -41,6 +41,16 @@ def types(s):
     return t
 
 
+# CQC "Specialisms/services" wording -> one-letter codes used by the app
+SPECIALISMS = [
+    ("Dementia", "D"), ("Physical disabilities", "P"), ("Sensory impairments", "S"),
+    ("Learning disabilities", "L"), ("Mental health conditions", "M"),
+    ("Substance misuse problems", "X"), ("Eating disorders", "E"),
+    ("Caring for adults over 65 yrs", "O"), ("Caring for adults under 65 yrs", "U"),
+    ("Caring for children", "C"), ("Services for everyone", "A"),
+]
+
+
 def main():
     with open(SRC, encoding="utf-8-sig") as f:
         rows = list(csv.DictReader(f))
@@ -55,6 +65,7 @@ def main():
             1 if "Dementia" in spec else 0, 1 if "Caring for adults over 65 yrs" in spec else 0,
             r["Overall rating"], "".join(CODE.get(r[d], "-") for d in DOMAINS),
             r["Rating published"], r["Service ratings"], r["Location URL"].rsplit("/", 1)[-1],
+            "".join(c for name, c in SPECIALISMS if name in spec),
         ])
         out_code = r["Postcode"].strip().upper().split(" ")[0]
         if out_code:

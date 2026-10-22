@@ -142,6 +142,9 @@ input[type="text"], input[type="number"], input[type="date"], input[type="time"]
 .pill-good { background: var(--good-soft); color: var(--good); }
 .pill-sun { background: var(--sun-soft); color: var(--sun-fg); }
 .pill-quiet { background: var(--sunk); color: var(--muted); }
+.spec { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.spec .tag { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--sunk); color: var(--fg); }
+.spec .tag-hi { background: var(--sun-soft); color: var(--sun-fg); }
 .head { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
 .head > div { min-width: 0; }
 
@@ -333,7 +336,17 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
   </div>
   <div class="stack-sm">
     <label class="check"><input type="checkbox" id="fOld" checked> Cares for adults over 65</label>
-    <label class="check"><input type="checkbox" id="fDem"> Dementia care</label>
+  </div>
+  <div class="stack-sm">
+    <label class="label" for="fSpec">Specialist care for</label>
+    <select id="fSpec">
+      <option value="">Any</option>
+      <option value="D">Dementia</option>
+      <option value="P">Physical disabilities</option>
+      <option value="S">Sensory impairments (sight, hearing)</option>
+      <option value="L">Learning disabilities</option>
+      <option value="M">Mental health conditions</option>
+    </select>
   </div>
   <p class="small muted" id="careStatus" aria-live="polite">Search by postcode or council to see care near them.</p>
   <div class="stack" id="careList"></div>

@@ -231,10 +231,28 @@
   }
 
   function filtered() {
-    var old = $("fOld").checked, dem = $("fDem").checked;
+    var old = $("fOld").checked, want = $("fSpec").value;
     return care.rows.filter(function (r) {
-      return r[5].indexOf(care.type) >= 0 && (!old || r[7]) && (!dem || r[6]);
+      return r[5].indexOf(care.type) >= 0 && (!old || r[7]) && (!want || specOf(r).indexOf(want) >= 0);
     });
+  }
+
+  var SPEC_WORD = { D: "Dementia", P: "Physical disabilities", S: "Sensory impairments", L: "Learning disabilities", M: "Mental health", X: "Substance misuse", E: "Eating disorders" };
+  var AGE_WORD = { O: "over 65s", U: "adults under 65", C: "children", A: "everyone" };
+
+  // Older cached data has no specialism codes, only the dementia flag
+  function specOf(r) { return r[13] != null ? r[13] : (r[6] ? "D" : ""); }
+
+  function specLine(r) {
+    var codes = specOf(r).split(""), want = $("fSpec").value;
+    var tags = codes.filter(function (c) { return SPEC_WORD[c]; }).map(function (c) {
+      return '<span class="tag' + (c === "D" || c === want ? " tag-hi" : "") + '">' + SPEC_WORD[c] + "</span>";
+    }).join("");
+    var ages = codes.filter(function (c) { return AGE_WORD[c]; }).map(function (c) { return AGE_WORD[c]; });
+    if (!tags && !ages.length) return "";
+    return '<div class="stack-sm"><p class="tiny muted">Specialist care (as listed by CQC)</p>' +
+      (tags ? '<div class="spec">' + tags + "</div>" : "") +
+      (ages.length ? '<p class="tiny muted">Cares for: ' + ages.join(", ") + "</p>" : "") + "</div>";
   }
 
   function rated(d) {
@@ -260,7 +278,7 @@
       '<p class="small">' + esc(addr) + " " + esc(pc) + "</p>" +
       (lows.length ? '<div class="warn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg><span>Good overall, but CQC rated ' + esc(lows.join(" and ")) + ". Read the CQC report before choosing.</span></div>" : "") +
       (overall === "Not Rated" ? '<p class="small">' + esc(svc) + "</p>" : '<div class="kq">' + cells + "</div>") +
-      (r[6] ? '<p class="tiny muted">Specialisms (CQC) include dementia</p>' : "") +
+      specLine(r) +
       (phone ? '<p class="small">Phone: <span class="phone">' + esc(phone) + "</span></p>" : "") +
       '<div class="actions">' +
       (phone ? '<a class="btn btn-primary btn-sm" href="tel:' + esc(phone) + '">Call</a>' : "") +
@@ -291,7 +309,7 @@
     renderCare(true);
   });
   $("fOld").addEventListener("change", function () { renderCare(true); });
-  $("fDem").addEventListener("change", function () { renderCare(true); });
+  $("fSpec").addEventListener("change", function () { renderCare(true); });
   $("careMore").addEventListener("click", function () { renderCare(false); });
 
   /* ---------- Care costs ---------- */
