@@ -143,6 +143,7 @@
     var details = [];
     if ($("apWho").value.trim()) details.push("Going: " + $("apWho").value.trim());
     if ($("apAsk").value.trim()) details.push("Questions to ask: " + $("apAsk").value.trim());
+    if ($("apNotes").value.trim()) details.push("Notes: " + $("apNotes").value.trim());
     var stamp = function (d) { return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + "T" + pad(d.getHours()) + pad(d.getMinutes()) + "00"; };
     return { title: title, where: $("apWhere").value.trim(), details: details.join("\n"), start: stamp(start), end: stamp(end) };
   }
