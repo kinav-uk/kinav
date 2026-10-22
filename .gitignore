@@ -1,0 +1,7 @@
+# Made fresh by each update; not needed on the website
+care-listings-england.csv
+update/state/
+update/*.log
+update/launchd.*
+__pycache__/
+.DS_Store

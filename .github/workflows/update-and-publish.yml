@@ -1,0 +1,63 @@
+# Every Monday: download the latest CQC data, rebuild the app's care listings and
+# republish the website. Also republishes whenever app changes are pushed.
+name: Update CQC data and publish
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"   # Mondays 06:00 UTC
+  workflow_dispatch:       # "Run workflow" button on GitHub
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download CQC data and rebuild listings
+        run: python -I update/update_listings.py
+      - name: Save the new data
+        run: |
+          git config user.name "kinav-bot"
+          git config user.email "kinav-bot@users.noreply.github.com"
+          git add app/data
+          if git diff --cached --quiet; then
+            echo "No changes in CQC data this week."
+          else
+            git commit -m "Weekly CQC data update"
+            git push
+          fi
+
+  publish:
+    needs: update
+    # Publish after a successful update, or straight away for a code push.
+    # If the CQC download fails, the live site keeps last week's data.
+    if: always() && (needs.update.result == 'success' || needs.update.result == 'skipped')
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app
+      - id: deploy
+        uses: actions/deploy-pages@v4

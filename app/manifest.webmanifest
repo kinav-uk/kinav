@@ -1,0 +1,10 @@
+{
+  "name": "Kinav",
+  "short_name": "Kinav",
+  "description": "Free tools and guides for families caring for an older parent in England.",
+  "start_url": "./#home",
+  "display": "standalone",
+  "background_color": "#f2f5f4",
+  "theme_color": "#1f5f7a",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
