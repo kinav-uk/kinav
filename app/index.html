@@ -276,10 +276,15 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 <!-- Appointments -->
 <section class="screen" id="s-appts" hidden>
   <div class="stack-sm">
-    <h1>Add an appointment</h1>
-    <p class="lede">Puts it straight into your calendar. Share that calendar with family so everyone sees it.</p>
+    <h1>Calendar</h1>
+    <p class="lede">Puts appointments and reminders straight into your calendar. Share that calendar with family so everyone sees them.</p>
+  </div>
+  <div class="seg" role="group" aria-label="What to add">
+    <a href="#appts" id="segAppt" aria-current="page">Appointment</a>
+    <a href="#appts" id="segRem">Reminder</a>
   </div>
   <form class="card stack" id="apptForm" novalidate>
+    <h2>Add an appointment</h2>
     <div class="field">
       <label for="apType">Type</label>
       <select id="apType">
@@ -302,6 +307,31 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
       <a class="btn btn-primary" id="apGoogle" href="#appts" target="_blank" rel="noopener">Add to Google Calendar</a>
       <a class="btn btn-ghost" id="apIcs" href="#appts" download="appointment.ics">Apple or Outlook</a>
     </div>
+  </form>
+  <form class="card stack" id="remForm" novalidate hidden>
+    <div class="stack-sm">
+      <h2>Add a reminder</h2>
+      <p class="small muted">For renewals, reviews and deadlines that are easy to miss.</p>
+    </div>
+    <div class="field"><label for="remType">Reminder for</label><select id="remType"></select></div>
+    <div class="field" id="remTitleField" hidden><label for="remTitle">What is it?</label><input type="text" id="remTitle" placeholder="e.g. Renew the TV licence"></div>
+    <div class="field"><label for="remDate" id="remDueLabel">Date it's due</label><input type="date" id="remDate"></div>
+    <div class="row2">
+      <div class="field"><label for="remWeeks">Remind me</label>
+        <select id="remWeeks">
+          <option value="0">On the day</option><option value="1">1 week before</option><option value="2">2 weeks before</option>
+          <option value="4">4 weeks before</option><option value="6">6 weeks before</option><option value="8">8 weeks before</option><option value="12">12 weeks before</option>
+        </select></div>
+      <div class="field"><label for="remRepeat">Repeat</label>
+        <select id="remRepeat"><option value="">Once</option><option value="monthly">Every month</option><option value="yearly">Every year</option></select></div>
+    </div>
+    <p class="small" id="remWhat"></p>
+    <p class="hint" id="remError" hidden>Choose a date first.</p>
+    <div class="actions">
+      <a class="btn btn-primary" id="remGoogle" href="#appts" target="_blank" rel="noopener">Add to Google Calendar</a>
+      <a class="btn btn-ghost" id="remIcs" href="#appts" download="reminder.ics">Apple or Outlook</a>
+    </div>
+    <p class="tiny muted">The reminder goes into your calendar. Kinav doesn't keep it.</p>
   </form>
   <div class="card stack">
     <div class="stack-sm">
@@ -682,8 +712,8 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 </div>
 
 <script id="gcScript" data-goatcounter="https://kinav.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="https://gc.zgo.at/count.js"></script>
-<script src="content.js?v=26fb9bf64c"></script>
-<script src="app.js?v=bd62e01a3e"></script>
+<script src="content.js?v=c09e21717e"></script>
+<script src="app.js?v=0de5556856"></script>
 
 </body>
 </html>

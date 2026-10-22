@@ -190,7 +190,7 @@ window.KC = {
       { t: "Wait for the decision", d: "Usually within 12 weeks. The council may ask for more information or invite them to a mobility assessment." },
       { t: "If it's refused", d: "Ask the council to reconsider, explaining anything they missed. You can reapply if things change. Citizens Advice (CAB) can help: Adviceline (England) 0800 144 8848." },
       { t: "Use it the right way", d: "The badge is theirs: use it only when they're travelling in the car, as driver or passenger. Show it on the dashboard, with the clock where needed. Misuse can mean a fine of up to £1,000." },
-      { t: "Set a renewal reminder", d: "Badges usually last up to 3 years, and you must reapply before it runs out. Add a reminder for 12 weeks before the expiry date with Calendar." }
+      { t: "Set a renewal reminder", d: "Badges usually last up to 3 years, and you must reapply before it runs out. In Calendar, choose Reminder, then Blue Badge renewal, and it will remind you 12 weeks before." }
     ]},
     { id: "contract", name: "Before you sign a care home contract", what: "Fees, increases, top-ups and notice.", steps: [
       { t: "Get the contract in advance", d: "Ask for it before moving day, and take time to read it." },
@@ -203,6 +203,32 @@ window.KC = {
       { t: "Know how to complain", d: "Ask for the complaints process. If it isn't resolved, you can go to the Local Government and Social Care Ombudsman." },
       { t: "Get free help if anything is unclear", d: "Citizens Advice (CAB) can explain your rights on fees, notice and unfair terms. Call the Citizens Advice consumer helpline on 0808 223 1133, or the Adviceline (England) on 0800 144 8848." }
     ]}
+  ],
+
+  // Calendar reminders: weeks = how long before the due date to remind; repeat = "", "yearly" or "monthly"
+  reminders: [
+    { id: "blue-badge", label: "Blue Badge renewal", due: "Date the badge expires", weeks: 12, repeat: "",
+      title: "Renew the Blue Badge", details: "The Blue Badge expires soon. Reapply before it runs out at gov.uk/apply-blue-badge. Have a recent photo, proof of identity and address, and any benefit award letter ready." },
+    { id: "aa-review", label: "Attendance Allowance or PIP review", due: "Award end or review date (on the award letter)", weeks: 8, repeat: "",
+      title: "Attendance Allowance or PIP review coming up", details: "Look out for the review form from the Department for Work and Pensions and send it back by the date given. Citizens Advice (0800 144 8848) can help with the form." },
+    { id: "claim-chase", label: "Chase a benefit claim", due: "Date to chase if there's no decision", weeks: 0, repeat: "",
+      title: "Chase the benefit claim", details: "If there's no decision yet, call the benefit's helpline with the claim reference and National Insurance number. Note who you spoke to and what they said." },
+    { id: "council-charges", label: "Council financial reassessment", due: "Date of the yearly reassessment", weeks: 4, repeat: "yearly",
+      title: "Council care charges reassessment", details: "The council reviews care charges each year. Gather bank statements, pension and benefit letters. Ask for the result in writing." },
+    { id: "care-review", label: "Care plan or needs review", due: "Date the review is due", weeks: 2, repeat: "yearly",
+      title: "Care plan review due", details: "The council should review the care and support plan at least once a year, or sooner if needs change. Note what's working and what isn't, and ask for the review if it hasn't been booked." },
+    { id: "carer-assessment", label: "Carer's assessment review", due: "Date of your last carer's assessment", weeks: 0, repeat: "yearly",
+      title: "Ask for a carer's assessment review", details: "Ask the council to review your carer's assessment, especially if caring has become harder or your work has changed. It's free." },
+    { id: "fee-rise", label: "Care fee increase", due: "Date the new fee starts", weeks: 6, repeat: "yearly",
+      title: "Care fees are going up", details: "Check the new weekly fee against the contract, and whether savings still cover it. If the council pays part, ask whether a top-up will change. Citizens Advice consumer helpline: 0808 223 1133." },
+    { id: "council-tax", label: "Council tax discount check", due: "Date the new council tax bill arrives (usually March)", weeks: 0, repeat: "yearly",
+      title: "Check the council tax discount", details: "Check the new bill still shows any discount, disregard or exemption, such as for severe mental impairment or for a carer. Call the council if it's missing." },
+    { id: "lpa", label: "Lasting Power of Attorney follow-up", due: "Date to check on the registration", weeks: 0, repeat: "",
+      title: "Check the Lasting Power of Attorney registration", details: "If you haven't heard from the Office of the Public Guardian, contact them with the reference number to check progress." },
+    { id: "alarm-test", label: "Test the fall alarm and smoke alarms", due: "First test date", weeks: 0, repeat: "monthly",
+      title: "Test the alarms", details: "Press the fall alarm pendant's test button, or call the alarm company to test it. Press the test button on smoke and carbon monoxide alarms. Replace batteries if needed." },
+    { id: "other", label: "Something else", due: "Date it's due", weeks: 0, repeat: "",
+      title: "", details: "" }
   ],
 
   benefits: {

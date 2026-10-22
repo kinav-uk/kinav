@@ -201,6 +201,72 @@
     });
   });
 
+  /* ---------- Reminders ---------- */
+  $("remType").innerHTML = KC.reminders.map(function (r) { return '<option value="' + r.id + '">' + esc(r.label) + "</option>"; }).join("");
+
+  function remPreset() { var id = $("remType").value; return KC.reminders.filter(function (r) { return r.id === id; })[0]; }
+
+  function remPick() {
+    var r = remPreset();
+    $("remDueLabel").textContent = r.due;
+    $("remWeeks").value = String(r.weeks);
+    $("remRepeat").value = r.repeat;
+    $("remTitleField").hidden = r.id !== "other";
+    $("remWhat").textContent = r.details;
+    updateRem();
+  }
+
+  function ymd(d) { return d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()); }
+
+  function remEvent() {
+    var r = remPreset(), due = $("remDate").value;
+    if (!due) return null;
+    var day = new Date(due + "T12:00"), weeks = parseInt($("remWeeks").value, 10) || 0;
+    day.setDate(day.getDate() - weeks * 7);
+    var next = new Date(day.getTime()); next.setDate(next.getDate() + 1);
+    var title = r.id === "other" ? ($("remTitle").value.trim() || "Reminder") : r.title;
+    var details = (r.details ? r.details + "\n\n" : "") + "Due: " + new Date(due + "T12:00").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) + ". Added with Kinav.";
+    return { title: title, details: details, start: ymd(day), end: ymd(next), repeat: $("remRepeat").value };
+  }
+
+  var remUrl = null;
+  function updateRem() {
+    var ev = remEvent();
+    $("remError").hidden = true;
+    if (!ev) { $("remGoogle").href = "#appts"; $("remIcs").href = "#appts"; return; }
+    var rule = ev.repeat ? "RRULE:FREQ=" + ev.repeat.toUpperCase() : "";
+    $("remGoogle").href = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=" + encodeURIComponent(ev.title) + "&dates=" + ev.start + "/" + ev.end +
+      "&details=" + encodeURIComponent(ev.details) + (rule ? "&recur=" + encodeURIComponent(rule) : "");
+    var clean = function (t) { return t.replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\\;"); };
+    var ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Kinav//EN", "BEGIN:VEVENT",
+      "UID:" + Date.now() + "-rem@kinav", "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z",
+      "DTSTART;VALUE=DATE:" + ev.start, "DTEND;VALUE=DATE:" + ev.end, "SUMMARY:" + clean(ev.title), "DESCRIPTION:" + clean(ev.details),
+      rule, "BEGIN:VALARM", "TRIGGER:PT9H", "ACTION:DISPLAY", "DESCRIPTION:" + clean(ev.title), "END:VALARM",
+      "END:VEVENT", "END:VCALENDAR"].filter(Boolean).join("\r\n");
+    if (remUrl) URL.revokeObjectURL(remUrl);
+    remUrl = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+    $("remIcs").href = remUrl;
+  }
+
+  $("remType").addEventListener("change", remPick);
+  $("remForm").addEventListener("input", function (e) { if (e.target.id !== "remType") updateRem(); });
+  $("remForm").addEventListener("submit", function (e) { e.preventDefault(); });
+  ["remGoogle", "remIcs"].forEach(function (id) {
+    $(id).addEventListener("click", function (e) {
+      if (!$("remDate").value) { e.preventDefault(); $("remError").hidden = false; $("remDate").focus(); }
+    });
+  });
+  remPick();
+
+  function calMode(rem) {
+    $("apptForm").hidden = rem; $("remForm").hidden = !rem;
+    if (rem) { $("segRem").setAttribute("aria-current", "page"); $("segAppt").removeAttribute("aria-current"); }
+    else { $("segAppt").setAttribute("aria-current", "page"); $("segRem").removeAttribute("aria-current"); }
+  }
+  $("segAppt").addEventListener("click", function (e) { e.preventDefault(); calMode(false); });
+  $("segRem").addEventListener("click", function (e) { e.preventDefault(); calMode(true); });
+
   /* ---------- Find care ---------- */
   var care = { index: null, rows: [], pool: [], council: null, point: null, place: "", files: {}, type: "H", shown: 0 };
   var HM_PER_MILE = 16.0934; // locations are stored in 100 m units
