@@ -224,17 +224,43 @@
     store.set("area", $("careQ").value.trim());
     $("careStatus").textContent = "Loading care in " + c.n + "…";
     fetch("data/la/" + c.s + ".json").then(function (r) { return r.json(); }).then(function (rows) {
-      care.rows = rows; care.council = c; renderCare(true);
+      care.rows = rows; care.council = c; fillAreas(); renderCare(true);
     }).catch(function () {
       $("careStatus").textContent = "Care listings couldn't load. Check your connection and try again.";
     });
   }
 
+  function outward(pc) { return (pc || "").trim().toUpperCase().split(" ")[0]; }
+
+  // Postcode districts in this council, picking the one they searched for
+  function fillAreas() {
+    var seen = {};
+    care.rows.forEach(function (r) { var o = outward(r[2]); if (o) seen[o] = (seen[o] || 0) + 1; });
+    var codes = Object.keys(seen).sort(function (a, b) { return a.localeCompare(b, "en", { numeric: true }); });
+    $("fArea").innerHTML = '<option value="">Whole of ' + esc(care.council.n) + "</option>" +
+      codes.map(function (o) { return '<option value="' + o + '">' + o + " (" + seen[o] + ")</option>"; }).join("");
+    var q = outward($("careQ").value);
+    $("fArea").value = seen[q] ? q : "";
+  }
+
+  function dateKey(d) { var p = (d || "").split("/"); return p.length === 3 ? p[2] + p[1] + p[0] : ""; }
+
   function filtered() {
-    var old = $("fOld").checked, want = $("fSpec").value;
-    return care.rows.filter(function (r) {
-      return r[5].indexOf(care.type) >= 0 && (!old || r[7]) && (!want || specOf(r).indexOf(want) >= 0);
+    var area = $("fArea").value, who = $("fWho").value, want = $("fSpec").value, rate = $("fRate").value;
+    var list = care.rows.filter(function (r) {
+      var spec = specOf(r);
+      if (r[5].indexOf(care.type) < 0) return false;
+      if (area && outward(r[2]) !== area) return false;
+      if (who && spec.indexOf(who) < 0 && spec.indexOf("A") < 0 && !(who === "O" && r[7])) return false;
+      if (want && spec.indexOf(want) < 0) return false;
+      if (rate === "O" && r[8] !== "Outstanding") return false;
+      if (rate === "G" && (r[8] === "Not Rated" || /[RI]/.test(r[9]))) return false;
+      return true;
     });
+    var sort = $("fSort").value;
+    if (sort === "az") list.sort(function (a, b) { return a[0].localeCompare(b[0]); });
+    if (sort === "recent") list.sort(function (a, b) { return dateKey(b[10]).localeCompare(dateKey(a[10])); });
+    return list;
   }
 
   var SPEC_WORD = { D: "Dementia", P: "Physical disabilities", S: "Sensory impairments", L: "Learning disabilities", M: "Mental health", X: "Substance misuse", E: "Eating disorders" };
@@ -296,8 +322,9 @@
     care.shown += next.length;
     $("careMore").hidden = care.shown >= list.length;
     $("careStatus").textContent = list.length
-      ? list.length + " " + { H: "care at home services", N: "nursing homes", R: "residential homes" }[care.type] + " in " + care.council.n + ", Outstanding first."
-      : "No matches in " + care.council.n + ". Try another type of care or turn off a filter.";
+      ? list.length + " " + { H: "care at home services", N: "nursing homes", R: "residential homes" }[care.type] + " in " + ($("fArea").value || care.council.n) + ", " +
+        { best: "best rated first.", recent: "most recently rated first.", az: "A to Z." }[$("fSort").value]
+      : "No matches in " + ($("fArea").value || care.council.n) + ". Try another type of care or change a filter.";
   }
 
   $("careForm").addEventListener("submit", function (e) { e.preventDefault(); searchCare(); });
@@ -308,8 +335,9 @@
     document.querySelectorAll("#careTypes .chip").forEach(function (c) { c.setAttribute("aria-pressed", String(c === b)); });
     renderCare(true);
   });
-  $("fOld").addEventListener("change", function () { renderCare(true); });
-  $("fSpec").addEventListener("change", function () { renderCare(true); });
+  ["fArea", "fWho", "fSpec", "fRate", "fSort"].forEach(function (id) {
+    $(id).addEventListener("change", function () { renderCare(true); });
+  });
   $("careMore").addEventListener("click", function () { renderCare(false); });
 
   /* ---------- Care costs ---------- */

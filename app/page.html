@@ -108,6 +108,7 @@ input[type="text"], input[type="number"], input[type="date"], input[type="time"]
 .money span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); }
 .money input { padding-left: 26px; }
 .row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
 .check { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; }
 .check input { width: 22px; height: 22px; margin: 1px 0 0; accent-color: var(--accent); flex: none; }
 .seg { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
@@ -325,19 +326,37 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
     <button class="chip" type="button" data-t="N" aria-pressed="false">Nursing homes</button>
     <button class="chip" type="button" data-t="R" aria-pressed="false">Residential homes</button>
   </div>
-  <div class="stack-sm">
-    <label class="check"><input type="checkbox" id="fOld" checked> Cares for adults over 65</label>
-  </div>
-  <div class="stack-sm">
-    <label class="label" for="fSpec">Specialist care for</label>
-    <select id="fSpec">
-      <option value="">Any</option>
-      <option value="D">Dementia</option>
-      <option value="P">Physical disabilities</option>
-      <option value="S">Sensory impairments (sight, hearing)</option>
-      <option value="L">Learning disabilities</option>
-      <option value="M">Mental health conditions</option>
-    </select>
+  <div class="filters">
+    <div class="field"><label for="fArea">Area</label>
+      <select id="fArea"><option value="">Whole council area</option></select></div>
+    <div class="field"><label for="fWho">Cares for</label>
+      <select id="fWho">
+        <option value="O">Adults over 65</option>
+        <option value="U">Adults under 65</option>
+        <option value="C">Children (0 to 18)</option>
+        <option value="">Anyone</option>
+      </select></div>
+    <div class="field"><label for="fSpec">Specialist care for</label>
+      <select id="fSpec">
+        <option value="">Any</option>
+        <option value="D">Dementia</option>
+        <option value="P">Physical disabilities</option>
+        <option value="S">Sensory impairments (sight, hearing)</option>
+        <option value="L">Learning disabilities</option>
+        <option value="M">Mental health conditions</option>
+      </select></div>
+    <div class="field"><label for="fRate">CQC rating</label>
+      <select id="fRate">
+        <option value="">Good or Outstanding</option>
+        <option value="O">Outstanding only</option>
+        <option value="G">Good or better in all five areas</option>
+      </select></div>
+    <div class="field"><label for="fSort">Sort by</label>
+      <select id="fSort">
+        <option value="best">Best rated first</option>
+        <option value="recent">Most recently rated</option>
+        <option value="az">Name, A to Z</option>
+      </select></div>
   </div>
   <p class="small muted" id="careStatus" aria-live="polite">Search by postcode or council to see care near them.</p>
   <div class="stack" id="careList"></div>
