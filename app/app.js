@@ -308,7 +308,11 @@
   $("qTopic").innerHTML = KC.questions.map(function (t) { return '<option value="' + t.id + '">' + esc(t.name) + "</option>"; }).join("");
   $("qTopic").value = store.get("qtopic", KC.questions[0].id);
   function qTopic() { var id = $("qTopic").value; return KC.questions.filter(function (t) { return t.id === id; })[0] || KC.questions[0]; }
-  function qState() { return store.get("q." + qTopic().id, { picked: [], notes: {} }); }
+  function qState() {
+    var n = qTopic().items.length, st = store.get("q." + qTopic().id, { picked: [], notes: {} });
+    st.picked = st.picked.filter(function (i) { return i < n; });
+    return st;
+  }
   function qSave(st) { store.set("q." + qTopic().id, st); }
 
   function renderQuestions() {
@@ -363,10 +367,10 @@
     location.hash = "appts";
     updateAppt();
   });
-  // One tap for busy carers: the first five questions in each list are the most important
+  // One tap for busy carers: pick every question in the list
   $("qQuick").addEventListener("click", function () {
     var st = qState(), t = qTopic();
-    st.picked = t.items.slice(0, 5).map(function (q, i) { return i; });
+    st.picked = t.items.map(function (q, i) { return i; });
     qSave(st); qMine = true; renderQuestions();
   });
   $("qClear").addEventListener("click", function () { qSave({ picked: [], notes: {} }); qMine = false; renderQuestions(); });

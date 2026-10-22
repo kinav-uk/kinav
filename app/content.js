@@ -251,65 +251,42 @@ window.KC = {
   },
 
   // Question lists: people pick the ones they want, then write answers beside them
+  // Free version: five key questions per topic. The detailed lists are planned for Kinav Pro.
   questions: [
     { id: "carehome", name: "Visiting a care home", items: [
       "Do you have a vacancy, and when?",
       "What is the weekly fee, and what costs extra?",
       "How often do fees go up, and by how much?",
       "Will you accept the council's rate if savings run out? Would a top-up be needed?",
-      "How many staff are on duty in the day and at night?",
-      "Are staff trained in dementia care? What training do they have?",
-      "Can family visit at any time?",
-      "Is there a secure garden residents can use?",
-      "What activities are there each day?",
-      "How do you involve families in the care plan?",
-      "Can residents bring their own furniture and belongings?",
-      "If needs change, could a resident be asked to leave? What notice do you give?",
-      "What did your latest CQC inspection find, and what have you changed since?",
-      "Can we visit again at a mealtime or at the weekend?"
+      "How many staff are on duty in the day and at night?"
     ]},
     { id: "homecare", name: "Choosing a home care agency", items: [
       "What is your hourly rate? Is it higher at evenings and weekends?",
       "What is the shortest visit you do?",
       "Will the same carers come each time?",
       "What happens if a carer is late or can't come?",
-      "What training do your carers have, for example in dementia care or moving and handling?",
-      "How will you tell us about changes or concerns?",
-      "Can we see the written care plan?",
-      "How do you keep keys and the home secure?",
-      "How much notice do we give to change or stop care?"
+      "What training do your carers have, for example in dementia care or moving and handling?"
     ]},
     { id: "assessment", name: "Council needs assessment", items: [
       "When will the assessment happen, and who will do it?",
       "Can I be there?",
       "Can I have a carer's assessment too?",
       "What support could be offered?",
-      "Could they have reablement first?",
-      "How does the financial assessment work?",
-      "How long until support starts?",
-      "Can we have the outcome in writing?",
-      "Who is our named contact?",
-      "How do we ask for a review if things change?"
+      "Could they have reablement first?"
     ]},
     { id: "discharge", name: "Leaving hospital", items: [
       "When is the planned discharge date?",
       "What support will be in place at home, and from when?",
       "Is reablement or intermediate care available?",
       "Will any equipment be delivered before they come home?",
-      "Should they be assessed for NHS continuing healthcare?",
-      "What medicines are they going home with, and who will explain them?",
-      "Will the GP get a discharge letter? Can we have a copy?",
-      "Who do we contact after they get home?"
+      "Should they be assessed for NHS continuing healthcare?"
     ]},
     { id: "appointment", name: "GP or hospital appointment", items: [
       "What happens next?",
       "Who is our main contact, and how do we reach them?",
       "When is the next review?",
       "What should we do if things change?",
-      "Can we have a copy of any letters?",
-      "Can you write down what you've told us?",
-      "Is there any support for me as a carer?",
-      "Can you refer us to any other services?"
+      "Can we have a copy of any letters?"
     ]}
   ],
 
