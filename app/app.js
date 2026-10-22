@@ -53,6 +53,18 @@
   var gcScript = document.getElementById("gcScript");
   if (gcScript) gcScript.addEventListener("load", function () { if (pendingVisit) track(pendingVisit); });
 
+  // "Last updated" on Home: whichever is newer, this version of the app or the weekly care data.
+  (function () {
+    var el = $("lastUpdated"), built = el.dataset.built;
+    if (!/^\d{4}-\d\d-\d\d$/.test(built)) { el.hidden = true; return; }
+    var full = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var words = function (iso) { var p = iso.split("-"); return parseInt(p[2], 10) + " " + full[parseInt(p[1], 10) - 1] + " " + p[0]; };
+    el.textContent = "Last updated " + words(built);
+    fetch("data/index.json").then(function (r) { return r.json(); }).then(function (idx) {
+      if (idx.iso && idx.iso > built) el.textContent = "Last updated " + words(idx.iso);
+    }).catch(function () {});
+  })();
+
   /* ---------- 30-day plans ---------- */
   function planDone() { return store.get("plan", {}); }
   function planKey() { var k = store.get("guide", "dementia"); return KC.plans[k] ? k : "dementia"; }

@@ -1,4 +1,5 @@
 """Wrap page.html into index.html, the full page served when Kinav is hosted."""
+import datetime
 import hashlib
 import os
 
@@ -10,6 +11,9 @@ html = ("<!doctype html>\n<html lang=\"en-GB\">\n<head>\n<meta charset=\"utf-8\"
         "<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}"
         "body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>\n"
         + body[:head_end] + "\n</head>\n<body>\n" + body[head_end:] + "\n</body>\n</html>\n")
+# The date this version was built; the app shows it, or the weekly care data date if that's newer.
+today = datetime.date.today()
+html = html.replace("BUILD_DATE_TEXT", today.strftime("%-d %B %Y")).replace("BUILD_DATE", today.isoformat())
 # Stamp each script with a hash of its contents, so browsers never mix an old script with a new page.
 for name in ("content.js", "app.js"):
     digest = hashlib.sha1(open(os.path.join(HERE, name), "rb").read()).hexdigest()[:10]

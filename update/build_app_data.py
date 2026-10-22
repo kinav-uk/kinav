@@ -116,6 +116,7 @@ def main(codepoint_zip=None):
         councils.append(council)
     index = {
         "updated": datetime.date.today().strftime("%-d %B %Y"),
+        "iso": datetime.date.today().isoformat(),
         "councils": councils,
         "districts": {d: slug(c.most_common(1)[0][0]) for d, c in districts.items()},
         "dc": centres,
