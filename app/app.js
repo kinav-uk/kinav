@@ -538,7 +538,7 @@
   });
   $("calc").addEventListener("submit", function (e) { e.preventDefault(); });
 
-  /* ---------- Benefits check ---------- */
+  /* ---------- Benefits calculator ---------- */
   var answers = {};
   $("benForm").innerHTML = KC.benefits.questions.map(function (q) {
     return '<fieldset class="card" style="border:0;margin:0"><legend class="label" style="padding:0;margin-bottom:8px">' + esc(q.q) + "</legend>" +
