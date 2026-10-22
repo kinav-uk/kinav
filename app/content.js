@@ -233,6 +233,23 @@ window.KC = {
       title: "", details: "" }
   ],
 
+  // Two questions per plan, added to appointments automatically. Who to ask and what happens next, never health advice.
+  planQuestions: {
+    dementia: ["Can we be referred to an Admiral Nurse or dementia adviser?", "Who should we contact if memory or behaviour changes?"],
+    parkinsons: ["Can we be referred to a Parkinson's nurse?", "When is the next medicines review?"],
+    mobility: ["Can we have an occupational therapy or physiotherapy assessment?", "Can we be referred to the local falls service?"],
+    stroke: ["What rehabilitation is available at home?", "Can we be referred to the Stroke Association's support service?"],
+    eol: ["Can we be referred to the palliative care team or local hospice?", "Who do we call out of hours?"],
+    heart: ["Can we be referred to a heart failure nurse?", "Who do we call if things change?"],
+    copd: ["Can we be referred to pulmonary rehabilitation?", "Is there a respiratory nurse we can contact?"],
+    cancer: ["Who is our clinical nurse specialist?", "What support is there for family, such as Macmillan?"],
+    sight: ["Can we be referred to the council's sensory support team?", "When is the next sight or hearing test due?"],
+    continence: ["Can we be referred to the NHS continence service?", "Are pads or other products available on the NHS?"],
+    diabetes: ["Who is our diabetes contact?", "When are the next checks due?"],
+    afterfall: ["Can we be referred to the falls service?", "Is reablement available at home?"],
+    delirium: ["What happens next, and what should we watch for?", "Who do we contact if it happens again?"]
+  },
+
   // Question lists: people pick the ones they want, then write answers beside them
   questions: [
     { id: "carehome", name: "Visiting a care home", items: [

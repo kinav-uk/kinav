@@ -39,6 +39,7 @@
     if (name === "home") renderHome();
     if (name === "care") initCare();
     if (name === "questions") renderQuestions();
+    if (name === "appts") suggestQuestions();
     window.scrollTo(0, 0);
     track(hash);
   }
@@ -213,6 +214,21 @@
     icsUrl = URL.createObjectURL(new Blob([icsText(ev)], { type: "text/calendar" }));
     $("apIcs").href = icsUrl;
   }
+  // Suggested questions: general ones, two for their plan, and any they picked in Questions to ask.
+  // Filled in only while the box is empty or still holds our suggestion, so their own words are never replaced.
+  function suggestQuestions() {
+    var box = $("apAsk");
+    if (box.value.trim() && box.dataset.auto !== "1") return;
+    var general = KC.questions.filter(function (t) { return t.id === "appointment"; })[0];
+    var picked = store.get("q.appointment", { picked: [] }).picked.map(function (i) { return general.items[i]; });
+    var list = general.items.slice(0, 3).concat(KC.planQuestions[planKey()] || [], picked);
+    list = list.filter(function (q, i) { return q && list.indexOf(q) === i; });
+    box.value = list.join("\n");
+    box.dataset.auto = "1";
+    $("apAskHint").hidden = false;
+    updateAppt();
+  }
+  $("apAsk").addEventListener("input", function () { $("apAsk").dataset.auto = "0"; $("apAskHint").hidden = true; });
   $("apptForm").addEventListener("input", updateAppt);
   $("apptForm").addEventListener("submit", function (e) { e.preventDefault(); });
   ["apGoogle", "apIcs"].forEach(function (id) {
@@ -343,6 +359,7 @@
   $("qToAppt").addEventListener("click", function () {
     var st = qState(), t = qTopic();
     $("apAsk").value = st.picked.map(function (i) { return t.items[i]; }).join("\n");
+    $("apAsk").dataset.auto = "0"; $("apAskHint").hidden = true;
     location.hash = "appts";
     updateAppt();
   });
