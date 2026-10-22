@@ -1,5 +1,5 @@
 // Offline support: keep the app shell cached; care data is fetched fresh, falling back to the cache.
-var SHELL = "kinav-shell-v6";
+var SHELL = "kinav-shell-v7";
 var FILES = ["./", "index.html", "content.js", "app.js", "manifest.webmanifest", "icon.svg", "data/index.json"];
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(SHELL).then(function (c) { return c.addAll(FILES); }));

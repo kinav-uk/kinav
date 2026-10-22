@@ -72,7 +72,8 @@ a { color: var(--accent); }
 .back { font-size: 15px; font-weight: 600; text-decoration: none; align-self: flex-start; padding-block: 6px; }
 .brand { display: flex; justify-content: space-between; align-items: center; }
 .brand b { font-family: var(--font-display); font-size: 20px; color: var(--accent); }
-.brand-mark { display: flex; align-items: center; gap: 10px; }
+.brand { margin-bottom: 20px; }
+.brand-mark { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .brand-mark svg { width: 36px; height: 36px; flex: none; }
 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sun-fg); }
 .lede { color: var(--muted); font-size: 16px; }
@@ -183,9 +184,10 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 
 <div class="app">
 
+  <header class="brand"><a class="brand-mark" href="#home" aria-label="Kinav home"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="112" fill="#1f5f7a"/><circle cx="256" cy="256" r="140" fill="none" stroke="#f2c14e" stroke-width="40"/><circle cx="256" cy="116" r="38" fill="#ffffff"/><circle cx="377" cy="326" r="38" fill="#ffffff"/><circle cx="135" cy="326" r="38" fill="#ffffff"/></svg><b>Kinav</b></a><span class="tiny muted">Free for families</span></header>
+
 <!-- Home -->
 <section class="screen" id="s-home">
-  <div class="brand"><span class="brand-mark"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="112" fill="#1f5f7a"/><circle cx="256" cy="256" r="140" fill="none" stroke="#f2c14e" stroke-width="40"/><circle cx="256" cy="116" r="38" fill="#ffffff"/><circle cx="377" cy="326" r="38" fill="#ffffff"/><circle cx="135" cy="326" r="38" fill="#ffffff"/></svg><b>Kinav</b></span><span class="tiny muted">Free for families</span></div>
   <div class="stack-sm">
     <h1>Caring for someone older?</h1>
     <p class="lede">Clear steps, the right numbers and good local care, all in one place.</p>
@@ -327,8 +329,16 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
     <button class="chip" type="button" data-t="R" aria-pressed="false">Residential homes</button>
   </div>
   <div class="filters">
-    <div class="field"><label for="fArea">Area</label>
-      <select id="fArea"><option value="">Whole council area</option></select></div>
+    <div class="field"><label for="fDist">Distance</label>
+      <select id="fDist" disabled>
+        <option value="">Enter a postcode to search by miles</option>
+        <option value="1">Within 1 mile</option>
+        <option value="2">Within 2 miles</option>
+        <option value="3">Within 3 miles</option>
+        <option value="5">Within 5 miles</option>
+        <option value="10">Within 10 miles</option>
+        <option value="20">Within 20 miles</option>
+      </select></div>
     <div class="field"><label for="fWho">Cares for</label>
       <select id="fWho">
         <option value="O">Adults over 65</option>
@@ -354,6 +364,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
     <div class="field"><label for="fSort">Sort by</label>
       <select id="fSort">
         <option value="best">Best rated first</option>
+        <option value="near">Nearest first</option>
         <option value="recent">Most recently rated</option>
         <option value="az">Name, A to Z</option>
       </select></div>
@@ -361,7 +372,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
   <p class="small muted" id="careStatus" aria-live="polite">Search by postcode or council to see care near them.</p>
   <div class="stack" id="careList"></div>
   <button class="btn btn-ghost" type="button" id="careMore" hidden>Show more</button>
-  <p class="note" id="careNote">We only list care homes and care at home services rated Good or Outstanding by CQC. We have removed those rated Requires improvement or Inadequate. Details and ratings are as CQC publishes them. Contains CQC data.</p>
+  <p class="note" id="careNote">We only list care homes and care at home services rated Good or Outstanding by CQC. We have removed those rated Requires improvement or Inadequate. Details and ratings are as CQC publishes them. Distances are in a straight line, not by road. Contains CQC data. Contains OS data © Crown copyright and database right 2026. Contains Royal Mail data © Royal Mail copyright and database right 2026. Contains National Statistics data © Crown copyright and database right 2026.</p>
 </section>
 
 <!-- Care costs -->
@@ -515,7 +526,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
   </div>
   <div class="card stack-sm">
     <h2>What stays on your phone</h2>
-    <p class="small">Your postcode, which 30-day plan you chose, your plan ticks and kit progress are saved in your phone's browser so the app remembers them. They are never sent to us. You can delete them at any time below, or by clearing your browser's data for this site.</p>
+    <p class="small">Your postcode, which 30-day plan you chose, your plan ticks and kit progress are saved in your phone's browser so the app remembers them. They are never sent to us. To find care and work out distances, the app downloads the listings for the council and the postcode area (for example BR1); your full postcode stays on your phone. You can delete them at any time below, or by clearing your browser's data for this site.</p>
   </div>
   <div class="card stack-sm">
     <h2>What we never keep</h2>

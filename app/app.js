@@ -178,7 +178,8 @@
   });
 
   /* ---------- Find care ---------- */
-  var care = { index: null, rows: [], council: null, type: "H", shown: 0 };
+  var care = { index: null, rows: [], pool: [], council: null, point: null, place: "", files: {}, type: "H", shown: 0 };
+  var HM_PER_MILE = 16.0934; // locations are stored in 100 m units
   var KQ = ["Safe", "Effective", "Caring", "Responsive", "Well-led"];
   var KQ_WORD = { O: "Outstanding", G: "Good", R: "Requires improvement", I: "Inadequate", "-": "Not rated" };
   var TYPE_WORD = { H: "Care at home", N: "Nursing home", R: "Residential home" };
@@ -223,34 +224,70 @@
     }
     store.set("area", $("careQ").value.trim());
     $("careStatus").textContent = "Loading care in " + c.n + "…";
-    fetch("data/la/" + c.s + ".json").then(function (r) { return r.json(); }).then(function (rows) {
-      care.rows = rows; care.council = c; fillAreas(); renderCare(true);
-    }).catch(function () {
+    Promise.all([councilRows(c), locate($("careQ").value)]).then(function (got) {
+      care.rows = got[0]; care.council = c; care.point = got[1] ? got[1].en : null; care.place = got[1] ? got[1].label : "";
+      var dist = $("fDist");
+      dist.disabled = !care.point;
+      dist.options[0].text = care.point ? "Whole of " + c.n : "Enter a postcode to search by miles";
+      if (!care.point) dist.value = "";
+      if (care.point && $("fSort").value === "best" && !care.sortChosen) $("fSort").value = "near";
+      if (!care.point && $("fSort").value === "near") $("fSort").value = "best";
+      return refreshPool();
+    }).then(function () { renderCare(true); }).catch(function () {
       $("careStatus").textContent = "Care listings couldn't load. Check your connection and try again.";
     });
   }
 
-  function outward(pc) { return (pc || "").trim().toUpperCase().split(" ")[0]; }
+  function councilRows(c) {
+    if (care.files[c.s]) return Promise.resolve(care.files[c.s]);
+    return fetch("data/la/" + c.s + ".json").then(function (r) { return r.json(); }).then(function (rows) {
+      care.files[c.s] = rows; return rows;
+    });
+  }
 
-  // Postcode districts in this council, picking the one they searched for
-  function fillAreas() {
-    var seen = {};
-    care.rows.forEach(function (r) { var o = outward(r[2]); if (o) seen[o] = (seen[o] || 0) + 1; });
-    var codes = Object.keys(seen).sort(function (a, b) { return a.localeCompare(b, "en", { numeric: true }); });
-    $("fArea").innerHTML = '<option value="">Whole of ' + esc(care.council.n) + "</option>" +
-      codes.map(function (o) { return '<option value="' + o + '">' + o + " (" + seen[o] + ")</option>"; }).join("");
-    var q = outward($("careQ").value);
-    $("fArea").value = seen[q] ? q : "";
+  // Find a postcode's location from this phone's own copy of the district file,
+  // so the postcode is never sent to anyone else.
+  function locate(q) {
+    var compact = (q || "").toUpperCase().replace(/\s+/g, "");
+    var full = /^([A-Z]{1,2}\d[A-Z\d]?)(\d[A-Z]{2})$/.exec(compact);
+    var outward = full ? full[1] : (/^[A-Z]{1,2}\d[A-Z\d]?$/.test(compact) ? compact : "");
+    if (!outward) return Promise.resolve(null);
+    var centre = care.index.dc && care.index.dc[outward];
+    var district = centre ? { en: centre, label: outward } : null;
+    if (!full) return Promise.resolve(district);
+    return fetch("data/pc/" + outward + ".json").then(function (r) { return r.ok ? r.json() : {}; }).then(function (pcs) {
+      var en = pcs[full[2]];
+      return en ? { en: en, label: outward + " " + full[2] } : district;
+    }).catch(function () { return district; });
+  }
+
+  function miles(r) {
+    if (!care.point || r[14] == null) return null;
+    return Math.sqrt(Math.pow(r[14] - care.point[0], 2) + Math.pow(r[15] - care.point[1], 2)) / HM_PER_MILE;
+  }
+
+  // Searching by miles can cross council borders, so load every council the circle touches.
+  function refreshPool() {
+    var m = parseFloat($("fDist").value);
+    if (!care.point || !m) { care.pool = care.rows; return Promise.resolve(); }
+    var p = care.point, reach = m * HM_PER_MILE;
+    var near = care.index.councils.filter(function (c) {
+      var b = c.b;
+      return c.s === care.council.s || (b && p[0] >= b[0] - reach && p[0] <= b[2] + reach && p[1] >= b[1] - reach && p[1] <= b[3] + reach);
+    });
+    $("careStatus").textContent = "Finding care within " + m + " miles…";
+    return Promise.all(near.map(councilRows)).then(function (lists) {
+      care.pool = [].concat.apply([], lists).filter(function (r) { var d = miles(r); return d !== null && d <= m; });
+    });
   }
 
   function dateKey(d) { var p = (d || "").split("/"); return p.length === 3 ? p[2] + p[1] + p[0] : ""; }
 
   function filtered() {
-    var area = $("fArea").value, who = $("fWho").value, want = $("fSpec").value, rate = $("fRate").value;
-    var list = care.rows.filter(function (r) {
+    var who = $("fWho").value, want = $("fSpec").value, rate = $("fRate").value;
+    var list = care.pool.filter(function (r) {
       var spec = specOf(r);
       if (r[5].indexOf(care.type) < 0) return false;
-      if (area && outward(r[2]) !== area) return false;
       if (who && spec.indexOf(who) < 0 && spec.indexOf("A") < 0 && !(who === "O" && r[7])) return false;
       if (want && spec.indexOf(want) < 0) return false;
       if (rate === "O" && r[8] !== "Outstanding") return false;
@@ -259,6 +296,7 @@
     });
     var sort = $("fSort").value;
     if (sort === "az") list.sort(function (a, b) { return a[0].localeCompare(b[0]); });
+    if (sort === "near" && care.point) list.sort(function (a, b) { return (miles(a) == null ? 1e9 : miles(a)) - (miles(b) == null ? 1e9 : miles(b)); });
     if (sort === "recent") list.sort(function (a, b) { return dateKey(b[10]).localeCompare(dateKey(a[10])); });
     return list;
   }
@@ -279,6 +317,10 @@
     return '<div class="stack-sm"><p class="tiny muted">Specialist care (as listed by CQC)</p>' +
       (tags ? '<div class="spec">' + tags + "</div>" : "") +
       (ages.length ? '<p class="tiny muted">Cares for: ' + ages.join(", ") + "</p>" : "") + "</div>";
+  }
+
+  function milesText(d) {
+    return d < 0.1 ? "Under 0.1 miles" : (d < 10 ? d.toFixed(1) : Math.round(d)) + (d >= 0.95 && d < 1.05 ? " mile" : " miles");
   }
 
   function rated(d) {
@@ -302,6 +344,7 @@
       '<div class="head"><div><h3>' + esc(name) + '</h3><p class="small muted">' + esc(types) + "</p></div>" +
       '<span class="pill ' + (overall === "Outstanding" ? "pill-good" : overall === "Good" ? "pill-good" : "pill-quiet") + '">' + esc(badge) + "</span></div>" +
       '<p class="small">' + esc(addr) + " " + esc(pc) + "</p>" +
+      (miles(r) !== null ? '<p class="small"><b>' + milesText(miles(r)) + "</b> from " + esc(care.place) + "</p>" : "") +
       (lows.length ? '<div class="warn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg><span>Good overall, but CQC rated ' + esc(lows.join(" and ")) + ". Read the CQC report before choosing.</span></div>" : "") +
       (overall === "Not Rated" ? '<p class="small">' + esc(svc) + "</p>" : '<div class="kq">' + cells + "</div>") +
       specLine(r) +
@@ -313,6 +356,11 @@
       "</div></article>";
   }
 
+  function where() {
+    var m = $("fDist").value;
+    return m && care.point ? "within " + m + (m === "1" ? " mile" : " miles") + " of " + care.place : "in " + care.council.n;
+  }
+
   function renderCare(reset) {
     if (!care.council) return;
     var list = filtered();
@@ -322,9 +370,9 @@
     care.shown += next.length;
     $("careMore").hidden = care.shown >= list.length;
     $("careStatus").textContent = list.length
-      ? list.length + " " + { H: "care at home services", N: "nursing homes", R: "residential homes" }[care.type] + " in " + ($("fArea").value || care.council.n) + ", " +
-        { best: "best rated first.", recent: "most recently rated first.", az: "A to Z." }[$("fSort").value]
-      : "No matches in " + ($("fArea").value || care.council.n) + ". Try another type of care or change a filter.";
+      ? list.length + " " + { H: "care at home services", N: "nursing homes", R: "residential homes" }[care.type] + " " + where() + ", " +
+        { best: "best rated first.", near: "nearest first.", recent: "most recently rated first.", az: "A to Z." }[$("fSort").value]
+      : "No matches " + where() + ". Try another type of care, a wider distance or change a filter.";
   }
 
   $("careForm").addEventListener("submit", function (e) { e.preventDefault(); searchCare(); });
@@ -335,8 +383,12 @@
     document.querySelectorAll("#careTypes .chip").forEach(function (c) { c.setAttribute("aria-pressed", String(c === b)); });
     renderCare(true);
   });
-  ["fArea", "fWho", "fSpec", "fRate", "fSort"].forEach(function (id) {
+  ["fWho", "fSpec", "fRate"].forEach(function (id) {
     $(id).addEventListener("change", function () { renderCare(true); });
+  });
+  $("fSort").addEventListener("change", function () { care.sortChosen = true; renderCare(true); });
+  $("fDist").addEventListener("change", function () {
+    if (care.council) refreshPool().then(function () { renderCare(true); });
   });
   $("careMore").addEventListener("click", function () { renderCare(false); });
 
