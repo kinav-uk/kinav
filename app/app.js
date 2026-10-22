@@ -68,7 +68,8 @@
 
   /* ---------- 30-day plans ---------- */
   function planDone() { return store.get("plan", {}); }
-  function planKey() { var k = store.get("guide", "dementia"); return KC.plans[k] ? k : "dementia"; }
+  // No plan until the carer picks one, so nobody is shown dementia steps they don't need.
+  function planKey() { var k = store.get("guide", ""); return KC.plans[k] ? k : ""; }
 
   function planStats(key) {
     var done = planDone(), total = 0, count = 0, next = null;
@@ -83,9 +84,16 @@
 
   function renderPlan() {
     var key = planKey(), plan = KC.plans[key], done = planDone();
+    fillPick($("planPick"), key);
+    $("planProgress").hidden = !key;
+    if (!key) {
+      $("planTitle").textContent = "Your 30-day plan";
+      $("planLede").textContent = "Choose the condition or situation below to see clear steps for your first 30 days.";
+      $("planList").innerHTML = "";
+      return;
+    }
     $("planTitle").textContent = plan.title;
     $("planLede").textContent = plan.lede + " Ticks are saved on this phone only.";
-    fillPick($("planPick"), key);
     $("planList").innerHTML = plan.groups.map(function (g) {
       return '<div class="stack-sm"><h2 style="color:var(--accent);font-size:16px">' + esc(g.title) + "</h2>" +
         g.items.map(function (it) {
@@ -108,7 +116,7 @@
         return '<option value="' + k + '"' + (k === key ? " selected" : "") + ">" + esc(KC.plans[k].name) + "</option>";
       }).join("") + "</optgroup>";
     };
-    sel.innerHTML = group("condition", "Conditions") + group("situation", "Situations");
+    sel.innerHTML = '<option value=""' + (key ? "" : " selected") + ">Choose a plan…</option>" + group("condition", "Conditions") + group("situation", "Situations");
   }
 
   $("planPick").addEventListener("change", function (e) {
@@ -131,8 +139,19 @@
 
   /* ---------- Home ---------- */
   function renderHome() {
-    var key = planKey(), st = planStats(key);
+    var key = planKey();
     $("homePlanTitle").textContent = "Your 30-day plan";
+    $("homePlanOpen").hidden = !key;
+    $("homePlanBar").parentNode.hidden = !key;
+    if (!key) {
+      $("homePlanCount").textContent = "";
+      $("homePlanNext").textContent = "Choose a condition or situation to get clear steps for your first 30 days.";
+      fillPick($("homePick"), key);
+      var pc0 = store.get("area", "");
+      if (pc0 && !$("homePostcode").value) $("homePostcode").value = pc0;
+      return;
+    }
+    var st = planStats(key);
     $("homePlanCount").textContent = st.count + " of " + st.total + " done";
     $("homePlanBar").style.width = Math.round(st.count / st.total * 100) + "%";
     $("homePlanNext").textContent = st.next ? "Next: " + st.next.text + "." : "All " + st.total + " steps done. Well done.";

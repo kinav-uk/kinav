@@ -1,5 +1,5 @@
 // Offline support: keep the app shell cached; care data is fetched fresh, falling back to the cache.
-var SHELL = "kinav-shell-v20";
+var SHELL = "kinav-shell-v21";
 var FILES = ["./", "index.html", "content.js", "app.js", "manifest.webmanifest", "icon.svg", "data/index.json"];
 self.addEventListener("install", function (e) {
   self.skipWaiting(); // a new version takes over straight away instead of waiting for every tab to close
