@@ -1,13 +1,14 @@
 // Offline support: keep the app shell cached; care data is fetched fresh, falling back to the cache.
-var SHELL = "kinav-shell-v8";
+var SHELL = "kinav-shell-v9";
 var FILES = ["./", "index.html", "content.js", "app.js", "manifest.webmanifest", "icon.svg", "data/index.json"];
 self.addEventListener("install", function (e) {
+  self.skipWaiting(); // a new version takes over straight away instead of waiting for every tab to close
   e.waitUntil(caches.open(SHELL).then(function (c) { return c.addAll(FILES); }));
 });
 self.addEventListener("activate", function (e) {
   e.waitUntil(caches.keys().then(function (keys) {
     return Promise.all(keys.filter(function (k) { return k !== SHELL && k !== "kinav-data"; }).map(function (k) { return caches.delete(k); }));
-  }));
+  }).then(function () { return self.clients.claim(); }));
 });
 self.addEventListener("fetch", function (e) {
   var url = new URL(e.request.url);

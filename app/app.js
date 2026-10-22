@@ -636,6 +636,6 @@
   renderCosts();
   show();
   if ("serviceWorker" in navigator && location.protocol === "https:") {
-    try { navigator.serviceWorker.register("sw.js").catch(function () {}); } catch (e) {}
+    try { navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).catch(function () {}); } catch (e) {}
   }
 })();
