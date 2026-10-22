@@ -39,8 +39,19 @@
     if (name === "home") renderHome();
     if (name === "care") initCare();
     window.scrollTo(0, 0);
+    track(hash);
   }
   window.addEventListener("hashchange", show);
+
+  // Visit counts with GoatCounter: no cookies, no personal details, only which screen was opened.
+  var pendingVisit = null;
+  function track(screen) {
+    if (location.hostname !== "kinav.co.uk") return;
+    var gc = window.goatcounter;
+    if (gc && gc.count) gc.count({ path: "/" + screen }); else pendingVisit = screen;
+  }
+  var gcScript = document.getElementById("gcScript");
+  if (gcScript) gcScript.addEventListener("load", function () { if (pendingVisit) track(pendingVisit); });
 
   /* ---------- 30-day plans ---------- */
   function planDone() { return store.get("plan", {}); }
