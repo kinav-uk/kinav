@@ -761,8 +761,10 @@
     if (a.move || a.wash || a.fall || a.meals) add("Money", "Check Attendance Allowance", "If they're over State Pension age and need help, it's £76.70 or £114.60 a week and isn't means-tested.", "#benefits", "Check what they could get");
     if (a.alone) add("Money", "Council tax discount for living alone", "Usually 25% off the bill. More off is possible in some situations, such as dementia.", "https://www.gov.uk/council-tax/discounts-for-people-living-alone", "GOV.UK guide");
     add("Plan", "Home or care home: the real cost", "See what staying at home with help costs compared with a care home.", "#costs", "Compare costs");
+    // Free version: the five most important steps, in order of priority.
+    steps = steps.slice(0, 5);
     var pill = { Free: "pill-good", Grant: "pill-sun", Money: "pill-sun", Help: "pill-quiet", Care: "pill-good", Plan: "pill-quiet" };
-    $("shPlan").innerHTML = "<h2>Their plan: " + steps.length + " steps</h2>" + steps.map(function (st, i) {
+    $("shPlan").innerHTML = "<h2>Their top " + steps.length + " steps</h2>" + steps.map(function (st, i) {
       var ext = /^https?:/.test(st.href);
       return '<div class="card shstep"><div class="head"><h3>' + (i + 1) + ". " + esc(st.title) + '</h3><span class="pill ' + pill[st.tag] + '">' + st.tag + "</span></div>" +
         '<p class="small">' + esc(st.why) + '</p><a class="small" style="font-weight:600" href="' + st.href + '"' + (ext ? ' target="_blank" rel="noopener"' : "") + ">" + esc(st.link) + " ›</a></div>";
