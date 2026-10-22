@@ -566,7 +566,7 @@
     if (a.hours !== "Under 20") out.push(["Carer's Credit", "You", "Likely", "You care 20 or more hours a week. It protects your State Pension.", "https://www.gov.uk/carers-credit"]);
     if (a.hours === "35 or more" && a.earn === "No") out.push(["Carer's Allowance", "You", "Worth checking", "You care 35+ hours a week and earn £204 a week or less. The person you care for must get a qualifying benefit, such as Attendance Allowance.", "https://www.gov.uk/carers-allowance"]);
     else out.push(["Carer's Allowance", "You", "Unlikely", "Needs 35+ hours caring a week and earnings of £204 a week or less.", "https://www.gov.uk/carers-allowance/eligibility"]);
-    out.push(["Blue Badge", "Them", "Worth checking", "Some non-visible conditions, including dementia, can qualify.", "https://www.gov.uk/apply-blue-badge"]);
+    out.push(["Blue Badge", "Them", "Worth checking", "Some non-visible conditions, including dementia, can qualify. See the step-by-step Blue Badge kit in Help.", "https://www.gov.uk/apply-blue-badge"]);
     out.push(["Carer's assessment", "You", "Likely", "Free from the council for anyone who cares. It can lead to support for you.", "https://www.gov.uk/carers-assessment"]);
     var pill = { Likely: "pill-good", "Worth checking": "pill-sun", Unlikely: "pill-quiet" };
     var order = { Likely: 0, "Worth checking": 1, Unlikely: 2 };

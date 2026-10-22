@@ -180,6 +180,18 @@ window.KC = {
       { t: "Sort out medicines", d: "Ask for a list of medicines, who will collect them, and whether the pharmacy can provide blister packs." },
       { t: "Check the follow-up", d: "Make sure the GP has the discharge letter, and ask whether a district nurse will visit." }
     ]},
+    { id: "blue-badge", name: "Applying for a Blue Badge", what: "Parking closer to where they need to go. England's rules.", steps: [
+      { t: "Check if they qualify automatically", d: "They do if they get the higher rate mobility part of DLA; PIP with 8 points or more for \"moving around\"; PIP with 10 points for descriptor E under \"planning and following journeys\"; are registered blind (severely sight impaired); or get War Pensioners' Mobility Supplement or certain Armed Forces compensation. Attendance Allowance on its own doesn't count." },
+      { t: "If not, they may still qualify", d: "The council decides. For example, if walking is very difficult because of pain, breathlessness or the time it takes, or isn't safe for them. Non-visible conditions can count too, such as being a serious risk near traffic, struggling severely to plan or follow a journey, or becoming extremely anxious in public places." },
+      { t: "Gather the documents", d: "A recent head-and-shoulders digital photo. A photo or scan of proof of identity (birth certificate, passport or driving licence) and proof of address (Council Tax bill or a recent government letter). Their National Insurance number, any benefit award letter (for PIP, the scores), and the current badge details if renewing." },
+      { t: "Write down how getting about affects them", d: "The form asks how far they can walk and how long it takes, what help they need, and who is involved in their care. A note of a typical trip, such as to the shops or the GP, makes this easier." },
+      { t: "Apply online", d: "Use GOV.UK: gov.uk/apply-blue-badge. You can apply on their behalf, and save and come back later. Or ask the council for a paper form." },
+      { t: "Pay the fee", d: "Up to £10 in England. The council tells you how to pay." },
+      { t: "Wait for the decision", d: "Usually within 12 weeks. The council may ask for more information or invite them to a mobility assessment." },
+      { t: "If it's refused", d: "Ask the council to reconsider, explaining anything they missed. You can reapply if things change. Citizens Advice (CAB) can help: Adviceline (England) 0800 144 8848." },
+      { t: "Use it the right way", d: "The badge is theirs: use it only when they're travelling in the car, as driver or passenger. Show it on the dashboard, with the clock where needed. Misuse can mean a fine of up to £1,000." },
+      { t: "Set a renewal reminder", d: "Badges usually last up to 3 years, and you must reapply before it runs out. Add a reminder for 12 weeks before the expiry date with Calendar." }
+    ]},
     { id: "contract", name: "Before you sign a care home contract", what: "Fees, increases, top-ups and notice.", steps: [
       { t: "Get the contract in advance", d: "Ask for it before moving day, and take time to read it." },
       { t: "Check the fees", d: "What is the weekly fee, and what costs extra, such as hairdressing, trips or toiletries?" },
