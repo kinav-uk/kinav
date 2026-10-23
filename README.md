@@ -11,4 +11,4 @@ Contains CQC data, published under the Open Government Licence. Contains OS data
 
 ## Copyright
 
-© 2026 Kinav. All rights reserved. This code is published only to host kinav.co.uk and may not be copied, reused or adapted without written permission. See [LICENSE](LICENSE).
+© 2026 Kinav Ltd. All rights reserved. This code is published only to host kinav.co.uk and may not be copied, reused or adapted without written permission. See [LICENSE](LICENSE).
