@@ -774,19 +774,34 @@
   });
 
   /* ---------- Add to home screen ---------- */
+  // One clear button: installs in one tap where the browser allows it, otherwise shows simple steps.
   var installEvent = null;
+  var SHARE_ICON = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Share"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
+  function installSteps() {
+    var ua = navigator.userAgent;
+    if (/iphone|ipad|ipod/i.test(ua)) return [
+      "Tap the Share button " + SHARE_ICON + " at the bottom of the screen (at the top on iPad).",
+      "Scroll down and tap <b>Add to Home Screen</b>.",
+      "Tap <b>Add</b>. Kinav now opens like an app from your home screen."];
+    return [
+      "Tap the browser menu <b>⋮</b> at the top right.",
+      "Tap <b>Add to Home screen</b> or <b>Install app</b>.",
+      "Tap <b>Add</b> or <b>Install</b>. Kinav now opens like an app from your home screen."];
+  }
   function showInstall() {
     var standalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || navigator.standalone;
-    if (standalone || store.get("installHide", false)) { $("installCard").hidden = true; return; }
-    var ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
-    $("installHow").textContent = installEvent ? "Open Kinav like an app, straight from your phone." :
-      ios ? "In Safari, tap the Share button, then Add to Home Screen." : "Open your browser menu (⋮), then tap Add to Home screen or Install app.";
-    $("installBtn").hidden = !installEvent;
+    if (standalone) { $("installCard").hidden = true; return; }
+    $("installHow").textContent = "Open Kinav like an app, straight from your phone. It takes 10 seconds.";
     $("installCard").hidden = false;
   }
   window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); installEvent = e; showInstall(); });
-  $("installBtn").addEventListener("click", function () { if (installEvent) { installEvent.prompt(); installEvent = null; $("installCard").hidden = true; } });
-  $("installHide").addEventListener("click", function () { store.set("installHide", true); $("installCard").hidden = true; });
+  window.addEventListener("appinstalled", function () { $("installCard").hidden = true; });
+  $("installBtn").addEventListener("click", function () {
+    if (installEvent) { installEvent.prompt(); installEvent = null; return; }
+    var list = $("installSteps");
+    list.innerHTML = installSteps().map(function (t) { return "<li><span>" + t + "</span></li>"; }).join("");
+    list.hidden = !list.hidden;
+  });
   showInstall();
 
   /* ---------- Larger text ---------- */

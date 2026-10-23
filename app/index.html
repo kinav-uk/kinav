@@ -257,6 +257,10 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 .start-main span { font-size: 14px; }
 .s-care { --tc: var(--accent); } .s-home { --tc: var(--good); } .s-cost { --tc: var(--sun); } .s-ben { --tc: var(--sun); } .s-house { --tc: var(--bad-line); } .s-kits { --tc: var(--accent); }
 html.big body { zoom: 1.15; }
+.install-steps { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; counter-reset: st; }
+.install-steps li { counter-increment: st; display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: center; background: var(--sunk); border-radius: 12px; padding: 10px 12px; font-size: 15px; }
+.install-steps li::before { content: counter(st); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--accent-fg); font-weight: 800; }
+.install-steps svg { vertical-align: -4px; }
 .pickq { gap: 8px; border-color: var(--accent); color: var(--accent); font-weight: 700; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .linkbtn { background: none; border: 0; padding: 0; color: var(--accent); font: inherit; text-decoration: underline; cursor: pointer; align-self: flex-start; }
@@ -329,7 +333,8 @@ html.big body { zoom: 1.15; }
   <div class="card" id="installCard" hidden>
     <h3>Add Kinav to your home screen</h3>
     <p class="small" id="installHow"></p>
-    <div class="actions"><button class="btn btn-primary btn-sm" type="button" id="installBtn" hidden>Add to home screen</button><button class="linkbtn small" type="button" id="installHide">Not now</button></div>
+    <button class="btn btn-primary" type="button" id="installBtn">Add to home screen</button>
+    <ol class="install-steps" id="installSteps" hidden></ol>
   </div>
   <button class="btn btn-ghost btn-sm" type="button" id="bigText" aria-pressed="false">Larger text</button>
   <div class="privacy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>No logins, no ads, no health data. Everything stays on this phone. <a href="#privacy">Privacy</a></span></div>
@@ -905,7 +910,7 @@ html.big body { zoom: 1.15; }
 
 <script id="gcScript" data-goatcounter="https://kinav.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="https://gc.zgo.at/count.js"></script>
 <script src="content.js?v=d92513702d"></script>
-<script src="app.js?v=6c76afdf8e"></script>
+<script src="app.js?v=d0a78df787"></script>
 
 </body>
 </html>
