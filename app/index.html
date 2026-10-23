@@ -267,7 +267,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 .stile::after, .start-main::after { content: ""; position: absolute; right: -16px; bottom: -16px; width: 84px; height: 84px; background: var(--tc, #18232e); opacity: .16;
   -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Ccircle%20cx%3D%22256%22%20cy%3D%22256%22%20r%3D%22140%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%2240%22/%3E%3Ccircle%20cx%3D%22256%22%20cy%3D%22116%22%20r%3D%2238%22/%3E%3Ccircle%20cx%3D%22377%22%20cy%3D%22326%22%20r%3D%2238%22/%3E%3Ccircle%20cx%3D%22135%22%20cy%3D%22326%22%20r%3D%2238%22/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Ccircle%20cx%3D%22256%22%20cy%3D%22256%22%20r%3D%22140%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%2240%22/%3E%3Ccircle%20cx%3D%22256%22%20cy%3D%22116%22%20r%3D%2238%22/%3E%3Ccircle%20cx%3D%22377%22%20cy%3D%22326%22%20r%3D%2238%22/%3E%3Ccircle%20cx%3D%22135%22%20cy%3D%22326%22%20r%3D%2238%22/%3E%3C/svg%3E") center / contain no-repeat; pointer-events: none; }
 .start-main::after { --tc: #18232e; width: 110px; height: 110px; opacity: .14; }
-.s-care { --tc: #1f7fa0; } .s-home { --tc: #2a9d63; } .s-cost { --tc: #d98a00; } .s-ben { --tc: #6a4fe0; } .s-house { --tc: #e8503a; } .s-kits { --tc: #0a8fc0; }
+.s-care { --tc: #1c7394; } .s-home { --tc: #1f8653; } .s-cost { --tc: #a96500; } .s-ben { --tc: #6a4fe0; } .s-house { --tc: #cf3f29; } .s-kits { --tc: #08779f; }
 html.big body { zoom: 1.15; }
 .more { background: var(--surface); border-radius: 16px; padding: 12px 16px; }
 .more > summary { cursor: pointer; font-weight: 700; color: var(--accent); }
@@ -278,6 +278,11 @@ html.big body { zoom: 1.15; }
 .trust span { font-size: 12.5px; color: var(--muted); line-height: 1.35; }
 .homefoot { display: flex; flex-direction: column; gap: 6px; text-align: center; font-size: 15px; padding-top: 4px; }
 .homefoot p { margin: 0; }
+.nextstep { background: var(--surface); border: 2px solid var(--accent); border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.nextstep h2 { font-size: 19px; }
+.fb { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; justify-content: center; padding: 6px 0; }
+.fb p { margin: 0; font-size: 15px; color: var(--muted); }
+.fb button { font: inherit; font-size: 15px; padding: 6px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; }
 .hdr-btn { font: inherit; font-size: 13.5px; font-weight: 700; padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--accent); background: var(--surface); color: var(--accent); cursor: pointer; white-space: nowrap; }
 .usp { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
 .usp li { display: flex; gap: 8px; align-items: baseline; font-size: 14.5px; font-weight: 600; }
@@ -314,6 +319,12 @@ html.big body { zoom: 1.15; }
       <li>Care homes can't pay to be listed</li>
       <li>No sign-up, nothing about your family stored</li>
     </ul>
+  </div>
+  <div class="nextstep" id="nextStep" hidden>
+    <div class="head"><span class="eyebrow">Your next step</span><span class="tiny muted" id="nextCount"></span></div>
+    <h2 id="nextTitle"></h2>
+    <div class="actions"><a class="btn btn-primary btn-sm" id="nextGo" href="#home">Do this now</a><button class="btn btn-ghost btn-sm" type="button" id="nextDone">Mark as done</button></div>
+    <button class="linkbtn tiny" type="button" id="nextReset">Start again</button>
   </div>
   <nav class="startgrid" aria-label="Start here">
     <a class="start-main" href="#start"><b>Where do I start?</b><span>Answer 3 quick questions and get your first steps</span></a>
@@ -367,6 +378,7 @@ html.big body { zoom: 1.15; }
     <div class="progress"><i id="planBar" style="width:0%"></i></div>
   </div>
   <div class="stack" id="planList"></div>
+  <div class="fb" data-fb="plan"><p>Was this helpful?</p><button type="button" data-v="yes">Yes</button><button type="button" data-v="no">No</button></div>
 </section>
 
 <!-- Appointments -->
@@ -548,6 +560,7 @@ html.big body { zoom: 1.15; }
   <button class="btn btn-ghost" type="button" id="careMore" hidden>Show more</button>
   <p class="note">Kinav doesn't recommend or inspect care services. A specialism listed by CQC doesn't mean a service suits the person's needs: visit, read the CQC report and ask for a needs assessment from the council. <a href="#terms">Terms of use</a></p>
   <p class="note" id="careNote">We only list care homes and care at home services rated Good or Outstanding by CQC. We have removed those rated Requires improvement or Inadequate. Details and ratings are as CQC publishes them. Distances are in a straight line, not by road. Contains CQC data. Contains OS data © Crown copyright and database right 2026. Contains Royal Mail data © Royal Mail copyright and database right 2026. Contains National Statistics data © Crown copyright and database right 2026.</p>
+  <div class="fb" data-fb="care"><p>Was this helpful?</p><button type="button" data-v="yes">Yes</button><button type="button" data-v="no">No</button></div>
 </section>
 
 <!-- Care costs -->
@@ -573,6 +586,7 @@ html.big body { zoom: 1.15; }
   </form>
   <div class="stack" id="stOut" aria-live="polite"></div>
   <p class="note">Practical steps and who to ask, not health advice. In an emergency, call 999.</p>
+  <div class="fb" data-fb="start"><p>Was this helpful?</p><button type="button" data-v="yes">Yes</button><button type="button" data-v="no">No</button></div>
 </section>
 
 <section class="screen" id="s-house" hidden>
@@ -605,6 +619,7 @@ html.big body { zoom: 1.15; }
   <div class="actions"><a class="btn btn-primary" href="#costs">Work out care costs</a><button class="btn btn-ghost" type="button" data-share="house">Send to family</button></div>
   <p class="small">Free help: Citizens Advice <span class="phone">0800 144 8848</span> · Age UK <span class="phone">0800 678 1602</span> · <a href="https://societyoflaterlifeadvisers.co.uk/" target="_blank" rel="noopener">Society of Later Life Advisers</a> for regulated financial advice.</p>
   <p class="note">General information about England's rules, not legal or financial advice.</p>
+  <div class="fb" data-fb="house"><p>Was this helpful?</p><button type="button" data-v="yes">Yes</button><button type="button" data-v="no">No</button></div>
 </section>
 
 <section class="screen" id="s-stayhome" hidden>
@@ -617,6 +632,7 @@ html.big body { zoom: 1.15; }
   <div class="stack" id="shPlan" aria-live="polite"></div>
   <button class="btn btn-ghost" type="button" data-share="stayhome" id="shShare" hidden>Send this plan to family</button>
   <p class="note">Practical steps and who to ask, not health advice. For health questions, speak to the GP, a pharmacist or NHS 111. In an emergency, call 999. <a href="#terms">Terms of use</a></p>
+  <div class="fb" data-fb="stayhome"><p>Was this helpful?</p><button type="button" data-v="yes">Yes</button><button type="button" data-v="no">No</button></div>
 </section>
 
 <section class="screen" id="s-costs" hidden>
@@ -734,6 +750,7 @@ html.big body { zoom: 1.15; }
   </div>
   </details>
   <p class="note">An estimate, not financial advice. Uses England's rules: councils may help when counted savings fall below £23,250, and ignore savings under £14,250. It leaves out personal allowances, NHS nursing contributions and top-up fees. Nothing you enter leaves this phone.</p>
+  <div class="fb" data-fb="costs"><p>Was this helpful?</p><button type="button" data-v="yes">Yes</button><button type="button" data-v="no">No</button></div>
 </section>
 
 <!-- Benefits calculator -->
@@ -754,6 +771,7 @@ html.big body { zoom: 1.15; }
   </div>
   <p class="note">These are possibilities, not decisions.</p>
   <p class="note">This is a guide to what may be worth checking, not benefits or financial advice. The Department for Work and Pensions and the council decide what someone gets. <a href="#terms">Terms of use</a></p>
+  <div class="fb" data-fb="benefits"><p>Was this helpful?</p><button type="button" data-v="yes">Yes</button><button type="button" data-v="no">No</button></div>
 </section>
 
 <!-- Help and kits -->
@@ -824,6 +842,7 @@ html.big body { zoom: 1.15; }
   <button class="linkbtn small" type="button" id="qClear">Clear this list</button>
   <p class="small muted">More detailed question lists are coming soon.</p>
   <p class="note">Your chosen questions and notes are saved only on this phone. Kinav doesn't see them. Questions to ask, not health advice.</p>
+  <div class="fb" data-fb="questions"><p>Was this helpful?</p><button type="button" data-v="yes">Yes</button><button type="button" data-v="no">No</button></div>
 </section>
 
 <!-- Articles -->
@@ -852,7 +871,7 @@ html.big body { zoom: 1.15; }
   </div>
   <div class="card stack-sm">
     <h2>What stays on your phone</h2>
-    <p class="small">Your postcode, which 30-day plan you chose, your plan ticks, kit progress, question lists and notes, and display settings are saved in your phone's browser so the app remembers them. They are never sent to us. To find care and work out distances, the app downloads the listings for the council and the postcode area (for example BR1); your full postcode stays on your phone. You can delete them at any time below, or by clearing your browser's data for this site.</p>
+    <p class="small">Your postcode, which 30-day plan you chose, your plan ticks, kit progress, question lists and notes, and display settings are saved in your phone's browser so the app remembers them. They are never sent to us. Kinav also counts taps on buttons such as Share or Was this helpful, without any personal details. To find care and work out distances, the app downloads the listings for the council and the postcode area (for example BR1); your full postcode stays on your phone. You can delete them at any time below, or by clearing your browser's data for this site.</p>
     <p class="small">We count visits with GoatCounter, which uses no cookies and collects no personal details. It records which screen was opened (for example "Find care"), the type of device and browser, the country, and the website you came from, so we know how many people Kinav helps. Your postcode, plan and anything you type are never included.</p>
   </div>
   <div class="card stack-sm">
@@ -947,6 +966,7 @@ html.big body { zoom: 1.15; }
   <div class="stack" id="kitSteps"></div>
   <p class="note">Tap a step to mark it done. Saved on this phone only.</p>
   <p class="note">General information only, not health or medical advice. For health questions, speak to the GP, a pharmacist or NHS 111. In an emergency, call 999. <a href="#terms">Terms of use</a></p>
+  <div class="fb" data-fb="kit"><p>Was this helpful?</p><button type="button" data-v="yes">Yes</button><button type="button" data-v="no">No</button></div>
 </section>
 
 </div>
@@ -962,8 +982,8 @@ html.big body { zoom: 1.15; }
 </div>
 
 <script id="gcScript" data-goatcounter="https://kinav.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="https://gc.zgo.at/count.js"></script>
-<script src="content.js?v=d92513702d"></script>
-<script src="app.js?v=22b56b8f2f"></script>
+<script src="content.js?v=3c88eab1bf"></script>
+<script src="app.js?v=430375821f"></script>
 
 </body>
 </html>

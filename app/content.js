@@ -89,6 +89,22 @@ window.KC = {
 
   // One article a month: one health issue, and how a carer can cope with it.
   articles: [
+    { id: "diabetes-christmas", from: "2026-12-01", month: "December 2026", topic: "Diabetes", plan: "diabetes",
+      title: "Caring for someone with diabetes over Christmas: how to cope",
+      intro: "The festive season can be busy and unsettled, which can make caring harder. This article is about you, the carer: staying organised, sharing the load and looking after yourself. For anything about their health, food or medicines, speak to their GP, diabetes nurse or pharmacist.",
+      sections: [
+        { h: "Plan the season ahead", p: ["Christmas changes routines: visitors, travel, different mealtimes and services that close for the holidays. Writing down what's happening each day helps everyone know who's doing what."],
+          list: ["Put family visits, and who's helping when, in a shared calendar.", "Check when the GP surgery and pharmacy are closed over the holidays.", "Order repeat prescriptions in good time.", "Keep the diabetes team's contact details somewhere easy to find."] },
+        { h: "Share the load", p: ["Caring through the holidays shouldn't fall on one person. Agree who covers which days, including lifts to appointments and collecting prescriptions. Kinav's calendar and reminders can help everyone keep track."] },
+        { h: "Ask before routines change", p: ["If you're unsure how changes in routine, food or activity over Christmas might affect them, ask their GP, diabetes nurse or pharmacist before the holidays. Writing your questions down first helps, and Kinav's Questions to ask can get you started."] },
+        { h: "Know who to call", list: ["For urgent advice, call NHS 111 or use 111.nhs.uk.", "In an emergency, call 999.", "Diabetes UK offers information and support for families."] },
+        { h: "Look after yourself", p: ["It's normal to feel stretched at this time of year. Short breaks matter: ask family or friends to take over for an afternoon, and ask the council for a carer's assessment if you haven't had one."] }
+      ],
+      sources: [
+        { name: "Diabetes UK", url: "https://www.diabetes.org.uk/" },
+        { name: "NHS 111 online", url: "https://111.nhs.uk/" },
+        { name: "NHS: carer's assessments", url: "https://www.nhs.uk/social-care-and-support/support-and-benefits-for-carers/carer-assessments/" }
+      ] },
     { id: "copd-winter", month: "November 2026", topic: "COPD and breathing", plan: "copd",
       title: "Caring for someone with COPD this winter: how to cope",
       intro: "Winter can be the hardest time for families living with COPD. This article is about you, the carer: how to stay organised, share the load and look after yourself. For anything about their health, speak to their GP, respiratory nurse, pharmacist or NHS 111. World COPD Day is on 18 November.",
@@ -117,7 +133,7 @@ window.KC = {
       ],
       sources: [
         { name: "Asthma + Lung UK: contact the helpline", url: "https://www.asthmaandlung.org.uk/about-us/contact-us" },
-        { name: "GOV.UK: carer's assessment", url: "https://www.gov.uk/carers-assessment" }
+        { name: "NHS: carer's assessments", url: "https://www.nhs.uk/social-care-and-support/support-and-benefits-for-carers/carer-assessments/" }
       ]
     }
   ],

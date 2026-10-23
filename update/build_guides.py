@@ -44,13 +44,41 @@ PLAN_PAGES = {
     "afterfall": "after-a-fall-or-hospital-stay",
     "delirium": "sudden-confusion-delirium-in-older-people",
 }
+REVIEWED = "24 October 2026"
+GOV_CARE = ("NHS: social care and support guide", "https://www.nhs.uk/social-care-and-support/")
+KIT_SOURCES = {
+    "home-choice": [("Care Quality Commission (CQC)", "https://www.cqc.org.uk/"), ("Age UK: care and support", "https://www.ageuk.org.uk/information-advice/care/")],
+    "home-care": [("GOV.UK: apply for a needs assessment", "https://www.gov.uk/apply-needs-assessment-social-services"), ("Care Quality Commission (CQC)", "https://www.cqc.org.uk/")],
+    "live-in": [("Care Quality Commission (CQC)", "https://www.cqc.org.uk/"), GOV_CARE],
+    "safety": [("GOV.UK: Disabled Facilities Grants", "https://www.gov.uk/disabled-facilities-grants"), ("NHS: falls", "https://www.nhs.uk/conditions/falls/")],
+    "alarms": [("Age UK: care and support", "https://www.ageuk.org.uk/information-advice/care/"), ("NHS: falls", "https://www.nhs.uk/conditions/falls/")],
+    "hospital": [GOV_CARE, ("Carers UK: help and advice", "https://www.carersuk.org/help-and-advice/")],
+    "blue-badge": [("GOV.UK: apply for a Blue Badge", "https://www.gov.uk/apply-blue-badge")],
+    "contract": [("CMA: care homes consumer law advice", "https://www.gov.uk/government/publications/care-homes-consumer-law-advice-for-providers"), ("Age UK: care and support", "https://www.ageuk.org.uk/information-advice/care/")],
+}
+PLAN_CHARITY = {
+    "dementia": ("Alzheimer's Society", "https://www.alzheimers.org.uk/"), "parkinsons": ("Parkinson's UK", "https://www.parkinsons.org.uk/"),
+    "mobility": ("NHS: falls", "https://www.nhs.uk/conditions/falls/"), "stroke": ("Stroke Association", "https://www.stroke.org.uk/"),
+    "eol": ("Marie Curie", "https://www.mariecurie.org.uk/"), "heart": ("British Heart Foundation", "https://www.bhf.org.uk/"),
+    "copd": ("Asthma + Lung UK", "https://www.asthmaandlung.org.uk/"), "cancer": ("Macmillan Cancer Support", "https://www.macmillan.org.uk/"),
+    "sight": ("RNIB", "https://www.rnib.org.uk/"), "continence": ("Bladder & Bowel UK", "https://www.bbuk.org.uk/"),
+    "diabetes": ("Diabetes UK", "https://www.diabetes.org.uk/"), "afterfall": ("NHS: falls", "https://www.nhs.uk/conditions/falls/"),
+    "delirium": GOV_CARE,
+}
+
+
+def sources_html(items):
+    links = " \u00b7 ".join('<a href="%s" rel="noopener" target="_blank">%s</a>' % (e(u), e(n)) for n, u in items)
+    return '<p class="small muted">Sources: %s. Last reviewed %s.</p>' % (links, REVIEWED)
+
+
 NOT_ADVICE = ('<p class="panel small">General information only, not health or medical advice. For health questions, speak to the GP, '
               'a pharmacist or NHS 111. In an emergency, call 999.</p>')
 
 # Free specialist helplines, by condition. Nurses and trained advisers, not a diagnosis service.
 SPECIALISTS = [
     ("Dementia", [
-        ("Admiral Nurse Dementia Helpline (Dementia UK)", "0800 888 6678", "https://www.dementiauk.org/get-support/dementia-helpline-alzheimers-dementia-support/",
+        ("Admiral Nurse Dementia Helpline (Dementia UK)", "0800 888 6678", "https://www.dementiauk.org/get-support/dementia-helpline/",
          "Specialist dementia nurses for families: changes in behaviour, coping, planning ahead and care choices."),
         ("Alzheimer's Society Dementia Support Line", "0333 150 3456", "https://www.alzheimers.org.uk/get-support/dementia-support-line",
          "Trained dementia advisers: what support is available locally, and someone to talk to."),
@@ -64,7 +92,7 @@ SPECIALISTS = [
          "Cardiac nurses answer questions about heart and circulatory conditions, for patients and families."),
     ]),
     ("Parkinson's", [
-        ("Parkinson's UK Helpline", "0808 800 0303", "https://www.parkinsons.org.uk/information-and-support/our-helpline",
+        ("Parkinson's UK Helpline", "0808 800 0303", "https://www.parkinsons.org.uk/contact",
          "Parkinson's nurses and advisers: living with Parkinson's, medicines questions to raise with the care team, money and work."),
     ]),
 ]
@@ -109,7 +137,8 @@ def kit_page(k, updated):
     steps = "".join('<li><b>%s</b><br><span class="muted">%s</span></li>' % (e(s["t"]), e(s["d"])) for s in k["steps"])
     body = [crumbs(), '<div class="stack-sm"><h1>%s</h1><p class="lede">%s</p></div>' % (e(k["name"]), e(k["what"])),
             cta("Tick off each step as you go in the free Kinav app.", "/#kit-%s" % k["id"], "Open this checklist"),
-            '<section class="panel"><h2>Step by step</h2><ol class="steps">%s</ol></section>' % steps, NOT_ADVICE]
+            '<section class="panel"><h2>Step by step</h2><ol class="steps">%s</ol></section>' % steps,
+            sources_html(KIT_SOURCES.get(k["id"], [GOV_CARE])), NOT_ADVICE]
     title = "%s: step-by-step checklist | Kinav" % k["name"]
     desc = "%s A free step-by-step checklist for families caring for an older parent in England." % k["what"]
     return path, build_pages.page(path, title, desc, "\n".join(body), updated, kind="guide")
@@ -122,7 +151,8 @@ def plan_page(key, p, updated):
                                for i in g["items"])) for g in p["groups"])
     body = [crumbs(("30-day plans", "/guides/#plans")),
             '<div class="stack-sm"><h1>%s</h1><p class="lede">%s</p></div>' % (e(p["title"]), e(p["lede"])),
-            cta("Follow this plan and tick off each step in the free Kinav app.", "/#plan", "Start the plan"), groups, NOT_ADVICE]
+            cta("Follow this plan and tick off each step in the free Kinav app.", "/#plan", "Start the plan"), groups,
+            sources_html([PLAN_CHARITY.get(key, GOV_CARE), ("Carers UK: help and advice", "https://www.carersuk.org/help-and-advice/")]), NOT_ADVICE]
     title = "%s: a 30-day plan for carers | Kinav" % p["title"]
     desc = "%s Practical steps for family carers: support, money, benefits and who to ask. Not medical advice." % p["lede"]
     return path, build_pages.page(path, title, desc, "\n".join(body), updated, kind="guide")
@@ -244,6 +274,9 @@ def main(updated):
         shutil.rmtree(os.path.join(APP, folder), ignore_errors=True)
     pages = [kit_page(k, updated) for k in kc["kits"] if k["id"] in KIT_PAGES]
     pages += [plan_page(key, p, updated) for key, p in kc["plans"].items() if key in PLAN_PAGES]
+    import datetime as _dt
+    today = _dt.date.today().isoformat()
+    kc["articles"] = [a for a in kc["articles"] if not a.get("from") or a["from"] <= today]
     pages += [article_page(a, kc["plans"], updated) for a in kc["articles"]]
     pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated)]
     for path, text in pages:

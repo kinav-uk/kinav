@@ -52,6 +52,11 @@
     var gc = window.goatcounter;
     if (gc && gc.count) gc.count({ path: "/" + screen }); else pendingVisit = screen;
   }
+  function countEvent(name) {
+    if (location.hostname !== "kinav.co.uk") return;
+    var gc = window.goatcounter;
+    if (gc && gc.count) gc.count({ path: name, title: name, event: true });
+  }
   var gcScript = document.getElementById("gcScript");
   if (gcScript) gcScript.addEventListener("load", function () { if (pendingVisit) track(pendingVisit); });
 
@@ -740,6 +745,9 @@
     steps = steps.concat(ST_STEPS[now] || []);
     if (alone === "yes" && now !== "carehome") steps.push(["#kit-alarms", "Think about a fall alarm", "Help at the press of a button when they live alone."]);
     steps = steps.slice(0, 4);
+    store.set("start", { steps: steps.map(function (st) { return [st[0], st[1]]; }), done: [] });
+    countEvent("start-" + now);
+    renderNext();
     $("stOut").innerHTML = "<h2>Your first " + steps.length + " steps</h2>" + steps.map(function (st, i) {
       return '<a class="card shstep" style="text-decoration:none;color:inherit" href="' + st[0] + '"' + (st[3] ? ' data-qtopic="' + st[3] + '"' : "") + (st[4] ? ' data-setplan="' + st[4] + '"' : "") +
         '><h3>' + (i + 1) + ". " + esc(st[1]) + ' ›</h3><p class="small muted">' + esc(st[2]) + "</p></a>";
@@ -750,8 +758,40 @@
   $("stOut").addEventListener("click", function (e) {
     var a = e.target.closest("a");
     if (!a) return;
-    if (a.dataset.setplan) { store.set("guide", a.dataset.setplan); renderPlan(); renderHome(); }
+    if (a.dataset.setplan) { store.set("guide", a.dataset.setplan); renderPlan(); renderHome(); countEvent("plan-" + a.dataset.setplan); }
+    var st = store.get("start", null), title = a.querySelector("h3") ? a.querySelector("h3").textContent.replace(/^\d+\. /, "").replace(/ ›$/, "") : "";
+    if (st) { st.steps.forEach(function (x, i) { if (x[1] === title && st.done.indexOf(i) < 0) st.done.push(i); }); store.set("start", st); renderNext(); }
     if (a.dataset.qtopic) { store.set("qtopic", a.dataset.qtopic); $("qTopic").value = a.dataset.qtopic; }
+  });
+
+  /* ---------- Your next step (Home) ---------- */
+  function renderNext() {
+    var st = store.get("start", null), card = $("nextStep");
+    var i = st ? st.steps.findIndex(function (x, k) { return st.done.indexOf(k) < 0; }) : -1;
+    if (!st || i < 0) { card.hidden = true; return; }
+    $("nextTitle").textContent = st.steps[i][1];
+    $("nextGo").setAttribute("href", st.steps[i][0]);
+    $("nextGo").dataset.i = i;
+    $("nextCount").textContent = "Step " + (st.done.length + 1) + " of " + st.steps.length;
+    card.hidden = false;
+  }
+  $("nextGo").addEventListener("click", function () { markNext(); });
+  $("nextDone").addEventListener("click", function () { markNext(); });
+  function markNext() {
+    var st = store.get("start", null), i = parseInt($("nextGo").dataset.i, 10);
+    if (st && st.done.indexOf(i) < 0) { st.done.push(i); store.set("start", st); }
+    setTimeout(renderNext, 50);
+  }
+  $("nextReset").addEventListener("click", function () { store.set("start", null); renderNext(); location.hash = "start"; });
+  renderNext();
+
+  /* ---------- Was this helpful? ---------- */
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest(".fb button");
+    if (!b) return;
+    var box = b.closest(".fb");
+    countEvent("helpful-" + box.dataset.fb + "-" + b.dataset.v);
+    box.innerHTML = '<p class="small muted">Thank you. This helps us improve Kinav.</p>';
   });
 
   /* ---------- Send to family ---------- */
@@ -770,7 +810,7 @@
   }
   document.addEventListener("click", function (e) {
     var b = e.target.closest("[data-share]");
-    if (b) shareSummary(b.dataset.share);
+    if (b) { shareSummary(b.dataset.share); countEvent("share-" + b.dataset.share); }
   });
 
   /* ---------- Add to home screen ---------- */
@@ -796,6 +836,7 @@
   window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); installEvent = e; showInstall(); });
   window.addEventListener("appinstalled", function () { $("installCard").hidden = true; });
   $("installBtn").addEventListener("click", function () {
+    countEvent("install-tap");
     if (installEvent) { installEvent.prompt(); installEvent = null; return; }
     var list = $("installSteps");
     list.innerHTML = installSteps().map(function (t) { return "<li><span>" + t + "</span></li>"; }).join("");
@@ -924,7 +965,7 @@
     if (a.hours === "35 or more" && a.earn === "No") out.push(["Carer's Allowance", "You", "Worth checking", "You care 35+ hours a week and earn £204 a week or less. The person you care for must get a qualifying benefit, such as Attendance Allowance.", "https://www.gov.uk/carers-allowance"]);
     else out.push(["Carer's Allowance", "You", "Unlikely", "Needs 35+ hours caring a week and earnings of £204 a week or less.", "https://www.gov.uk/carers-allowance/eligibility"]);
     out.push(["Blue Badge", "Them", "Worth checking", "Some non-visible conditions, including dementia, can qualify. See the step-by-step Blue Badge kit in Help.", "https://www.gov.uk/apply-blue-badge"]);
-    out.push(["Carer's assessment", "You", "Likely", "Free from the council for anyone who cares. It can lead to support for you.", "https://www.gov.uk/carers-assessment"]);
+    out.push(["Carer's assessment", "You", "Likely", "Free from the council for anyone who cares. It can lead to support for you.", "https://www.nhs.uk/social-care-and-support/support-and-benefits-for-carers/carer-assessments/"]);
     var pill = { Likely: "pill-good", "Worth checking": "pill-sun", Unlikely: "pill-quiet" };
     var order = { Likely: 0, "Worth checking": 1, Unlikely: 2 };
     out.sort(function (x, y) { return order[x[2]] - order[y[2]]; });
@@ -939,7 +980,7 @@
       out.map(function (o) {
         return '<div class="card"><div class="head"><h3>' + esc(o[0]) + '</h3><span class="pill ' + pill[o[2]] + '">' + esc(o[2]) + "</span></div>" +
           '<p class="tiny muted">For ' + esc(o[1].toLowerCase()) + "</p><p class=\"small\">" + esc(o[3]) + "</p>" +
-          '<a class="small" style="font-weight:600" href="' + o[4] + '" target="_blank" rel="noopener">See GOV.UK ›</a></div>';
+          '<a class="small" style="font-weight:600" href="' + o[4] + '" target="_blank" rel="noopener">' + (o[4].indexOf("nhs.uk") >= 0 ? "See NHS" : "See GOV.UK") + ' ›</a></div>';
       }).join("");
   }
 
@@ -978,6 +1019,8 @@
   });
 
   /* ---------- Articles ---------- */
+  var todayIso = new Date().toISOString().slice(0, 10);
+  KC.articles = KC.articles.filter(function (a) { return !a.from || a.from <= todayIso; });
   var latest = KC.articles[0];
   $("homeArticleMonth").textContent = latest.month + " · " + latest.topic;
   $("homeArticleTitle").textContent = latest.title;

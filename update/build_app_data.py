@@ -133,6 +133,8 @@ def main(codepoint_zip=None):
         regions.setdefault(r["Local authority"] or "Unknown", r["Region"] or "England")
     app_dir = os.path.dirname(OUT)
     urls = build_pages.write(by_la, regions, os.path.join(app_dir, "care"), index["updated"])
+    import build_guides  # guide pages too, so dated monthly articles appear on time
+    build_guides.main(index["updated"])
     print("Area pages: %d, sitemap pages: %d" % (len(urls), build_pages.write_sitemap(app_dir)))
 
 
