@@ -10,6 +10,10 @@ window.KC = {
     { name: "Samaritans", number: "116 123", note: "Any time, day or night. Free." }
   ],
 
+  // Quick pick for Who does what.
+  rotaJobs: ["Visits", "Phone calls", "Food shopping", "Collecting prescriptions", "Lifts and going to appointments", "Bills, post and paperwork",
+    "Cleaning and laundry", "Garden and odd jobs", "Dealing with the council and benefits", "Cover when the main carer is away"],
+
   plans: {
     dementia: { kind: "condition", name: "Dementia", title: "Just diagnosed: dementia", lede: "Your first 30 days after a dementia diagnosis, one step at a time.", groups: [
 

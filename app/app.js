@@ -39,8 +39,8 @@
   };
 
   /* ---------- Screens ---------- */
-  var SCREENS = ["home", "plan", "appts", "care", "costs", "benefits", "help", "kit", "privacy", "terms", "articles", "article", "questions", "stayhome", "start", "house"];
-  var TAB_FOR = { stayhome: "home", start: "home", house: "home", costs: "home", benefits: "home", kit: "help", questions: "help", privacy: "home", terms: "home", articles: "home", article: "home" };
+  var SCREENS = ["home", "plan", "appts", "care", "costs", "benefits", "help", "kit", "privacy", "terms", "articles", "article", "questions", "stayhome", "start", "house", "letters", "rota"];
+  var TAB_FOR = { stayhome: "home", start: "home", house: "home", letters: "home", rota: "home", costs: "home", benefits: "home", kit: "help", questions: "help", privacy: "home", terms: "home", articles: "home", article: "home" };
 
   function show() {
     var hash = (location.hash || "#home").slice(1);
@@ -56,6 +56,8 @@
     if (name === "home") renderHome();
     if (name === "care") initCare();
     if (name === "questions") renderQuestions();
+    if (name === "letters") renderLetter();
+    if (name === "rota") renderRota();
     if (name === "appts") suggestQuestions();
     window.scrollTo(0, 0);
     track(hash);
@@ -822,6 +824,245 @@
     var box = b.closest(".fb");
     countEvent("helpful-" + box.dataset.fb + "-" + b.dataset.v);
     box.innerHTML = '<p class="small muted">Thank you. This helps us improve Kinav.</p>';
+  });
+
+  /* ---------- Letter writer ---------- */
+  // Template letters for England (Care Act 2014). The letter is rebuilt from the boxes as people type.
+  var LT_FIELDS = {
+    them: ["Their name", "text", "e.g. Margaret Jones"],
+    addr: ["Their address", "text", "House, street, town, postcode"],
+    dob: ["Their date of birth (optional)", "text", "e.g. 3 March 1941"],
+    hospital: ["Hospital and ward", "text", "e.g. Ward 7, Royal Free Hospital"],
+    leave: ["When they may leave hospital (optional)", "text", "e.g. Friday 30 October"],
+    need: ["What they're finding hard (optional)", "area", "e.g. washing, getting dressed, cooking, managing medicines"],
+    caring: ["What you do for them (optional)", "area", "e.g. shopping, meals, lifts to appointments, help at night"],
+    hours: ["Hours a week you spend caring (optional)", "text", "e.g. 25"],
+    when: ["Date of the decision (optional)", "text", "e.g. 12 October 2026"],
+    decided: ["What was decided", "area", "e.g. that she isn't eligible for help at home"],
+    why: ["Why you disagree", "area", "e.g. the assessment missed that she falls at night"],
+    happened: ["What happened", "area", "Dates, names and what went wrong"],
+    want: ["What you'd like to happen", "area", "e.g. a new assessment and an apology"],
+    you: ["Your name", "text", "e.g. Sarah Jones"],
+    rel: ["You are their", "text", "e.g. daughter"],
+    contact: ["Your phone or email", "text", "So they can reply to you"],
+    council: ["Council", "text", "e.g. Barnet Council"]
+  };
+  var LT_TICKS = {
+    ot: "Ask for a home safety check by an occupational therapist",
+    carer: "Ask for a carer's assessment for me too",
+    cant: "I can't give all the care they'll need myself",
+    agree: "They know I'm writing for them"
+  };
+  // Ends a typed phrase with one full stop, whatever the person typed.
+  function sent(t) { return t.trim().replace(/[.!?\s]+$/, "") + "."; }
+  var LETTERS = [
+    { id: "needs", name: "Ask for a needs assessment", to: "council",
+      when: "When someone is struggling at home and may need care, equipment or changes to the home. It's free, whatever their savings.",
+      fields: ["them", "addr", "need", "you", "rel", "contact", "council"], ticks: ["ot", "carer", "agree"],
+      subject: "Request for a needs assessment",
+      body: function (v, t) { return [
+        "I'm writing to ask for a needs assessment for " + v.them + " under the Care Act 2014." + (v.addr ? " " + v.them + " lives at " + sent(v.addr) : ""),
+        v.need ? v.them + " is finding it hard to manage with: " + sent(v.need) : "",
+        "I understand the council must assess anyone who appears to need care and support, whatever their income or savings.",
+        t.ot ? "Please include a home safety check by an occupational therapist, so that equipment or small changes to the home can be considered." : "",
+        t.carer ? "I'd also like a carer's assessment for myself." : "",
+        t.agree ? v.them + " knows I'm writing and agrees." : "",
+        "Please contact me to arrange the assessment, and let me know roughly how long it will take."]; } },
+    { id: "carer", name: "Ask for a carer's assessment", to: "council",
+      when: "For you, if you help look after someone. It's free, whatever your income, and they don't need to be getting council help.",
+      fields: ["them", "addr", "caring", "hours", "you", "rel", "contact", "council"], ticks: [],
+      subject: "Request for a carer's assessment",
+      body: function (v) { return [
+        "I'm writing to ask for a carer's assessment for myself under the Care Act 2014.",
+        "I help look after " + v.them + (v.rel ? ", and I'm their " + v.rel.trim() : "") + "." + (v.addr ? " " + v.them + " lives at " + sent(v.addr) : ""),
+        (v.hours ? "I spend about " + v.hours.replace(/\s*hours?.*$/i, "").trim() + " hours a week caring. " : "") + (v.caring ? "This includes: " + sent(v.caring) : ""),
+        "I understand the council must assess any carer who appears to need support, whatever their income, and whether or not the person they care for gets help from the council.",
+        "I'd like to talk about how caring affects my health, work and time for myself, and what support is available.",
+        "Please contact me to arrange the assessment."]; } },
+    { id: "discharge", name: "Plan for leaving hospital", to: "hospital",
+      when: "Before someone comes home from hospital, so the right help is in place first.",
+      fields: ["them", "dob", "hospital", "leave", "you", "rel", "contact"], ticks: ["cant"],
+      subject: "Planning for leaving hospital",
+      body: function (v, t) { return [
+        v.them + " is a patient on " + v.hospital + "." + (v.rel ? " I'm their " + sent(v.rel) : "") + " I'm writing about plans for them to leave hospital" + (v.leave ? ", which may be " + v.leave.trim().replace(/[.!?]+$/, "") : "") + ".",
+        "Before they leave, please:\n- involve " + v.them + " and me in planning their discharge\n- tell us what care and support they will need, and make sure it's arranged before they leave\n- make sure any equipment they need at home is in place\n- give us a written plan, with who to contact if there are problems after they leave",
+        t.cant ? "Please don't assume that I can provide their care. I can't do it all myself, and I'd like to agree what help will be in place before they leave." : "",
+        "I understand that short-term care to help them recover after leaving hospital (reablement) is free for up to six weeks.",
+        "Please keep me updated."]; } },
+    { id: "review", name: "Challenge a council decision", to: "council",
+      when: "If you think an assessment, a care plan or a funding decision is wrong.",
+      fields: ["them", "addr", "when", "decided", "why", "you", "rel", "contact", "council"], ticks: ["agree"],
+      subject: "Request to review a decision",
+      body: function (v, t) { return [
+        "I'm writing about a decision the council made" + (v.when ? " on " + v.when.trim().replace(/[.!?]+$/, "") : "") + " about " + v.them + (v.rel ? ", my " + v.rel.trim() : "") + ".",
+        "The council decided " + sent(v.decided),
+        "We disagree because " + sent(v.why),
+        "Please:\n- send me the decision and the reasons for it in writing, if you haven't already\n- send me a copy of the assessment and any care and support plan\n- review the decision, taking these points into account",
+        t.agree ? v.them + " knows I'm writing and agrees." : "",
+        "If we can't sort this out, I'll make a formal complaint."]; } },
+    { id: "complaint", name: "Make a complaint to the council", to: "complaints",
+      when: "If things have gone wrong with the council's adult social care and asking hasn't fixed it.",
+      fields: ["them", "happened", "want", "you", "rel", "contact", "council"], ticks: ["agree"],
+      subject: "Formal complaint",
+      body: function (v, t) { return [
+        "I'm making a formal complaint about the council's adult social care, about the care and support for " + v.them + (v.rel ? ", my " + v.rel.trim() : "") + ".",
+        "What happened:\n" + v.happened.trim(),
+        "What I'd like to happen:\n" + v.want.trim(),
+        t.agree ? v.them + " knows I'm writing and agrees." : "",
+        "Please acknowledge this complaint within 3 working days, tell me who is dealing with it, and let me know when to expect a full response.",
+        "If I'm still unhappy after your response, I understand I can ask the Local Government and Social Care Ombudsman to look into it."]; } }
+  ];
+
+  function ltState() { return store.get("letter", { id: LETTERS[0].id, v: {}, t: { agree: true, carer: true, ot: true } }); }
+  function ltLetter() { var id = ltState().id; return LETTERS.filter(function (l) { return l.id === id; })[0] || LETTERS[0]; }
+  function ltBuild() {
+    var st = ltState(), l = ltLetter(), v = {};
+    // Empty boxes show as [Their name] and so on, so gaps are easy to spot; optional ones are left out.
+    Object.keys(LT_FIELDS).forEach(function (k) {
+      var val = (st.v[k] || "").trim(), label = LT_FIELDS[k][0];
+      v[k] = val || (/optional/.test(label) || k === "addr" || k === "rel" ? "" : "[" + label.toLowerCase() + "]");
+    });
+    var d = new Date(), date = d.getDate() + " " + ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][d.getMonth()] + " " + d.getFullYear();
+    var to = l.to === "hospital" ? ["The ward manager and discharge team", v.hospital] : [l.to === "complaints" ? "Complaints team, Adult Social Care" : "Adult Social Care", v.council];
+    var dear = l.to === "hospital" ? "Dear ward manager," : l.to === "complaints" ? "Dear complaints team," : "Dear Adult Social Care team,";
+    var re = l.subject + ": " + v.them + (st.v.dob ? ", date of birth " + st.v.dob.trim() : "");
+    return [v.you, v.contact, date, "", to.join("\n"), "", dear, "", re, ""].join("\n") + "\n" +
+      l.body(v, st.t).filter(Boolean).join("\n\n") +
+      "\n\nYours sincerely,\n\n" + v.you + (st.v.rel ? "\n" + st.v.rel.trim().charAt(0).toUpperCase() + st.v.rel.trim().slice(1) + " of " + v.them : "");
+  }
+  function ltRefresh() {
+    var st = ltState();
+    if (st.edited && st.text) { $("ltText").value = st.text; $("ltReset").hidden = false; }
+    else { $("ltText").value = ltBuild(); $("ltReset").hidden = true; }
+    grow($("ltText"));
+  }
+  function renderLetter() {
+    var st = ltState(), l = ltLetter();
+    $("ltPick").value = l.id;
+    $("ltWhen").textContent = l.when;
+    $("ltCopied").hidden = true;
+    $("ltFields").innerHTML = l.fields.map(function (k) {
+      var f = LT_FIELDS[k], val = esc(st.v[k] || "");
+      return '<div class="field"><label for="lt-' + k + '">' + esc(f[0]) + "</label>" + (f[1] === "area"
+        ? '<textarea id="lt-' + k + '" data-k="' + k + '" rows="2" placeholder="' + esc(f[2]) + '">' + val + "</textarea>"
+        : '<input type="text" id="lt-' + k + '" data-k="' + k + '" placeholder="' + esc(f[2]) + '" value="' + val + '" autocomplete="off">') + "</div>";
+    }).join("") + l.ticks.map(function (k) {
+      return '<label class="check"><input type="checkbox" data-t="' + k + '"' + (st.t[k] ? " checked" : "") + "> <span>" + esc(LT_TICKS[k]) + "</span></label>";
+    }).join("");
+    document.querySelectorAll("#ltFields textarea").forEach(grow);
+    ltRefresh();
+  }
+  $("ltPick").innerHTML = LETTERS.map(function (l) { return '<option value="' + l.id + '">' + esc(l.name) + "</option>"; }).join("");
+  $("ltPick").addEventListener("change", function () {
+    var st = ltState(); st.id = $("ltPick").value; st.edited = false; st.text = ""; store.set("letter", st); renderLetter();
+  });
+  $("ltFields").addEventListener("input", function (e) {
+    var st = ltState(), el = e.target;
+    if (el.dataset.k) { st.v[el.dataset.k] = el.value; if (el.tagName === "TEXTAREA") grow(el); }
+    if (el.dataset.t) st.t[el.dataset.t] = el.checked;
+    store.set("letter", st); ltRefresh();
+  });
+  $("ltFields").addEventListener("change", function (e) { if (e.target.dataset.t) $("ltFields").dispatchEvent(new Event("input")); });
+  $("ltText").addEventListener("input", function () {
+    var st = ltState(); st.edited = true; st.text = $("ltText").value; store.set("letter", st);
+    $("ltReset").hidden = false; grow($("ltText"));
+  });
+  $("ltReset").addEventListener("click", function () { var st = ltState(); st.edited = false; st.text = ""; store.set("letter", st); ltRefresh(); });
+  $("ltSend").addEventListener("click", function () {
+    countEvent("letter-" + ltLetter().id);
+    location.href = "mailto:?subject=" + encodeURIComponent(ltLetter().subject + ": " + ((ltState().v.them || "").trim() || "")) + "&body=" + encodeURIComponent($("ltText").value);
+  });
+  $("ltCopy").addEventListener("click", function () {
+    var done = function () { $("ltCopied").hidden = false; };
+    try { navigator.clipboard.writeText($("ltText").value).then(done, done); } catch (e) { done(); }
+  });
+  $("ltPrint").addEventListener("click", function () {
+    $("qPrintOut").innerHTML = '<div style="white-space:pre-wrap">' + esc($("ltText").value) + "</div>";
+    window.print();
+  });
+
+  /* ---------- Who does what ---------- */
+  // A shared-out job list for the family. Saved on this phone only and sent as one message.
+  function rtState() { return store.get("rota", { forWho: "", people: [], jobs: [] }); }
+  function rtSave(st) { store.set("rota", st); }
+  function rtText() {
+    var st = rtState(), who = (st.forWho || "").trim(), groups = {};
+    st.jobs.forEach(function (j) { var k = j.who || ""; (groups[k] = groups[k] || []).push(j.t + (j.when ? " (" + j.when.trim() + ")" : "")); });
+    var lines = st.people.filter(function (p) { return groups[p]; }).map(function (p) { return p + ": " + groups[p].join(", "); });
+    if (groups[""]) lines.push("Not decided yet: " + groups[""].join(", "));
+    return "Who does what" + (who ? " for " + who : "") + "\n\n" + lines.join("\n") + "\n\nMade with Kinav, free help for families: https://kinav.co.uk";
+  }
+  function renderRota() {
+    var st = rtState();
+    $("rtFor").value = st.forWho || "";
+    $("rtCopied").hidden = true;
+    $("rtPeople").innerHTML = st.people.length ? st.people.map(function (p, i) {
+      return '<button class="chip" type="button" data-rm="' + i + '" aria-label="Remove ' + esc(p) + '">' + esc(p) + " ✕</button>";
+    }).join("") : '<p class="small muted">Add everyone who could help, including yourself.</p>';
+    var opts = function (sel) {
+      return '<option value="">Not decided yet</option>' + st.people.map(function (p) { return '<option' + (p === sel ? " selected" : "") + ">" + esc(p) + "</option>"; }).join("");
+    };
+    $("rtJobs").innerHTML = st.jobs.map(function (j, i) {
+      return '<div class="rjob' + (j.who ? " set" : "") + '"><div class="head"><b>' + esc(j.t) + '</b><button class="linkbtn tiny" type="button" data-rmjob="' + i + '">Remove</button></div>' +
+        '<div class="row2"><select data-who="' + i + '" aria-label="Who does ' + esc(j.t) + '">' + opts(j.who) + "</select>" +
+        '<input type="text" data-when="' + i + '" value="' + esc(j.when || "") + '" placeholder="When? e.g. Saturdays" aria-label="When" autocomplete="off"></div></div>';
+    }).join("");
+    $("rtUsual").hidden = st.jobs.length > 0;
+    var undecided = st.jobs.filter(function (j) { return !j.who; }).length;
+    $("rtCount").textContent = st.jobs.length ? (st.jobs.length - undecided) + " of " + st.jobs.length + " shared out" : "";
+    var each = st.people.map(function (p) { return p + " " + st.jobs.filter(function (j) { return j.who === p; }).length; });
+    $("rtEach").hidden = !st.people.length || !st.jobs.length;
+    $("rtEach").textContent = "Jobs each: " + each.join(" · ");
+  }
+  function rtAdd(input, key) {
+    var t = $(input).value.trim(), st = rtState();
+    if (!t) return;
+    if (key === "people") { if (st.people.indexOf(t) < 0) st.people.push(t); }
+    else st.jobs.push({ t: t, who: "", when: "" });
+    rtSave(st); $(input).value = ""; renderRota(); $(input).focus();
+  }
+  $("rtAddName").addEventListener("click", function () { rtAdd("rtName", "people"); });
+  $("rtAddJob").addEventListener("click", function () { rtAdd("rtJob", "jobs"); });
+  $("rtName").addEventListener("keydown", function (e) { if (e.key === "Enter") rtAdd("rtName", "people"); });
+  $("rtJob").addEventListener("keydown", function (e) { if (e.key === "Enter") rtAdd("rtJob", "jobs"); });
+  $("rtFor").addEventListener("input", function () { var st = rtState(); st.forWho = $("rtFor").value; rtSave(st); });
+  $("rtUsual").addEventListener("click", function () {
+    var st = rtState();
+    KC.rotaJobs.forEach(function (t) { if (!st.jobs.some(function (j) { return j.t === t; })) st.jobs.push({ t: t, who: "", when: "" }); });
+    rtSave(st); renderRota();
+  });
+  $("rtPeople").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-rm]"); if (!b) return;
+    var st = rtState(), name = st.people[+b.dataset.rm];
+    st.people.splice(+b.dataset.rm, 1);
+    st.jobs.forEach(function (j) { if (j.who === name) j.who = ""; });
+    rtSave(st); renderRota();
+  });
+  $("rtJobs").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-rmjob]"); if (!b) return;
+    var st = rtState(); st.jobs.splice(+b.dataset.rmjob, 1); rtSave(st); renderRota();
+  });
+  $("rtJobs").addEventListener("change", function (e) {
+    var i = e.target.dataset.who; if (i == null) return;
+    var st = rtState(); st.jobs[+i].who = e.target.value; rtSave(st); renderRota();
+  });
+  $("rtJobs").addEventListener("input", function (e) {
+    var i = e.target.dataset.when; if (i == null) return;
+    var st = rtState(); st.jobs[+i].when = e.target.value; rtSave(st);
+  });
+  $("rtSend").addEventListener("click", function () {
+    countEvent("share-rota");
+    var text = rtText();
+    if (navigator.share) { navigator.share({ title: "Who does what", text: text }).catch(function () {}); return; }
+    window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener");
+  });
+  $("rtCopy").addEventListener("click", function () {
+    var done = function () { $("rtCopied").hidden = false; };
+    try { navigator.clipboard.writeText(rtText()).then(done, done); } catch (e) { done(); }
+  });
+  $("rtClear").addEventListener("click", function () {
+    if (!confirm("Start a new list? This clears the names and jobs on this phone.")) return;
+    rtSave({ forWho: "", people: [], jobs: [] }); renderRota();
   });
 
   /* ---------- Send to family ---------- */
