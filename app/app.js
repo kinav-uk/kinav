@@ -8,6 +8,23 @@
     });
   };
   var gbp = function (n) { return "£" + Math.round(n).toLocaleString("en-GB"); };
+  // Makes UK phone numbers in already-escaped text tappable: 0800 888 6678, 116 123, NHS 111 and 999.
+  var telLinks = function (html) {
+    return html.replace(/(^|[^£\d.,])(0\d{3}(?: ?\d){6,7}|116 123|NHS 111|999)(?![\d,])/g, function (m, pre, num) {
+      return pre + '<a class="tel" href="tel:' + num.replace(/\D/g, "") + '">' + num + "</a>";
+    });
+  };
+  // Phone numbers sit inside tick-off buttons and card links: let a tap call, not tick or open.
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("a.tel, .phone[data-tel]");
+    if (!t) return;
+    e.stopPropagation();
+    if (t.dataset.tel) { e.preventDefault(); location.href = "tel:" + t.dataset.tel; }
+  }, true);
+  Array.prototype.forEach.call(document.querySelectorAll("span.phone"), function (n) {
+    n.dataset.tel = n.textContent.replace(/\D/g, "");
+    n.setAttribute("role", "link");
+  });
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   // Everything personal stays in this browser. Storage can be blocked, so never rely on it.
@@ -107,7 +124,7 @@
           return '<button class="task" type="button" data-id="' + it.id + '" aria-pressed="' + d + '">' +
             '<span class="box" aria-hidden="true">' + (d ? tick() : "") + "</span>" +
             '<span class="stack-sm" style="gap:2px"><span class="tt">' + esc(it.text) + "</span>" +
-            (it.note ? '<span class="small muted">' + esc(it.note) + "</span>" : "") + "</span></button>";
+            (it.note ? '<span class="small muted">' + telLinks(esc(it.note)) + "</span>" : "") + "</span></button>";
         }).join("") + "</div>";
     }).join("");
     var st = planStats(key);
@@ -373,6 +390,19 @@
       return "- " + t.items[i] + (n ? "\n  " + n : "");
     }).join("\n");
   }
+  $("qSend").addEventListener("click", function () {
+    countEvent("share-questions");
+    if (navigator.share) { navigator.share({ title: qTopic().name, text: qText() }).catch(function () {}); return; }
+    location.href = "mailto:?subject=" + encodeURIComponent(qTopic().name) + "&body=" + encodeURIComponent(qText());
+  });
+  $("qPrint").addEventListener("click", function () {
+    var t = qTopic(), st = qState(), box = $("qPrintOut");
+    box.innerHTML = "<h1>" + esc(t.name) + "</h1><ol>" + st.picked.map(function (i) {
+      var n = (st.notes[i] || "").trim();
+      return "<li><b>" + esc(t.items[i]) + "</b><p>" + (n ? esc(n) : "&nbsp;") + "</p></li>";
+    }).join("") + "</ol><p>From Kinav, free help for families: kinav.co.uk</p>";
+    window.print();
+  });
   $("qCopy").addEventListener("click", function () {
     var done = function () { $("qCopied").hidden = false; };
     try { navigator.clipboard.writeText(qText()).then(done, done); } catch (e) { done(); }
@@ -1008,9 +1038,15 @@
 
   function kitDone(id) { return store.get("kit." + id, {}); }
 
-  $("kitList").innerHTML = KC.kits.map(function (k) {
-    return '<a class="card" style="text-decoration:none;color:inherit" href="#kit-' + k.id + '"><div class="head"><h3>' + esc(k.name) + '</h3><span class="tiny" style="color:var(--accent);font-weight:600;white-space:nowrap">' + k.steps.length + " steps ›</span></div>" +
-      '<p class="small muted">' + esc(k.what) + "</p></a>";
+  // Kits grouped under short headings, in the order they first appear in content.js.
+  var kitGroups = [];
+  KC.kits.forEach(function (k) { if (kitGroups.indexOf(k.group) < 0) kitGroups.push(k.group); });
+  $("kitList").innerHTML = kitGroups.map(function (g) {
+    return '<div class="stack-sm"><h2 style="color:var(--accent);font-size:16px">' + esc(g) + "</h2>" +
+      KC.kits.filter(function (k) { return k.group === g; }).map(function (k) {
+        return '<a class="card" style="text-decoration:none;color:inherit" href="#kit-' + k.id + '"><div class="head"><h3>' + esc(k.name) + '</h3><span class="tiny" style="color:var(--accent);font-weight:600;white-space:nowrap">' + k.steps.length + " steps ›</span></div>" +
+          '<p class="small muted">' + esc(k.what) + "</p></a>";
+      }).join("") + "</div>";
   }).join("");
 
   function renderKit(id) {
@@ -1022,7 +1058,7 @@
     $("kitSteps").innerHTML = k.steps.map(function (s, i) {
       var d = !!done[i];
       return '<button class="task kitstep" type="button" data-i="' + i + '" data-done="' + d + '" aria-pressed="' + d + '">' +
-        '<span class="n" aria-hidden="true">' + (d ? tick() : i + 1) + '</span><span class="stack-sm" style="gap:2px"><span class="tt">' + esc(s.t) + '</span><span class="small muted">' + esc(s.d) + "</span></span></button>";
+        '<span class="n" aria-hidden="true">' + (d ? tick() : i + 1) + '</span><span class="stack-sm" style="gap:2px"><span class="tt">' + esc(s.t) + '</span><span class="small muted">' + telLinks(esc(s.d)) + "</span></span></button>";
     }).join("");
     $("kitSteps").dataset.kit = id;
   }
@@ -1053,8 +1089,8 @@
       '<div class="stack-sm"><span class="eyebrow">' + esc(a.month + " · " + a.topic) + "</span><h1>" + esc(a.title) + '</h1><p class="lede">' + esc(a.intro) + "</p></div>" +
       a.sections.map(function (sec) {
         return '<div class="stack-sm"><h2>' + esc(sec.h) + "</h2>" +
-          (sec.p || []).map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("") +
-          (sec.list ? '<ul class="plain">' + sec.list.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul>" : "") + "</div>";
+          (sec.p || []).map(function (t) { return "<p>" + telLinks(esc(t)) + "</p>"; }).join("") +
+          (sec.list ? '<ul class="plain">' + sec.list.map(function (t) { return "<li>" + telLinks(esc(t)) + "</li>"; }).join("") + "</ul>" : "") + "</div>";
       }).join("") +
       (a.plan && KC.plans[a.plan] ? '<a class="btn btn-primary" href="#plan" data-plan="' + a.plan + '">Open the ' + esc(KC.plans[a.plan].name) + " 30-day plan</a>" : "") +
       '<div class="stack-sm"><h3>Sources</h3><ul class="plain tiny">' + a.sources.map(function (src) {

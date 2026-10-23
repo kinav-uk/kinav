@@ -10,6 +10,7 @@ Each page links into the app, where people can tick steps off or use the tools.
 """
 import json
 import os
+import re
 import shutil
 
 import build_pages
@@ -65,6 +66,14 @@ PLAN_CHARITY = {
     "diabetes": ("Diabetes UK", "https://www.diabetes.org.uk/"), "afterfall": ("NHS: falls", "https://www.nhs.uk/conditions/falls/"),
     "delirium": GOV_CARE,
 }
+
+
+TEL = re.compile(r"(^|[^\u00a3\d.,])(0\d{3}(?: ?\d){6,7}|116 123|NHS 111|999)(?![\d,])")
+
+
+def tel(html_text):
+    """Make UK phone numbers in already-escaped text tappable (same rule as the app)."""
+    return TEL.sub(lambda m: '%s<a href="tel:%s">%s</a>' % (m.group(1), re.sub(r"\D", "", m.group(2)), m.group(2)), html_text)
 
 
 def sources_html(items):
@@ -134,7 +143,7 @@ def crumbs(*parts):
 
 def kit_page(k, updated):
     path = "/guides/%s/" % KIT_PAGES[k["id"]]
-    steps = "".join('<li><b>%s</b><br><span class="muted">%s</span></li>' % (e(s["t"]), e(s["d"])) for s in k["steps"])
+    steps = "".join('<li><b>%s</b><br><span class="muted">%s</span></li>' % (e(s["t"]), tel(e(s["d"]))) for s in k["steps"])
     body = [crumbs(), '<div class="stack-sm"><h1>%s</h1><p class="lede">%s</p></div>' % (e(k["name"]), e(k["what"])),
             cta("Tick off each step as you go in the free Kinav app.", "/#kit-%s" % k["id"], "Open this checklist"),
             '<section class="panel"><h2>Step by step</h2><ol class="steps">%s</ol></section>' % steps,
@@ -147,7 +156,7 @@ def kit_page(k, updated):
 def plan_page(key, p, updated):
     path = "/plans/%s/" % PLAN_PAGES[key]
     groups = "".join('<section class="panel"><h2>%s</h2><ul class="steps">%s</ul></section>' % (
-        e(g["title"]), "".join('<li><b>%s</b>%s</li>' % (e(i["text"]), '<br><span class="muted">%s</span>' % e(i["note"]) if i.get("note") else "")
+        e(g["title"]), "".join('<li><b>%s</b>%s</li>' % (e(i["text"]), '<br><span class="muted">%s</span>' % tel(e(i["note"])) if i.get("note") else "")
                                for i in g["items"])) for g in p["groups"])
     body = [crumbs(("30-day plans", "/guides/#plans")),
             '<div class="stack-sm"><h1>%s</h1><p class="lede">%s</p></div>' % (e(p["title"]), e(p["lede"])),
@@ -161,8 +170,8 @@ def plan_page(key, p, updated):
 def article_page(a, plans, updated):
     path = "/articles/%s/" % a["id"]
     secs = "".join('<section class="stack-sm"><h2>%s</h2>%s%s</section>' % (
-        e(s["h"]), "".join("<p>%s</p>" % e(t) for t in s.get("p", [])),
-        '<ul>%s</ul>' % "".join("<li>%s</li>" % e(t) for t in s["list"]) if s.get("list") else "") for s in a["sections"])
+        e(s["h"]), "".join("<p>%s</p>" % tel(e(t)) for t in s.get("p", [])),
+        '<ul>%s</ul>' % "".join("<li>%s</li>" % tel(e(t)) for t in s["list"]) if s.get("list") else "") for s in a["sections"])
     plan = plans.get(a.get("plan"))
     body = [crumbs(("Articles", "/guides/#articles")),
             '<div class="stack-sm"><p class="tiny muted">%s · %s</p><h1>%s</h1><p class="lede">%s</p></div>' % (
@@ -223,7 +232,7 @@ def specialist_page(updated):
     path = "/ask-a-specialist/"
     groups = "".join('<section class="panel"><h2>%s</h2>%s</section>' % (e(cond), "".join(
         '<div class="stack-sm"><h3><a href="%s" rel="noopener" target="_blank">%s</a></h3><p><b>%s</b></p><p class="small muted">%s</p></div>' % (
-            e(url), e(name), e(num), e(note)) for name, num, url, note in lines)) for cond, lines in SPECIALISTS)
+            e(url), e(name), tel(e(num)), e(note)) for name, num, url, note in lines)) for cond, lines in SPECIALISTS)
     faq = "".join('<details class="panel"><summary><b>%s</b></summary><p>%s</p></details>' % (e(q), e(a)) for q, a in FAQS)
     schema = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in FAQS]}

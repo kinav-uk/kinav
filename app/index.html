@@ -189,6 +189,14 @@ input[type="text"], input[type="number"], input[type="date"], input[type="time"]
 .warn svg { flex: none; color: var(--sun-fg); margin-top: 2px; }
 .actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .phone { font-variant-numeric: tabular-nums; user-select: all; }
+a.tel, .phone[data-tel] { color: var(--accent); font-weight: 600; text-decoration: underline; cursor: pointer; white-space: nowrap; }
+#qPrintOut { display: none; }
+@media print {
+  body > *:not(#qPrintOut) { display: none !important; }
+  #qPrintOut { display: block; color: #000; font: 14pt/1.5 Georgia, serif; }
+  #qPrintOut li { margin-bottom: 18pt; }
+  #qPrintOut li p { border-bottom: 1px solid #999; min-height: 40pt; margin: 6pt 0 0; }
+}
 
 .out { background: var(--surface); border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
 .big { font-family: var(--font-display); font-size: 40px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
@@ -360,7 +368,7 @@ html.big body { zoom: 1.15; }
   <footer class="homefoot">
     <p><a href="#help"><b>Struggling right now? Get help</b></a></p>
     <p><button class="linkbtn" type="button" id="bigText" aria-pressed="false">Larger text</button> · <a href="#privacy">Privacy</a> · <a href="#terms">Terms</a></p>
-    <p class="tiny muted"><span id="lastUpdated" data-built="2026-10-23">Last updated 23 October 2026</span>. General information only, not health or medical advice. In an emergency, call 999.</p>
+    <p class="tiny muted"><span id="lastUpdated" data-built="2026-10-24">Last updated 24 October 2026</span>. General information only, not health or medical advice. In an emergency, call 999.</p>
   </footer>
 </section>
 
@@ -778,8 +786,8 @@ html.big body { zoom: 1.15; }
 <section class="screen" id="s-help" hidden>
   <div class="card crisis">
     <h2>Struggling right now?</h2>
+    <p class="small"><b>In an emergency, call <a class="tel" href="tel:999">999</a>.</b> For urgent advice, call <a class="tel" href="tel:111">NHS 111</a>.</p>
     <div class="stack-sm" id="helplines"></div>
-    <p class="small muted">In an emergency, call 999.</p>
   </div>
   <a class="card" href="#questions" style="text-decoration:none;color:inherit"><h3>Questions to ask ›</h3><span class="small muted">Pick the questions for a care home visit, home care agency, council assessment, hospital discharge or appointment, then write the answers.</span></a>
   <div class="stack-sm">
@@ -835,11 +843,11 @@ html.big body { zoom: 1.15; }
   <div class="stack-sm" id="qList"></div>
   <p class="small muted" id="qEmpty" hidden>No questions chosen yet. Untick "Show only my questions" and tap the ones you want.</p>
   <div class="actions">
-    <button class="btn btn-primary" type="button" id="qCopy">Copy questions and notes</button>
+    <button class="btn btn-primary" type="button" id="qSend">Send to my phone or email</button>
     <button class="btn btn-ghost" type="button" id="qToAppt">Add to an appointment</button>
   </div>
+  <p class="small"><button class="linkbtn" type="button" id="qPrint">Print</button> · <button class="linkbtn" type="button" id="qCopy">Copy</button> · <button class="linkbtn" type="button" id="qClear">Clear this list</button></p>
   <p class="small" id="qCopied" hidden>Copied. Paste it into an email or message.</p>
-  <button class="linkbtn small" type="button" id="qClear">Clear this list</button>
   <p class="small muted">More detailed question lists are coming soon.</p>
   <p class="note">Your chosen questions and notes are saved only on this phone. Kinav doesn't see them. Questions to ask, not health advice.</p>
   <div class="fb" data-fb="questions"><p>Was this helpful?</p><button type="button" data-v="yes">Yes</button><button type="button" data-v="no">No</button></div>
@@ -981,9 +989,11 @@ html.big body { zoom: 1.15; }
   </nav>
 </div>
 
+<div id="qPrintOut" aria-hidden="true"></div>
+
 <script id="gcScript" data-goatcounter="https://kinav.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="https://gc.zgo.at/count.js"></script>
-<script src="content.js?v=3c88eab1bf"></script>
-<script src="app.js?v=891d422d9b"></script>
+<script src="content.js?v=55c162b2f1"></script>
+<script src="app.js?v=f1e564dcbc"></script>
 
 </body>
 </html>

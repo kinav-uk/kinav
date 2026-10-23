@@ -139,7 +139,7 @@ window.KC = {
   ],
 
   kits: [
-    { id: "home-choice", name: "Choosing a nursing home", what: "Shortlist, visit and ask the right questions.", steps: [
+    { id: "home-choice", group: "Arranging care", name: "Choosing a nursing home", what: "Shortlist, visit and ask the right questions.", steps: [
       { t: "Ask the council for a free needs assessment", d: "It confirms what level of care is needed. Anyone can ask, whatever their savings." },
       { t: "Work out how it will be paid for", d: "Use the Care costs tool. If savings are above £23,250 they will usually pay their own fees at first. Ask the council for a financial assessment either way." },
       { t: "Shortlist 3 to 5 homes", d: "Use Find care, filter to nursing homes and dementia care if needed, and read each home's latest CQC report." },
@@ -150,7 +150,7 @@ window.KC = {
       { t: "Read the contract before signing", d: "Use the Before you sign kit." },
       { t: "Plan the move", d: "Bring familiar things and photos, label clothes, and tell the GP, pharmacy, bank and pension providers about the new address." }
     ]},
-    { id: "home-care", name: "Setting up care at home", what: "Compare agencies and agree a care plan.", steps: [
+    { id: "home-care", group: "Arranging care", name: "Setting up care at home", what: "Compare agencies and agree a care plan.", steps: [
       { t: "Ask the council for a free needs assessment", d: "Ask about reablement too: free short-term support at home, usually for up to 6 weeks." },
       { t: "List what help is needed", d: "Write down the times of day and tasks, for example getting up and washed, lunch and medication, help to bed." },
       { t: "Find 3 agencies", d: "Use Find care with \"Care at home\", and read each agency's latest CQC report." },
@@ -160,7 +160,7 @@ window.KC = {
       { t: "Be there for the first visits", d: "Leave a notebook at home for carers and family to write in." },
       { t: "Review after a month", d: "Ask the council for a review if needs change." }
     ]},
-    { id: "live-in", name: "Arranging live-in care", what: "Find, check and plan cover for a live-in carer.", steps: [
+    { id: "live-in", group: "Arranging care", name: "Arranging live-in care", what: "Find, check and plan cover for a live-in carer.", steps: [
       { t: "Choose the type of service", d: "A managed service employs the carer and must be registered with CQC. An introductory agency only introduces carers, so you take on more responsibility." },
       { t: "Check the space", d: "A live-in carer needs their own bedroom." },
       { t: "Compare the cost", d: "Ask for the weekly fee and put it into the Care costs tool to see how long savings last." },
@@ -169,7 +169,7 @@ window.KC = {
       { t: "Tell the home insurer", d: "Let them know someone else will be living in the home." },
       { t: "Review after the first month", d: "Check the care plan still fits." }
     ]},
-    { id: "safety", name: "Home safety and grants", what: "Free OT assessment, free equipment and grants.", steps: [
+    { id: "safety", group: "Hospital and safety", name: "Home safety and grants", what: "Free OT assessment, free equipment and grants.", steps: [
       { t: "Ask for a free OT home assessment", d: "Call the council's adult social care team and ask for an occupational therapist to assess the home." },
       { t: "Ask what equipment is free", d: "In England, councils should provide equipment and small adaptations costing under £1,000 free of charge." },
       { t: "Ask about a Disabled Facilities Grant", d: "Up to £30,000 in England for bigger changes such as a stairlift or level-access shower. It is means-tested." },
@@ -177,7 +177,7 @@ window.KC = {
       { t: "Consider a fall alarm", d: "Ask the council about telecare, such as a pendant alarm or fall detector. See the Fall alarms and home cameras kit." },
       { t: "Use trusted traders", d: "Ask the council about its trusted trader scheme, and get 2 or 3 written quotes." }
     ]},
-    { id: "alarms", name: "Fall alarms and home cameras", what: "Get help quickly after a fall, and use cameras with care.", steps: [
+    { id: "alarms", group: "Hospital and safety", name: "Fall alarms and home cameras", what: "Get help quickly after a fall, and use cameras with care.", steps: [
       { t: "Ask the council about a personal alarm", d: "Most councils run a telecare or lifeline service: a button worn on the wrist or neck that calls a 24-hour team. Ask during the needs assessment or OT visit. There is usually a weekly charge." },
       { t: "Choose the right type of alarm", d: "A button they press; an automatic fall detector that calls for help even if they can't press it; a GPS alarm if they go out alone; or a smartwatch with fall detection. If they might forget to press a button, choose automatic fall detection." },
       { t: "Pick who responds", d: "Give the alarm service 2 or 3 people who live nearby and can get there quickly. Some services offer their own responders if family is far away." },
@@ -189,7 +189,7 @@ window.KC = {
       { t: "Tell carers about any cameras", d: "Let care workers and the agency know where cameras are and why. Recording people without telling them damages trust." },
       { t: "Keep the cameras private and secure", d: "Change the default password and turn on two-step login. If a camera films beyond their property, such as the street or a neighbour's garden, data protection law applies, so point cameras inside the home." }
     ]},
-    { id: "hospital", name: "Leaving hospital", what: "Make sure the right help is in place at home.", steps: [
+    { id: "hospital", group: "Hospital and safety", name: "Leaving hospital", what: "Make sure the right help is in place at home.", steps: [
       { t: "Ask who is planning the discharge", d: "Ask the ward for the name of the person coordinating it, and for the discharge plan." },
       { t: "Be clear about what you can do", d: "If you can't provide care, say so. Don't let the plan assume family will cover." },
       { t: "Ask about free short-term care", d: "Ask about reablement or intermediate care to help them recover at home." },
@@ -198,7 +198,7 @@ window.KC = {
       { t: "Sort out medicines", d: "Ask for a list of medicines, who will collect them, and whether the pharmacy can provide blister packs." },
       { t: "Check the follow-up", d: "Make sure the GP has the discharge letter, and ask whether a district nurse will visit." }
     ]},
-    { id: "blue-badge", name: "Applying for a Blue Badge", what: "Parking closer to where they need to go. England's rules.", steps: [
+    { id: "blue-badge", group: "Money, rights and forms", name: "Applying for a Blue Badge", what: "Parking closer to where they need to go. England's rules.", steps: [
       { t: "Check if they qualify automatically", d: "They do if they get the higher rate mobility part of DLA; PIP with 8 points or more for \"moving around\"; PIP with 10 points for descriptor E under \"planning and following journeys\"; are registered blind (severely sight impaired); or get War Pensioners' Mobility Supplement or certain Armed Forces compensation. Attendance Allowance on its own doesn't count." },
       { t: "If not, they may still qualify", d: "The council decides. For example, if walking is very difficult because of pain, breathlessness or the time it takes, or isn't safe for them. Non-visible conditions can count too, such as being a serious risk near traffic, struggling severely to plan or follow a journey, or becoming extremely anxious in public places." },
       { t: "Gather the documents", d: "A recent head-and-shoulders digital photo. A photo or scan of proof of identity (birth certificate, passport or driving licence) and proof of address (Council Tax bill or a recent government letter). Their National Insurance number, any benefit award letter (for PIP, the scores), and the current badge details if renewing." },
@@ -210,7 +210,7 @@ window.KC = {
       { t: "Use it the right way", d: "The badge is theirs: use it only when they're travelling in the car, as driver or passenger. Show it on the dashboard, with the clock where needed. Misuse can mean a fine of up to £1,000." },
       { t: "Set a renewal reminder", d: "Badges usually last up to 3 years, and you must reapply before it runs out. In Calendar, choose Reminder, then Blue Badge renewal, and it will remind you 12 weeks before." }
     ]},
-    { id: "contract", name: "Before you sign a care home contract", what: "Fees, increases, top-ups and notice.", steps: [
+    { id: "contract", group: "Money, rights and forms", name: "Before you sign a care home contract", what: "Fees, increases, top-ups and notice.", steps: [
       { t: "Get the contract in advance", d: "Ask for it before moving day, and take time to read it." },
       { t: "Check the fees", d: "What is the weekly fee, and what costs extra, such as hairdressing, trips or toiletries?" },
       { t: "Check how fees go up", d: "How often do fees rise, by how much, and how much notice do they give?" },
