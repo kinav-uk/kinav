@@ -55,8 +55,11 @@ def page(path, title, description, body, updated, kind="care"):
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{site}{path}">
+<meta property="og:image" content="{site}/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#1f5f7a">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/site.css">
 </head>
 <body>
