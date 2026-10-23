@@ -804,10 +804,27 @@
   });
   showInstall();
 
+  // Header button: "Get the app" until Kinav is on the home screen, then a text-size switch.
+  function isStandalone() { return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || navigator.standalone; }
+  function setHdr() { $("hdrBtn").textContent = isStandalone() ? (store.get("bigtext", false) ? "Normal text" : "Larger text") : "Get the app"; }
+  $("hdrBtn").addEventListener("click", function () {
+    if (isStandalone()) { $("bigText").click(); setHdr(); return; }
+    if (installEvent) { installEvent.prompt(); installEvent = null; return; }
+    location.hash = "home";
+    setTimeout(function () {
+      var list = $("installSteps");
+      list.innerHTML = installSteps().map(function (t) { return "<li><span>" + t + "</span></li>"; }).join("");
+      list.hidden = false;
+      $("installCard").hidden = false;
+      $("installCard").scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 150);
+  });
+
   /* ---------- Larger text ---------- */
   function applyBig(on) { document.documentElement.classList.toggle("big", on); $("bigText").setAttribute("aria-pressed", String(on)); $("bigText").textContent = on ? "Normal text" : "Larger text"; }
   applyBig(store.get("bigtext", false));
-  $("bigText").addEventListener("click", function () { var on = !store.get("bigtext", false); store.set("bigtext", on); applyBig(on); });
+  $("bigText").addEventListener("click", function () { var on = !store.get("bigtext", false); store.set("bigtext", on); applyBig(on); setHdr(); });
+  setHdr();
 
   /* ---------- Stay at home plan ---------- */
   // Five yes/no questions build a list of practical next steps. Nothing is saved.

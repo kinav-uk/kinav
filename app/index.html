@@ -257,6 +257,10 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 .start-main span { font-size: 14px; }
 .s-care { --tc: var(--accent); } .s-home { --tc: var(--good); } .s-cost { --tc: var(--sun); } .s-ben { --tc: var(--sun); } .s-house { --tc: var(--bad-line); } .s-kits { --tc: var(--accent); }
 html.big body { zoom: 1.15; }
+.hdr-btn { font: inherit; font-size: 13.5px; font-weight: 700; padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--accent); background: var(--surface); color: var(--accent); cursor: pointer; white-space: nowrap; }
+.usp { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.usp li { display: flex; gap: 8px; align-items: baseline; font-size: 14.5px; font-weight: 600; }
+.usp li::before { content: "✓"; color: var(--good); font-weight: 800; }
 .install-steps { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; counter-reset: st; }
 .install-steps li { counter-increment: st; display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: center; background: var(--sunk); border-radius: 12px; padding: 10px 12px; font-size: 15px; }
 .install-steps li::before { content: counter(st); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--accent-fg); font-weight: 800; }
@@ -277,13 +281,18 @@ html.big body { zoom: 1.15; }
 
 <div class="app">
 
-  <header class="brand"><a class="brand-mark" href="#home" aria-label="Kinav home"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="112" fill="#1f5f7a"/><circle cx="256" cy="256" r="140" fill="none" stroke="#f2c14e" stroke-width="40"/><circle cx="256" cy="116" r="38" fill="#ffffff"/><circle cx="377" cy="326" r="38" fill="#ffffff"/><circle cx="135" cy="326" r="38" fill="#ffffff"/></svg><b>Kinav</b></a><span class="tiny muted">Free for families</span></header>
+  <header class="brand"><a class="brand-mark" href="#home" aria-label="Kinav home"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="112" fill="#1f5f7a"/><circle cx="256" cy="256" r="140" fill="none" stroke="#f2c14e" stroke-width="40"/><circle cx="256" cy="116" r="38" fill="#ffffff"/><circle cx="377" cy="326" r="38" fill="#ffffff"/><circle cx="135" cy="326" r="38" fill="#ffffff"/></svg><b>Kinav</b></a><button class="hdr-btn" type="button" id="hdrBtn">Get the app</button></header>
 
 <!-- Home -->
 <section class="screen" id="s-home">
   <div class="stack-sm">
     <h1>Caring for an older parent?</h1>
-    <p class="lede">Free help for families in England: care homes and care at home rated Good or Outstanding by CQC, care costs, benefits and clear steps, all in one place.</p>
+    <p class="lede">Good local care, real costs and clear next steps, all in one place.</p>
+    <ul class="usp" aria-label="Why Kinav">
+      <li>Only care rated Good or Outstanding</li>
+      <li>Care homes can't pay to be listed</li>
+      <li>No sign-up, nothing about your family stored</li>
+    </ul>
   </div>
   <div class="card" id="areaCard">
     <label class="label" for="homePostcode">Where does the person you care for live?</label>
@@ -910,7 +919,7 @@ html.big body { zoom: 1.15; }
 
 <script id="gcScript" data-goatcounter="https://kinav.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="https://gc.zgo.at/count.js"></script>
 <script src="content.js?v=d92513702d"></script>
-<script src="app.js?v=d0a78df787"></script>
+<script src="app.js?v=8f165954d3"></script>
 
 </body>
 </html>
