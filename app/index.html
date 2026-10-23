@@ -276,6 +276,8 @@ html.big body { zoom: 1.15; }
 .trust li { background: var(--surface); border-radius: 14px; padding: 10px; display: flex; flex-direction: column; gap: 2px; text-align: center; }
 .trust b { font-size: 14px; color: var(--accent); }
 .trust span { font-size: 12.5px; color: var(--muted); line-height: 1.35; }
+.homefoot { display: flex; flex-direction: column; gap: 6px; text-align: center; font-size: 15px; padding-top: 4px; }
+.homefoot p { margin: 0; }
 .hdr-btn { font: inherit; font-size: 13.5px; font-weight: 700; padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--accent); background: var(--surface); color: var(--accent); cursor: pointer; white-space: nowrap; }
 .usp { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
 .usp li { display: flex; gap: 8px; align-items: baseline; font-size: 14.5px; font-weight: 600; }
@@ -322,7 +324,7 @@ html.big body { zoom: 1.15; }
     <a class="stile s-house" href="#house"><span class="sico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M12 13v4M10 15h4"/></svg></span><b>Will they have to sell the house?</b><span>The rules in plain English</span></a>
     <a class="stile s-kits" href="#help"><span class="sico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><b>Kits and questions to ask</b><span>Step by step, with what to say</span></a>
   </nav>
-  <div class="card" id="areaCard">
+  <div class="card" id="areaCard" hidden>
     <label class="label" for="homePostcode">Where does the person you care for live?</label>
     <div class="row2">
       <input type="text" id="homePostcode" placeholder="Postcode, e.g. BR1 3AA" autocomplete="postal-code">
@@ -338,27 +340,17 @@ html.big body { zoom: 1.15; }
     <select id="homePick" class="pick"></select>
     <a class="btn btn-sm" href="#plan" id="homePlanOpen">Open my plan</a>
   </div>
-  <a class="card" id="homeArticle" href="#articles" style="text-decoration:none;color:inherit">
-    <span class="eyebrow" id="homeArticleMonth">This month</span>
-    <h3 id="homeArticleTitle"></h3>
-    <span class="small" style="color:var(--accent);font-weight:600">Read the article ›</span>
-  </a>
-  <a class="btn btn-ghost" href="#help">I'm struggling: talk to someone now</a>
   <div class="card" id="installCard" hidden>
     <h3>Add Kinav to your home screen</h3>
     <p class="small" id="installHow"></p>
     <button class="btn btn-primary" type="button" id="installBtn">Add to home screen</button>
     <ol class="install-steps" id="installSteps" hidden></ol>
   </div>
-  <button class="btn btn-ghost btn-sm" type="button" id="bigText" aria-pressed="false">Larger text</button>
-  <ul class="trust" aria-label="About Kinav">
-    <li><b>CQC data</b><span>Care ratings updated every Monday</span></li>
-    <li><b>Independent</b><span>No care home pays to be listed</span></li>
-    <li><b>Private</b><span>No sign-up, no ads, nothing stored</span></li>
-  </ul>
-  <div class="privacy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>No logins, no ads, no health data. Everything stays on this phone. <a href="#privacy">Privacy</a></span></div>
-  <p class="tiny muted" id="lastUpdated" data-built="2026-10-23">Last updated 23 October 2026</p>
-  <p class="note">Kinav gives general information to help carers organise care. It does not give health or medical advice. For health questions, speak to a GP, pharmacist or NHS 111. In an emergency, call 999. <a href="#terms">Terms of use</a></p>
+  <footer class="homefoot">
+    <p><a href="#help"><b>Struggling right now? Get help</b></a></p>
+    <p><button class="linkbtn" type="button" id="bigText" aria-pressed="false">Larger text</button> · <a href="#privacy">Privacy</a> · <a href="#terms">Terms</a></p>
+    <p class="tiny muted"><span id="lastUpdated" data-built="2026-10-23">Last updated 23 October 2026</span>. General information only, not health or medical advice. In an emergency, call 999.</p>
+  </footer>
 </section>
 
 <!-- 30-day plan -->
@@ -438,7 +430,9 @@ html.big body { zoom: 1.15; }
     </div>
     <p class="tiny muted">The reminder goes into your calendar. Kinav doesn't keep it.</p>
   </form>
-  <div class="card stack">
+<details class="more">
+    <summary>How to share a calendar with family</summary>
+    <div class="card stack">
     <div class="stack-sm">
       <h2>Share a calendar with family</h2>
       <p class="small muted">Set this up once. Then every appointment you add shows on everyone's phone, with a reminder.</p>
@@ -464,7 +458,10 @@ html.big body { zoom: 1.15; }
       </ol>
     </div>
   </div>
-  <div class="card">
+  </details>
+<details class="more">
+    <summary>What to take to every appointment</summary>
+    <div class="card">
     <h3>Take to every appointment</h3>
     <ul class="plain small">
       <li>A list of current medicines, or the boxes</li>
@@ -473,6 +470,7 @@ html.big body { zoom: 1.15; }
       <li>A Lasting Power of Attorney, if they want you to speak for them</li>
     </ul>
   </div>
+  </details>
   <p class="note">Kinav doesn't keep a copy of your appointments. They go only into your own calendar.</p>
 </section>
 
@@ -702,7 +700,9 @@ html.big body { zoom: 1.15; }
   </div>
     </div>
   </details>
-  <div class="card stack">
+<details class="more">
+    <summary>When does the council help pay?</summary>
+    <div class="card stack">
     <h2>When the council helps pay</h2>
     <p class="small muted">England's savings limits. The council looks at the savings of the person who needs care, not yours.</p>
     <div class="stack-sm">
@@ -732,6 +732,7 @@ html.big body { zoom: 1.15; }
     </div>
     <p class="tiny muted">These are England's rules. Wales, Scotland and Northern Ireland have different limits. For free help with the financial assessment or a council charging decision, contact Citizens Advice (CAB) on <span class="phone">0800 144 8848</span>. <a href="https://www.citizensadvice.org.uk/family/looking-after-people/carers-help-and-support/" target="_blank" rel="noopener">Citizens Advice: help for carers ›</a> <a href="https://www.ageuk.org.uk/information-advice/care/paying-for-care/paying-for-a-care-home/" target="_blank" rel="noopener">Age UK guide ›</a></p>
   </div>
+  </details>
   <p class="note">An estimate, not financial advice. Uses England's rules: councils may help when counted savings fall below £23,250, and ignore savings under £14,250. It leaves out personal allowances, NHS nursing contributions and top-up fees. Nothing you enter leaves this phone.</p>
 </section>
 
@@ -768,16 +769,24 @@ html.big body { zoom: 1.15; }
     <p class="lede">What a care advisor would do, broken into steps you can follow, with what to say on each call.</p>
   </div>
   <div class="stack-sm" id="kitList"></div>
-  <div class="stack-sm">
-    <h2>Want an expert?</h2>
+  <a class="card" id="homeArticle" href="#articles" style="text-decoration:none;color:inherit">
+    <span class="eyebrow" id="homeArticleMonth">This month</span>
+    <h3 id="homeArticleTitle"></h3>
+    <span class="small" style="color:var(--accent);font-weight:600">Read the article ›</span>
+  </a>
+  <details class="more">
+    <summary>Expert help: Age UK, Citizens Advice, specialist nurses</summary>
+    <div class="stack-sm">
     <a class="card" style="text-decoration:none;color:inherit" href="https://www.ageuk.org.uk/services/age-uk-advice-line/" target="_blank" rel="noopener"><h3>Age UK Advice Line ›</h3><span class="small muted">Free advice on care, benefits and money</span></a>
     <a class="card" style="text-decoration:none;color:inherit" href="https://www.citizensadvice.org.uk/" target="_blank" rel="noopener"><h3>Citizens Advice (CAB) ›</h3><span class="small muted">Free, independent help with benefits, care costs, contracts and complaints. Adviceline (England): <span class="phone">0800 144 8848</span>. Many towns have a local Citizens Advice office, once called the Citizens Advice Bureau.</span></a>
     <a class="card" style="text-decoration:none;color:inherit" href="/ask-a-specialist/"><h3>Ask a nurse or specialist ›</h3><span class="small muted">Free helplines with specialist nurses for dementia, stroke, heart conditions and Parkinson's. Not a substitute for the GP or NHS 111.</span></a>
     <a class="card" style="text-decoration:none;color:inherit" href="https://societyoflaterlifeadvisers.co.uk/" target="_blank" rel="noopener"><h3>Society of Later Life Advisers ›</h3><span class="small muted">Find an accredited adviser for paying for care (paid)</span></a>
   </div>
+  </details>
   <p class="note">Kinav doesn't give health advice. For health questions, speak to the GP, a pharmacist or NHS 111, and call 999 in an emergency. It gives general information only, not medical, legal or financial advice. <a href="#privacy">Privacy notice</a> · <a href="#terms">Terms of use</a></p>
-  <nav class="stack-sm" aria-label="Guides">
-    <h2>Guides to read</h2>
+  <details class="more">
+    <summary>Guides to read</summary>
+    <nav class="stack-sm" aria-label="Guides">
     <ul class="plain small links-list">
       <li><a href="/guides/how-to-choose-a-care-home/">How to choose a care home</a></li>
       <li><a href="/care-cost-calculator/">How long will their savings last?</a></li>
@@ -789,7 +798,8 @@ html.big body { zoom: 1.15; }
       <li><a href="/care/">Care homes and care at home by council area</a></li>
       <li><a href="/guides/">All guides</a></li>
     </ul>
-  </nav>
+    </nav>
+  </details>
 </section>
 
 <!-- Questions to ask -->
@@ -953,7 +963,7 @@ html.big body { zoom: 1.15; }
 
 <script id="gcScript" data-goatcounter="https://kinav.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="https://gc.zgo.at/count.js"></script>
 <script src="content.js?v=d92513702d"></script>
-<script src="app.js?v=8f165954d3"></script>
+<script src="app.js?v=22b56b8f2f"></script>
 
 </body>
 </html>

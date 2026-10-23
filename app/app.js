@@ -792,7 +792,6 @@
     var standalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || navigator.standalone;
     if (standalone) { $("installCard").hidden = true; return; }
     $("installHow").textContent = "Open Kinav like an app, straight from your phone. It takes 10 seconds.";
-    $("installCard").hidden = false;
   }
   window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); installEvent = e; showInstall(); });
   window.addEventListener("appinstalled", function () { $("installCard").hidden = true; });
