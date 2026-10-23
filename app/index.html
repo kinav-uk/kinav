@@ -251,11 +251,17 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 .start-main { grid-column: 1 / -1; background: var(--sun); color: #18232e; padding: 18px; }
 .start-main b { font-family: var(--font-display); font-size: 22px; }
 .start-main b::after, .stile b::after { content: " ›"; }
-.stile { background: var(--surface); border: 1.5px solid var(--line); }
+.stile { background: color-mix(in srgb, var(--tc, var(--accent)) 11%, var(--surface)); border: 1.5px solid color-mix(in srgb, var(--tc, var(--accent)) 35%, var(--line)); }
 .stile b { font-size: 15.5px; line-height: 1.25; }
 .stile span { font-size: 13px; color: var(--muted); }
 .start-main span { font-size: 14px; }
-.stile .sico { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: var(--sunk); color: var(--accent); margin-bottom: 4px; }
+.stile .sico { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--tc); color: #ffffff; margin-bottom: 4px; position: relative; z-index: 1; }
+.stile, .start-main { position: relative; overflow: hidden; }
+.stile b, .stile span:not(.sico), .start-main b, .start-main span { position: relative; z-index: 1; }
+.stile::after, .start-main::after { content: ""; position: absolute; right: -16px; bottom: -16px; width: 84px; height: 84px; background: var(--tc, #18232e); opacity: .16;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Ccircle%20cx%3D%22256%22%20cy%3D%22256%22%20r%3D%22140%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%2240%22/%3E%3Ccircle%20cx%3D%22256%22%20cy%3D%22116%22%20r%3D%2238%22/%3E%3Ccircle%20cx%3D%22377%22%20cy%3D%22326%22%20r%3D%2238%22/%3E%3Ccircle%20cx%3D%22135%22%20cy%3D%22326%22%20r%3D%2238%22/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Ccircle%20cx%3D%22256%22%20cy%3D%22256%22%20r%3D%22140%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%2240%22/%3E%3Ccircle%20cx%3D%22256%22%20cy%3D%22116%22%20r%3D%2238%22/%3E%3Ccircle%20cx%3D%22377%22%20cy%3D%22326%22%20r%3D%2238%22/%3E%3Ccircle%20cx%3D%22135%22%20cy%3D%22326%22%20r%3D%2238%22/%3E%3C/svg%3E") center / contain no-repeat; pointer-events: none; }
+.start-main::after { --tc: #18232e; width: 110px; height: 110px; opacity: .14; }
+.s-care { --tc: #1f7fa0; } .s-home { --tc: #2a9d63; } .s-cost { --tc: #d98a00; } .s-ben { --tc: #6a4fe0; } .s-house { --tc: #e8503a; } .s-kits { --tc: #0a8fc0; }
 html.big body { zoom: 1.15; }
 .more { background: var(--surface); border-radius: 16px; padding: 12px 16px; }
 .more > summary { cursor: pointer; font-weight: 700; color: var(--accent); }
