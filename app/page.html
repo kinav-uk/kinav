@@ -242,12 +242,15 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 .start-main { grid-column: 1 / -1; background: var(--sun); color: #18232e; padding: 18px; }
 .start-main b { font-family: var(--font-display); font-size: 22px; }
 .start-main b::after, .stile b::after { content: " ›"; }
-.stile { background: var(--surface); border: 1.5px solid var(--line); border-left: 6px solid var(--tc, var(--accent)); }
+.stile { background: var(--surface); border: 1.5px solid var(--line); }
 .stile b { font-size: 15.5px; line-height: 1.25; }
 .stile span { font-size: 13px; color: var(--muted); }
 .start-main span { font-size: 14px; }
-.s-care { --tc: var(--accent); } .s-home { --tc: var(--good); } .s-cost { --tc: var(--sun); } .s-ben { --tc: var(--sun); } .s-house { --tc: var(--bad-line); } .s-kits { --tc: var(--accent); }
+.stile .sico { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: var(--sunk); color: var(--accent); margin-bottom: 4px; }
 html.big body { zoom: 1.15; }
+.more { background: var(--surface); border-radius: 16px; padding: 12px 16px; }
+.more > summary { cursor: pointer; font-weight: 700; color: var(--accent); }
+.more[open] > summary { margin-bottom: 12px; }
 .hdr-btn { font: inherit; font-size: 13.5px; font-weight: 700; padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--accent); background: var(--surface); color: var(--accent); cursor: pointer; white-space: nowrap; }
 .usp { margin: 4px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
 .usp li { display: flex; gap: 8px; align-items: baseline; font-size: 14.5px; font-weight: 600; }
@@ -295,12 +298,12 @@ html.big body { zoom: 1.15; }
   </div>
   <nav class="startgrid" aria-label="Start here">
     <a class="start-main" href="#start"><b>Where do I start?</b><span>Answer 3 quick questions and get your first steps</span></a>
-    <a class="stile s-care" href="#care"><b>Find care near them</b><span>Rated Good or Outstanding by CQC</span></a>
-    <a class="stile s-home" href="#stayhome"><b>Help them stay at home</b><span>Grants, equipment, alarms and home care</span></a>
-    <a class="stile s-cost" href="#costs"><b>Care costs</b><span>Home or care home, and how long savings last</span></a>
-    <a class="stile s-ben" href="#benefits"><b>Money they could be missing</b><span>Benefits calculator</span></a>
-    <a class="stile s-house" href="#house"><b>Will they have to sell the house?</b><span>The rules in plain English</span></a>
-    <a class="stile s-kits" href="#help"><b>Kits and questions to ask</b><span>Step by step, with what to say</span></a>
+    <a class="stile s-care" href="#care"><span class="sico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></span><b>Find care near them</b><span>Rated Good or Outstanding by CQC</span></a>
+    <a class="stile s-home" href="#stayhome"><span class="sico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg></span><b>Help them stay at home</b><span>Grants, equipment, alarms and home care</span></a>
+    <a class="stile s-cost" href="#costs"><span class="sico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h2M13 11h2M9 15h2M13 15h2"/></svg></span><b>Care costs</b><span>Home or care home, and how long savings last</span></a>
+    <a class="stile s-ben" href="#benefits"><span class="sico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M14.5 9.5a2.5 2.5 0 0 0-5 0c0 3 5 2 5 5a2.5 2.5 0 0 1-5 0M12 6v2M12 16v2"/></svg></span><b>Money they could be missing</b><span>Benefits calculator</span></a>
+    <a class="stile s-house" href="#house"><span class="sico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M12 13v4M10 15h4"/></svg></span><b>Will they have to sell the house?</b><span>The rules in plain English</span></a>
+    <a class="stile s-kits" href="#help"><span class="sico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><b>Kits and questions to ask</b><span>Step by step, with what to say</span></a>
   </nav>
   <div class="hero">
     <div class="head"><h2 id="homePlanTitle">Your first 30 days</h2><span class="tiny" id="homePlanCount"></span></div>
@@ -316,20 +319,6 @@ html.big body { zoom: 1.15; }
     <span class="small" style="color:var(--accent);font-weight:600">Read the article ›</span>
   </a>
   <a class="btn btn-ghost" href="#help">I'm struggling: talk to someone now</a>
-  <nav class="stack-sm" aria-label="Guides">
-    <h2>Popular guides</h2>
-    <ul class="plain small links-list">
-      <li><a href="/guides/how-to-choose-a-care-home/">How to choose a care home</a></li>
-      <li><a href="/care-cost-calculator/">How long will their savings last?</a></li>
-      <li><a href="/benefits-calculator/">Benefits carers and older people can claim</a></li>
-      <li><a href="/guides/how-to-apply-for-a-blue-badge/">How to apply for a Blue Badge</a></li>
-      <li><a href="/plans/caring-for-someone-with-dementia/">Caring for someone with dementia</a></li>
-      <li><a href="/ask-a-specialist/">Ask a nurse or specialist: dementia, stroke, heart, Parkinson's</a></li>
-      <li><a href="/will-they-have-to-sell-the-house-to-pay-for-care/">Will they have to sell the house to pay for care?</a></li>
-      <li><a href="/care/">Care homes and care at home by council area</a></li>
-      <li><a href="/guides/">All guides</a></li>
-    </ul>
-  </nav>
   <div class="card" id="installCard" hidden>
     <h3>Add Kinav to your home screen</h3>
     <p class="small" id="installHow"></p>
@@ -491,13 +480,6 @@ html.big body { zoom: 1.15; }
         <option value="10">Within 10 miles</option>
         <option value="20">Within 20 miles</option>
       </select></div>
-    <div class="field"><label for="fWho">Cares for</label>
-      <select id="fWho">
-        <option value="O">Adults over 65</option>
-        <option value="U">Adults under 65</option>
-        <option value="C">Children (0 to 18)</option>
-        <option value="">Anyone</option>
-      </select></div>
     <div class="field"><label for="fSpec">Specialist care for</label>
       <select id="fSpec">
         <option value="">Any</option>
@@ -506,6 +488,17 @@ html.big body { zoom: 1.15; }
         <option value="S">Sensory impairments (sight, hearing)</option>
         <option value="L">Learning disabilities</option>
         <option value="M">Mental health conditions</option>
+      </select></div>
+  </div>
+  <details class="more">
+    <summary>More filters</summary>
+    <div class="filters">
+    <div class="field"><label for="fWho">Cares for</label>
+      <select id="fWho">
+        <option value="O">Adults over 65</option>
+        <option value="U">Adults under 65</option>
+        <option value="C">Children (0 to 18)</option>
+        <option value="">Anyone</option>
       </select></div>
     <div class="field"><label for="fRate">CQC rating</label>
       <select id="fRate">
@@ -520,7 +513,8 @@ html.big body { zoom: 1.15; }
         <option value="recent">Most recently rated</option>
         <option value="az">Name, A to Z</option>
       </select></div>
-  </div>
+    </div>
+  </details>
   <p class="small muted" id="careStatus" aria-live="polite">Search by postcode or council to see care near them.</p>
   <div class="stack" id="careList"></div>
   <button class="btn btn-ghost" type="button" id="careMore" hidden>Show more</button>
@@ -605,7 +599,7 @@ html.big body { zoom: 1.15; }
   </div>
   <form class="card stack" id="cmp" novalidate>
     <h2>Home or care home?</h2>
-    <p class="small muted">Typical England figures are filled in. Change any of them to a local quote.</p>
+    <p class="small muted">Typical England figures are filled in. Change any of them to a local quote. For more detail, including their home, open the detailed calculator below.</p>
     <div class="row2">
       <div class="field"><label for="cmpHours">Home care hours a week</label><input type="number" id="cmpHours" min="0" step="1" value="10" inputmode="numeric"></div>
       <div class="field"><label for="cmpRate">Hourly rate (£)</label><input type="number" id="cmpRate" min="0" step="0.5" value="34" inputmode="decimal"></div>
@@ -619,6 +613,9 @@ html.big body { zoom: 1.15; }
     <button class="btn btn-ghost btn-sm" type="button" data-share="costs">Send to family</button>
     <p class="tiny muted">Income means pensions and benefits such as Attendance Allowance. Savings above £23,250 are used before the council helps. An estimate, not financial advice: the council and providers decide the real figures.</p>
   </form>
+  <details class="more" id="calcMore">
+    <summary>Detailed calculator: include their home and the council's rules</summary>
+    <div class="stack">
   <form class="stack" id="calc" novalidate>
     <div class="field">
       <label for="area">Where they'll receive care</label>
@@ -673,6 +670,8 @@ html.big body { zoom: 1.15; }
     </div>
     <div class="stack-sm"><h3>What to do next</h3><ol class="steps small" id="steps"></ol></div>
   </div>
+    </div>
+  </details>
   <div class="card stack">
     <h2>When the council helps pay</h2>
     <p class="small muted">England's savings limits. The council looks at the savings of the person who needs care, not yours.</p>
@@ -747,6 +746,20 @@ html.big body { zoom: 1.15; }
     <a class="card" style="text-decoration:none;color:inherit" href="https://societyoflaterlifeadvisers.co.uk/" target="_blank" rel="noopener"><h3>Society of Later Life Advisers ›</h3><span class="small muted">Find an accredited adviser for paying for care (paid)</span></a>
   </div>
   <p class="note">Kinav doesn't give health advice. For health questions, speak to the GP, a pharmacist or NHS 111, and call 999 in an emergency. It gives general information only, not medical, legal or financial advice. <a href="#privacy">Privacy notice</a> · <a href="#terms">Terms of use</a></p>
+  <nav class="stack-sm" aria-label="Guides">
+    <h2>Guides to read</h2>
+    <ul class="plain small links-list">
+      <li><a href="/guides/how-to-choose-a-care-home/">How to choose a care home</a></li>
+      <li><a href="/care-cost-calculator/">How long will their savings last?</a></li>
+      <li><a href="/benefits-calculator/">Benefits carers and older people can claim</a></li>
+      <li><a href="/guides/how-to-apply-for-a-blue-badge/">How to apply for a Blue Badge</a></li>
+      <li><a href="/plans/caring-for-someone-with-dementia/">Caring for someone with dementia</a></li>
+      <li><a href="/ask-a-specialist/">Ask a nurse or specialist: dementia, stroke, heart, Parkinson's</a></li>
+      <li><a href="/will-they-have-to-sell-the-house-to-pay-for-care/">Will they have to sell the house to pay for care?</a></li>
+      <li><a href="/care/">Care homes and care at home by council area</a></li>
+      <li><a href="/guides/">All guides</a></li>
+    </ul>
+  </nav>
 </section>
 
 <!-- Questions to ask -->
