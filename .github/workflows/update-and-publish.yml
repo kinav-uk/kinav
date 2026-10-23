@@ -61,3 +61,6 @@ jobs:
           path: app
       - id: deploy
         uses: actions/deploy-pages@v4
+      - name: Tell search engines about the pages (IndexNow)
+        continue-on-error: true
+        run: python3 update/indexnow.py
