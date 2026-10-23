@@ -570,6 +570,31 @@ html.big body { zoom: 1.15; }
   <div class="fb" data-fb="care"><p>Was this helpful?</p><button type="button" data-v="yes">Yes</button><button type="button" data-v="no">No</button></div>
 </section>
 
+<!-- Email a care home or agency -->
+<section class="screen" id="s-enquire" hidden>
+  <a class="back" href="#care">‹ Find care</a>
+  <div class="stack-sm">
+    <h1 id="eqTitle">Email them</h1>
+    <p class="lede">Fill in a few details and your email is written for you. Then add their email address from their website.</p>
+  </div>
+  <div class="field" id="eqPickWrap"><label for="eqPick">What do you want to ask?</label><select id="eqPick"></select></div>
+  <div class="card stack-sm" id="eqFields"></div>
+  <div class="stack-sm">
+    <h2>Your email</h2>
+    <p class="tiny muted">You can change any of the wording.</p>
+    <textarea id="eqText" rows="14" aria-label="Your email"></textarea>
+    <button class="linkbtn tiny" type="button" id="eqReset" hidden>Undo my changes to the wording</button>
+  </div>
+  <div class="actions">
+    <button class="btn btn-primary" type="button" id="eqSend">Open in my email</button>
+    <button class="btn btn-ghost" type="button" id="eqCopy">Copy</button>
+    <a class="btn btn-ghost" id="eqSite" href="#" target="_blank" rel="noopener" hidden>Their website</a>
+  </div>
+  <p class="small" id="eqCopied" hidden>Copied. Paste it into an email or their website's contact form.</p>
+  <p class="small muted">Can't find an email address on their website? Use their contact form, or call and ask for one.</p>
+  <p class="note">What you type stays on this phone. Kinav doesn't see it or send anything for you. Don't include health details in an email until you've spoken to them.</p>
+</section>
+
 <!-- Care costs -->
 <section class="screen" id="s-start" hidden>
   <a class="back" href="#home">‹ Home</a>

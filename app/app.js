@@ -39,8 +39,8 @@
   };
 
   /* ---------- Screens ---------- */
-  var SCREENS = ["home", "plan", "appts", "care", "costs", "benefits", "help", "kit", "privacy", "terms", "articles", "article", "questions", "stayhome", "start", "house", "letters", "rota"];
-  var TAB_FOR = { stayhome: "home", start: "home", house: "home", letters: "home", rota: "home", costs: "home", benefits: "home", kit: "help", questions: "help", privacy: "home", terms: "home", articles: "home", article: "home" };
+  var SCREENS = ["home", "plan", "appts", "care", "costs", "benefits", "help", "kit", "privacy", "terms", "articles", "article", "questions", "stayhome", "start", "house", "letters", "rota", "enquire"];
+  var TAB_FOR = { stayhome: "home", start: "home", house: "home", letters: "home", rota: "home", enquire: "care", costs: "home", benefits: "home", kit: "help", questions: "help", privacy: "home", terms: "home", articles: "home", article: "home" };
 
   function show() {
     var hash = (location.hash || "#home").slice(1);
@@ -58,6 +58,7 @@
     if (name === "questions") renderQuestions();
     if (name === "letters") renderLetter();
     if (name === "rota") renderRota();
+    if (name === "enquire") renderEnquiry();
     if (name === "appts") suggestQuestions();
     window.scrollTo(0, 0);
     track(hash);
@@ -423,7 +424,7 @@
   $("qClear").addEventListener("click", function () { qSave({ picked: [], notes: {} }); $("qOnly").checked = false; renderQuestions(); });
 
   /* ---------- Find care ---------- */
-  var care = { index: null, rows: [], pool: [], council: null, point: null, place: "", files: {}, type: "H", shown: 0 };
+  var care = { index: null, rows: [], pool: [], council: null, point: null, place: "", files: {}, type: "H", shown: 0, byId: {} };
   var HM_PER_MILE = 16.0934; // locations are stored in 100 m units
   var KQ = ["Safe", "Effective", "Caring", "Responsive", "Well-led"];
   var KQ_WORD = { O: "Outstanding", G: "Good", R: "Requires improvement", I: "Inadequate", "-": "Not rated" };
@@ -575,6 +576,7 @@
 
   function careCard(r) {
     var name = r[0], addr = r[1], pc = r[2], phone = r[3], web = r[4], overall = r[8], kq = r[9], date = r[10], svc = r[11], id = r[12];
+    care.byId[id] = r;
     var lows = [];
     var cells = kq.split("").map(function (k, i) {
       if (k === "R" || k === "I") lows.push(KQ[i] + " as " + KQ_WORD[k]);
@@ -597,6 +599,7 @@
       '<div class="actions">' +
       (phone ? '<a class="btn btn-primary btn-sm" href="tel:' + esc(phone) + '">Call</a>' : "") +
       (site ? '<a class="btn btn-ghost btn-sm" href="' + esc(site) + '" target="_blank" rel="noopener">Website</a>' : "") +
+      '<button class="btn btn-ghost btn-sm" type="button" data-enq="' + esc(id) + '">Email them</button>' +
       '<a class="btn btn-ghost btn-sm" href="https://www.cqc.org.uk/location/' + esc(id) + '" target="_blank" rel="noopener">CQC report</a>' +
       "</div></article>";
   }
@@ -979,6 +982,127 @@
   $("ltPrint").addEventListener("click", function () {
     $("qPrintOut").innerHTML = '<div style="white-space:pre-wrap">' + esc($("ltText").value) + "</div>";
     window.print();
+  });
+
+  /* ---------- Email a care home or agency ---------- */
+  // A ready-written enquiry. Kinav has no email addresses (CQC doesn't publish them), so people add one from the provider's website.
+  var EQ_FIELDS = {
+    who: ["Who is the care for?", "text", "e.g. my mother, Margaret"],
+    area: ["Where do they live? (optional)", "text", "e.g. Finchley"],
+    stay: ["What kind of stay?", "select", ["Not sure yet", "Permanent", "Respite (a short stay)"]],
+    help: ["What help, roughly?", "text", "e.g. morning and evening visits, 7 days a week"],
+    when: ["When is care needed? (optional)", "text", "e.g. from mid-November"],
+    visit: ["When could you visit? (optional)", "text", "e.g. weekday afternoons next week"],
+    pays: ["Who will pay?", "select", ["Not sure yet", "The council", "The family or them", "The council, with a family top-up"]],
+    you: ["Your name", "text", "e.g. Sarah Jones"],
+    contact: ["Your phone number (optional)", "text", "So they can call you back"]
+  };
+  function eqPaysLine(p) {
+    return { "The council": "The council is likely to pay towards the fees.", "The family or them": "The fees would be paid privately.",
+      "The council, with a family top-up": "The council is likely to pay part of the fees, with a top-up from the family." }[p] || "We're not sure yet how the fees will be paid.";
+  }
+  var ENQUIRIES = [
+    { id: "place", kind: "home", name: "A room and fees", fields: ["who", "area", "stay", "when", "pays", "you", "contact"],
+      subject: function (n) { return "Enquiry about a room at " + n; },
+      body: function (v) {
+        var stay = v.stay === "Permanent" ? "a permanent place" : v.stay === "Respite (a short stay)" ? "a respite (short) stay" : "a place, either permanent or a short stay";
+        return ["I'm looking for " + stay + " for " + v.who + (v.area ? ", who lives in " + v.area.trim() : "") + (v.when ? ", " + v.when.trim().replace(/[.!?]+$/, "") : "") + ".",
+          eqPaysLine(v.pays),
+          "Please could you tell me:\n- whether you have a room available, or how long the wait is\n- your weekly fee, and what it does and doesn't include\n" +
+            (v.pays === "The family or them" ? "" : "- whether you accept the council's rate, and if a top-up would be needed\n") + "- how often your fees go up, and by how much",
+          "I'd be glad to talk about their needs by phone, and to arrange a visit."]; } },
+    { id: "visit", kind: "home", name: "Arrange a visit", fields: ["who", "visit", "you", "contact"],
+      subject: function (n) { return "Arranging a visit to " + n; },
+      body: function (v) {
+        return ["I'd like to arrange a visit to look round, as we're looking for a care home for " + v.who + ".",
+          v.visit ? "We could come " + v.visit.trim().replace(/[.!?]+$/, "") + ". Could you suggest some times?" : "Could you suggest some times that suit you?",
+          "If possible, we'd like to meet the manager, see a room, the lounge and any garden, and visit around a mealtime.",
+          "Please let me know if there's anything we should bring."]; } },
+    { id: "homecare", kind: "agency", name: "Care at home", fields: ["who", "area", "help", "when", "pays", "you", "contact"],
+      subject: function (n) { return "Enquiry about care at home"; },
+      body: function (v) {
+        return ["I'm looking for care at home for " + v.who + (v.area ? ", who lives in " + v.area.trim() : "") + ".",
+          "They'd need help with " + v.help.trim().replace(/[.!?]+$/, "") + (v.when ? ", " + v.when.trim().replace(/[.!?]+$/, "") : "") + ".",
+          eqPaysLine(v.pays),
+          "Please could you tell me:\n- whether you cover their area and can take them on\n- your hourly rate, any minimum visit length, and extra charges at weekends or bank holidays\n" +
+            "- whether you'd visit first to talk through what's needed\n- how you try to keep the same carers",
+          "I'd be glad to talk about their needs by phone."]; } }
+  ];
+
+  function eqState() {
+    var lt = ltState().v;
+    return store.get("enq", { to: null, pick: "", v: { you: lt.you || "", contact: "", stay: "Not sure yet", pays: "Not sure yet" } });
+  }
+  function eqOptions() {
+    var st = eqState(), kind = st.to && st.to.agency ? "agency" : "home";
+    return ENQUIRIES.filter(function (q) { return q.kind === kind; });
+  }
+  function eqCurrent() {
+    var st = eqState(), opts = eqOptions();
+    return opts.filter(function (q) { return q.id === st.pick; })[0] || opts[0];
+  }
+  function eqBuild() {
+    var st = eqState(), q = eqCurrent(), v = {};
+    Object.keys(EQ_FIELDS).forEach(function (k) {
+      var val = (st.v[k] || "").trim(), label = EQ_FIELDS[k][0];
+      v[k] = val || (/optional/.test(label) ? "" : "[" + label.replace(/\?.*$/, "").toLowerCase() + "]");
+    });
+    var name = st.to ? st.to.name : "[care home]";
+    return "Dear " + name + " team,\n\n" + q.body(v).filter(Boolean).join("\n\n") + "\n\n" +
+      (st.v.contact ? "You can reply by email or call me on " + st.v.contact.trim() + ".\n\n" : "") + "Kind regards,\n" + v.you;
+  }
+  function eqRefresh() {
+    var st = eqState();
+    if (st.edited && st.text) { $("eqText").value = st.text; $("eqReset").hidden = false; }
+    else { $("eqText").value = eqBuild(); $("eqReset").hidden = true; }
+    grow($("eqText"));
+  }
+  function renderEnquiry() {
+    var st = eqState(), q = eqCurrent(), opts = eqOptions();
+    if (!st.to) { location.hash = "care"; return; }
+    $("eqTitle").textContent = "Email " + st.to.name;
+    $("eqPick").innerHTML = opts.map(function (o) { return '<option value="' + o.id + '"' + (o.id === q.id ? " selected" : "") + ">" + esc(o.name) + "</option>"; }).join("");
+    $("eqPickWrap").hidden = opts.length < 2;
+    $("eqSite").hidden = !st.to.site;
+    if (st.to.site) $("eqSite").href = st.to.site;
+    $("eqCopied").hidden = true;
+    $("eqFields").innerHTML = q.fields.map(function (k) {
+      var f = EQ_FIELDS[k], val = st.v[k] || "";
+      return '<div class="field"><label for="eq-' + k + '">' + esc(f[0]) + "</label>" + (f[1] === "select"
+        ? '<select id="eq-' + k + '" data-k="' + k + '">' + f[2].map(function (o) { return "<option" + (o === val ? " selected" : "") + ">" + esc(o) + "</option>"; }).join("") + "</select>"
+        : '<input type="text" id="eq-' + k + '" data-k="' + k + '" placeholder="' + esc(f[2]) + '" value="' + esc(val) + '" autocomplete="off">') + "</div>";
+    }).join("");
+    eqRefresh();
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-enq]"), r = b && care.byId[b.dataset.enq];
+    if (!r) return;
+    var st = eqState(), web = r[4];
+    st.to = { name: r[0], site: web ? (/^https?:/i.test(web) ? web : "https://" + web) : "", agency: care.type === "H" };
+    st.pick = ""; st.edited = false; st.text = "";
+    store.set("enq", st);
+    countEvent("enquire-" + (st.to.agency ? "agency" : "home"));
+    location.hash = "enquire";
+  });
+  $("eqPick").addEventListener("change", function () {
+    var st = eqState(); st.pick = $("eqPick").value; st.edited = false; st.text = ""; store.set("enq", st); renderEnquiry();
+  });
+  $("eqFields").addEventListener("input", function (e) {
+    var k = e.target.dataset.k; if (!k) return;
+    var st = eqState(); st.v[k] = e.target.value; store.set("enq", st); eqRefresh();
+  });
+  $("eqFields").addEventListener("change", function (e) { if (e.target.tagName === "SELECT") $("eqFields").dispatchEvent(new Event("input")); });
+  $("eqText").addEventListener("input", function () {
+    var st = eqState(); st.edited = true; st.text = $("eqText").value; store.set("enq", st); $("eqReset").hidden = false; grow($("eqText"));
+  });
+  $("eqReset").addEventListener("click", function () { var st = eqState(); st.edited = false; st.text = ""; store.set("enq", st); eqRefresh(); });
+  $("eqSend").addEventListener("click", function () {
+    countEvent("enquire-send");
+    location.href = "mailto:?subject=" + encodeURIComponent(eqCurrent().subject(eqState().to.name)) + "&body=" + encodeURIComponent($("eqText").value);
+  });
+  $("eqCopy").addEventListener("click", function () {
+    var done = function () { $("eqCopied").hidden = false; };
+    try { navigator.clipboard.writeText($("eqText").value).then(done, done); } catch (e) { done(); }
   });
 
   /* ---------- Who does what ---------- */
