@@ -209,15 +209,43 @@ def specialist_page(updated):
                                   "\n".join(body), updated, kind="guide")
 
 
+HOUSE_FAQS = [
+    ("Will Mum have to sell her house to pay for care at home?", "No. In England, the home is never counted when someone gets care in their own home."),
+    ("Is the house counted if they move into a care home?", "It can be, but not if their partner, a relative aged 60 or over, a relative who is disabled, or a child under 18 they support still lives there."),
+    ("Does the house have to be sold straight away?", "No. If the home is counted, it's ignored for the first 12 weeks of a permanent stay, and a deferred payment agreement with the council means it doesn't have to be sold in their lifetime."),
+    ("When does the council start to help pay?", "When savings and other assets fall below \u00a323,250. Below \u00a314,250, they're ignored."),
+    ("Can we give the house away to avoid care fees?", "Giving the home away to avoid care fees can be treated as if they still own it."),
+]
+
+
+def house_page(updated):
+    path = "/will-they-have-to-sell-the-house-to-pay-for-care/"
+    faq = "".join('<details class="panel"><summary><b>%s</b></summary><p>%s</p></details>' % (e(q), e(a)) for q, a in HOUSE_FAQS)
+    schema = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in HOUSE_FAQS]}
+    body = [crumbs(), '<div class="stack-sm"><h1>Will they have to sell the house to pay for care?</h1>'
+            '<p class="lede">Often not, and never straight away. England\'s rules in plain English for families.</p></div>',
+            cta("Work out what care could cost and how long savings would last, privately on your phone.", "/#costs", "Use the cost calculator"),
+            '<section class="stack"><h2>Common questions</h2>%s</section>' % faq,
+            '<section class="panel"><h2>Good to know</h2><ul><li>If the NHS agrees they qualify for NHS continuing healthcare, the NHS pays for their care.</li>'
+            '<li>The council\'s financial assessment decides, so ask for the result in writing.</li>'
+            '<li>Free help: Citizens Advice 0800 144 8848 and Age UK 0800 678 1602. For regulated financial advice, the Society of Later Life Advisers.</li></ul></section>',
+            '<p class="panel small">General information about England\'s rules, not legal or financial advice.</p>',
+            '<script type="application/ld+json">%s</script>' % json.dumps(schema)]
+    return path, build_pages.page(path, "Will they have to sell the house to pay for care? (England) | Kinav",
+                                  "Does the house have to be sold to pay for care? England's rules explained: care at home, the 12-week disregard, who still lives there, deferred payments and the \u00a323,250 limit.",
+                                  "\n".join(body), updated, kind="guide")
+
+
 def main(updated):
     with open(CONTENT, encoding="utf-8") as f:
         kc = json.load(f)
-    for folder in ("guides", "plans", "articles", "care-cost-calculator", "benefits-calculator", "ask-a-specialist"):
+    for folder in ("guides", "plans", "articles", "care-cost-calculator", "benefits-calculator", "ask-a-specialist", "will-they-have-to-sell-the-house-to-pay-for-care"):
         shutil.rmtree(os.path.join(APP, folder), ignore_errors=True)
     pages = [kit_page(k, updated) for k in kc["kits"] if k["id"] in KIT_PAGES]
     pages += [plan_page(key, p, updated) for key, p in kc["plans"].items() if key in PLAN_PAGES]
     pages += [article_page(a, kc["plans"], updated) for a in kc["articles"]]
-    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated)]
+    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated)]
     for path, text in pages:
         save(path.strip("/"), text)
 
@@ -231,7 +259,7 @@ def main(updated):
             '<p class="lede">Free step-by-step guides, 30-day plans and tools for carers in England.</p></div>',
             '<section class="panel"><h2>Tools</h2><div class="grid"><a href="/care-cost-calculator/">Care cost calculator</a>'
             '<a href="/benefits-calculator/">Benefits calculator</a><a href="/care/">Care homes and care at home by area</a>'
-            '<a href="/ask-a-specialist/">Ask a nurse or specialist</a></div></section>',
+            '<a href="/ask-a-specialist/">Ask a nurse or specialist</a><a href="/will-they-have-to-sell-the-house-to-pay-for-care/">Will they have to sell the house?</a></div></section>',
             '<section class="panel" id="kits"><h2>Step-by-step guides</h2>%s</section>' % links("/guides/", kits),
             '<section class="panel" id="plans"><h2>30-day plans</h2>%s</section>' % links("/plans/", plans),
             '<section class="panel" id="articles"><h2>Articles for carers</h2>%s</section>' % links("/articles/", arts), NOT_ADVICE]

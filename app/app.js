@@ -22,8 +22,8 @@
   };
 
   /* ---------- Screens ---------- */
-  var SCREENS = ["home", "plan", "appts", "care", "costs", "benefits", "help", "kit", "privacy", "terms", "articles", "article", "questions", "stayhome"];
-  var TAB_FOR = { stayhome: "home", costs: "home", benefits: "home", kit: "help", questions: "help", privacy: "home", terms: "home", articles: "home", article: "home" };
+  var SCREENS = ["home", "plan", "appts", "care", "costs", "benefits", "help", "kit", "privacy", "terms", "articles", "article", "questions", "stayhome", "start", "house"];
+  var TAB_FOR = { stayhome: "home", start: "home", house: "home", costs: "home", benefits: "home", kit: "help", questions: "help", privacy: "home", terms: "home", articles: "home", article: "home" };
 
   function show() {
     var hash = (location.hash || "#home").slice(1);
@@ -722,6 +722,78 @@
   });
   $("calc").addEventListener("submit", function (e) { e.preventDefault(); });
 
+  /* ---------- Where do I start? ---------- */
+  fillPick($("stPlan"), "");
+  $("stPlan").options[0].text = "None, or not sure";
+  var ST_STEPS = {
+    diagnosed: [["#benefits", "Check the money they could be missing", "Attendance Allowance isn't means-tested."], ["#questions", "Pick questions for the next appointment", "So nothing is forgotten on the day.", "appointment"]],
+    hospital: [["#kit-hospital", "Use the Leaving hospital checklist", "Make sure help is in place before they come home."], ["#questions", "Questions to ask before they come home", "Discharge date, support, equipment and contacts.", "discharge"], ["#stayhome", "Help them stay at home", "Grants, equipment, alarms and home care."]],
+    struggling: [["#stayhome", "Help them stay at home", "A plan with grants, equipment, alarms and home care."], ["#kit-home-care", "Ask the council for a needs assessment", "Free, whatever their savings."], ["#benefits", "Check the money they could be missing", "Benefits and discounts in six questions."]],
+    carehome: [["#care", "Find care homes near them", "Only homes rated Good or Outstanding by CQC."], ["#kit-home-choice", "Use the Choosing a care home checklist", "Shortlist, visit and ask the right questions."], ["#house", "Will they have to sell the house?", "The rules in plain English."], ["#costs", "Work out the costs", "And how long savings could last."]],
+    money: [["#benefits", "Check the money they could be missing", "Benefits and discounts in six questions."], ["#house", "Will they have to sell the house?", "The rules in plain English."], ["#costs", "Work out care costs", "Home or care home, and how long savings last."]]
+  };
+  function renderStart() {
+    var now = $("stNow").value, plan = $("stPlan").value, alone = $("stAlone").value;
+    if (!now) { $("stOut").innerHTML = ""; return; }
+    var steps = [];
+    if (plan) steps.push(["#plan", "Start the 30-day plan: " + KC.plans[plan].name, "Clear steps for the first weeks, one at a time.", null, plan]);
+    steps = steps.concat(ST_STEPS[now] || []);
+    if (alone === "yes" && now !== "carehome") steps.push(["#kit-alarms", "Think about a fall alarm", "Help at the press of a button when they live alone."]);
+    steps = steps.slice(0, 4);
+    $("stOut").innerHTML = "<h2>Your first " + steps.length + " steps</h2>" + steps.map(function (st, i) {
+      return '<a class="card shstep" style="text-decoration:none;color:inherit" href="' + st[0] + '"' + (st[3] ? ' data-qtopic="' + st[3] + '"' : "") + (st[4] ? ' data-setplan="' + st[4] + '"' : "") +
+        '><h3>' + (i + 1) + ". " + esc(st[1]) + ' ›</h3><p class="small muted">' + esc(st[2]) + "</p></a>";
+    }).join("") + '<button class="btn btn-ghost" type="button" data-share="start">Send these steps to family</button>';
+  }
+  $("stForm").addEventListener("change", renderStart);
+  $("stForm").addEventListener("submit", function (e) { e.preventDefault(); });
+  $("stOut").addEventListener("click", function (e) {
+    var a = e.target.closest("a");
+    if (!a) return;
+    if (a.dataset.setplan) { store.set("guide", a.dataset.setplan); renderPlan(); renderHome(); }
+    if (a.dataset.qtopic) { store.set("qtopic", a.dataset.qtopic); $("qTopic").value = a.dataset.qtopic; }
+  });
+
+  /* ---------- Send to family ---------- */
+  // Shares a short summary through the phone's share sheet, or WhatsApp where that isn't available.
+  function shareSummary(kind) {
+    var lines = [];
+    var pick = function (sel) { return Array.prototype.map.call(document.querySelectorAll(sel), function (n) { return n.textContent.replace(/ ›$/, "").trim(); }); };
+    if (kind === "stayhome") lines = ["Steps to help them stay at home:"].concat(pick("#shPlan h3"));
+    if (kind === "start") lines = ["Our first steps:"].concat(pick("#stOut h3"));
+    if (kind === "costs") lines = ["Care costs (estimate):"].concat(pick("#cmpOut .cmp-box").map(function (t) { return t.replace(/\s+/g, " "); }));
+    if (kind === "benefits") lines = ["Benefits worth checking:"].concat(pick("#benResults .card h3"));
+    if (kind === "house") lines = ["Will they have to sell the house to pay for care? Often not. The rules explained:"];
+    var text = lines.join("\n") + "\n\nFrom Kinav, free help for families: https://kinav.co.uk";
+    if (navigator.share) { navigator.share({ title: "Kinav", text: text }).catch(function () {}); return; }
+    window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener");
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-share]");
+    if (b) shareSummary(b.dataset.share);
+  });
+
+  /* ---------- Add to home screen ---------- */
+  var installEvent = null;
+  function showInstall() {
+    var standalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || navigator.standalone;
+    if (standalone || store.get("installHide", false)) { $("installCard").hidden = true; return; }
+    var ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    $("installHow").textContent = installEvent ? "Open Kinav like an app, straight from your phone." :
+      ios ? "In Safari, tap the Share button, then Add to Home Screen." : "Open your browser menu (⋮), then tap Add to Home screen or Install app.";
+    $("installBtn").hidden = !installEvent;
+    $("installCard").hidden = false;
+  }
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); installEvent = e; showInstall(); });
+  $("installBtn").addEventListener("click", function () { if (installEvent) { installEvent.prompt(); installEvent = null; $("installCard").hidden = true; } });
+  $("installHide").addEventListener("click", function () { store.set("installHide", true); $("installCard").hidden = true; });
+  showInstall();
+
+  /* ---------- Larger text ---------- */
+  function applyBig(on) { document.documentElement.classList.toggle("big", on); $("bigText").setAttribute("aria-pressed", String(on)); $("bigText").textContent = on ? "Normal text" : "Larger text"; }
+  applyBig(store.get("bigtext", false));
+  $("bigText").addEventListener("click", function () { var on = !store.get("bigtext", false); store.set("bigtext", on); applyBig(on); });
+
   /* ---------- Stay at home plan ---------- */
   // Five yes/no questions build a list of practical next steps. Nothing is saved.
   var SH_Q = [
@@ -761,6 +833,7 @@
     add("Plan", "Home or care home: the real cost", "See what staying at home with help costs compared with a care home.", "#costs", "Compare costs");
     // Free version: the five most important steps, in order of priority.
     steps = steps.slice(0, 5);
+    $("shShare").hidden = false;
     var pill = { Free: "pill-good", Grant: "pill-sun", Money: "pill-sun", Help: "pill-quiet", Care: "pill-good", Plan: "pill-quiet" };
     $("shPlan").innerHTML = "<h2>Their top " + steps.length + " steps</h2>" + steps.map(function (st, i) {
       var ext = /^https?:/.test(st.href);
@@ -830,6 +903,7 @@
     if (maybe("Attendance Allowance")) yearly += 114.60 * 52;
     if (maybe("Carer's Allowance")) yearly += 86.45 * 52;
     var headline = yearly ? '<div class="money-head"><span class="small">Your family could be missing up to</span><b>£' + Math.round(yearly / 100) * 100 + ' a year</b><span class="tiny">From Attendance Allowance and Carer\'s Allowance at 2026 to 2027 rates, plus any council tax or Pension Credit. The Department for Work and Pensions decides.</span></div>' : "";
+    $("benShare").hidden = false;
     $("benResults").innerHTML = headline + '<h2>' + likely + " likely, " + out.filter(function (o) { return o[2] === "Worth checking"; }).length + " worth checking</h2>" +
       out.map(function (o) {
         return '<div class="card"><div class="head"><h3>' + esc(o[0]) + '</h3><span class="pill ' + pill[o[2]] + '">' + esc(o[2]) + "</span></div>" +

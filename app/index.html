@@ -246,6 +246,17 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 .shstep { display: flex; flex-direction: column; gap: 4px; }
 .money-head { background: var(--sun); color: #18232e; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 2px; }
 .money-head b { font-family: var(--font-display); font-size: 30px; font-variant-numeric: tabular-nums; }
+.startgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.start-main, .stile { display: flex; flex-direction: column; gap: 3px; border-radius: 18px; padding: 14px; text-decoration: none; color: var(--fg); min-width: 0; }
+.start-main { grid-column: 1 / -1; background: var(--sun); color: #18232e; padding: 18px; }
+.start-main b { font-family: var(--font-display); font-size: 22px; }
+.start-main b::after, .stile b::after { content: " ›"; }
+.stile { background: var(--surface); border: 1.5px solid var(--line); border-left: 6px solid var(--tc, var(--accent)); }
+.stile b { font-size: 15.5px; line-height: 1.25; }
+.stile span { font-size: 13px; color: var(--muted); }
+.start-main span { font-size: 14px; }
+.s-care { --tc: var(--accent); } .s-home { --tc: var(--good); } .s-cost { --tc: var(--sun); } .s-ben { --tc: var(--sun); } .s-house { --tc: var(--bad-line); } .s-kits { --tc: var(--accent); }
+html.big body { zoom: 1.15; }
 .pickq { gap: 8px; border-color: var(--accent); color: var(--accent); font-weight: 700; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .linkbtn { background: none; border: 0; padding: 0; color: var(--accent); font: inherit; text-decoration: underline; cursor: pointer; align-self: flex-start; }
@@ -278,13 +289,15 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
     </div>
     <p class="hint" id="areaHint">Saved on this phone only, to show care near them.</p>
   </div>
-  <div class="hfl">
-    <h2>Help them stay at home for longer</h2>
-    <p class="small">Three quick checks for their area. Private, and free.</p>
-    <a class="hfl-row" href="#stayhome"><b>Stay at home plan</b><span>Grants, equipment, alarms and home care</span></a>
-    <a class="hfl-row" href="#costs"><b>Home or care home?</b><span>What each costs, and how long savings last</span></a>
-    <a class="hfl-row" href="#benefits"><b>Money they could be missing</b><span>Benefits and discounts in six questions</span></a>
-  </div>
+  <nav class="startgrid" aria-label="Start here">
+    <a class="start-main" href="#start"><b>Where do I start?</b><span>Answer 3 quick questions and get your first steps</span></a>
+    <a class="stile s-care" href="#care"><b>Find care near them</b><span>Rated Good or Outstanding by CQC</span></a>
+    <a class="stile s-home" href="#stayhome"><b>Help them stay at home</b><span>Grants, equipment, alarms and home care</span></a>
+    <a class="stile s-cost" href="#costs"><b>Care costs</b><span>Home or care home, and how long savings last</span></a>
+    <a class="stile s-ben" href="#benefits"><b>Money they could be missing</b><span>Benefits calculator</span></a>
+    <a class="stile s-house" href="#house"><b>Will they have to sell the house?</b><span>The rules in plain English</span></a>
+    <a class="stile s-kits" href="#help"><b>Kits and questions to ask</b><span>Step by step, with what to say</span></a>
+  </nav>
   <div class="hero">
     <div class="head"><h2 id="homePlanTitle">Your first 30 days</h2><span class="tiny" id="homePlanCount"></span></div>
     <div class="bar"><i id="homePlanBar" style="width:0%"></i></div>
@@ -292,16 +305,6 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
     <label class="sr" for="homePick">Choose a 30-day plan</label>
     <select id="homePick" class="pick"></select>
     <a class="btn btn-sm" href="#plan" id="homePlanOpen">Open my plan</a>
-  </div>
-  <div class="stack-sm">
-    <div class="head"><h2>Free tools</h2><span class="tiny muted">No sign-up</span></div>
-    <div class="tools">
-      <a class="tool t-costs" href="#costs"><span class="tool-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></svg></span><strong>Care cost calculator</strong><span>How long their savings will last, and when the council helps</span><em>Work it out ›</em></a>
-      <a class="tool t-ben" href="#benefits"><span class="tool-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M14.5 9.5a2.5 2.5 0 0 0-4.5 1.5v5M9 13h4M9 16h6"/></svg></span><strong>Benefits calculator</strong><span>Attendance Allowance, Carer's Allowance, council tax discounts and more</span><em>See what you could claim ›</em></a>
-      <a class="tool t-care" href="#care"><span class="tool-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg></span><strong>Find care near them</strong><span>Care homes and care at home rated Good or Outstanding</span><em>Search by postcode ›</em></a>
-      <a class="tool t-kits" href="#help"><span class="tool-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><strong>Step-by-step kits</strong><span>Blue Badge, hospital discharge, choosing a care home and more</span><em>Open the kits ›</em></a>
-      <a class="tool tool-wide" href="/care/"><span class="tool-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg></span><strong>Care by council area</strong><span>Every council in England: care homes, nursing homes, care at home and dementia care</span><em>Browse areas ›</em></a>
-    </div>
   </div>
   <a class="card" id="homeArticle" href="#articles" style="text-decoration:none;color:inherit">
     <span class="eyebrow" id="homeArticleMonth">This month</span>
@@ -318,9 +321,17 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
       <li><a href="/guides/how-to-apply-for-a-blue-badge/">How to apply for a Blue Badge</a></li>
       <li><a href="/plans/caring-for-someone-with-dementia/">Caring for someone with dementia</a></li>
       <li><a href="/ask-a-specialist/">Ask a nurse or specialist: dementia, stroke, heart, Parkinson's</a></li>
+      <li><a href="/will-they-have-to-sell-the-house-to-pay-for-care/">Will they have to sell the house to pay for care?</a></li>
+      <li><a href="/care/">Care homes and care at home by council area</a></li>
       <li><a href="/guides/">All guides</a></li>
     </ul>
   </nav>
+  <div class="card" id="installCard" hidden>
+    <h3>Add Kinav to your home screen</h3>
+    <p class="small" id="installHow"></p>
+    <div class="actions"><button class="btn btn-primary btn-sm" type="button" id="installBtn" hidden>Add to home screen</button><button class="linkbtn small" type="button" id="installHide">Not now</button></div>
+  </div>
+  <button class="btn btn-ghost btn-sm" type="button" id="bigText" aria-pressed="false">Larger text</button>
   <div class="privacy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>No logins, no ads, no health data. Everything stays on this phone. <a href="#privacy">Privacy</a></span></div>
   <p class="tiny muted" id="lastUpdated" data-built="2026-10-23">Last updated 23 October 2026</p>
   <p class="note">Kinav gives general information to help carers organise care. It does not give health or medical advice. For health questions, speak to a GP, pharmacist or NHS 111. In an emergency, call 999. <a href="#terms">Terms of use</a></p>
@@ -513,6 +524,62 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 </section>
 
 <!-- Care costs -->
+<section class="screen" id="s-start" hidden>
+  <a class="back" href="#home">‹ Home</a>
+  <div class="stack-sm">
+    <h1>Where do I start?</h1>
+    <p class="lede">Three quick questions, then your first steps. Your answers stay on this phone.</p>
+  </div>
+  <form class="stack" id="stForm" novalidate>
+    <div class="field"><label for="stNow">What's happening now?</label>
+      <select id="stNow">
+        <option value="">Choose one…</option>
+        <option value="diagnosed">They've just been diagnosed with something</option>
+        <option value="hospital">They're in hospital or just come home</option>
+        <option value="struggling">They're struggling to manage at home</option>
+        <option value="carehome">We're looking for a care home</option>
+        <option value="money">We're worried about money</option>
+      </select></div>
+    <div class="field"><label for="stPlan">Is there a condition or situation? (optional)</label><select id="stPlan"></select></div>
+    <div class="field"><label for="stAlone">Do they live alone?</label>
+      <select id="stAlone"><option value="">Choose…</option><option value="yes">Yes</option><option value="no">No</option></select></div>
+  </form>
+  <div class="stack" id="stOut" aria-live="polite"></div>
+  <p class="note">Practical steps and who to ask, not health advice. In an emergency, call 999.</p>
+</section>
+
+<section class="screen" id="s-house" hidden>
+  <a class="back" href="#home">‹ Home</a>
+  <div class="stack-sm">
+    <h1>Will they have to sell the house to pay for care?</h1>
+    <p class="lede">Often not, and never straight away. Here are England's rules in plain English.</p>
+  </div>
+  <div class="card stack-sm">
+    <h2>Care at home</h2>
+    <p class="small">Their home is <b>never counted</b> when they get care in their own home.</p>
+  </div>
+  <div class="card stack-sm">
+    <h2>Moving into a care home</h2>
+    <ul class="plain small">
+      <li>The home is <b>not counted</b> if their partner, a relative aged 60 or over, a relative who is disabled, or a child under 18 they support still lives there.</li>
+      <li>If it is counted, it's <b>ignored for the first 12 weeks</b> of a permanent stay.</li>
+      <li>A <b>deferred payment agreement</b> with the council means the home doesn't have to be sold in their lifetime. The fees are paid back later, usually from the sale.</li>
+      <li>Councils help when savings and other assets fall below <b>£23,250</b>. Below <b>£14,250</b>, they're ignored.</li>
+    </ul>
+  </div>
+  <div class="card stack-sm">
+    <h2>Good to know</h2>
+    <ul class="plain small">
+      <li>Giving the home away to avoid care fees can be treated as if they still own it.</li>
+      <li>If the NHS agrees they qualify for NHS continuing healthcare, the NHS pays for their care.</li>
+      <li>The council's financial assessment decides, so ask for the result in writing.</li>
+    </ul>
+  </div>
+  <div class="actions"><a class="btn btn-primary" href="#costs">Work out care costs</a><button class="btn btn-ghost" type="button" data-share="house">Send to family</button></div>
+  <p class="small">Free help: Citizens Advice <span class="phone">0800 144 8848</span> · Age UK <span class="phone">0800 678 1602</span> · <a href="https://societyoflaterlifeadvisers.co.uk/" target="_blank" rel="noopener">Society of Later Life Advisers</a> for regulated financial advice.</p>
+  <p class="note">General information about England's rules, not legal or financial advice.</p>
+</section>
+
 <section class="screen" id="s-stayhome" hidden>
   <a class="back" href="#home">‹ Home</a>
   <div class="stack-sm">
@@ -521,6 +588,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
   </div>
   <form class="stack" id="shForm" novalidate></form>
   <div class="stack" id="shPlan" aria-live="polite"></div>
+  <button class="btn btn-ghost" type="button" data-share="stayhome" id="shShare" hidden>Send this plan to family</button>
   <p class="note">Practical steps and who to ask, not health advice. For health questions, speak to the GP, a pharmacist or NHS 111. In an emergency, call 999. <a href="#terms">Terms of use</a></p>
 </section>
 
@@ -543,6 +611,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
     </div>
     <div class="field"><label for="cmpSavings">Their savings (£)</label><input type="number" id="cmpSavings" min="0" step="1000" value="60000" inputmode="numeric"></div>
     <div class="cmp-out" id="cmpOut" aria-live="polite"></div>
+    <button class="btn btn-ghost btn-sm" type="button" data-share="costs">Send to family</button>
     <p class="tiny muted">Income means pensions and benefits such as Attendance Allowance. Savings above £23,250 are used before the council helps. An estimate, not financial advice: the council and providers decide the real figures.</p>
   </form>
   <form class="stack" id="calc" novalidate>
@@ -641,6 +710,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
   </div>
   <form class="stack" id="benForm" novalidate></form>
   <div class="stack" id="benResults" aria-live="polite"></div>
+  <button class="btn btn-ghost" type="button" data-share="benefits" id="benShare" hidden>Send to family</button>
   <div class="card stack-sm">
     <h2>Free help to claim</h2>
     <p class="small"><b>Citizens Advice (CAB)</b> can check what someone is entitled to, help fill in forms such as Attendance Allowance, and help challenge a decision. Call the Adviceline (England) on <span class="phone">0800 144 8848</span>, or visit a local office.</p>
@@ -724,7 +794,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
   </div>
   <div class="card stack-sm">
     <h2>What stays on your phone</h2>
-    <p class="small">Your postcode, which 30-day plan you chose, your plan ticks, kit progress, and question lists and notes are saved in your phone's browser so the app remembers them. They are never sent to us. To find care and work out distances, the app downloads the listings for the council and the postcode area (for example BR1); your full postcode stays on your phone. You can delete them at any time below, or by clearing your browser's data for this site.</p>
+    <p class="small">Your postcode, which 30-day plan you chose, your plan ticks, kit progress, question lists and notes, and display settings are saved in your phone's browser so the app remembers them. They are never sent to us. To find care and work out distances, the app downloads the listings for the council and the postcode area (for example BR1); your full postcode stays on your phone. You can delete them at any time below, or by clearing your browser's data for this site.</p>
     <p class="small">We count visits with GoatCounter, which uses no cookies and collects no personal details. It records which screen was opened (for example "Find care"), the type of device and browser, the country, and the website you came from, so we know how many people Kinav helps. Your postcode, plan and anything you type are never included.</p>
   </div>
   <div class="card stack-sm">
@@ -835,7 +905,7 @@ ol.steps, ul.plain { margin: 0; padding-left: 20px; display: flex; flex-directio
 
 <script id="gcScript" data-goatcounter="https://kinav.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="https://gc.zgo.at/count.js"></script>
 <script src="content.js?v=d92513702d"></script>
-<script src="app.js?v=de05f718d9"></script>
+<script src="app.js?v=6c76afdf8e"></script>
 
 </body>
 </html>
