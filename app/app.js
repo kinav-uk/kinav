@@ -247,6 +247,12 @@
   // Filled in only while the box is empty or still holds our suggestion, so their own words are never replaced.
   function suggestQuestions() {
     var box = $("apAsk");
+    // Added from Questions to ask: keep in step with whichever set they've picked there since.
+    if (box.dataset.auto === "q") {
+      var fromQ = qPickedText();
+      if (fromQ) { box.value = fromQ; updateAppt(); }
+      return;
+    }
     if (box.value.trim() && box.dataset.auto !== "1") return;
     var general = KC.questions.filter(function (t) { return t.id === "appointment"; })[0];
     var picked = store.get("q.appointment", { picked: [] }).picked.map(function (i) { return general.items[i]; });
@@ -414,10 +420,13 @@
     var done = function () { $("qCopied").hidden = false; };
     try { navigator.clipboard.writeText(qText()).then(done, done); } catch (e) { done(); }
   });
-  $("qToAppt").addEventListener("click", function () {
+  function qPickedText() {
     var st = qState(), t = qTopic();
-    $("apAsk").value = st.picked.map(function (i) { return t.items[i]; }).join("\n");
-    $("apAsk").dataset.auto = "0"; $("apAskHint").hidden = true;
+    return st.picked.map(function (i) { return t.items[i]; }).join("\n");
+  }
+  $("qToAppt").addEventListener("click", function () {
+    $("apAsk").value = qPickedText();
+    $("apAsk").dataset.auto = "q"; $("apAskHint").hidden = true;
     location.hash = "appts";
     updateAppt();
   });
