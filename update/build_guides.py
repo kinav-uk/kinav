@@ -45,6 +45,7 @@ PLAN_PAGES = {
     "sight": "caring-for-someone-with-sight-or-hearing-loss",
     "continence": "caring-for-someone-with-incontinence",
     "diabetes": "caring-for-someone-with-diabetes-in-older-age",
+    "arthritis": "caring-for-someone-with-arthritis",
     "afterfall": "after-a-fall-or-hospital-stay",
     "delirium": "sudden-confusion-delirium-in-older-people",
 }
@@ -67,7 +68,7 @@ PLAN_CHARITY = {
     "eol": ("Marie Curie", "https://www.mariecurie.org.uk/"), "heart": ("British Heart Foundation", "https://www.bhf.org.uk/"),
     "copd": ("Asthma + Lung UK", "https://www.asthmaandlung.org.uk/"), "cancer": ("Macmillan Cancer Support", "https://www.macmillan.org.uk/"),
     "sight": ("RNIB", "https://www.rnib.org.uk/"), "continence": ("Bladder & Bowel UK", "https://www.bbuk.org.uk/"),
-    "diabetes": ("Diabetes UK", "https://www.diabetes.org.uk/"), "afterfall": ("NHS: falls", "https://www.nhs.uk/conditions/falls/"),
+    "diabetes": ("Diabetes UK", "https://www.diabetes.org.uk/"), "arthritis": ("Versus Arthritis", "https://www.versusarthritis.org/"), "afterfall": ("NHS: falls", "https://www.nhs.uk/conditions/falls/"),
     "delirium": GOV_CARE,
 }
 
