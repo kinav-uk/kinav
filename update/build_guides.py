@@ -31,6 +31,7 @@ KIT_PAGES = {
     "hospital": "leaving-hospital-discharge-checklist",
     "blue-badge": "how-to-apply-for-a-blue-badge",
     "contract": "care-home-contract-checklist",
+    "no-lpa": "no-lasting-power-of-attorney-deputyship",
 }
 PLAN_PAGES = {
     "dementia": "caring-for-someone-with-dementia",
@@ -57,6 +58,7 @@ KIT_SOURCES = {
     "alarms": [("Age UK: care and support", "https://www.ageuk.org.uk/information-advice/care/"), ("NHS: falls", "https://www.nhs.uk/conditions/falls/")],
     "hospital": [GOV_CARE, ("Carers UK: help and advice", "https://www.carersuk.org/help-and-advice/")],
     "blue-badge": [("GOV.UK: apply for a Blue Badge", "https://www.gov.uk/apply-blue-badge")],
+    "no-lpa": [("GOV.UK: become a deputy", "https://www.gov.uk/become-deputy"), ("GOV.UK: become an appointee", "https://www.gov.uk/become-appointee-for-someone-claiming-benefits"), ("GOV.UK: search the Office of the Public Guardian registers", "https://www.gov.uk/find-someones-attorney-deputy-or-guardian")],
     "contract": [("CMA: care homes consumer law advice", "https://www.gov.uk/government/publications/care-homes-consumer-law-advice-for-providers"), ("Age UK: care and support", "https://www.ageuk.org.uk/information-advice/care/")],
 }
 PLAN_CHARITY = {
