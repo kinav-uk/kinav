@@ -27,14 +27,14 @@ window.KC = {
       { id: "b1", text: "Make both Lasting Powers of Attorney", note: "Property and financial affairs, and health and welfare. Do it while they can still decide." },
       { id: "b2", text: "Check their will is up to date", note: "" },
       { id: "b3", text: "Claim Attendance Allowance", note: "Not means-tested. Use the Benefits calculator to see what else may apply." },
-      { id: "b4", text: "Ask the council about a council tax discount", note: "Up to 100% off for severe mental impairment, with a GP certificate." }
+      { id: "b4", text: "Ask the council about a council tax discount", note: "Up to 100% off for severe mental impairment. It needs a GP certificate, and they must also get a qualifying benefit such as Attendance Allowance, so claim that first." }
     ]},
     { title: "Weeks 3 to 4: care and you", items: [
       { id: "c1", text: "Ask the council for a needs assessment and a carer's assessment", note: "Both are free, whatever their savings." },
       { id: "c2", text: "Check Carer's Allowance and Carer's Credit", note: "Carer's Credit from 20 hours a week, Carer's Allowance from 35." },
       { id: "c3", text: "Book a free fire safety visit", note: "From your local fire and rescue service." },
       { id: "c4", text: "Tell your employer", note: "One week of unpaid carer's leave a year, and the right to ask for flexible working, both from day one." },
-      { id: "c5", text: "Ask the GP to record consent for you to discuss their care", note: "A signed letter from your parent is enough in the early stages." }
+      { id: "c5", text: "Ask the GP to record consent for you to discuss their care", note: "A signed letter from your parent is enough in the early stages. If they agree, ask the surgery about proxy access in the NHS App too, so you can see letters and order repeat prescriptions." }
     ]}
     ]},
     parkinsons: { kind: "condition", name: "Parkinson's", title: "Just diagnosed: Parkinson's", lede: "Your first 30 days after a Parkinson's diagnosis, one step at a time.", groups: [
@@ -55,7 +55,7 @@ window.KC = {
       { id: "p-c2", text: "Ask the council for a needs assessment and a carer's assessment", note: "Both are free, whatever their savings." },
       { id: "p-c3", text: "Check Carer's Allowance and Carer's Credit", note: "Carer's Credit from 20 hours a week, Carer's Allowance from 35." },
       { id: "p-c4", text: "Tell your employer", note: "One week of unpaid carer's leave a year, and the right to ask for flexible working, both from day one." },
-      { id: "p-c5", text: "Ask the GP to record consent for you to discuss their care", note: "A signed letter from your parent is enough while they can decide." }
+      { id: "p-c5", text: "Ask the GP to record consent for you to discuss their care", note: "A signed letter from your parent is enough while they can decide. If they agree, ask the surgery about proxy access in the NHS App too, so you can see letters and order repeat prescriptions." }
     ]}
     ]},
     mobility: { kind: "condition", name: "Poor mobility", title: "Poor mobility and falls", lede: "Your first 30 days of help when moving around gets harder, one step at a time.", groups: [
@@ -146,22 +146,25 @@ window.KC = {
     { id: "home-choice", group: "Arranging care", name: "Choosing a nursing home", what: "Shortlist, visit and ask the right questions.", steps: [
       { t: "Ask the council for a free needs assessment", d: "It confirms what level of care is needed. Anyone can ask, whatever their savings." },
       { t: "Work out how it will be paid for", d: "Use the Care costs tool. If savings are above £23,250 they will usually pay their own fees at first. Ask the council for a financial assessment either way." },
+      { t: "If their home is the main asset", d: "The value of their home is ignored for the first 12 weeks in a care home, and always if a partner or certain relatives still live there. Ask the council about a deferred payment agreement, which lets fees be paid from the home's value later, so it doesn't have to be sold straight away. The Society of Later Life Advisers can find an accredited adviser." },
+      { t: "Check who can manage their money", d: "To deal with their bank, pension or the house, you'll need a property and financial affairs Lasting Power of Attorney. It can only be made while they can still decide. If it's too late, you can apply to the Court of Protection to become their deputy, which takes months. For benefits only, the DWP can make you their appointee." },
       { t: "Shortlist 3 to 5 homes", d: "Use Find care, filter to nursing homes and dementia care if needed, and read each home's latest CQC report." },
       { t: "Phone each home", d: "Say: \"I'm looking for a nursing place for my mum. Do you have a vacancy, what is the weekly fee, and what does it include?\" Ask whether they keep residents if their savings run out and the council starts paying." },
       { t: "Visit at least twice", d: "Go once at a mealtime. Look for staff talking with residents, call bells answered quickly, residents doing things, and a clean, fresh home." },
       { t: "Ask the manager", d: "How many nurses are on each shift? How much do you use agency staff? How do you support someone who becomes distressed? How often does a GP visit? Can residents stay here to the end of their life?" },
-      { t: "Ask about NHS help with nursing costs", d: "The NHS may pay a contribution towards nursing care. Ask about an NHS Continuing Healthcare check too." },
+      { t: "Ask about NHS help with nursing costs", d: "In a nursing home, the NHS pays a weekly contribution towards nursing care, called NHS-funded Nursing Care, straight to the home. Check the fee quoted shows it. Ask about an NHS Continuing Healthcare check too: if they qualify, the NHS pays the full cost." },
       { t: "Read the contract before signing", d: "Use the Before you sign kit." },
-      { t: "Plan the move", d: "Bring familiar things and photos, label clothes, and tell the GP, pharmacy, bank and pension providers about the new address." }
+      { t: "Plan the move", d: "Bring familiar things and photos, label clothes, and tell the GP, pharmacy, bank, pension providers and the DWP about the new address. Ask whether they will stay with their GP or move to the home's GP. Check whether Attendance Allowance or PIP stops after 28 days if the council helps pay the fees." }
     ]},
     { id: "home-care", group: "Arranging care", name: "Setting up care at home", what: "Compare agencies and agree a care plan.", steps: [
       { t: "Ask the council for a free needs assessment", d: "Ask about reablement too: free short-term support at home, usually for up to 6 weeks." },
+      { t: "Ask about direct payments", d: "If the council helps pay, you can ask for the money as a direct payment and choose the agency or carer yourself, instead of the council arranging it." },
       { t: "List what help is needed", d: "Write down the times of day and tasks, for example getting up and washed, lunch and medication, help to bed." },
       { t: "Find 3 agencies", d: "Use Find care with \"Care at home\", and read each agency's latest CQC report." },
       { t: "Call each agency", d: "Ask: What is your hourly rate, and is it higher at weekends? What is the shortest visit? Will Mum see the same carers? Are your carers trained in dementia care? What happens if a carer is late or can't come? How much notice do I give to stop?" },
       { t: "Get it in writing", d: "Ask for the rates, terms and notice period by email before you agree." },
       { t: "Agree a written care plan", d: "The agency should visit first and write down what carers will do at each visit." },
-      { t: "Be there for the first visits", d: "Leave a notebook at home for carers and family to write in." },
+      { t: "Be there for the first visits", d: "Leave a notebook at home for carers and family to write in. A police-approved key safe lets carers get in if they can't answer the door." },
       { t: "Review after a month", d: "Ask the council for a review if needs change." }
     ]},
     { id: "live-in", group: "Arranging care", name: "Arranging live-in care", what: "Find, check and plan cover for a live-in carer.", steps: [
@@ -174,9 +177,9 @@ window.KC = {
       { t: "Review after the first month", d: "Check the care plan still fits." }
     ]},
     { id: "safety", group: "Hospital and safety", name: "Home safety and grants", what: "Free OT assessment, free equipment and grants.", steps: [
-      { t: "Ask for a free OT home assessment", d: "Call the council's adult social care team and ask for an occupational therapist to assess the home." },
+      { t: "Ask for a free OT home assessment", d: "Call the council's adult social care team and ask for an occupational therapist to assess the home. Ask how long the wait is, and tell them about any falls or near misses, as this can speed things up." },
       { t: "Ask what equipment is free", d: "In England, councils should provide equipment and small adaptations costing under £1,000 free of charge." },
-      { t: "Ask about a Disabled Facilities Grant", d: "Up to £30,000 in England for bigger changes such as a stairlift or level-access shower. It is means-tested." },
+      { t: "Ask about a Disabled Facilities Grant", d: "Up to £30,000 in England for bigger changes such as a stairlift or level-access shower. It is means-tested, and usually needs an OT to recommend the work first. Don't start the work before it's approved, or it may not be paid. Tenants can apply too, with the landlord's permission." },
       { t: "Book a free fire safety visit", d: "Your local fire and rescue service checks smoke alarms and fire risks." },
       { t: "Consider a fall alarm", d: "Ask the council about telecare, such as a pendant alarm or fall detector. See the Fall alarms and home cameras kit." },
       { t: "Use trusted traders", d: "Ask the council about its trusted trader scheme, and get 2 or 3 written quotes." }
@@ -195,27 +198,30 @@ window.KC = {
     ]},
     { id: "hospital", group: "Hospital and safety", name: "Leaving hospital", what: "Make sure the right help is in place at home.", steps: [
       { t: "Ask who is planning the discharge", d: "Ask the ward for the name of the person coordinating it, and for the discharge plan." },
-      { t: "Be clear about what you can do", d: "If you can't provide care, say so. Don't let the plan assume family will cover." },
+      { t: "Be clear about what you can do", d: "If you can't provide care, say so. Don't let the plan assume family will cover. Ask for a carer's assessment for yourself too." },
+      { t: "Ask to be their named contact", d: "Ask the ward to record you as their next of kin or main contact, so they keep you updated. Staff can only share details if they agree, or if it's in their best interests when they can't decide." },
       { t: "Ask about free short-term care", d: "Ask about reablement or intermediate care to help them recover at home." },
       { t: "Ask about NHS Continuing Healthcare", d: "If health needs are complex, ask for the Continuing Healthcare checklist before discharge." },
       { t: "Get equipment in place", d: "Make sure equipment such as a commode or raised toilet seat is delivered before they come home." },
       { t: "Sort out medicines", d: "Ask for a list of medicines, who will collect them, and whether the pharmacy can provide blister packs." },
-      { t: "Check the follow-up", d: "Make sure the GP has the discharge letter, and ask whether a district nurse will visit." }
+      { t: "Check the follow-up", d: "Make sure the GP has the discharge letter, ask for your own copy, and ask whether a district nurse will visit. If they agree, the GP surgery can give you proxy access in the NHS App to see letters and order repeat prescriptions." }
     ]},
     { id: "blue-badge", group: "Money, rights and forms", name: "Applying for a Blue Badge", what: "Parking closer to where they need to go. England's rules.", steps: [
       { t: "Check if they qualify automatically", d: "They do if they get the higher rate mobility part of DLA; PIP with 8 points or more for \"moving around\"; PIP with 10 points for descriptor E under \"planning and following journeys\"; are registered blind (severely sight impaired); or get War Pensioners' Mobility Supplement or certain Armed Forces compensation. Attendance Allowance on its own doesn't count." },
       { t: "If not, they may still qualify", d: "The council decides. For example, if walking is very difficult because of pain, breathlessness or the time it takes, or isn't safe for them. Non-visible conditions can count too, such as being a serious risk near traffic, struggling severely to plan or follow a journey, or becoming extremely anxious in public places." },
       { t: "Gather the documents", d: "A recent head-and-shoulders digital photo. A photo or scan of proof of identity (birth certificate, passport or driving licence) and proof of address (Council Tax bill or a recent government letter). Their National Insurance number, any benefit award letter (for PIP, the scores), and the current badge details if renewing." },
-      { t: "Write down how getting about affects them", d: "The form asks how far they can walk and how long it takes, what help they need, and who is involved in their care. A note of a typical trip, such as to the shops or the GP, makes this easier." },
+      { t: "Get medical evidence, if they don't qualify automatically", d: "Check the council's own Blue Badge page first, as each council asks for different evidence. Many want letters from a consultant, specialist nurse, physiotherapist or occupational therapist, dated in the last 12 months. The letters should say how the condition affects walking or journeys, not just the diagnosis, how long it's likely to last, and what treatment has been tried. Letters about the outcome of an appointment count; appointment letters don't. Some councils say a GP letter alone isn't enough, and some professionals charge for letters." },
+      { t: "Getting their medical letters as their carer", d: "Hospital and clinic letters are usually copied to the GP. They can ask the GP surgery for copies of letters in their record, which is normally free. If they agree, the surgery can also give you proxy access in the NHS App so you can see their letters and record yourself; most surgeries ask you both to sign a consent form and show photo ID. If they can't make the decision themselves, a health and welfare Lasting Power of Attorney helps, and the GP decides what's appropriate." },
+      { t: "Write down how getting about affects them", d: "The form asks about their conditions and treatment, how far they can walk and how long it takes, what help they need, and the healthcare professionals involved in their care. Have their medicines list and the names of their GP, consultants and therapists to hand. A note of a typical trip, such as to the shops or the GP, makes this easier." },
       { t: "Apply online", d: "Use GOV.UK: gov.uk/apply-blue-badge. You can apply on their behalf, and save and come back later. Or ask the council for a paper form." },
       { t: "Pay the fee", d: "Up to £10 in England. The council tells you how to pay." },
-      { t: "Wait for the decision", d: "Usually within 12 weeks. The council may ask for more information or invite them to a mobility assessment." },
+      { t: "Wait for the decision", d: "Usually within 12 weeks. The council may ask for more information, or invite them to a mobility assessment with an independent health professional. Keep copies of everything you send." },
       { t: "If it's refused", d: "Ask the council to reconsider, explaining anything they missed. You can reapply if things change. Citizens Advice (CAB) can help: Adviceline (England) 0800 144 8848." },
       { t: "Use it the right way", d: "The badge is theirs: use it only when they're travelling in the car, as driver or passenger. Show it on the dashboard, with the clock where needed. Misuse can mean a fine of up to £1,000." },
       { t: "Set a renewal reminder", d: "Badges usually last up to 3 years, and you must reapply before it runs out. In Calendar, choose Reminder, then Blue Badge renewal, and it will remind you 12 weeks before." }
     ]},
     { id: "contract", group: "Money, rights and forms", name: "Before you sign a care home contract", what: "Fees, increases, top-ups and notice.", steps: [
-      { t: "Get the contract in advance", d: "Ask for it before moving day, and take time to read it." },
+      { t: "Get the contract in advance", d: "Ask for it before moving day, and take time to read it. Check who is signing and in what role: only sign as their attorney if you have a Lasting Power of Attorney, and don't agree to pay fees personally unless you mean to." },
       { t: "Check the fees", d: "What is the weekly fee, and what costs extra, such as hairdressing, trips or toiletries?" },
       { t: "Check how fees go up", d: "How often do fees rise, by how much, and how much notice do they give?" },
       { t: "Ask about top-up fees", d: "If the council starts paying later, will someone need to pay a top-up? Who agrees to it?" },
