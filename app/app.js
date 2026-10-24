@@ -854,6 +854,8 @@
     contact: ["Your phone or email", "text", "So they can reply to you"],
     council: ["Council", "text", "e.g. Barnet Council"]
   };
+  var LT_RELS = ["daughter", "son", "wife", "husband", "partner", "daughter-in-law", "son-in-law", "granddaughter", "grandson",
+    "niece", "nephew", "sister", "brother", "friend", "neighbour"];
   var LT_TICKS = {
     ot: "Ask for a home safety check by an occupational therapist",
     carer: "Ask for a carer's assessment for me too",
@@ -950,6 +952,13 @@
     $("ltCopied").hidden = true;
     $("ltFields").innerHTML = l.fields.map(function (k) {
       var f = LT_FIELDS[k], val = esc(st.v[k] || "");
+      if (k === "rel") {
+        var cur = (st.v.rel || "").trim(), other = cur && LT_RELS.indexOf(cur.toLowerCase()) < 0;
+        return '<div class="field"><label for="lt-relpick">' + esc(f[0]) + '</label><select id="lt-relpick" data-rel="1"><option value="">Choose…</option>' +
+          LT_RELS.map(function (r) { return '<option' + (cur.toLowerCase() === r ? " selected" : "") + ">" + r + "</option>"; }).join("") +
+          '<option value="other"' + (other ? " selected" : "") + '>Other…</option></select>' +
+          '<input type="text" id="lt-rel" data-k="rel" aria-label="How you are related" placeholder="e.g. cousin, godson, carer" value="' + (other ? val : "") + '" autocomplete="off"' + (other ? "" : " hidden") + "></div>";
+      }
       return '<div class="field"><label for="lt-' + k + '">' + esc(f[0]) + "</label>" + (f[1] === "area"
         ? '<textarea id="lt-' + k + '" data-k="' + k + '" rows="2" placeholder="' + esc(f[2]) + '">' + val + "</textarea>"
         : '<input type="text" id="lt-' + k + '" data-k="' + k + '" placeholder="' + esc(f[2]) + '" value="' + val + '" autocomplete="off">') + "</div>";
@@ -967,6 +976,12 @@
     var st = ltState(), el = e.target;
     if (el.dataset.k) { st.v[el.dataset.k] = el.value; if (el.tagName === "TEXTAREA") grow(el); }
     if (el.dataset.t) st.t[el.dataset.t] = el.checked;
+    if (el.dataset.rel) {
+      var box = $("lt-rel"), isOther = el.value === "other";
+      box.hidden = !isOther;
+      st.v.rel = isOther ? box.value : el.value;
+      if (isOther) box.focus();
+    }
     store.set("letter", st); ltRefresh();
   });
   $("ltFields").addEventListener("change", function (e) { if (e.target.dataset.t) $("ltFields").dispatchEvent(new Event("input")); });
