@@ -5,6 +5,7 @@ Reads update/content.json (the app's content, exported by app/build.py) and writ
   /guides/<kit page>/            each step-by-step kit
   /plans/<plan page>/            each 30-day plan
   /articles/<article id>/        each monthly article
+  /letters/<letter page>/        each letter template, as a sample to fill in
   /care-cost-calculator/, /benefits-calculator/, /ask-a-specialist/
 Each page links into the app, where people can tick steps off or use the tools.
 """
@@ -12,6 +13,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 
 import build_pages
 from build_pages import e
@@ -276,10 +278,86 @@ def house_page(updated):
                                   "\n".join(body), updated, kind="guide")
 
 
+# Letter templates live in app.js; these pages show each one as a sample, filled with [gaps].
+LETTER_PAGES = {
+    "needs": ("letter-asking-the-council-for-a-care-needs-assessment", "Letter asking the council for a care needs assessment"),
+    "carer": ("carers-assessment-request-letter", "Carer's assessment request letter"),
+    "discharge": ("hospital-discharge-planning-letter", "Letter to plan for leaving hospital"),
+    "review": ("letter-to-challenge-a-council-care-decision", "Letter to challenge a council care decision"),
+    "complaint": ("adult-social-care-complaint-letter", "Adult social care complaint letter"),
+}
+LETTER_SOURCES = {
+    "needs": [("GOV.UK: apply for a needs assessment", "https://www.gov.uk/apply-needs-assessment-social-services"), GOV_CARE],
+    "carer": [("NHS: carer's assessments", "https://www.nhs.uk/social-care-and-support/support-and-benefits-for-carers/carer-assessments/"),
+              ("Carers UK: help and advice", "https://www.carersuk.org/help-and-advice/")],
+    "discharge": [("NHS: going into hospital and leaving", "https://www.nhs.uk/nhs-services/hospitals/going-into-hospital/"), GOV_CARE],
+    "review": [("GOV.UK: apply for a needs assessment", "https://www.gov.uk/apply-needs-assessment-social-services"),
+               ("Citizens Advice", "https://www.citizensadvice.org.uk/")],
+    "complaint": [("Local Government and Social Care Ombudsman", "https://www.lgo.org.uk/"), ("Citizens Advice", "https://www.citizensadvice.org.uk/")],
+}
+APP_JS = os.path.join(APP, "app.js")
+JSC = "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc"
+SAMPLE_JS = r"""
+var out = LETTERS.map(function (l) {
+  var v = {}, t = {};
+  Object.keys(LT_FIELDS).forEach(function (k) { v[k] = "[" + LT_FIELDS[k][0].replace(/ \(optional\)/, "").toLowerCase() + "]"; });
+  v.hours = "[number]"; v.rel = "[daughter or son]";
+  l.ticks.forEach(function (k) { t[k] = true; });
+  var to = l.to === "hospital" ? ["The ward manager and discharge team", v.hospital] : [l.to === "complaints" ? "Complaints team, Adult Social Care" : "Adult Social Care", v.council];
+  var dear = l.to === "hospital" ? "Dear ward manager," : l.to === "complaints" ? "Dear complaints team," : "Dear Adult Social Care team,";
+  var text = [v.you, v.contact, "[date]", "", to.join("\n"), "", dear, "", l.subject + ": " + v.them, ""].join("\n") + "\n" +
+    l.body(v, t).filter(Boolean).join("\n\n") + "\n\nYours sincerely,\n\n" + v.you;
+  return { id: l.id, name: l.name, when: l.when, ticks: l.ticks.map(function (k) { return LT_TICKS[k]; }), text: text };
+});
+print(JSON.stringify(out));
+"""
+
+
+def letter_samples():
+    with open(APP_JS, encoding="utf-8") as f:
+        js = f.read()
+    start, end = js.index("  var LT_FIELDS = {"), js.index("\n  function ltState")
+    out = subprocess.run([JSC, "-e", js[start:end] + SAMPLE_JS], check=True, capture_output=True, text=True).stdout
+    return json.loads(out)
+
+
+def letter_page(l, updated):
+    slug, title = LETTER_PAGES[l["id"]]
+    path = "/letters/%s/" % slug
+    ticks = "".join("<li>%s</li>" % e(t) for t in l["ticks"])
+    body = [crumbs(("Letters", "/letters/")),
+            '<div class="stack-sm"><h1>%s: free template</h1><p class="lede">%s</p></div>' % (e(title), e(l["when"])),
+            cta("Fill in the gaps on your phone and Kinav writes the letter for you, ready to email, copy or print. Nothing you type leaves your phone.",
+                "/#letter-" + l["id"], "Write this letter"),
+            '<section class="stack-sm"><h2>The letter</h2><pre class="letter">%s</pre></section>' % e(l["text"]),
+            ('<section class="panel"><h2>Lines you can switch on or off in the app</h2><ul>%s</ul></section>' % ticks) if ticks else "",
+            '<section class="panel"><h2>Good to know</h2><ul>'
+            '<li>Email or post it, and keep a copy with the date you sent it.</li>'
+            '<li>If you haven\'t heard back in a couple of weeks, phone and ask who is dealing with it.</li>'
+            '<li>Free help: Carers UK on 0808 808 7777 and Age UK on 0800 678 1602. Citizens Advice: 0800 144 8848.</li></ul></section>',
+            sources_html(LETTER_SOURCES[l["id"]]),
+            '<p class="panel small">A template to help you write, not legal advice.</p>']
+    return path, build_pages.page(path, "%s (free template, England) | Kinav" % title,
+                                  "%s for families in England. %s Free, and fill it in on your phone." % (title, l["when"]),
+                                  tel("\n".join(b for b in body if b)), updated, kind="guide")
+
+
+def letters_index(samples, updated):
+    items = "".join('<a href="/letters/%s/">%s</a>' % (LETTER_PAGES[l["id"]][0], e(LETTER_PAGES[l["id"]][1])) for l in samples if l["id"] in LETTER_PAGES)
+    body = [crumbs(), '<div class="stack-sm"><h1>Free letter templates for family carers</h1>'
+            '<p class="lede">Letters to the council and the hospital, in plain English, for families in England.</p></div>',
+            cta("Fill in the gaps on your phone and Kinav writes the letter for you. Nothing you type leaves your phone.", "/#letters", "Write a letter"),
+            '<section class="panel"><h2>Letters</h2><div class="grid">%s</div></section>' % items,
+            '<p class="panel small">Templates to help you write, not legal advice.</p>']
+    return "/letters/", build_pages.page("/letters/", "Free letter templates for family carers in England | Kinav",
+                                         "Free letter templates for carers in England: ask for a needs assessment or carer's assessment, plan for leaving hospital, challenge a decision or complain.",
+                                         "\n".join(body), updated, kind="guide")
+
+
 def main(updated):
     with open(CONTENT, encoding="utf-8") as f:
         kc = json.load(f)
-    for folder in ("guides", "plans", "articles", "care-cost-calculator", "benefits-calculator", "ask-a-specialist", "will-they-have-to-sell-the-house-to-pay-for-care"):
+    for folder in ("guides", "plans", "articles", "care-cost-calculator", "benefits-calculator", "ask-a-specialist", "will-they-have-to-sell-the-house-to-pay-for-care", "letters"):
         shutil.rmtree(os.path.join(APP, folder), ignore_errors=True)
     pages = [kit_page(k, updated) for k in kc["kits"] if k["id"] in KIT_PAGES]
     pages += [plan_page(key, p, updated) for key, p in kc["plans"].items() if key in PLAN_PAGES]
@@ -288,6 +366,8 @@ def main(updated):
     kc["articles"] = [a for a in kc["articles"] if not a.get("from") or a["from"] <= today]
     pages += [article_page(a, kc["plans"], updated) for a in kc["articles"]]
     pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated)]
+    samples = letter_samples()
+    pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
     for path, text in pages:
         save(path.strip("/"), text)
 
@@ -301,7 +381,8 @@ def main(updated):
             '<p class="lede">Free step-by-step guides, 30-day plans and tools for carers in England.</p></div>',
             '<section class="panel"><h2>Tools</h2><div class="grid"><a href="/care-cost-calculator/">Care cost calculator</a>'
             '<a href="/benefits-calculator/">Benefits calculator</a><a href="/care/">Care homes and care at home by area</a>'
-            '<a href="/ask-a-specialist/">Ask a nurse or specialist</a><a href="/will-they-have-to-sell-the-house-to-pay-for-care/">Will they have to sell the house?</a></div></section>',
+            '<a href="/ask-a-specialist/">Ask a nurse or specialist</a><a href="/will-they-have-to-sell-the-house-to-pay-for-care/">Will they have to sell the house?</a>'
+            '<a href="/letters/">Free letter templates</a></div></section>',
             '<section class="panel" id="kits"><h2>Step-by-step guides</h2>%s</section>' % links("/guides/", kits),
             '<section class="panel" id="plans"><h2>30-day plans</h2>%s</section>' % links("/plans/", plans),
             '<section class="panel" id="articles"><h2>Articles for carers</h2>%s</section>' % links("/articles/", arts), NOT_ADVICE]

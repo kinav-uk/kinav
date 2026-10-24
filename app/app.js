@@ -44,7 +44,7 @@
 
   function show() {
     var hash = (location.hash || "#home").slice(1);
-    var name = hash.indexOf("kit-") === 0 ? "kit" : hash.indexOf("article-") === 0 ? "article" : hash;
+    var name = hash.indexOf("kit-") === 0 ? "kit" : hash.indexOf("article-") === 0 ? "article" : hash.indexOf("letter-") === 0 ? "letters" : hash;
     if (SCREENS.indexOf(name) < 0) name = "home";
     SCREENS.forEach(function (s) { $("s-" + s).hidden = s !== name; });
     var tab = TAB_FOR[name] || name;
@@ -56,7 +56,11 @@
     if (name === "home") renderHome();
     if (name === "care") initCare();
     if (name === "questions") renderQuestions();
-    if (name === "letters") renderLetter();
+    if (name === "letters") {
+      var pick = hash.slice(7), lst = ltState();
+      if (pick && pick !== lst.id && LETTERS.some(function (l) { return l.id === pick; })) { lst.id = pick; lst.edited = false; lst.text = ""; store.set("letter", lst); }
+      renderLetter();
+    }
     if (name === "rota") renderRota();
     if (name === "enquire") renderEnquiry();
     if (name === "appts") suggestQuestions();
