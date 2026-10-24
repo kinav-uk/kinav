@@ -163,6 +163,15 @@ def paying(council):
             '<a href="https://www.citizensadvice.org.uk/family/looking-after-people/carers-help-and-support/" rel="noopener" target="_blank">Citizens Advice: help for carers</a></p></section>') % e(council)
 
 
+def day_centres(council):
+    return ('<section class="panel"><h2>Day centres and respite in %s</h2>'
+            '<p>Day centres offer company, activities and a meal, often with transport, and give family carers a regular break. '
+            'Many, especially those run or funded by the council, only take people referred by a social worker, so ask at the needs assessment. '
+            'Others let you book and pay privately. Ask about respite care too: short stays so carers can rest.</p>'
+            '<p>Day centres aren\'t usually rated by CQC, so they aren\'t listed on Kinav. Ask %s adult social care, your social worker, '
+            'or local charities such as Age UK and Alzheimer\'s Society what\'s available nearby.</p></section>') % (e(council), e(council))
+
+
 def write(by_la, regions, out_dir, updated):
     """by_la: {council name: [app rows]}; regions: {council name: region}."""
     shutil.rmtree(out_dir, ignore_errors=True)
@@ -195,6 +204,7 @@ def write(by_la, regions, out_dir, updated):
             body.append('<section class="stack"><h2>Rated Outstanding in %s</h2><div class="list">%s</div></section>' % (
                 e(council), "".join(card(r, True) for r in outstanding[:12])))
         body.append(paying(council))
+        body.append(day_centres(council))
         title = "Care homes and care at home in %s: Good and Outstanding | Kinav" % council
         desc = "%d care services in %s rated Good or Outstanding by CQC: nursing homes, residential homes, care at home and dementia care. Updated weekly." % (len(rows), council)
         save(out_dir, slug, "", page("/care/%s/" % slug, title, desc, "\n".join(body), updated))
