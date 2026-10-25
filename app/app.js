@@ -613,7 +613,7 @@
       '<div class="actions">' +
       (phone ? '<a class="btn btn-primary btn-sm" href="tel:' + esc(phone) + '">Call</a>' : "") +
       (site ? '<a class="btn btn-ghost btn-sm" href="' + esc(site) + '" target="_blank" rel="noopener">Website</a>' : "") +
-      '<button class="btn btn-ghost btn-sm" type="button" data-enq="' + esc(id) + '">Email them</button>' +
+      '<button class="btn btn-sun btn-sm btn-enq" type="button" data-enq="' + esc(id) + '"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Email them</button>' +
       '<a class="btn btn-ghost btn-sm" href="https://www.cqc.org.uk/location/' + esc(id) + '" target="_blank" rel="noopener">CQC report</a>' +
       "</div></article>";
   }
