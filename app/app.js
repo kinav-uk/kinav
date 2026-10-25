@@ -173,6 +173,8 @@
   function renderHome() {
     var key = planKey();
     $("homePlanTitle").textContent = "Your 30-day plan";
+    // New visitors start with "Where do I start?"; the plan card only shows progress once a plan is chosen.
+    $("homePlanTitle").closest(".hero").hidden = !key;
     $("homePlanOpen").hidden = !key;
     $("homePlanBar").parentNode.hidden = !key;
     if (!key) {
