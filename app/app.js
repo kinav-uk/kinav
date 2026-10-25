@@ -131,7 +131,8 @@
           return '<button class="task" type="button" data-id="' + it.id + '" aria-pressed="' + d + '">' +
             '<span class="box" aria-hidden="true">' + (d ? tick() : "") + "</span>" +
             '<span class="stack-sm" style="gap:2px"><span class="tt">' + esc(it.text) + "</span>" +
-            (it.note ? '<span class="small muted">' + telLinks(esc(it.note)) + "</span>" : "") + "</span></button>";
+            (it.note ? '<span class="small muted">' + telLinks(esc(it.note)) + "</span>" : "") + "</span></button>" +
+            (it.links && it.links.length ? '<p class="small tasklinks">' + it.links.map(function (l) { return '<a href="' + l[1] + '">' + esc(l[0]) + " ›</a>"; }).join("") + "</p>" : "");
         }).join("") + "</div>";
     }).join("");
     var st = planStats(key);

@@ -360,3 +360,40 @@ window.KC = {
     other: { name: "Elsewhere in England", res: 1501, nurs: 1647, hourly: 34.42, note: "No local figure yet, so Surrey averages are used. Enter a local quote." }
   }
 };
+
+// Link plan steps to the guides, letters and tools that help with them.
+(function () {
+  var L = {
+    badge: ["How to apply for a Blue Badge", "#kit-blue-badge", "/guides/how-to-apply-for-a-blue-badge/"],
+    nolpa: ["No Lasting Power of Attorney?", "#kit-no-lpa", "/guides/no-lasting-power-of-attorney-deputyship/"],
+    safety: ["Home safety and grants", "#kit-safety", "/guides/home-safety-and-grants-for-older-people/"],
+    alarms: ["Fall alarms guide", "#kit-alarms", "/guides/fall-alarms-and-home-cameras/"],
+    hospital: ["Leaving hospital checklist", "#kit-hospital", "/guides/leaving-hospital-discharge-checklist/"],
+    needs: ["Letter asking for a needs assessment", "#letter-needs", "/letters/letter-asking-the-council-for-a-care-needs-assessment/"],
+    carer: ["Carer's assessment letter", "#letter-carer", "/letters/carers-assessment-request-letter/"],
+    benefits: ["Benefits calculator", "#benefits", "/benefits-calculator/"],
+    days: ["Day centres: how they help", "#article-day-centres", "/articles/day-centres/"],
+    homecare: ["Setting up care at home", "#kit-home-care", "/guides/setting-up-care-at-home/"]
+  };
+  var RULES = [
+    [/Blue Badge/, ["badge"]],
+    [/No Lasting Power of Attorney/, ["nolpa"]],
+    [/Disabled Facilities Grant|OT home assessment|Home safety kit/, ["safety"]],
+    [/fall alarm|Fall alarms/i, ["alarms"]],
+    [/Leaving hospital kit/, ["hospital"]],
+    [/needs assessment and a carer's assessment/, ["needs", "carer"]],
+    [/day centres/, ["days"]],
+    [/Attendance Allowance|Carer's Allowance|Benefits calculator/, ["benefits"]]
+  ];
+  Object.keys(window.KC.plans).forEach(function (k) {
+    window.KC.plans[k].groups.forEach(function (g) {
+      g.items.forEach(function (it) {
+        var txt = it.text + " " + (it.note || ""), seen = {};
+        it.links = [];
+        RULES.forEach(function (r) {
+          if (r[0].test(txt)) r[1].forEach(function (id) { if (!seen[id]) { seen[id] = 1; it.links.push(L[id]); } });
+        });
+      });
+    });
+  });
+})();

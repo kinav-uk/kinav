@@ -161,7 +161,8 @@ def kit_page(k, updated):
 def plan_page(key, p, updated):
     path = "/plans/%s/" % PLAN_PAGES[key]
     groups = "".join('<section class="panel"><h2>%s</h2><ul class="steps">%s</ul></section>' % (
-        e(g["title"]), "".join('<li><b>%s</b>%s</li>' % (e(i["text"]), '<br><span class="muted">%s</span>' % tel(e(i["note"])) if i.get("note") else "")
+        e(g["title"]), "".join('<li><b>%s</b>%s%s</li>' % (e(i["text"]), '<br><span class="muted">%s</span>' % tel(e(i["note"])) if i.get("note") else "",
+                                                          '<br>%s' % " · ".join('<a href="%s">%s ›</a>' % (l[2], e(l[0])) for l in i["links"]) if i.get("links") else "")
                                for i in g["items"])) for g in p["groups"])
     body = [crumbs(("30-day plans", "/guides/#plans")),
             '<div class="stack-sm"><h1>%s</h1><p class="lede">%s</p></div>' % (e(p["title"]), e(p["lede"])),
