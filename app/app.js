@@ -39,8 +39,8 @@
   };
 
   /* ---------- Screens ---------- */
-  var SCREENS = ["home", "plan", "appts", "care", "costs", "benefits", "help", "kit", "privacy", "terms", "articles", "article", "questions", "stayhome", "start", "house", "letters", "rota", "enquire"];
-  var TAB_FOR = { stayhome: "home", start: "home", house: "home", letters: "home", rota: "home", enquire: "care", costs: "home", benefits: "home", kit: "help", questions: "help", privacy: "home", terms: "home", articles: "home", article: "home" };
+  var SCREENS = ["home", "plan", "appts", "care", "costs", "benefits", "help", "kit", "privacy", "terms", "articles", "article", "questions", "stayhome", "start", "house", "letters", "rota", "enquire", "support"];
+  var TAB_FOR = { stayhome: "home", start: "home", house: "home", letters: "home", rota: "home", enquire: "care", costs: "home", benefits: "home", kit: "help", questions: "help", privacy: "home", terms: "home", articles: "home", article: "home", support: "home" };
 
   function show() {
     var hash = (location.hash || "#home").slice(1);

@@ -376,7 +376,7 @@ html.big body { zoom: 1.15; }
     <ol class="install-steps" id="installSteps" hidden></ol>
   </div>
   <footer class="homefoot">
-    <p><a href="#help"><b>Struggling right now? Get help</b></a></p>
+    <p><a href="#support"><b>Struggling right now? Get help</b></a></p>
     <p><button class="linkbtn" type="button" id="bigText" aria-pressed="false">Larger text</button> · <a href="#privacy">Privacy</a> · <a href="#terms">Terms</a></p>
     <p>Follow us on <a href="https://www.instagram.com/ukkinav/" target="_blank" rel="noopener">Instagram</a> and <a href="https://www.facebook.com/kinavhelp" target="_blank" rel="noopener">Facebook</a></p>
     <p class="tiny muted"><span id="lastUpdated" data-built="2026-10-25">Last updated 25 October 2026</span>. General information only, not health or medical advice. In an emergency, call 999.</p>
@@ -820,12 +820,26 @@ html.big body { zoom: 1.15; }
 </section>
 
 <!-- Help and kits -->
-<section class="screen" id="s-help" hidden>
+<section class="screen" id="s-support" hidden>
+  <a class="back" href="#home">‹ Home</a>
   <div class="card crisis">
     <h2>Struggling right now?</h2>
     <p class="small urgent"><b>In an emergency, call <a class="tel" href="tel:999">999</a>.</b> For urgent advice, call <a class="tel" href="tel:111">NHS 111</a>.</p>
     <div class="stack-sm" id="helplines"></div>
   </div>
+  <details class="more" open>
+    <summary>Expert help: Age UK, Citizens Advice, specialist nurses</summary>
+    <div class="stack-sm">
+    <a class="card" style="text-decoration:none;color:inherit" href="https://www.ageuk.org.uk/services/age-uk-advice-line/" target="_blank" rel="noopener"><h3>Age UK Advice Line ›</h3><span class="small muted">Free advice on care, benefits and money</span></a>
+    <a class="card" style="text-decoration:none;color:inherit" href="https://www.citizensadvice.org.uk/" target="_blank" rel="noopener"><h3>Citizens Advice ›</h3><span class="small muted">Free, independent help with benefits, care costs, contracts and complaints. Adviceline (England): <span class="phone">0800 144 8848</span>. Many towns have a local Citizens Advice office, once called the Citizens Advice Bureau.</span></a>
+    <a class="card" style="text-decoration:none;color:inherit" href="/ask-a-specialist/"><h3>Ask a nurse or specialist ›</h3><span class="small muted">Free helplines with specialist nurses for dementia, stroke, heart conditions and Parkinson's. Not a substitute for the GP or NHS 111.</span></a>
+    <a class="card" style="text-decoration:none;color:inherit" href="https://societyoflaterlifeadvisers.co.uk/" target="_blank" rel="noopener"><h3>Society of Later Life Advisers ›</h3><span class="small muted">Find an accredited adviser for paying for care (paid)</span></a>
+  </div>
+  </details>
+  <p class="note">Kinav doesn't give health advice. For health questions, speak to the GP, a pharmacist or NHS 111, and call 999 in an emergency. It gives general information only, not medical, legal or financial advice. <a href="#privacy">Privacy notice</a> · <a href="#terms">Terms of use</a></p>
+</section>
+
+<section class="screen" id="s-help" hidden>
   <a class="card" href="#questions" style="text-decoration:none;color:inherit"><h3>Questions to ask ›</h3><span class="small muted">Pick the questions for a care home visit, home care agency, council assessment, hospital discharge or appointment, then write the answers.</span></a>
   <a class="card" href="#letters" style="text-decoration:none;color:inherit"><h3>Write to the council or hospital ›</h3><span class="small muted">Ready-made letters: ask for an assessment, plan leaving hospital, challenge a decision or complain.</span></a>
   <details class="more">
@@ -855,15 +869,6 @@ html.big body { zoom: 1.15; }
     <h3 id="homeArticleTitle"></h3>
     <span class="small" style="color:var(--accent);font-weight:600">Read the article ›</span>
   </a>
-  <details class="more">
-    <summary>Expert help: Age UK, Citizens Advice, specialist nurses</summary>
-    <div class="stack-sm">
-    <a class="card" style="text-decoration:none;color:inherit" href="https://www.ageuk.org.uk/services/age-uk-advice-line/" target="_blank" rel="noopener"><h3>Age UK Advice Line ›</h3><span class="small muted">Free advice on care, benefits and money</span></a>
-    <a class="card" style="text-decoration:none;color:inherit" href="https://www.citizensadvice.org.uk/" target="_blank" rel="noopener"><h3>Citizens Advice ›</h3><span class="small muted">Free, independent help with benefits, care costs, contracts and complaints. Adviceline (England): <span class="phone">0800 144 8848</span>. Many towns have a local Citizens Advice office, once called the Citizens Advice Bureau.</span></a>
-    <a class="card" style="text-decoration:none;color:inherit" href="/ask-a-specialist/"><h3>Ask a nurse or specialist ›</h3><span class="small muted">Free helplines with specialist nurses for dementia, stroke, heart conditions and Parkinson's. Not a substitute for the GP or NHS 111.</span></a>
-    <a class="card" style="text-decoration:none;color:inherit" href="https://societyoflaterlifeadvisers.co.uk/" target="_blank" rel="noopener"><h3>Society of Later Life Advisers ›</h3><span class="small muted">Find an accredited adviser for paying for care (paid)</span></a>
-  </div>
-  </details>
   <p class="note">Kinav doesn't give health advice. For health questions, speak to the GP, a pharmacist or NHS 111, and call 999 in an emergency. It gives general information only, not medical, legal or financial advice. <a href="#privacy">Privacy notice</a> · <a href="#terms">Terms of use</a></p>
 </section>
 
@@ -1102,7 +1107,7 @@ html.big body { zoom: 1.15; }
 
 <script id="gcScript" data-goatcounter="https://kinav.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="https://gc.zgo.at/count.js"></script>
 <script src="content.js?v=fe9c63721d"></script>
-<script src="app.js?v=b0941ff886"></script>
+<script src="app.js?v=6afaf4655c"></script>
 
 </body>
 </html>
