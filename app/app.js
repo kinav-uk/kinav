@@ -56,6 +56,7 @@
     if (name === "home") renderHome();
     if (name === "care") initCare();
     if (name === "questions") renderQuestions();
+    if (name === "support") renderHelplines();
     if (name === "help") { renderKitList(); helpJumpCurrent(); }
     if (name === "letters") {
       var pick = hash.slice(7), lst = ltState();
@@ -1432,9 +1433,22 @@
   }
 
   /* ---------- Help and kits ---------- */
-  $("helplines").innerHTML = KC.helplines.map(function (h) {
-    return '<div><p style="font-weight:600">' + esc(h.name) + '</p><p><a class="phone" style="font-size:18px;font-weight:700;text-decoration:none" href="tel:' + h.number.replace(/\s/g, "") + '">' + esc(h.number) + '</a></p><p class="tiny muted">' + esc(h.note) + "</p></div>";
-  }).join("");
+  // Helplines for every family first, then the chosen plan's condition, then the rest by condition.
+  function renderHelplines() {
+    var key = planKey(), line = function (h) {
+      return '<div><p style="font-weight:600">' + esc(h.name) + '</p><p><a class="phone" style="font-size:18px;font-weight:700;text-decoration:none" href="tel:' + h.number.replace(/\s/g, "") + '">' + esc(h.number) + '</a></p><p class="tiny muted">' + esc(h.note) + "</p></div>";
+    };
+    var head = function (t) { return '<h3 class="eyebrow" style="margin-top:6px">' + esc(t) + "</h3>"; };
+    var all = KC.helplines.filter(function (h) { return h.for === "all"; });
+    var mine = key ? KC.helplines.filter(function (h) { return h.for === key; }) : [];
+    var rest = KC.helplines.filter(function (h) { return h.for !== "all" && h.for !== key; });
+    $("helplines").innerHTML = head("For every family") + all.map(line).join("") +
+      (mine.length ? head("For " + KC.plans[key].name) + mine.map(line).join("") : "") +
+      head(mine.length ? "Other conditions" : "By condition") + rest.map(function (h) {
+        return line({ name: h.name, number: h.number, note: KC.plans[h.for].name + ". " + h.note });
+      }).join("");
+  }
+  renderHelplines();
 
   function kitDone(id) { return store.get("kit." + id, {}); }
 

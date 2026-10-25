@@ -1,13 +1,24 @@
 // Kinav content: guides, kits, benefits rules and helplines.
 // Facts checked against GOV.UK, Age UK and Alzheimer's Society (October 2026).
 window.KC = {
+  // "all": for every family. Otherwise the 30-day plan they match, so the chosen plan's lines show first.
   helplines: [
-    { name: "Admiral Nurse Dementia Helpline", number: "0800 888 6678", note: "Dementia UK. Specialist dementia nurses." },
-    { name: "Alzheimer's Society Dementia Support Line", number: "0333 150 3456", note: "Advice and someone to talk to." },
-    { name: "Parkinson's UK Helpline", number: "0808 800 0303", note: "Free advice from Parkinson's nurses and advisers." },
-    { name: "Stroke Association Helpline", number: "0303 3033 100", note: "For stroke survivors and their families." },
-    { name: "British Heart Foundation Heart Helpline", number: "0808 802 1234", note: "Cardiac nurses for patients and families." },
-    { name: "Samaritans", number: "116 123", note: "Any time, day or night. Free." }
+    { for: "all", name: "Carers UK Helpline", number: "0808 808 7777", note: "Advice for family carers. Weekdays 9am to 6pm." },
+    { for: "all", name: "Age UK Advice Line", number: "0800 678 1602", note: "Care, money and benefits. 8am to 7pm, every day." },
+    { for: "all", name: "Samaritans", number: "116 123", note: "Someone to talk to, day or night." },
+    { for: "dementia", name: "Admiral Nurse Dementia Helpline", number: "0800 888 6678", note: "Dementia UK's specialist dementia nurses." },
+    { for: "dementia", name: "Alzheimer's Society Dementia Support Line", number: "0333 150 3456", note: "Dementia advisers and someone to talk to." },
+    { for: "parkinsons", name: "Parkinson's UK Helpline", number: "0808 800 0303", note: "Parkinson's nurses and advisers." },
+    { for: "stroke", name: "Stroke Association Helpline", number: "0303 3033 100", note: "For stroke survivors and their families." },
+    { for: "heart", name: "British Heart Foundation Heart Helpline", number: "0808 802 1234", note: "Cardiac nurses for patients and families." },
+    { for: "copd", name: "Asthma + Lung UK Helpline", number: "0300 222 5800", note: "Respiratory nurses. Weekdays 9am to 5pm." },
+    { for: "cancer", name: "Macmillan Support Line", number: "0808 808 00 00", note: "Cancer nurses and advisers. 8am to 8pm, every day." },
+    { for: "eol", name: "Marie Curie Support Line", number: "0800 090 2309", note: "For terminal illness, caring and bereavement." },
+    { for: "sight", name: "RNIB Helpline", number: "0303 123 9999", note: "Living with sight loss." },
+    { for: "sight", name: "RNID Helpline", number: "0808 808 0123", note: "Hearing loss and tinnitus." },
+    { for: "continence", name: "Bladder & Bowel UK Helpline", number: "0161 214 4591", note: "Continence nurses and product advice." },
+    { for: "diabetes", name: "Diabetes UK Helpline", number: "0345 123 2399", note: "For anyone affected by diabetes. Weekdays 9am to 6pm." },
+    { for: "arthritis", name: "Arthritis UK Helpline", number: "0800 5200 520", note: "Formerly Versus Arthritis. Weekdays 9am to 6pm." }
   ],
 
   // Quick pick for Who does what.

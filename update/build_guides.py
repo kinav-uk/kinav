@@ -109,6 +109,34 @@ SPECIALISTS = [
         ("Parkinson's UK Helpline", "0808 800 0303", "https://www.parkinsons.org.uk/contact",
          "Parkinson's nurses and advisers: living with Parkinson's, medicines questions to raise with the care team, money and work."),
     ]),
+    ("Cancer", [
+        ("Macmillan Support Line", "0808 808 00 00", "https://www.macmillan.org.uk/about-us/contact-us",
+         "Cancer information nurses and advisers, 8am to 8pm every day: treatment questions to raise, money, work and emotional support."),
+    ]),
+    ("Lungs and breathing", [
+        ("Asthma + Lung UK Helpline", "0300 222 5800", "https://www.asthmaandlung.org.uk/helpline",
+         "Respiratory nurses for COPD and other lung conditions, weekdays 9am to 5pm."),
+    ]),
+    ("Terminal illness and end of life", [
+        ("Marie Curie Support Line", "0800 090 2309", "https://www.mariecurie.org.uk/help/support",
+         "Practical and emotional support for people with a terminal illness, their families and carers, including bereavement."),
+    ]),
+    ("Arthritis", [
+        ("Arthritis UK Helpline", "0800 5200 520", "https://www.arthritis-uk.org/",
+         "Formerly Versus Arthritis. Advice on living with arthritis and joint pain, weekdays 9am to 6pm."),
+    ]),
+    ("Diabetes", [
+        ("Diabetes UK Helpline", "0345 123 2399", "https://www.diabetes.org.uk/how_we_help/helpline",
+         "For anyone affected by diabetes, including family, weekdays 9am to 6pm."),
+    ]),
+    ("Sight and hearing", [
+        ("RNIB Helpline", "0303 123 9999", "https://www.rnib.org.uk/helpline", "Living with sight loss: equipment, benefits, rights and emotional support."),
+        ("RNID Helpline", "0808 808 0123", "https://rnid.org.uk/about-us/contact-rnid/", "Hearing loss and tinnitus: hearing aids, equipment and support."),
+    ]),
+    ("Bladder and bowel", [
+        ("Bladder & Bowel UK Helpline", "0161 214 4591", "https://www.bbuk.org.uk/",
+         "Specialist continence nurses and product advice."),
+    ]),
 ]
 FAQS = [
     ("Can I ask a doctor a question online for free?",
@@ -242,15 +270,15 @@ def specialist_page(updated):
     faq = "".join('<details class="panel"><summary><b>%s</b></summary><p>%s</p></details>' % (e(q), e(a)) for q, a in FAQS)
     schema = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in FAQS]}
-    body = [crumbs(), '<div class="stack-sm"><h1>Ask a nurse or specialist: dementia, stroke, heart and Parkinson\'s</h1>'
+    body = [crumbs(), '<div class="stack-sm"><h1>Ask a nurse or specialist: free helplines by condition</h1>'
             '<p class="lede">Free UK helplines where family carers can ask specialist nurses and trained advisers about a condition, and what to ask the doctor.</p></div>',
             '<p class="panel"><b>Urgent?</b> Call 999 if someone is seriously ill or injured, or their life is at risk. For urgent advice, call NHS 111. '
             'For questions about their health and medicines, speak to their GP or a pharmacist.</p>',
             groups, '<section class="stack"><h2>Common questions</h2>%s</section>' % faq,
             '<p class="panel small">Kinav lists these services so you know where to ask. It doesn\'t run them or give health or medical advice. Opening times vary: check each website.</p>',
             '<script type="application/ld+json">%s</script>' % json.dumps(schema)]
-    return path, build_pages.page(path, "Ask a nurse or specialist: dementia, stroke, heart and Parkinson's helplines | Kinav",
-                                  "Free UK helplines for family carers: Admiral Nurses for dementia, Stroke Association, British Heart Foundation cardiac nurses and Parkinson's UK nurses.",
+    return path, build_pages.page(path, "Ask a nurse or specialist: free UK helplines by condition | Kinav",
+                                  "Free UK helplines for family carers: dementia, stroke, heart, Parkinson's, cancer, lungs, arthritis, diabetes, sight and hearing. Specialist nurses and advisers.",
                                   "\n".join(body), updated, kind="guide")
 
 
