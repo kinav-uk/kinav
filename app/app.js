@@ -56,6 +56,7 @@
     if (name === "home") renderHome();
     if (name === "care") initCare();
     if (name === "questions") renderQuestions();
+    if (name === "help") renderKitList();
     if (name === "letters") {
       var pick = hash.slice(7), lst = ltState();
       if (pick && pick !== lst.id && LETTERS.some(function (l) { return l.id === pick; })) { lst.id = pick; lst.edited = false; lst.text = ""; store.set("letter", lst); }
@@ -1435,13 +1436,17 @@
   // Kits grouped under short headings, in the order they first appear in content.js.
   var kitGroups = [];
   KC.kits.forEach(function (k) { if (kitGroups.indexOf(k.group) < 0) kitGroups.push(k.group); });
-  $("kitList").innerHTML = kitGroups.map(function (g) {
-    return '<div class="stack-sm"><h2 style="color:var(--accent);font-size:16px">' + esc(g) + "</h2>" +
-      KC.kits.filter(function (k) { return k.group === g; }).map(function (k) {
-        return '<a class="card" style="text-decoration:none;color:inherit" href="#kit-' + k.id + '"><div class="head"><h3>' + esc(k.name) + '</h3><span class="tiny" style="color:var(--accent);font-weight:600;white-space:nowrap">' + k.steps.length + " steps ›</span></div>" +
-          '<p class="small muted">' + esc(k.what) + "</p></a>";
-      }).join("") + "</div>";
-  }).join("");
+  function renderKitList() {
+    $("kitList").innerHTML = kitGroups.map(function (g) {
+      return '<div class="rowgroup"><h3>' + esc(g) + '</h3><div class="rowlist">' +
+        KC.kits.filter(function (k) { return k.group === g; }).map(function (k) {
+          var d = kitDone(k.id), n = Object.keys(d).filter(function (x) { return d[x]; }).length;
+          var go = n >= k.steps.length ? '<span class="go done">Done ✓</span>' : '<span class="go">' + (n ? n + " of " : "") + k.steps.length + " steps ›</span>";
+          return '<a href="#kit-' + k.id + '"><span class="t"><b>' + esc(k.name) + "</b><span>" + esc(k.what) + "</span></span>" + go + "</a>";
+        }).join("") + "</div></div>";
+    }).join("");
+  }
+  renderKitList();
 
   function renderKit(id) {
     var k = KC.kits.filter(function (x) { return x.id === id; })[0];
