@@ -97,7 +97,7 @@ window.KC = {
     delirium: {"name": "Sudden confusion (delirium)", "title": "Sudden confusion (delirium)", "lede": "Confusion that starts over hours or days needs urgent medical help. It is often treatable.", "kind": "situation", "groups": [{"title": "Right now", "items": [{"id": "delirium-0-0", "text": "Get medical help the same day", "note": "Call the GP urgently or NHS 111. If you think it's an emergency, call 999."}, {"id": "delirium-0-1", "text": "Tell the doctor what's normal for them", "note": "Say how they were a few days ago, so the doctor can see what has changed."}, {"id": "delirium-0-2", "text": "Tell them about any recent changes", "note": "New medicines, a recent fall, or anything else that's different."}]}, {"title": "While they recover", "items": [{"id": "delirium-1-0", "text": "Ask the staff how you can help", "note": "Ask the GP, nurse or ward what you can do while they recover."}, {"id": "delirium-1-1", "text": "Bring their glasses and hearing aids", "note": "And familiar things from home, if they're in hospital."}, {"id": "delirium-1-2", "text": "Stay with them if you can", "note": "A familiar face is calming. In hospital, ask about open visiting for carers."}, {"id": "delirium-1-3", "text": "Share a This is me form in hospital", "note": "From Alzheimer's Society: tells staff about their routine, likes and how to calm them."}]}, {"title": "Afterwards", "items": [{"id": "delirium-2-0", "text": "Ask what to expect", "note": "Ask the doctor how recovery is likely to go."}, {"id": "delirium-2-1", "text": "Ask the GP for a follow-up", "note": "Ask whether any further checks are needed once they've recovered."}, {"id": "delirium-2-2", "text": "Ask what to do if it happens again", "note": "Ask the GP, and write the plan down."}]}]}
   },
 
-  // One article a month: one health issue, and how a carer can cope with it.
+  // One article a month on looking after yourself as a carer.
   articles: [
     { id: "diabetes-christmas", from: "2026-12-01", month: "December 2026", topic: "Diabetes", plan: "diabetes",
       title: "Caring for someone with diabetes over Christmas: how to cope",
@@ -224,7 +224,7 @@ window.KC = {
       { t: "Apply online", d: "Use GOV.UK: gov.uk/apply-blue-badge. You can apply on their behalf, and save and come back later. Or ask the council for a paper form." },
       { t: "Pay the fee", d: "Up to £10 in England. The council tells you how to pay." },
       { t: "Wait for the decision", d: "Usually within 12 weeks. The council may ask for more information, or invite them to a mobility assessment with an independent health professional. Keep copies of everything you send." },
-      { t: "If it's refused", d: "Ask the council to reconsider, explaining anything they missed. You can reapply if things change. Citizens Advice (CAB) can help: Adviceline (England) 0800 144 8848." },
+      { t: "If it's refused", d: "Ask the council to reconsider, explaining anything they missed. You can reapply if things change. Citizens Advice can help: Adviceline (England) 0800 144 8848." },
       { t: "Use it the right way", d: "The badge is theirs: use it only when they're travelling in the car, as driver or passenger. Show it on the dashboard, with the clock where needed. Misuse can mean a fine of up to £1,000." },
       { t: "Set a renewal reminder", d: "Badges usually last up to 3 years, and you must reapply before it runs out. In Calendar, choose Reminder, then Blue Badge renewal, and it will remind you 12 weeks before." }
     ]},
@@ -240,7 +240,7 @@ window.KC = {
       { t: "After you're appointed", d: "You may need to buy a security bond first. There's a one-off £100 assessment fee and a yearly supervision fee (£320, or £35 if they have under £21,000), and you send a report to the Office of the Public Guardian each year. Keep their money separate from yours and keep receipts." },
       { t: "Health and care decisions", d: "These usually don't need a court application. Doctors, nurses and social workers decide in their best interests under the Mental Capacity Act and must consult family. Tell them you want to be involved. Health and welfare deputies are rarely appointed." },
       { t: "If they move into a care home", d: "If they're under continuous supervision and not free to leave, the home must apply to the council for a Deprivation of Liberty Safeguards (DoLS) authorisation. You should be consulted, and you can ask questions or ask for a review. If there's no family, an independent advocate is appointed." },
-      { t: "Get free help", d: "Office of the Public Guardian 0300 456 0300. Court of Protection 0300 456 4600. Alzheimer's Society 0333 150 3456. Citizens Advice (CAB) Adviceline (England) 0800 144 8848. A solicitor who does Court of Protection work can apply for you, for a fee." }
+      { t: "Get free help", d: "Office of the Public Guardian 0300 456 0300. Court of Protection 0300 456 4600. Alzheimer's Society 0333 150 3456. Citizens Advice Adviceline (England) 0800 144 8848. A solicitor who does Court of Protection work can apply for you, for a fee." }
     ]},
     { id: "contract", group: "Money, rights and forms", name: "Before you sign a care home contract", what: "Fees, increases, top-ups and notice.", steps: [
       { t: "Get the contract in advance", d: "Ask for it before moving day, and take time to read it. Check who is signing and in what role: only sign as their attorney if you have a Lasting Power of Attorney, and don't agree to pay fees personally unless you mean to." },
@@ -251,7 +251,7 @@ window.KC = {
       { t: "Check notice terms", d: "How much notice is needed to leave, and how many days of fees are charged after a death?" },
       { t: "Check when a resident can be asked to leave", d: "Ask what the reasons are and what notice they give." },
       { t: "Know how to complain", d: "Ask for the complaints process. If it isn't resolved, you can go to the Local Government and Social Care Ombudsman." },
-      { t: "Get free help if anything is unclear", d: "Citizens Advice (CAB) can explain your rights on fees, notice and unfair terms. Call the Citizens Advice consumer helpline on 0808 223 1133, or the Adviceline (England) on 0800 144 8848." }
+      { t: "Get free help if anything is unclear", d: "Citizens Advice can explain your rights on fees, notice and unfair terms. Call the Citizens Advice consumer helpline on 0808 223 1133, or the Adviceline (England) on 0800 144 8848." }
     ]}
   ],
 

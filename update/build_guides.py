@@ -222,13 +222,13 @@ def benefits_page(updated):
              ("Council tax discounts", "Discounts or exemptions for people living alone, people with a severe mental impairment such as dementia, and some carers."),
              ("Blue Badge", "Parking closer to where they need to go. See the step-by-step Blue Badge guide.")]
     body = [crumbs(), '<div class="stack-sm"><h1>Benefits calculator for carers and older people</h1>'
-            '<p class="lede">Six quick questions to see which benefits the person you care for, and you, could be missing out on.</p></div>',
+            '<p class="lede">Six quick questions to see which benefits the person you care for, and you, could claim.</p></div>',
             cta("Answer six questions. Your answers are used once on your phone, then forgotten.", "/#benefits", "Check what you could claim"),
-            '<section class="panel"><h2>Benefits worth checking</h2><ul>%s</ul></section>' % "".join(
+            '<section class="panel"><h2>Benefits they may be eligible for</h2><ul>%s</ul></section>' % "".join(
                 "<li><b>%s:</b> %s</li>" % (e(n), e(d)) for n, d in items),
-            '<section class="panel"><h2>Free help to claim</h2><p>Citizens Advice (CAB) can check entitlement, help fill in forms such as Attendance Allowance and challenge decisions. '
+            '<section class="panel"><h2>Free help to claim</h2><p>Citizens Advice can check entitlement, help fill in forms such as Attendance Allowance and challenge decisions. '
             'Adviceline (England): 0800 144 8848. Age UK Advice Line: 0800 678 1602.</p></section>',
-            '<p class="panel small">A guide to what may be worth checking, not benefits or financial advice. The Department for Work and Pensions and the council decide what someone gets.</p>']
+            '<p class="panel small">A guide to what they may be eligible for, not benefits or financial advice. The Department for Work and Pensions and the council decide what someone gets.</p>']
     return path, build_pages.page(path, "Benefits calculator for carers and older people (UK) | Kinav",
                                   "Free benefits calculator: check Attendance Allowance, PIP, Carer's Allowance, Carer's Credit, Pension Credit, council tax discounts and Blue Badge in six questions.",
                                   "\n".join(body), updated, kind="guide")

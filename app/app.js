@@ -780,11 +780,11 @@
   fillPick($("stPlan"), "");
   $("stPlan").options[0].text = "None, or not sure";
   var ST_STEPS = {
-    diagnosed: [["#benefits", "Check the money they could be missing", "Attendance Allowance isn't means-tested."], ["#questions", "Pick questions for the next appointment", "So nothing is forgotten on the day.", "appointment"]],
+    diagnosed: [["#benefits", "Check the benefits they could claim", "Attendance Allowance isn't means-tested."], ["#questions", "Pick questions for the next appointment", "So nothing is forgotten on the day.", "appointment"]],
     hospital: [["#kit-hospital", "Use the Leaving hospital checklist", "Make sure help is in place before they come home."], ["#questions", "Questions to ask before they come home", "Discharge date, support, equipment and contacts.", "discharge"], ["#stayhome", "Help them stay at home", "Grants, equipment, alarms and home care."]],
-    struggling: [["#stayhome", "Help them stay at home", "A plan with grants, equipment, alarms and home care."], ["#kit-home-care", "Ask the council for a needs assessment", "Free, whatever their savings."], ["#benefits", "Check the money they could be missing", "Benefits and discounts in six questions."]],
+    struggling: [["#stayhome", "Help them stay at home", "A plan with grants, equipment, alarms and home care."], ["#kit-home-care", "Ask the council for a needs assessment", "Free, whatever their savings."], ["#benefits", "Check the benefits they could claim", "Benefits and discounts in six questions."]],
     carehome: [["#care", "Find care homes near them", "Only homes rated Good or Outstanding by CQC."], ["#kit-home-choice", "Use the Choosing a care home checklist", "Shortlist, visit and ask the right questions."], ["#house", "Will they have to sell the house?", "The rules in plain English."], ["#costs", "Work out the costs", "And how long savings could last."]],
-    money: [["#benefits", "Check the money they could be missing", "Benefits and discounts in six questions."], ["#house", "Will they have to sell the house?", "The rules in plain English."], ["#costs", "Work out care costs", "Home or care home, and how long savings last."]]
+    money: [["#benefits", "Check the benefits they could claim", "Benefits and discounts in six questions."], ["#house", "Will they have to sell the house?", "The rules in plain English."], ["#costs", "Work out care costs", "Home or care home, and how long savings last."]]
   };
   function renderStart() {
     var now = $("stNow").value, plan = $("stPlan").value, alone = $("stAlone").value;
@@ -1226,7 +1226,7 @@
     if (kind === "stayhome") lines = ["Steps to help them stay at home:"].concat(pick("#shPlan h3"));
     if (kind === "start") lines = ["Our first steps:"].concat(pick("#stOut h3"));
     if (kind === "costs") lines = ["Care costs (estimate):"].concat(pick("#cmpOut .cmp-box").map(function (t) { return t.replace(/\s+/g, " "); }));
-    if (kind === "benefits") lines = ["Benefits worth checking:"].concat(pick("#benResults .card h3"));
+    if (kind === "benefits") lines = ["Benefits they may be eligible for:"].concat(pick("#benResults .card h3"));
     if (kind === "house") lines = ["Will they have to sell the house to pay for care? Often not. The rules explained:"];
     var text = lines.join("\n") + "\n\nFrom Kinav, free help for families: https://kinav.co.uk";
     if (navigator.share) { navigator.share({ title: "Kinav", text: text }).catch(function () {}); return; }
@@ -1395,29 +1395,29 @@
     var need = KC.benefits.questions.length - Object.keys(a).length;
     if (need > 0) { $("benResults").innerHTML = '<p class="small muted">' + need + " more to answer.</p>"; return; }
     var spa = a.age === "Yes";
-    if (spa && a.help === "Yes") out.push(["Attendance Allowance", "Them", "Likely", "They're over State Pension age and have needed help for 6 months. £76.70 or £114.60 a week, and not means-tested.", "https://www.gov.uk/attendance-allowance"]);
-    else if (spa && a.help === "Not yet") out.push(["Attendance Allowance", "Them", "Worth checking", "They can usually claim once they've needed help for 6 months, or straight away if terminally ill.", "https://www.gov.uk/attendance-allowance"]);
-    else if (!spa) out.push(["Personal Independence Payment", "Them", "Worth checking", "Under State Pension age, PIP is the benefit for extra daily living or mobility needs.", "https://www.gov.uk/pip"]);
-    if (a.income !== "No" && spa) out.push(["Pension Credit", "Them", "Worth checking", "Tops up a low income. Getting Attendance Allowance can increase it.", "https://www.gov.uk/pension-credit"]);
-    out.push(["Council tax discount", "Their household", "Worth checking",
+    if (spa && a.help === "Yes") out.push(["Attendance Allowance", "Them", "Likely eligible", "They're over State Pension age and have needed help for 6 months. £76.70 or £114.60 a week, and not means-tested.", "https://www.gov.uk/attendance-allowance"]);
+    else if (spa && a.help === "Not yet") out.push(["Attendance Allowance", "Them", "May be eligible", "They can usually claim once they've needed help for 6 months, or straight away if terminally ill.", "https://www.gov.uk/attendance-allowance"]);
+    else if (!spa) out.push(["Personal Independence Payment", "Them", "May be eligible", "Under State Pension age, PIP is the benefit for extra daily living or mobility needs.", "https://www.gov.uk/pip"]);
+    if (a.income !== "No" && spa) out.push(["Pension Credit", "Them", "May be eligible", "Tops up a low income. Getting Attendance Allowance can increase it.", "https://www.gov.uk/pension-credit"]);
+    out.push(["Council tax discount", "Their household", "May be eligible",
       a.alone === "Yes" ? "If they live alone with dementia or another condition affecting memory, council tax can be cut by up to 100%." : "There are discounts and disregards for people with severe mental impairment, such as dementia.",
       "https://www.gov.uk/council-tax/discounts-for-disabled-people"]);
-    if (a.hours !== "Under 20") out.push(["Carer's Credit", "You", "Likely", "You care 20 or more hours a week. It protects your State Pension.", "https://www.gov.uk/carers-credit"]);
-    if (a.hours === "35 or more" && a.earn === "No") out.push(["Carer's Allowance", "You", "Worth checking", "You care 35+ hours a week and earn £204 a week or less. The person you care for must get a qualifying benefit, such as Attendance Allowance.", "https://www.gov.uk/carers-allowance"]);
-    else out.push(["Carer's Allowance", "You", "Unlikely", "Needs 35+ hours caring a week and earnings of £204 a week or less.", "https://www.gov.uk/carers-allowance/eligibility"]);
-    out.push(["Blue Badge", "Them", "Worth checking", "Some non-visible conditions, including dementia, can qualify. See the step-by-step Blue Badge kit in Help.", "https://www.gov.uk/apply-blue-badge"]);
-    out.push(["Carer's assessment", "You", "Likely", "Free from the council for anyone who cares. It can lead to support for you.", "https://www.nhs.uk/social-care-and-support/support-and-benefits-for-carers/carer-assessments/"]);
-    var pill = { Likely: "pill-good", "Worth checking": "pill-sun", Unlikely: "pill-quiet" };
-    var order = { Likely: 0, "Worth checking": 1, Unlikely: 2 };
+    if (a.hours !== "Under 20") out.push(["Carer's Credit", "You", "Likely eligible", "You care 20 or more hours a week. It protects your State Pension.", "https://www.gov.uk/carers-credit"]);
+    if (a.hours === "35 or more" && a.earn === "No") out.push(["Carer's Allowance", "You", "May be eligible", "You care 35+ hours a week and earn £204 a week or less. The person you care for must get a qualifying benefit, such as Attendance Allowance.", "https://www.gov.uk/carers-allowance"]);
+    else out.push(["Carer's Allowance", "You", "Unlikely to qualify", "Needs 35+ hours caring a week and earnings of £204 a week or less.", "https://www.gov.uk/carers-allowance/eligibility"]);
+    out.push(["Blue Badge", "Them", "May be eligible", "Some non-visible conditions, including dementia, can qualify. See the step-by-step Blue Badge kit in Help.", "https://www.gov.uk/apply-blue-badge"]);
+    out.push(["Carer's assessment", "You", "Likely eligible", "Free from the council for anyone who cares. It can lead to support for you.", "https://www.nhs.uk/social-care-and-support/support-and-benefits-for-carers/carer-assessments/"]);
+    var pill = { "Likely eligible": "pill-good", "May be eligible": "pill-sun", "Unlikely to qualify": "pill-quiet" };
+    var order = { "Likely eligible": 0, "May be eligible": 1, "Unlikely to qualify": 2 };
     out.sort(function (x, y) { return order[x[2]] - order[y[2]]; });
-    var likely = out.filter(function (o) { return o[2] === "Likely"; }).length;
-    // A yearly "could be missing" figure from the two benefits with fixed rates (2026 to 2027 rates).
-    var yearly = 0, maybe = function (name) { return out.some(function (o) { return o[0] === name && o[2] !== "Unlikely"; }); };
+    var likely = out.filter(function (o) { return o[2] === "Likely eligible"; }).length;
+    // A yearly "could be entitled to" figure from the two benefits with fixed rates (2026 to 2027 rates).
+    var yearly = 0, maybe = function (name) { return out.some(function (o) { return o[0] === name && o[2] !== "Unlikely to qualify"; }); };
     if (maybe("Attendance Allowance")) yearly += 114.60 * 52;
     if (maybe("Carer's Allowance")) yearly += 86.45 * 52;
-    var headline = yearly ? '<div class="money-head"><span class="small">Your family could be missing up to</span><b>£' + Math.round(yearly / 100) * 100 + ' a year</b><span class="tiny">From Attendance Allowance and Carer\'s Allowance at 2026 to 2027 rates, plus any council tax or Pension Credit. The Department for Work and Pensions decides.</span></div>' : "";
+    var headline = yearly ? '<div class="money-head"><span class="small">Your family could be entitled to up to</span><b>£' + Math.round(yearly / 100) * 100 + ' a year</b><span class="tiny">From Attendance Allowance and Carer\'s Allowance at 2026 to 2027 rates, plus any council tax or Pension Credit. The Department for Work and Pensions decides.</span></div>' : "";
     $("benShare").hidden = false;
-    $("benResults").innerHTML = headline + '<h2>' + likely + " likely, " + out.filter(function (o) { return o[2] === "Worth checking"; }).length + " worth checking</h2>" +
+    $("benResults").innerHTML = headline + '<h2>' + likely + " likely, " + out.filter(function (o) { return o[2] === "May be eligible"; }).length + " possible</h2>" +
       out.map(function (o) {
         return '<div class="card"><div class="head"><h3>' + esc(o[0]) + '</h3><span class="pill ' + pill[o[2]] + '">' + esc(o[2]) + "</span></div>" +
           '<p class="tiny muted">For ' + esc(o[1].toLowerCase()) + "</p><p class=\"small\">" + esc(o[3]) + "</p>" +
