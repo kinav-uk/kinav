@@ -172,6 +172,7 @@
   /* ---------- Home ---------- */
   function renderHome() {
     var key = planKey();
+    renderNext();
     $("homePlanTitle").textContent = "Your 30-day plan";
     // New visitors start with "Where do I start?"; the plan card only shows progress once a plan is chosen.
     $("homePlanTitle").closest(".hero").hidden = !key;
@@ -819,6 +820,8 @@
   /* ---------- Your next step (Home) ---------- */
   function renderNext() {
     var st = store.get("start", null), card = $("nextStep");
+    // Once a 30-day plan is chosen, its own card shows progress, so "Start the 30-day plan" counts as done.
+    if (st && planKey()) st.steps.forEach(function (x, k) { if (x[0] === "#plan" && st.done.indexOf(k) < 0) { st.done.push(k); store.set("start", st); } });
     var i = st ? st.steps.findIndex(function (x, k) { return st.done.indexOf(k) < 0; }) : -1;
     if (!st || i < 0) { card.hidden = true; return; }
     $("nextTitle").textContent = st.steps[i][1];
