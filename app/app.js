@@ -40,7 +40,7 @@
 
   /* ---------- Screens ---------- */
   var SCREENS = ["home", "plan", "appts", "care", "costs", "benefits", "help", "kit", "privacy", "terms", "articles", "article", "questions", "stayhome", "start", "house", "letters", "rota", "enquire", "support"];
-  var TAB_FOR = { stayhome: "home", start: "home", house: "home", letters: "home", rota: "home", enquire: "care", costs: "home", benefits: "home", kit: "help", questions: "help", privacy: "home", terms: "home", articles: "home", article: "home", support: "home" };
+  var TAB_FOR = { stayhome: "home", start: "home", house: "home", letters: "home", rota: "home", enquire: "care", costs: "home", benefits: "home", kit: "home", questions: "home", privacy: "home", terms: "home", articles: "home", article: "home", help: "home" };
 
   function show() {
     var hash = (location.hash || "#home").slice(1);
@@ -56,7 +56,7 @@
     if (name === "home") renderHome();
     if (name === "care") initCare();
     if (name === "questions") renderQuestions();
-    if (name === "help") renderKitList();
+    if (name === "help") { renderKitList(); helpJumpCurrent(); }
     if (name === "letters") {
       var pick = hash.slice(7), lst = ltState();
       if (pick && pick !== lst.id && LETTERS.some(function (l) { return l.id === pick; })) { lst.id = pick; lst.edited = false; lst.text = ""; store.set("letter", lst); }
@@ -1406,7 +1406,7 @@
     if (a.hours !== "Under 20") out.push(["Carer's Credit", "You", "Likely eligible", "You care 20 or more hours a week. It protects your State Pension.", "https://www.gov.uk/carers-credit"]);
     if (a.hours === "35 or more" && a.earn === "No") out.push(["Carer's Allowance", "You", "May be eligible", "You care 35+ hours a week and earn £204 a week or less. The person you care for must get a qualifying benefit, such as Attendance Allowance.", "https://www.gov.uk/carers-allowance"]);
     else out.push(["Carer's Allowance", "You", "Unlikely to qualify", "Needs 35+ hours caring a week and earnings of £204 a week or less.", "https://www.gov.uk/carers-allowance/eligibility"]);
-    out.push(["Blue Badge", "Them", "May be eligible", "Some non-visible conditions, including dementia, can qualify. See the step-by-step Blue Badge kit in Help.", "https://www.gov.uk/apply-blue-badge"]);
+    out.push(["Blue Badge", "Them", "May be eligible", "Some non-visible conditions, including dementia, can qualify. See the step-by-step Blue Badge kit in Kits and guides.", "https://www.gov.uk/apply-blue-badge"]);
     out.push(["Carer's assessment", "You", "Likely eligible", "Free from the council for anyone who cares. It can lead to support for you.", "https://www.nhs.uk/social-care-and-support/support-and-benefits-for-carers/carer-assessments/"]);
     var pill = { "Likely eligible": "pill-good", "May be eligible": "pill-sun", "Unlikely to qualify": "pill-quiet" };
     var order = { "Likely eligible": 0, "May be eligible": 1, "Unlikely to qualify": 2 };
@@ -1436,17 +1436,45 @@
   // Kits grouped under short headings, in the order they first appear in content.js.
   var kitGroups = [];
   KC.kits.forEach(function (k) { if (kitGroups.indexOf(k.group) < 0) kitGroups.push(k.group); });
+  var KIT_ICON = {
+    "home-choice": '<path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/>',
+    "home-care": '<path d="M3 11l9-8 9 8M5 10v10h14V10"/><path d="M12 17s-3-1.8-3-3.6a1.6 1.6 0 0 1 3-.8 1.6 1.6 0 0 1 3 .8c0 1.8-3 3.6-3 3.6z"/>',
+    "live-in": '<path d="M3 19V7M3 13h18v6M21 13a3 3 0 0 0-3-3h-7v3"/><circle cx="7" cy="10" r="2"/>',
+    safety: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',
+    alarms: '<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>',
+    hospital: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8M8 12h8"/>',
+    "blue-badge": '<rect x="4" y="3" width="16" height="18" rx="3"/><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"/>',
+    "no-lpa": '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',
+    contract: '<path d="M4 20h16M6 16l9-9 3 3-9 9H6z"/>'
+  };
+  var GROUP_TC = ["#1c7394", "#1f8653", "#a96500"];
+  var Q_ROW = '<div class="rowlist" style="--tc:#08779f"><a class="kit" href="#questions"><span class="kico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01"/></svg></span><span class="t"><b>Questions to ask</b></span><span class="go">›</span></a></div>';
   function renderKitList() {
-    $("kitList").innerHTML = kitGroups.map(function (g) {
-      return '<div class="rowgroup"><h3>' + esc(g) + '</h3><div class="rowlist">' +
+    $("kitList").innerHTML = Q_ROW + kitGroups.map(function (g, gi) {
+      return '<div class="rowgroup"><h3>' + esc(g) + '</h3><div class="rowlist" style="--tc:' + GROUP_TC[gi % 3] + '">' +
         KC.kits.filter(function (k) { return k.group === g; }).map(function (k) {
           var d = kitDone(k.id), n = Object.keys(d).filter(function (x) { return d[x]; }).length;
-          var go = n >= k.steps.length ? '<span class="go done">Done ✓</span>' : '<span class="go">' + (n ? n + " of " : "") + k.steps.length + " steps ›</span>";
-          return '<a href="#kit-' + k.id + '"><span class="t"><b>' + esc(k.name) + "</b><span>" + esc(k.what) + "</span></span>" + go + "</a>";
+          var go = n >= k.steps.length ? '<span class="go done">Done ✓</span>' : '<span class="go">' + (n ? n + "/" : "") + k.steps.length + " steps ›</span>";
+          return '<a class="kit" href="#kit-' + k.id + '"><span class="kico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (KIT_ICON[k.id] || KIT_ICON.contract) + "</svg></span>" +
+            '<span class="t"><b>' + esc(k.name) + "</b></span>" + go + "</a>";
         }).join("") + "</div></div>";
     }).join("");
   }
   renderKitList();
+  // Help: section shortcuts scroll the page; the one in view is highlighted.
+  document.querySelectorAll(".jumpbar button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      $(b.dataset.jump).scrollIntoView({ behavior: "smooth", block: "start" });
+      document.querySelectorAll(".jumpbar button").forEach(function (x) { x.setAttribute("aria-current", x === b); });
+    });
+  });
+  function helpJumpCurrent() {
+    if ($("s-help").hidden) return;
+    var cur = "helpKits";
+    ["helpGuides"].forEach(function (id) { if ($(id).getBoundingClientRect().top < 120) cur = id; });
+    document.querySelectorAll(".jumpbar button").forEach(function (b) { b.setAttribute("aria-current", b.dataset.jump === cur); });
+  }
+  window.addEventListener("scroll", helpJumpCurrent, { passive: true });
 
   function renderKit(id) {
     var k = KC.kits.filter(function (x) { return x.id === id; })[0];
