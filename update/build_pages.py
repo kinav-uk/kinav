@@ -72,7 +72,7 @@ def page(path, title, description, body, updated, kind="care"):
 <footer class="tiny muted">
   {footer}
   <p><a href="/">Kinav app</a> · <a href="/care/">Care by area</a> · <a href="/guides/">Guides</a> · <a href="/ask-a-specialist/">Ask a specialist</a> · <a href="/#privacy">Privacy</a> · <a href="/#terms">Terms</a></p>
-  <p>Follow us on Instagram: <a href="https://www.instagram.com/ukkinav/" rel="noopener">@ukkinav</a></p>
+  <p>Follow us on <a href="https://www.instagram.com/ukkinav/" rel="noopener">Instagram</a> and <a href="https://www.facebook.com/kinavhelp" rel="noopener">Facebook</a></p>
   <p>© {y} Kinav</p>
 </footer>
 </div>
