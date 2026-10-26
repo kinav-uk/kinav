@@ -161,6 +161,19 @@ window.KC = {
   ],
 
   kits: [
+    { id: "needs-assessment", group: "Arranging care", name: "Preparing for a care needs assessment", what: "The council's free assessment: how to ask, how to prepare and what happens next. England.", steps: [
+      { t: "Ask the council", d: "Contact adult social care at their council. Anyone who seems to need care has the right to an assessment, free, whatever their savings. Kinav can write the letter for you." },
+      { t: "Agree how it will happen", d: "It can be at home, by phone or by video. They can have a family member or friend with them. If they'd struggle to take part and have no one to help, the council must offer an independent advocate." },
+      { t: "Keep a diary for a week", d: "Note what they need help with, day and night: washing, dressing, the toilet, meals, medicines, moving around, going out and staying safe. Include the bad days, not just the good ones." },
+      { t: "Write down what family do now", d: "List the help you and others give, and say clearly what you can't keep doing. The plan shouldn't assume family will cover everything." },
+      { t: "Have the details to hand", d: "A list of their medicines, GP and hospital contacts, recent letters from health professionals, and any equipment they use." },
+      { t: "On the day", d: "Many older people play things down. Let them speak first, then gently add what you've seen, using examples from the diary." },
+      { t: "Ask what happens next", d: "Ask whether they meet the national eligibility criteria, when you'll hear in writing, and for a copy of the assessment." },
+      { t: "If they qualify", d: "The council writes a care and support plan with you, and a financial assessment works out what they pay. With savings over £23,250 they usually pay the full cost at first." },
+      { t: "If they don't qualify", d: "The council must tell you why in writing and give information about other help, such as day centres or local charities. If you disagree, ask for a review or make a complaint." },
+      { t: "Ask for a carer's assessment too", d: "If you help them, you have the right to your own assessment, free. Kinav can write that letter too." },
+      { t: "Get free help", d: "Age UK 0800 678 1602. Carers UK 0808 808 7777. Citizens Advice Adviceline (England) 0800 144 8848." }
+    ]},
     { id: "home-choice", group: "Arranging care", name: "Choosing a nursing home", what: "Shortlist, visit and ask the right questions.", steps: [
       { t: "Ask the council for a free needs assessment", d: "It confirms what level of care is needed. Anyone can ask, whatever their savings." },
       { t: "Work out how it will be paid for", d: "Use the Care costs tool. If savings are above £23,250 they will usually pay their own fees at first. Ask the council for a financial assessment either way." },
@@ -224,6 +237,54 @@ window.KC = {
       { t: "Get equipment in place", d: "Make sure equipment such as a commode or raised toilet seat is delivered before they come home." },
       { t: "Sort out medicines", d: "Ask for a list of medicines, who will collect them, and whether the pharmacy can provide blister packs." },
       { t: "Check the follow-up", d: "Make sure the GP has the discharge letter, ask for your own copy, and ask whether a district nurse will visit. If they agree, the GP surgery can give you proxy access in the NHS App to see letters and order repeat prescriptions." }
+    ]},
+    { id: "aa", group: "Money, rights and forms", name: "Claiming Attendance Allowance", what: "Up to £114.60 a week if they're over State Pension age and need help. Savings and income don't matter.", steps: [
+      { t: "Check they can claim", d: "They must be over State Pension age and have needed help or supervision for at least 6 months because of an illness or disability. It's about the help they need, not whether anyone gives it." },
+      { t: "Phone for the form", d: "Call the Attendance Allowance helpline on 0800 731 0122. If the form is returned within 6 weeks, payment is backdated to the day you called, so note the date. A downloaded form only counts from the day DWP receives it." },
+      { t: "Keep a diary first", d: "For a week, note each time they need help or someone keeping an eye on them, day and night, and how long it takes. Include falls, confusion and help at night." },
+      { t: "Answer for most days, including bad days", d: "Describe how things usually are, not their best day. Say what happens without help, such as a fall or a missed meal." },
+      { t: "Give examples", d: "\"Needs help getting out of the bath, about 20 minutes each morning\" says more than \"struggles with washing\"." },
+      { t: "Know the two rates", d: "£76.70 a week for help in the day or at night. £114.60 a week for help both day and night, or if they're terminally ill." },
+      { t: "Add supporting evidence", d: "Include copies, not originals, of letters from the GP, hospital or occupational therapist if you have them, and name a professional who knows them." },
+      { t: "If they're terminally ill", d: "If they may not live more than 12 months, ask their doctor or nurse for form SR1. The claim is dealt with faster and paid at the higher rate." },
+      { t: "Sign, copy and send", d: "They sign it, or you can if you're their appointee or attorney. Keep a copy of everything you send." },
+      { t: "Check what else it unlocks", d: "An award can mean extra Pension Credit, a Council Tax reduction and Carer's Allowance for you. Use the benefits calculator." },
+      { t: "If it's refused", d: "Ask for a mandatory reconsideration within one month of the decision letter. Citizens Advice Adviceline (England) 0800 144 8848 can help." }
+    ]},
+    { id: "carers-allowance", group: "Money, rights and forms", name: "Claiming Carer's Allowance", what: "£86.45 a week if you care 35 hours or more and earn £204 a week or less. Check first, as it can affect their benefits.", steps: [
+      { t: "Check the rules", d: "You care for them at least 35 hours a week, and they get a qualifying benefit such as Attendance Allowance or the daily living part of PIP. You don't need to live with them or be related." },
+      { t: "Check your earnings", d: "After tax, National Insurance and half of any pension contributions, you must earn £204 a week or less (2026). Going even slightly over stops the whole payment for that week." },
+      { t: "Check before you claim", d: "If they get the severe disability extra in Pension Credit or other benefits, your Carer's Allowance can stop it. Ask Citizens Advice first: 0800 144 8848." },
+      { t: "Getting a State Pension?", d: "If your State Pension is more than £86.45 a week, Carer's Allowance won't be paid on top. Claiming can still add a carer amount to Pension Credit or Housing Benefit, so it's worth checking." },
+      { t: "Apply online", d: "Use GOV.UK (search \"apply for Carer's Allowance\"). Have their National Insurance number, your bank details and recent payslips ready. It can be backdated up to 3 months." },
+      { t: "Can't get it? Claim Carer's Credit", d: "If you care for 20 hours a week or more, Carer's Credit protects your State Pension, even if you can't get Carer's Allowance." },
+      { t: "Report changes straight away", d: "Tell the Carer's Allowance Unit if your earnings or hours change, or if they go into hospital or a care home, to avoid being overpaid." },
+      { t: "Get free help", d: "Carers UK 0808 808 7777. Citizens Advice Adviceline (England) 0800 144 8848." }
+    ]},
+    { id: "lpa", group: "Money, rights and forms", name: "Making a Lasting Power of Attorney", what: "Lets someone they trust make decisions if they can't. Do it while they still can. England and Wales.", steps: [
+      { t: "Know the two types", d: "Property and financial affairs covers the bank, bills and the house. Health and welfare covers care, treatment and where they live. Many families make both." },
+      { t: "Do it while they can", d: "They must understand what it means when they sign. If you're not sure they still can, see the No Lasting Power of Attorney kit." },
+      { t: "Choose the attorneys", d: "One or more people they trust, aged 18 or over. Decide whether attorneys must make every decision together (jointly) or can also act alone (jointly and severally)." },
+      { t: "Name a replacement", d: "A replacement attorney steps in if an attorney can no longer act." },
+      { t: "Make it online", d: "Use GOV.UK (search \"make a lasting power of attorney\"). You can fill it in with them, but the choices must be theirs. Paper forms are available too." },
+      { t: "Choose a certificate provider", d: "Someone who has known them for at least 2 years, or a professional such as their GP or a solicitor, confirms they understand it and aren't under pressure. It can't be a family member or an attorney." },
+      { t: "Sign in the right order", d: "They sign first, then the certificate provider, then the attorneys. Signatures need a witness, and an attorney can't witness their signature." },
+      { t: "Register it and pay", d: "£92 for each LPA, so £184 for both (2026). There's a reduction if their income is under £12,000, and an exemption on some benefits." },
+      { t: "Allow time", d: "Registration takes 8 to 10 weeks if there are no mistakes. A mistake can mean starting again, so check every page before sending." },
+      { t: "Once it's registered", d: "Use the online service (search \"use a lasting power of attorney\") to share it with banks, the GP and care providers. Keep the paper copy safe." },
+      { t: "Get free help", d: "Office of the Public Guardian 0300 456 0300. Age UK 0800 678 1602." }
+    ]},
+    { id: "chc", group: "Money, rights and forms", name: "NHS Continuing Healthcare", what: "If their needs are mainly health needs, the NHS pays for all their care, at home or in a care home. England.", steps: [
+      { t: "Know what it is", d: "Care fully funded by the NHS for people whose main need is a health need. It isn't means-tested. It depends on how complex, intense or unpredictable their needs are, not on a diagnosis." },
+      { t: "Ask for the checklist", d: "Ask a nurse, social worker or the GP to complete the NHS Continuing Healthcare checklist. In hospital, ask before they're discharged. It's a short screening step." },
+      { t: "The full assessment", d: "If the checklist is positive, a team of professionals assesses them using the Decision Support Tool, which looks at 12 areas such as breathing, eating, mobility, behaviour and medicines. The NHS aims to decide within 28 days." },
+      { t: "Take part and bring evidence", d: "You can be there. Bring a diary of their needs over a few weeks, day and night, and any care records. Say if you think something has been missed." },
+      { t: "If time is short", d: "If they're near the end of life and getting worse quickly, a doctor or nurse can use the fast-track route so care can start within days." },
+      { t: "Get copies", d: "Ask for copies of the checklist, the Decision Support Tool and the decision letter." },
+      { t: "If it's refused", d: "Write to the Integrated Care Board (ICB) within 6 months of the decision to ask for a review. If you're still unhappy, ask NHS England for an independent review." },
+      { t: "If it's not Continuing Healthcare", d: "In a nursing home, they may get NHS-funded Nursing Care, a weekly NHS payment towards nursing costs. Ask about it." },
+      { t: "Reviews", d: "If they get it, it's reviewed after 3 months and then at least once a year." },
+      { t: "Get free help", d: "Age UK 0800 678 1602. Citizens Advice Adviceline (England) 0800 144 8848." }
     ]},
     { id: "blue-badge", group: "Money, rights and forms", name: "Applying for a Blue Badge", what: "Parking closer to where they need to go. England's rules.", steps: [
       { t: "Check if they qualify automatically", d: "They do if they get the higher rate mobility part of DLA; PIP with 8 points or more for \"moving around\"; PIP with 10 points for descriptor E under \"planning and following journeys\"; are registered blind (severely sight impaired); or get War Pensioners' Mobility Supplement or certain Armed Forces compensation. Attendance Allowance on its own doesn't count." },
@@ -384,7 +445,12 @@ window.KC = {
     carer: ["Carer's assessment letter", "#letter-carer", "/letters/carers-assessment-request-letter/"],
     benefits: ["Benefits calculator", "#benefits", "/benefits-calculator/"],
     days: ["Day centres: how they help", "#article-day-centres", "/articles/day-centres/"],
-    homecare: ["Setting up care at home", "#kit-home-care", "/guides/setting-up-care-at-home/"]
+    homecare: ["Setting up care at home", "#kit-home-care", "/guides/setting-up-care-at-home/"],
+    prep: ["Preparing for a needs assessment", "#kit-needs-assessment", "/guides/care-needs-assessment-how-to-prepare/"],
+    aa: ["How to claim Attendance Allowance", "#kit-aa", "/guides/how-to-claim-attendance-allowance/"],
+    ca: ["How to claim Carer's Allowance", "#kit-carers-allowance", "/guides/how-to-claim-carers-allowance/"],
+    lpa: ["How to make an LPA", "#kit-lpa", "/guides/how-to-make-a-lasting-power-of-attorney/"],
+    chc: ["NHS Continuing Healthcare guide", "#kit-chc", "/guides/nhs-continuing-healthcare-checklist-and-assessment/"]
   };
   var RULES = [
     [/Blue Badge/, ["badge"]],
@@ -394,6 +460,11 @@ window.KC = {
     [/Leaving hospital kit/, ["hospital"]],
     [/needs assessment and a carer's assessment/, ["needs", "carer"]],
     [/day centres/, ["days"]],
+    [/needs assessment/, ["prep"]],
+    [/Lasting Powers? of Attorney/, ["lpa"]],
+    [/Continuing Healthcare/, ["chc"]],
+    [/Attendance Allowance/, ["aa"]],
+    [/Carer's Allowance/, ["ca"]],
     [/Attendance Allowance|Carer's Allowance|Benefits calculator/, ["benefits"]]
   ];
   Object.keys(window.KC.plans).forEach(function (k) {

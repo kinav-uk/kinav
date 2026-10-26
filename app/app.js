@@ -1464,7 +1464,12 @@
     hospital: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8M8 12h8"/>',
     "blue-badge": '<rect x="4" y="3" width="16" height="18" rx="3"/><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"/>',
     "no-lpa": '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',
-    contract: '<path d="M4 20h16M6 16l9-9 3 3-9 9H6z"/>'
+    contract: '<path d="M4 20h16M6 16l9-9 3 3-9 9H6z"/>',
+    "needs-assessment": '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11l2 2 4-4M9 17h6"/>',
+    aa: '<circle cx="12" cy="12" r="9"/><path d="M15 8.5a3 3 0 0 0-5 2V15H9h6M9 12.5h4"/>',
+    "carers-allowance": '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+    lpa: '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/>',
+    chc: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 9v6M9 12h6"/>'
   };
   var GROUP_TC = ["#1c7394", "#1f8653", "#a96500"];
   var Q_ROW = '<div class="rowlist" style="--tc:#08779f"><a class="kit" href="#questions"><span class="kico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5h.01"/></svg></span><span class="t"><b>Questions to ask</b></span><span class="go">›</span></a></div>';

@@ -32,6 +32,11 @@ KIT_PAGES = {
     "blue-badge": "how-to-apply-for-a-blue-badge",
     "contract": "care-home-contract-checklist",
     "no-lpa": "no-lasting-power-of-attorney-deputyship",
+    "needs-assessment": "care-needs-assessment-how-to-prepare",
+    "aa": "how-to-claim-attendance-allowance",
+    "carers-allowance": "how-to-claim-carers-allowance",
+    "lpa": "how-to-make-a-lasting-power-of-attorney",
+    "chc": "nhs-continuing-healthcare-checklist-and-assessment",
 }
 PLAN_PAGES = {
     "dementia": "caring-for-someone-with-dementia",
@@ -60,6 +65,11 @@ KIT_SOURCES = {
     "hospital": [GOV_CARE, ("Carers UK: help and advice", "https://www.carersuk.org/help-and-advice/")],
     "blue-badge": [("GOV.UK: apply for a Blue Badge", "https://www.gov.uk/apply-blue-badge")],
     "no-lpa": [("GOV.UK: become a deputy", "https://www.gov.uk/become-deputy"), ("GOV.UK: become an appointee", "https://www.gov.uk/become-appointee-for-someone-claiming-benefits"), ("GOV.UK: search the Office of the Public Guardian registers", "https://www.gov.uk/find-someones-attorney-deputy-or-guardian")],
+    "needs-assessment": [("GOV.UK: apply for a needs assessment", "https://www.gov.uk/apply-needs-assessment-social-services"), ("Age UK: care and support", "https://www.ageuk.org.uk/information-advice/care/")],
+    "aa": [("GOV.UK: Attendance Allowance", "https://www.gov.uk/attendance-allowance"), ("Citizens Advice: Attendance Allowance", "https://www.citizensadvice.org.uk/benefits/sick-or-disabled-people-and-carers/attendance-allowance/")],
+    "carers-allowance": [("GOV.UK: Carer's Allowance", "https://www.gov.uk/carers-allowance"), ("Carers UK: help and advice", "https://www.carersuk.org/help-and-advice/")],
+    "lpa": [("GOV.UK: make a lasting power of attorney", "https://www.gov.uk/power-of-attorney"), ("GOV.UK: register a lasting power of attorney", "https://www.gov.uk/power-of-attorney/register")],
+    "chc": [("NHS: NHS continuing healthcare", "https://www.nhs.uk/social-care-and-support/money-work-and-benefits/nhs-continuing-healthcare/"), ("Age UK: care and support", "https://www.ageuk.org.uk/information-advice/care/")],
     "contract": [("CMA: care homes consumer law advice", "https://www.gov.uk/government/publications/care-homes-consumer-law-advice-for-providers"), ("Age UK: care and support", "https://www.ageuk.org.uk/information-advice/care/")],
 }
 PLAN_CHARITY = {
@@ -179,7 +189,8 @@ def kit_page(k, updated):
     steps = "".join('<li><b>%s</b><br><span class="muted">%s</span></li>' % (e(s["t"]), tel(e(s["d"]))) for s in k["steps"])
     body = [crumbs(), '<div class="stack-sm"><h1>%s</h1><p class="lede">%s</p></div>' % (e(k["name"]), e(k["what"])),
             cta("Tick off each step as you go in the free Kinav app.", "/#kit-%s" % k["id"], "Open this checklist"),
-            '<section class="panel"><h2>Step by step</h2><ol class="steps">%s</ol></section>' % steps,
+            '<section class="panel"><h2>Step by step</h2><ol class="steps">%s</ol>'
+            '<p class="noprint"><button class="btn btn-ghost" type="button" onclick="print()">Print this checklist</button></p></section>' % steps,
             sources_html(KIT_SOURCES.get(k["id"], [GOV_CARE])), NOT_ADVICE]
     title = "%s: step-by-step checklist | Kinav" % k["name"]
     desc = "%s A free step-by-step checklist for families caring for an older parent in England." % k["what"]

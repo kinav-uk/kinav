@@ -89,3 +89,8 @@ pre.letter { white-space: pre-wrap; font: inherit; background: var(--surface); b
 .steps li { padding-left: 2px; }
 details.panel summary { cursor: pointer; }
 details.panel[open] summary { margin-bottom: 8px; }
+@media print {
+  header.top, footer, .crumbs, .cta, .noprint { display: none !important; }
+  body, .panel { background: #fff !important; color: #000 !important; box-shadow: none !important; }
+  a { color: inherit; text-decoration: none; }
+}
