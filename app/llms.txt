@@ -1,0 +1,62 @@
+# Kinav
+
+> Kinav is a free website and app for families arranging care for an older parent or relative in England. It lists care homes and home care providers with their latest CQC ratings, and has step-by-step guides, 30-day plans for common conditions, a benefits calculator, a care cost calculator and free letter templates. No sign-up, no ads, and nothing about the family is stored. Kinav gives general information only, not health, medical, legal or financial advice.
+
+Useful for people in England who want to know how to arrange or pay for care for an older relative, what benefits they or their parent can claim, or how to deal with the council, the NHS or a care home.
+
+## Tools
+
+- [Kinav app: find care by postcode](https://kinav.co.uk/)
+- [Care homes and home care by council area](https://kinav.co.uk/care/)
+- [Ask a nurse or specialist: free UK helplines by condition](https://kinav.co.uk/ask-a-specialist/)
+- [Benefits calculator for carers and older people (UK)](https://kinav.co.uk/benefits-calculator/)
+- [Care cost calculator: how long will savings last? (England)](https://kinav.co.uk/care-cost-calculator/)
+- [Will they have to sell the house to pay for care? (England)](https://kinav.co.uk/will-they-have-to-sell-the-house-to-pay-for-care/)
+
+## Step-by-step guides
+
+- [Arranging live-in care: step-by-step checklist](https://kinav.co.uk/guides/arranging-live-in-care/)
+- [Before you sign a care home contract: step-by-step checklist](https://kinav.co.uk/guides/care-home-contract-checklist/)
+- [Preparing for a care needs assessment: step-by-step checklist](https://kinav.co.uk/guides/care-needs-assessment-how-to-prepare/)
+- [Fall alarms and home cameras: step-by-step checklist](https://kinav.co.uk/guides/fall-alarms-and-home-cameras/)
+- [Home safety and grants: step-by-step checklist](https://kinav.co.uk/guides/home-safety-and-grants-for-older-people/)
+- [Applying for a Blue Badge: step-by-step checklist](https://kinav.co.uk/guides/how-to-apply-for-a-blue-badge/)
+- [Choosing a nursing home: step-by-step checklist](https://kinav.co.uk/guides/how-to-choose-a-care-home/)
+- [Claiming Attendance Allowance: step-by-step checklist](https://kinav.co.uk/guides/how-to-claim-attendance-allowance/)
+- [Claiming Carer's Allowance: step-by-step checklist](https://kinav.co.uk/guides/how-to-claim-carers-allowance/)
+- [Making a Lasting Power of Attorney: step-by-step checklist](https://kinav.co.uk/guides/how-to-make-a-lasting-power-of-attorney/)
+- [Leaving hospital: step-by-step checklist](https://kinav.co.uk/guides/leaving-hospital-discharge-checklist/)
+- [NHS Continuing Healthcare: step-by-step checklist](https://kinav.co.uk/guides/nhs-continuing-healthcare-checklist-and-assessment/)
+- [No Lasting Power of Attorney?: step-by-step checklist](https://kinav.co.uk/guides/no-lasting-power-of-attorney-deputyship/)
+- [Setting up care at home: step-by-step checklist](https://kinav.co.uk/guides/setting-up-care-at-home/)
+
+## Letter templates
+
+- [Free letter templates for family carers in England](https://kinav.co.uk/letters/)
+- [Adult social care complaint letter (free template, England)](https://kinav.co.uk/letters/adult-social-care-complaint-letter/)
+- [Carer's assessment request letter (free template, England)](https://kinav.co.uk/letters/carers-assessment-request-letter/)
+- [Letter to plan for leaving hospital (free template, England)](https://kinav.co.uk/letters/hospital-discharge-planning-letter/)
+- [Letter asking the council for a care needs assessment (free template, England)](https://kinav.co.uk/letters/letter-asking-the-council-for-a-care-needs-assessment/)
+- [Letter to challenge a council care decision (free template, England)](https://kinav.co.uk/letters/letter-to-challenge-a-council-care-decision/)
+
+## 30-day plans for carers
+
+- [After a fall or hospital stay: a 30-day plan for carers](https://kinav.co.uk/plans/after-a-fall-or-hospital-stay/)
+- [After a stroke: a 30-day plan for carers](https://kinav.co.uk/plans/caring-for-someone-after-a-stroke/)
+- [Living with arthritis: a 30-day plan for carers](https://kinav.co.uk/plans/caring-for-someone-with-arthritis/)
+- [COPD and breathing problems: a 30-day plan for carers](https://kinav.co.uk/plans/caring-for-someone-with-copd/)
+- [Just diagnosed: dementia: a 30-day plan for carers](https://kinav.co.uk/plans/caring-for-someone-with-dementia/)
+- [Diabetes in older age: a 30-day plan for carers](https://kinav.co.uk/plans/caring-for-someone-with-diabetes-in-older-age/)
+- [Living with heart failure: a 30-day plan for carers](https://kinav.co.uk/plans/caring-for-someone-with-heart-failure/)
+- [Bladder and bowel problems: a 30-day plan for carers](https://kinav.co.uk/plans/caring-for-someone-with-incontinence/)
+- [Just diagnosed: Parkinson's: a 30-day plan for carers](https://kinav.co.uk/plans/caring-for-someone-with-parkinsons/)
+- [Poor mobility and falls: a 30-day plan for carers](https://kinav.co.uk/plans/caring-for-someone-with-poor-mobility-and-falls/)
+- [Sight and hearing loss: a 30-day plan for carers](https://kinav.co.uk/plans/caring-for-someone-with-sight-or-hearing-loss/)
+- [End of life care: a 30-day plan for carers](https://kinav.co.uk/plans/end-of-life-care-for-a-parent/)
+- [Sudden confusion (delirium): a 30-day plan for carers](https://kinav.co.uk/plans/sudden-confusion-delirium-in-older-people/)
+- [Supporting someone with cancer: a 30-day plan for carers](https://kinav.co.uk/plans/supporting-someone-with-cancer/)
+
+## Articles
+
+- [Caring for someone with COPD this winter: how to cope](https://kinav.co.uk/articles/copd-winter/)
+- [Day centres: how they help your parent, and you](https://kinav.co.uk/articles/day-centres/)

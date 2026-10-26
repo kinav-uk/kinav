@@ -433,6 +433,30 @@ def main(updated):
                                     "Free guides for families caring for an older parent in England: choosing a care home, care costs, benefits, Blue Badge, hospital discharge and 30-day plans.",
                                     "\n".join(body), updated, kind="guide"))
     print("Guide pages: %d" % (len(pages) + 1))
+    write_llms(pages)
+
+
+def write_llms(pages):
+    """A plain summary for AI assistants (llmstxt.org), listing every guide page."""
+    import html
+    title = {path: html.unescape(re.search(r"<title>(.*?)</title>", text).group(1)).replace(" | Kinav", "") for path, text in pages}
+    def section(head, prefix):
+        return "## %s\n\n%s\n" % (head, "\n".join("- [%s](https://kinav.co.uk%s)" % (t, p) for p, t in sorted(title.items()) if p.startswith(prefix)))
+    tools = [p for p in title if not p.startswith(("/guides/", "/letters/", "/plans/", "/articles/"))]
+    out = ["# Kinav", "",
+           "> Kinav is a free website and app for families arranging care for an older parent or relative in England. "
+           "It lists care homes and home care providers with their latest CQC ratings, and has step-by-step guides, "
+           "30-day plans for common conditions, a benefits calculator, a care cost calculator and free letter templates. "
+           "No sign-up, no ads, and nothing about the family is stored. Kinav gives general information only, not health, "
+           "medical, legal or financial advice.", "",
+           "Useful for people in England who want to know how to arrange or pay for care for an older relative, what benefits "
+           "they or their parent can claim, or how to deal with the council, the NHS or a care home.", "",
+           "## Tools\n\n- [Kinav app: find care by postcode](https://kinav.co.uk/)\n- [Care homes and home care by council area](https://kinav.co.uk/care/)\n%s\n"
+           % "\n".join("- [%s](https://kinav.co.uk%s)" % (title[p], p) for p in sorted(tools)),
+           section("Step-by-step guides", "/guides/"), section("Letter templates", "/letters/"),
+           section("30-day plans for carers", "/plans/"), section("Articles", "/articles/")]
+    with open(os.path.join(APP, "llms.txt"), "w", encoding="utf-8") as f:
+        f.write("\n".join(out))
 
 
 if __name__ == "__main__":
