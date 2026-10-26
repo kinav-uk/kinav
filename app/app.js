@@ -892,7 +892,13 @@
     you: ["Your name", "text", "e.g. Sarah Jones"],
     rel: ["You are their", "text", "e.g. daughter"],
     contact: ["Your phone or email", "text", "So they can reply to you"],
-    council: ["Council", "text", "e.g. Barnet Council"]
+    council: ["Council", "text", "e.g. Barnet Council"],
+    org: ["Name of the care home, agency or service", "text", "e.g. Sunrise Home Care"],
+    paid: ["Visit length you pay for", "text", "e.g. 1 hour"],
+    visits: ["Visits you know were short or missed", "area", "e.g. Mon 12 Oct: arrived 9:05, left 9:35"],
+    fee: ["The fee rise", "text", "e.g. from \u00a31,250 to \u00a31,450 a week from 1 January"],
+    from: ["Records from (date, optional)", "text", "e.g. 1 September 2026"],
+    concern: ["What worries you", "area", "What you've seen or been told, with dates"]
   };
   var LT_RELS = ["daughter", "son", "wife", "husband", "partner", "daughter-in-law", "son-in-law", "granddaughter", "grandson",
     "niece", "nephew", "sister", "brother", "friend", "neighbour"];
@@ -900,7 +906,11 @@
     ot: "Ask for a home safety check by an occupational therapist",
     carer: "Ask for a carer's assessment for me too",
     cant: "I can't give all the care they'll need myself",
-    agree: "They know I'm writing for them"
+    agree: "They know I'm writing for them",
+    consent: "They've agreed I can ask for their records (signed consent attached)",
+    lpa: "I'm their attorney under a Lasting Power of Attorney (copy attached)",
+    cqc: "I'm also telling the Care Quality Commission (CQC)",
+    refund: "Ask for a refund for the time we paid for and didn't get"
   };
   // Ends a typed phrase with one full stop, whatever the person typed.
   function sent(t) { return t.trim().replace(/[.!?\s]+$/, "") + "."; }
@@ -943,7 +953,7 @@
       fields: ["them", "addr", "when", "decided", "why", "you", "rel", "contact", "council"], ticks: ["agree"],
       subject: "Request to review a decision",
       body: function (v, t) { return [
-        "I'm writing about a decision the council made" + (v.when ? " on " + v.when.trim().replace(/[.!?]+$/, "") : "") + " about " + v.them + (v.rel ? ", my " + v.rel.trim() : "") + ".",
+        "I'm writing about a decision the council made" + (v.when ? " on " + v.when.trim().replace(/[.!?]+$/, "") : "") + " about " + v.them + (v.rel ? " (I'm their " + v.rel.trim() + ")" : "") + ".",
         "The council decided " + sent(v.decided),
         "We disagree because " + sent(v.why),
         "Please:\n- send me the decision and the reasons for it in writing, if you haven't already\n- send me a copy of the assessment and any care and support plan\n- review the decision, taking these points into account",
@@ -954,13 +964,103 @@
       fields: ["them", "happened", "want", "you", "rel", "contact", "council"], ticks: ["agree"],
       subject: "Formal complaint",
       body: function (v, t) { return [
-        "I'm making a formal complaint about the council's adult social care, about the care and support for " + v.them + (v.rel ? ", my " + v.rel.trim() : "") + ".",
+        "I'm making a formal complaint about the council's adult social care, about the care and support for " + v.them + (v.rel ? " (I'm their " + v.rel.trim() + ")" : "") + ".",
         "What happened:\n" + v.happened.trim(),
         "What I'd like to happen:\n" + v.want.trim(),
         t.agree ? v.them + " knows I'm writing and agrees." : "",
         "Please acknowledge this complaint within 3 working days, tell me who is dealing with it, and let me know when to expect a full response.",
-        "If I'm still unhappy after your response, I understand I can ask the Local Government and Social Care Ombudsman to look into it."]; } }
+        "If I'm still unhappy after your response, I understand I can ask the Local Government and Social Care Ombudsman to look into it."]; } },
+    { id: "short", name: "Care visits cut short or missed", to: "provider",
+      when: "If home care visits are shorter than you pay for, late or missed. Send it to the agency's manager.",
+      fields: ["them", "addr", "org", "paid", "visits", "you", "rel", "contact"], ticks: ["refund", "cqc", "agree"],
+      subject: "Complaint: care visits cut short or missed",
+      body: function (v, t) { return [
+        "I'm writing about the home care " + v.org + " provides for " + v.them + (v.rel ? " (I'm their " + v.rel.trim() + ")" : "") + "." + (v.addr ? " " + v.them + " lives at " + sent(v.addr) : ""),
+        "We pay for visits of " + v.paid.trim().replace(/[.!?]+$/, "") + ", but some visits have been much shorter, or missed. For example:\n" + v.visits.trim(),
+        "This means " + v.them + " hasn't had all the care they need" + (t.refund ? ", and we have paid for time that wasn't given." : "."),
+        "Please:\n- explain why this has happened, and how you will make sure every visit lasts the full time\n- send me the visit records, care notes and electronic check-in and check-out times for these dates\n- tell me whether any care was missed, such as medicines, meals or washing" + (t.refund ? "\n- refund the time we paid for but didn't receive, showing how you worked it out" : ""),
+        t.agree ? v.them + " knows I'm writing and agrees." : "",
+        t.cqc ? "I'm also letting the Care Quality Commission know." : "",
+        "Please treat this as a formal complaint under your complaints procedure, and reply in writing within 14 days."]; } },
+    { id: "provider", name: "Complain to a care home or agency", to: "provider",
+      when: "If you're unhappy with the care a home or agency gives. Raise it with the manager first; this makes it formal.",
+      fields: ["them", "org", "happened", "want", "you", "rel", "contact"], ticks: ["cqc", "agree"],
+      subject: "Formal complaint",
+      body: function (v, t) { return [
+        "I'm making a formal complaint about the care " + v.org + " provides for " + v.them + (v.rel ? " (I'm their " + v.rel.trim() + ")" : "") + ".",
+        "What happened:\n" + v.happened.trim(),
+        "What I'd like to happen:\n" + v.want.trim(),
+        t.agree ? v.them + " knows I'm writing and agrees." : "",
+        t.cqc ? "I'm also letting the Care Quality Commission know." : "",
+        "Please send me a copy of your complaints procedure, acknowledge this complaint within 3 working days, and tell me when to expect a full response.",
+        "If I'm still unhappy after your response, I understand I can ask the Local Government and Social Care Ombudsman to look into it, whether the council or the family pays for the care."]; } },
+    { id: "fee", name: "Question a care home fee rise", to: "provider",
+      when: "If a care home puts its fees up and you don't think it's fair, or it wasn't explained.",
+      fields: ["them", "org", "fee", "you", "rel", "contact"], ticks: ["lpa"],
+      subject: "Proposed fee increase",
+      body: function (v, t) { return [
+        "I'm writing about the fees for " + v.them + (v.rel ? " (I'm their " + v.rel.trim() + ")" : "") + ", a resident at " + v.org + ".",
+        "You've told us the fees will rise " + sent(v.fee),
+        "Please:\n- explain the reasons for the increase and how it was worked out\n- show me the part of the contract that allows it, and the notice it requires\n- confirm what the new fee includes\n- keep the current fee in place while we discuss this",
+        "I understand from the Competition and Markets Authority's guidance for care homes that fee terms must be clear and fair, and that residents should be told about increases in good time, with the reasons.",
+        t.lpa ? "I'm writing as " + v.them + "'s attorney under a Lasting Power of Attorney." : "",
+        "Please reply in writing within 14 days."]; } },
+    { id: "nhs", name: "Complain to the NHS (GP or hospital)", to: "nhs",
+      when: "If something went wrong with NHS care. You can complain up to 12 months after it happened.",
+      fields: ["them", "dob", "org", "happened", "want", "you", "rel", "contact"], ticks: ["agree"],
+      subject: "Formal complaint",
+      body: function (v, t) { return [
+        "I'm making a formal complaint about the care " + v.them + (v.rel ? " (I'm their " + v.rel.trim() + ")" : "") + ", received from " + sent(v.org),
+        "What happened:\n" + v.happened.trim(),
+        "What I'd like to happen:\n" + v.want.trim(),
+        t.agree ? v.them + " knows I'm writing and agrees to their information being shared with me." : "",
+        "Please acknowledge this complaint within 3 working days, as the NHS complaints procedure requires, and agree with me how it will be handled and when I'll get a response.",
+        "If I'm still unhappy after your final response, I understand I can ask the Parliamentary and Health Service Ombudsman to look into it."]; } },
+    { id: "cqc", name: "Tell CQC about poor care", to: "cqc",
+      when: "CQC can't settle your complaint, but it uses what you tell it to decide when and where to inspect. Email it, or paste it into CQC's online form at cqc.org.uk/give-feedback-on-care.",
+      fields: ["them", "org", "concern", "you", "rel", "contact"], ticks: [],
+      subject: "Concerns about care",
+      body: function (v) { return [
+        "I want to tell you about concerns with the care " + v.org + " provides for " + v.them + (v.rel ? " (I'm their " + v.rel.trim() + ")" : "") + ".",
+        "What I've seen:\n" + v.concern.trim(),
+        "I've raised this with the provider. Please take it into account when you next look at this service.",
+        "You can contact me if you'd like more details."]; } },
+    { id: "safeguard", name: "Report a safeguarding concern", to: "safeguarding",
+      when: "If you think someone is being neglected or abused, including by carers. If anyone is in danger now, call 999.",
+      fields: ["them", "addr", "org", "concern", "you", "rel", "contact", "council"], ticks: [],
+      subject: "Safeguarding concern",
+      body: function (v) { return [
+        "I'm worried that " + v.them + (v.rel ? " (I'm their " + v.rel.trim() + ")" : "") + " is at risk of neglect or abuse." + (v.addr ? " " + v.them + " lives at " + sent(v.addr) : ""),
+        v.org.charAt(0) === "[" ? "" : "The concern involves " + sent(v.org),
+        "What I've seen or been told:\n" + v.concern.trim(),
+        "I understand the council must make enquiries under section 42 of the Care Act 2014 when an adult with care needs may be at risk.",
+        "Please tell me who is dealing with this, what will happen next, and how " + v.them + " will be kept safe in the meantime."]; } },
+    { id: "sar", name: "Ask for their care records", to: "dpo",
+      when: "A subject access request for their care plans, daily notes and visit records. It's free, and the reply is due within one month.",
+      fields: ["them", "dob", "addr", "org", "from", "you", "rel", "contact"], ticks: ["consent", "lpa"],
+      subject: "Subject access request",
+      body: function (v, t) { return [
+        "I'm making a subject access request under the UK General Data Protection Regulation for the personal data " + v.org + " holds about " + v.them + (v.addr ? ", of " + v.addr.trim().replace(/[.!?]+$/, "") : "") + ".",
+        t.lpa ? "I'm " + v.them + "'s attorney under a Lasting Power of Attorney, and a copy is attached." : t.consent ? v.them + " has agreed that I can make this request for them, and their signed consent is attached." : "",
+        "Please send" + (v.from ? " everything from " + v.from.trim().replace(/[.!?]+$/, "") + " onwards, including:" : ":") + "\n- care and support plans, and risk assessments\n- daily care notes and visit records\n- electronic call monitoring (check-in and check-out) times\n- incident, accident and medicines records\n- emails, messages and notes about " + v.them,
+        "I understand you must reply within one month, and that there's normally no fee.",
+        "Please send the information by email if you can."]; } }
   ];
+
+  // Who each kind of letter goes to.
+  function ltHead(l, v) {
+    var H = {
+      council: [["Adult Social Care", v.council], "Dear Adult Social Care team,"],
+      complaints: [["Complaints team, Adult Social Care", v.council], "Dear complaints team,"],
+      hospital: [["The ward manager and discharge team", v.hospital], "Dear ward manager,"],
+      provider: [["The registered manager", v.org], "Dear manager,"],
+      nhs: [["Complaints manager", v.org], "Dear complaints manager,"],
+      cqc: [["Care Quality Commission", "enquiries@cqc.org.uk"], "Dear Care Quality Commission,"],
+      safeguarding: [["Adult Safeguarding team", v.council], "Dear safeguarding team,"],
+      dpo: [["Data Protection Officer", v.org], "Dear Data Protection Officer,"]
+    }[l.to];
+    return { to: H[0], dear: H[1] };
+  }
 
   function ltState() { return store.get("letter", { id: LETTERS[0].id, v: {}, t: { agree: true, carer: true, ot: true } }); }
   function ltLetter() { var id = ltState().id; return LETTERS.filter(function (l) { return l.id === id; })[0] || LETTERS[0]; }
@@ -972,8 +1072,7 @@
       v[k] = val || (/optional/.test(label) || k === "addr" || k === "rel" ? "" : "[" + label.toLowerCase() + "]");
     });
     var d = new Date(), date = d.getDate() + " " + ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][d.getMonth()] + " " + d.getFullYear();
-    var to = l.to === "hospital" ? ["The ward manager and discharge team", v.hospital] : [l.to === "complaints" ? "Complaints team, Adult Social Care" : "Adult Social Care", v.council];
-    var dear = l.to === "hospital" ? "Dear ward manager," : l.to === "complaints" ? "Dear complaints team," : "Dear Adult Social Care team,";
+    var hd = ltHead(l, v), to = hd.to, dear = hd.dear;
     var re = l.subject + ": " + v.them + (st.v.dob ? ", date of birth " + st.v.dob.trim() : "");
     return [v.you, v.contact, date, "", to.join("\n"), "", dear, "", re, ""].join("\n") + "\n" +
       l.body(v, st.t).filter(Boolean).join("\n\n") +
@@ -1008,7 +1107,10 @@
     document.querySelectorAll("#ltFields textarea").forEach(grow);
     ltRefresh();
   }
-  $("ltPick").innerHTML = LETTERS.map(function (l) { return '<option value="' + l.id + '">' + esc(l.name) + "</option>"; }).join("");
+  var LT_GROUPS = [["Ask for help", ["needs", "carer", "discharge"]], ["Complain or challenge", ["short", "provider", "fee", "review", "complaint", "nhs"]], ["Report a concern or get records", ["cqc", "safeguard", "sar"]]];
+  $("ltPick").innerHTML = LT_GROUPS.map(function (g) {
+    return '<optgroup label="' + esc(g[0]) + '">' + LETTERS.filter(function (l) { return g[1].indexOf(l.id) >= 0; }).map(function (l) { return '<option value="' + l.id + '">' + esc(l.name) + "</option>"; }).join("") + "</optgroup>";
+  }).join("");
   $("ltPick").addEventListener("change", function () {
     var st = ltState(); st.id = $("ltPick").value; st.edited = false; st.text = ""; store.set("letter", st); renderLetter();
   });

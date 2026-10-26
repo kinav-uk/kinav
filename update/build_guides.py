@@ -328,6 +328,13 @@ LETTER_PAGES = {
     "discharge": ("hospital-discharge-planning-letter", "Letter to plan for leaving hospital"),
     "review": ("letter-to-challenge-a-council-care-decision", "Letter to challenge a council care decision"),
     "complaint": ("adult-social-care-complaint-letter", "Adult social care complaint letter"),
+    "short": ("complaint-letter-home-care-visits-cut-short-or-missed", "Complaint letter: home care visits cut short or missed"),
+    "provider": ("complaint-letter-to-a-care-home-or-care-agency", "Complaint letter to a care home or care agency"),
+    "fee": ("letter-to-question-a-care-home-fee-increase", "Letter to question a care home fee increase"),
+    "nhs": ("nhs-complaint-letter-gp-or-hospital", "NHS complaint letter (GP or hospital)"),
+    "cqc": ("how-to-tell-cqc-about-poor-care", "Tell CQC about poor care: letter template"),
+    "safeguard": ("report-a-safeguarding-concern-letter", "Letter to report a safeguarding concern"),
+    "sar": ("subject-access-request-for-care-records", "Subject access request for care records"),
 }
 LETTER_SOURCES = {
     "needs": [("GOV.UK: apply for a needs assessment", "https://www.gov.uk/apply-needs-assessment-social-services"), GOV_CARE],
@@ -337,6 +344,13 @@ LETTER_SOURCES = {
     "review": [("GOV.UK: apply for a needs assessment", "https://www.gov.uk/apply-needs-assessment-social-services"),
                ("Citizens Advice", "https://www.citizensadvice.org.uk/")],
     "complaint": [("Local Government and Social Care Ombudsman", "https://www.lgo.org.uk/"), ("Citizens Advice", "https://www.citizensadvice.org.uk/")],
+    "short": [("Local Government and Social Care Ombudsman", "https://www.lgo.org.uk/"), ("CQC: give feedback on care", "https://www.cqc.org.uk/give-feedback-on-care")],
+    "provider": [("Local Government and Social Care Ombudsman", "https://www.lgo.org.uk/"), ("CQC: give feedback on care", "https://www.cqc.org.uk/give-feedback-on-care")],
+    "fee": [("CMA: care homes consumer law advice", "https://www.gov.uk/government/publications/care-homes-consumer-law-advice-for-providers"), ("Age UK: care and support", "https://www.ageuk.org.uk/information-advice/care/")],
+    "nhs": [("NHS: how to complain to the NHS", "https://www.nhs.uk/using-the-nhs/about-the-nhs/how-to-complain-to-the-nhs/"), ("Parliamentary and Health Service Ombudsman", "https://www.ombudsman.org.uk/")],
+    "cqc": [("CQC: give feedback on care", "https://www.cqc.org.uk/give-feedback-on-care")],
+    "safeguard": [("NHS: abuse and neglect of adults at risk", "https://www.nhs.uk/social-care-and-support/help-from-social-services-and-charities/abuse-and-neglect-adults-at-risk/"), GOV_CARE],
+    "sar": [("ICO: your right of access", "https://ico.org.uk/for-the-public/your-right-to-get-copies-of-your-data/")],
 }
 APP_JS = os.path.join(APP, "app.js")
 JSC = "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc"
@@ -346,8 +360,7 @@ var out = LETTERS.map(function (l) {
   Object.keys(LT_FIELDS).forEach(function (k) { v[k] = "[" + LT_FIELDS[k][0].replace(/ \(optional\)/, "").toLowerCase() + "]"; });
   v.hours = "[number]"; v.rel = "[daughter or son]";
   l.ticks.forEach(function (k) { t[k] = true; });
-  var to = l.to === "hospital" ? ["The ward manager and discharge team", v.hospital] : [l.to === "complaints" ? "Complaints team, Adult Social Care" : "Adult Social Care", v.council];
-  var dear = l.to === "hospital" ? "Dear ward manager," : l.to === "complaints" ? "Dear complaints team," : "Dear Adult Social Care team,";
+  var hd = ltHead(l, v), to = hd.to, dear = hd.dear;
   var text = [v.you, v.contact, "[date]", "", to.join("\n"), "", dear, "", l.subject + ": " + v.them, ""].join("\n") + "\n" +
     l.body(v, t).filter(Boolean).join("\n\n") + "\n\nYours sincerely,\n\n" + v.you;
   return { id: l.id, name: l.name, when: l.when, ticks: l.ticks.map(function (k) { return LT_TICKS[k]; }), text: text };
