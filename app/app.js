@@ -171,9 +171,24 @@
   });
 
   /* ---------- Home ---------- */
+  // Their council's adult social care, once Find care knows where they live.
+  function renderCouncil() {
+    var area = store.get("area", "");
+    $("councilCard").hidden = true;
+    if (!area) return;
+    loadCareIndex().then(function () {
+      var c = findCouncil(area), info = c && window.KC.councils[c.s];
+      if (!info) return;
+      $("councilName").textContent = info[0];
+      $("councilGo").href = "https://www.gov.uk/apply-needs-assessment-social-services/" + (info[1] || c.s);
+      $("councilCard").hidden = false;
+    }).catch(function () {});
+  }
+
   function renderHome() {
     var key = planKey();
     renderNext();
+    renderCouncil();
     $("homePlanTitle").textContent = "Your 30-day plan";
     // New visitors start with "Where do I start?"; the plan card only shows progress once a plan is chosen.
     $("homePlanTitle").closest(".hero").hidden = !key;
@@ -449,10 +464,18 @@
   var KQ_WORD = { O: "Outstanding", G: "Good", R: "Requires improvement", I: "Inadequate", "-": "Not rated" };
   var TYPE_WORD = { H: "Care at home", N: "Nursing home", R: "Residential home" };
 
+  var indexLoad = null;
+  function loadCareIndex() {
+    if (!indexLoad) indexLoad = fetch("data/index.json").then(function (r) { return r.json(); }).then(function (idx) { care.index = idx; return idx; });
+    indexLoad.catch(function () { indexLoad = null; });
+    return indexLoad;
+  }
+
+  var careReady = false;
   function initCare() {
-    if (care.index) return;
-    fetch("data/index.json").then(function (r) { return r.json(); }).then(function (idx) {
-      care.index = idx;
+    if (careReady) return;
+    loadCareIndex().then(function (idx) {
+      careReady = true;
       $("councilList").innerHTML = idx.councils.map(function (c) { return '<option value="' + esc(c.n) + '">'; }).join("");
       $("careNote").textContent += " Updated " + idx.updated + ".";
       var saved = store.get("area", "");
