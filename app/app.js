@@ -1186,7 +1186,7 @@
           "They'd need help with " + v.help.trim().replace(/[.!?]+$/, "") + (v.when ? ", " + v.when.trim().replace(/[.!?]+$/, "") : "") + ".",
           eqPaysLine(v.pays),
           "Please could you tell me:\n- whether you cover their area and can take them on\n- your hourly rate, any minimum visit length, and extra charges at weekends or bank holidays\n" +
-            "- whether you'd visit first to talk through what's needed\n- how you try to keep the same carers",
+            "- whether you'd visit first to talk through what's needed\n- how you try to keep the same carers\n- how visits are logged, and whether family can see visit times and care notes",
           "I'd be glad to talk about their needs by phone."]; } }
   ];
 

@@ -197,6 +197,8 @@ window.KC = {
       { t: "Get it in writing", d: "Ask for the rates, terms and notice period by email before you agree." },
       { t: "Agree a written care plan", d: "The agency should visit first and write down what carers will do at each visit." },
       { t: "Be there for the first visits", d: "Leave a notebook at home for carers and family to write in. A police-approved key safe lets carers get in if they can't answer the door." },
+      { t: "Check how visits are logged", d: "Ask whether carers check in and out on an app, and whether family can see the visit times and care notes. It's the easiest way to spot visits that are short or missed." },
+      { t: "Thinking about a camera?", d: "Ask them first: it's their home. Use shared rooms only, never where they're washed or dressed, and tell the agency. Video only if you can, and keep the footage secure. Search \"CQC using surveillance\" for guidance." },
       { t: "Review after a month", d: "Ask the council for a review if needs change." }
     ]},
     { id: "live-in", group: "Arranging care", name: "Arranging live-in care", what: "Find, check and plan cover for a live-in carer.", steps: [
@@ -385,7 +387,11 @@ window.KC = {
       "What is your hourly rate? Is it higher at evenings and weekends?",
       "What is the shortest visit you do?",
       "Will the same carers come each time?",
-      "What happens if a carer is late or can't come?",
+      "Are visits logged digitally, with check-in and check-out times?",
+      "Can family see the visit times and care notes, in an app or by email?",
+      "Do you charge for the time booked, or the time carers actually stay?",
+      "How much travel time do carers get between visits?",
+      "Who tells us if a visit is late or missed, and how quickly?",
       "What training do your carers have, for example in dementia care or moving and handling?"
     ]},
     { id: "assessment", name: "Council needs assessment", items: [
