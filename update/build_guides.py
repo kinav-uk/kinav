@@ -293,6 +293,28 @@ def specialist_page(updated):
                                   "\n".join(body), updated, kind="guide")
 
 
+def door_sign_page(updated):
+    """A printable Halloween door sign. Kept all year so it's found again each October."""
+    path = "/printables/no-trick-or-treaters-door-sign/"
+    body = ['<style>.sign{border:8px solid #e8772e;border-radius:32px;background:#fff;color:#18232e;text-align:center;padding:48px 20px;margin:0 auto;max-width:560px;box-sizing:border-box}'
+            '.sign .pk{font-size:96px;line-height:1}.sign b{display:block;font-size:clamp(32px,9vw,52px);line-height:1.05;margin:24px 0 0}.sign span{display:block;font-size:24px;margin-top:20px}'
+            '@media print{.sign{max-width:none;padding:120px 40px;border-width:12px}.sign .pk{font-size:160px}.sign b{font-size:96px}.sign span{font-size:36px}}</style>',
+            '<div class="stack-sm noprint"><h1>Free printable "No trick or treaters" door sign</h1>'
+            '<p class="lede">For an older parent, relative or neighbour who would rather not have knocks at the door after dark on Halloween. '
+            'Print it, then tape it to the front door or a window.</p>'
+            '<p><button class="btn" type="button" onclick="print()">Print the sign</button></p></div>',
+            '<div class="sign"><div class="pk">\U0001F383</div><b>No trick or treaters, please</b><span>Thank you, and have a lovely Halloween</span></div>',
+            '<section class="panel noprint"><h2>A few other things that help</h2><ul>'
+            '<li>Remind them they don\'t have to answer the door after dark, to anyone they aren\'t expecting.</li>'
+            '<li>Leave the porch light off if they don\'t want callers. Many families take that as a sign to skip the house.</li>'
+            '<li>Give them a quick call in the evening, or ask a neighbour to look in.</li>'
+            '<li>If a stranger calls about work on the house or money, they can say no and close the door. Real callers won\'t mind.</li></ul>'
+            '<p>More free help for families caring for an older parent: <a href="/guides/">guides</a>, <a href="/letters/">letters</a> and <a href="/">care near them</a>.</p></section>']
+    return path, build_pages.page(path, "Free printable \"No trick or treaters\" door sign for older parents | Kinav",
+                                  "A free Halloween door sign to print for an older parent or neighbour who would rather not have knocks at the door after dark.",
+                                  "\n".join(body), updated, kind="guide")
+
+
 HOUSE_FAQS = [
     ("Will Mum have to sell her house to pay for care at home?", "No. In England, the home is never counted when someone gets care in their own home."),
     ("Is the house counted if they move into a care home?", "It can be, but not if their partner, a relative aged 60 or over, a relative who is disabled, or a child under 18 they support still lives there."),
@@ -413,7 +435,7 @@ def letters_index(samples, updated):
 def main(updated):
     with open(CONTENT, encoding="utf-8") as f:
         kc = json.load(f)
-    for folder in ("guides", "plans", "articles", "care-cost-calculator", "benefits-calculator", "ask-a-specialist", "will-they-have-to-sell-the-house-to-pay-for-care", "letters"):
+    for folder in ("guides", "plans", "articles", "care-cost-calculator", "benefits-calculator", "ask-a-specialist", "will-they-have-to-sell-the-house-to-pay-for-care", "letters", "printables"):
         shutil.rmtree(os.path.join(APP, folder), ignore_errors=True)
     pages = [kit_page(k, updated) for k in kc["kits"] if k["id"] in KIT_PAGES]
     pages += [plan_page(key, p, updated) for key, p in kc["plans"].items() if key in PLAN_PAGES]
@@ -421,7 +443,7 @@ def main(updated):
     today = _dt.date.today().isoformat()
     kc["articles"] = [a for a in kc["articles"] if not a.get("from") or a["from"] <= today]
     pages += [article_page(a, kc["plans"], updated) for a in kc["articles"]]
-    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated)]
+    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated)]
     samples = letter_samples()
     pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
     for path, text in pages:
