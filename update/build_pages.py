@@ -157,7 +157,7 @@ def paying(council):
             '<p>In England, the council may help pay for care if the person has less than £23,250 in savings and other assets. '
             'Below £14,250, these don\'t count at all. The value of their home is usually ignored for the first 12 weeks in a care home, '
             'and always if a partner or certain relatives still live there.</p>'
-            '<p>For free help with the financial assessment or a council charging decision, contact Citizens Advice (CAB) on 0800 144 8848.</p>'
+            '<p>For free help with the financial assessment or a council charging decision, contact Citizens Advice on 0800 144 8848.</p>'
             '<p class="links"><a href="/#costs">Work out care costs</a><a href="/#benefits">Check benefits</a>'
             '<a href="/#kit-home-choice">Choosing a care home: step by step</a>'
             '<a href="https://www.citizensadvice.org.uk/family/looking-after-people/carers-help-and-support/" rel="noopener" target="_blank">Citizens Advice: help for carers</a></p></section>') % e(council)
@@ -203,6 +203,8 @@ def write(by_la, regions, out_dir, updated):
         if outstanding:
             body.append('<section class="stack"><h2>Rated Outstanding in %s</h2><div class="list">%s</div></section>' % (
                 e(council), "".join(card(r, True) for r in outstanding[:12])))
+        body.append('<section class="panel"><h2>Ask %s for help</h2><p>Anyone who seems to need care can ask the council for a free needs assessment, whatever their savings. '
+                    '<a href="/care/%s/needs-assessment/">How to ask, and what happens next ›</a></p></section>' % (e(council), slug))
         body.append(paying(council))
         body.append(day_centres(council))
         title = "Care homes and care at home in %s: Good and Outstanding | Kinav" % council

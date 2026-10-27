@@ -445,8 +445,48 @@ def main(updated):
     save("guides", build_pages.page("/guides/", "Guides for family carers: care homes, costs, benefits and plans | Kinav",
                                     "Free guides for families caring for an older parent in England: choosing a care home, care costs, benefits, Blue Badge, hospital discharge and 30-day plans.",
                                     "\n".join(body), updated, kind="guide"))
+    council_pages(kc, updated)
     print("Guide pages: %d" % (len(pages) + 1))
     write_llms(pages)
+
+
+def council_pages(kc, updated):
+    """One page per council: how to ask that council for a care needs assessment. Rebuilt with the weekly data."""
+    try:
+        with open(os.path.join(APP, "data", "index.json"), encoding="utf-8") as f:
+            idx = json.load(f)
+    except OSError:
+        return
+    names = kc.get("councils", {})
+    for c in idx["councils"]:
+        info = names.get(c["s"])
+        if not info or not os.path.isdir(os.path.join(APP, "care", c["s"])):
+            continue
+        full, area, slug = info[0], c["n"].replace(", City of", "").replace(", County of", ""), c["s"]
+        gov = "https://www.gov.uk/apply-needs-assessment-social-services/%s" % (info[1] if len(info) > 1 else slug)
+        path = "/care/%s/needs-assessment/" % slug
+        body = ['<nav class="crumbs" aria-label="Breadcrumb"><a href="/care/">England</a> › <a href="/care/%s/">%s</a></nav>' % (slug, e(area)),
+                '<div class="stack-sm"><h1>Ask %s for a care needs assessment</h1><p class="lede">Anyone in %s who seems to need care or support can ask '
+                '%s for an assessment. It\'s free, whatever their savings, and it\'s how the council decides what help it can arrange.</p></div>' % (e(full), e(area), e(full)),
+                '<div class="cta"><p>Ask online on %s\'s website, or let Kinav write the letter for you, ready to email.</p>'
+                '<a class="btn" href="%s" rel="noopener" target="_blank">Go to %s</a> <a class="btn btn-ghost" href="/#letter-needs">Write the letter</a></div>' % (e(full), gov, e(full)),
+                '<section class="panel"><h2>How it works</h2><ol class="steps">'
+                '<li><b>Ask adult social care</b><br><span class="muted">Contact %s online, by phone or with a letter. You can ask on their behalf.</span></li>'
+                '<li><b>Prepare</b><br><span class="muted">Keep a diary for a week of what they need help with, day and night, and write down what family do now and can\'t keep doing.</span></li>'
+                '<li><b>The assessment</b><br><span class="muted">At home, by phone or by video. Family can be there. If they\'d struggle to take part and have no one to help, the council must offer an advocate.</span></li>'
+                '<li><b>The decision</b><br><span class="muted">The council tells you in writing whether they meet the national eligibility criteria. If they do, it writes a care and support plan with you.</span></li>'
+                '<li><b>Paying for care</b><br><span class="muted">A separate financial assessment works out what they pay. With savings over £23,250 they usually pay the full cost at first; below £14,250, savings aren\'t counted.</span></li>'
+                '<li><b>If you disagree</b><br><span class="muted">Ask for a review, then complain if needed. After that, the Local Government and Social Care Ombudsman can look into it, free.</span></li>'
+                '</ol><p><a href="/guides/care-needs-assessment-how-to-prepare/">How to prepare: full checklist ›</a></p></section>' % e(full),
+                '<section class="panel"><h2>Ask for a carer\'s assessment too</h2><p>If you help look after them, you have the right to your own assessment from %s, '
+                'free, whatever your income. <a href="/letters/carers-assessment-request-letter/">Carer\'s assessment letter ›</a></p></section>' % e(full),
+                '<section class="panel"><h2>Care in %s</h2><p>%d care services in %s are rated Good or Outstanding by CQC. '
+                '<a href="/care/%s/">See care homes and care at home in %s ›</a></p></section>' % (e(area), c.get("c", 0), e(area), slug, e(area)),
+                sources_html([("GOV.UK: apply for a needs assessment", "https://www.gov.uk/apply-needs-assessment-social-services"), GOV_CARE]),
+                '<p class="panel small">General information about care in England, not legal advice. Kinav isn\'t part of %s.</p>' % e(full)]
+        save(path.strip("/"), build_pages.page(path, "How to ask %s for a care needs assessment | Kinav" % full,
+                                               "Ask %s for a free care needs assessment: how to ask, how to prepare, what happens next and how paying for care works in %s." % (full, area),
+                                               tel("\n".join(body)), updated, kind="guide"))
 
 
 def write_llms(pages):
