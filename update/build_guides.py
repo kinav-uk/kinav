@@ -448,6 +448,7 @@ def main(updated):
     council_pages(kc, updated)
     print("Guide pages: %d" % (len(pages) + 1))
     write_llms(pages)
+    write_pins(pages)
 
 
 def council_pages(kc, updated):
@@ -487,6 +488,28 @@ def council_pages(kc, updated):
         save(path.strip("/"), build_pages.page(path, "How to ask %s for a care needs assessment | Kinav" % full,
                                                "Ask %s for a free care needs assessment: how to ask, how to prepare, what happens next and how paying for care works in %s." % (full, area),
                                                tel("\n".join(body)), updated, kind="guide"))
+
+
+def write_pins(pages):
+    """RSS feed for Pinterest: one item per page that has a picture in app/pins (made by make_pins.py)."""
+    import html
+    from email.utils import formatdate
+    items = []
+    for path, text in sorted(pages):
+        slug = path.strip("/").split("/")[-1]
+        img = os.path.join(APP, "pins", slug + ".jpg")
+        if not os.path.exists(img):
+            continue
+        title = html.unescape(re.search(r"<title>(.*?)</title>", text).group(1)).replace(" | Kinav", "")
+        desc = html.unescape(re.search(r'<meta name="description" content="(.*?)"', text).group(1))
+        url = "https://kinav.co.uk" + path
+        items.append("<item><title>%s</title><link>%s</link><guid>%s</guid><description>%s</description>"
+                     '<enclosure url="https://kinav.co.uk/pins/%s.jpg" length="%d" type="image/jpeg"/></item>'
+                     % (e(title), url, url, e(desc), slug, os.path.getsize(img)))
+    with open(os.path.join(APP, "pins.xml"), "w", encoding="utf-8") as f:
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>Kinav: guides and letters for family carers</title>'
+                "<link>https://kinav.co.uk/</link><description>Free step-by-step guides, letters and plans for families caring for an older parent in England.</description>"
+                "<lastBuildDate>%s</lastBuildDate>%s</channel></rss>\n" % (formatdate(usegmt=True), "".join(items)))
 
 
 def write_llms(pages):
