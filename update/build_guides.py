@@ -221,6 +221,8 @@ def article_page(a, plans, updated):
     body = [crumbs(("Articles", "/guides/#articles")),
             '<div class="stack-sm"><p class="tiny muted">%s · %s</p><h1>%s</h1><p class="lede">%s</p></div>' % (
                 e(a["month"]), e(a["topic"]), e(a["title"]), e(a["intro"])), secs]
+    if a.get("cta"):
+        body.append(cta(e(a["cta"][0]), a["cta"][1], a["cta"][2]))
     if plan:
         body.append(cta("A step-by-step plan for families: %s." % e(plan["title"]), "/plans/%s/" % PLAN_PAGES[a["plan"]], "See the 30-day plan"))
     body.append('<section class="stack-sm"><h2>Sources</h2><ul>%s</ul></section>' % "".join(
