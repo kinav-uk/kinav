@@ -12,7 +12,7 @@ import tempfile
 HOME = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP = os.path.join(HOME, "app")
 CHROME = os.environ.get("CHROME", os.path.expanduser("~/Desktop/Google Chrome.app/Contents/MacOS/Google Chrome"))
-KINDS = [("guides", "Step-by-step guide"), ("letters", "Free letter template"), ("plans", "30-day plan for carers"), ("articles", "For carers")]
+KINDS = [("guides", "Step-by-step guide"), ("letters", "Free letter template"), ("plans", "30-day plan for carers"), ("articles", "For carers"), ("printables", "Free printable")]
 TOOLS = {"benefits-calculator": "Free tool", "care-cost-calculator": "Free tool", "will-they-have-to-sell-the-house-to-pay-for-care": "Paying for care",
          "ask-a-specialist": "Free helplines"}
 

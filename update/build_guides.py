@@ -189,6 +189,7 @@ def kit_page(k, updated):
     steps = "".join('<li><b>%s</b><br><span class="muted">%s</span></li>' % (e(s["t"]), tel(e(s["d"]))) for s in k["steps"])
     body = [crumbs(), '<div class="stack-sm"><h1>%s</h1><p class="lede">%s</p></div>' % (e(k["name"]), e(k["what"])),
             cta("Tick off each step as you go in the free Kinav app.", "/#kit-%s" % k["id"], "Open this checklist"),
+            cta(e(k["print"][1]), k["print"][2], k["print"][0]) if k.get("print") else "",
             '<section class="panel"><h2>Step by step</h2><ol class="steps">%s</ol>'
             '<p class="noprint"><button class="btn btn-ghost" type="button" onclick="print()">Print this checklist</button></p></section>' % steps,
             sources_html(KIT_SOURCES.get(k["id"], [GOV_CARE])), NOT_ADVICE]
@@ -314,6 +315,46 @@ def door_sign_page(updated):
             '<p>More free help for families caring for an older parent: <a href="/guides/">guides</a>, <a href="/letters/">letters</a> and <a href="/">care near them</a>.</p></section>']
     return path, build_pages.page(path, "Free printable \"No trick or treaters\" door sign for older parents | Kinav",
                                   "A free Halloween door sign to print for an older parent or neighbour who would rather not have knocks at the door after dark.",
+                                  "\n".join(body), updated, kind="guide")
+
+
+DISCHARGE_SHEET = [
+    ("The plan", ["When is the planned discharge date and time?", "Can we have the written discharge plan, and a copy for the family?",
+                  "Who is our named contact for the discharge, and their number?"]),
+    ("Support at home", ["What care and support will be in place at home, and from which day?", "Is reablement being arranged? It's free, usually for up to 6 weeks.",
+                         "Who is arranging the care, and how do we contact them?", "Has a care needs assessment been done or asked for?"]),
+    ("Equipment and the home", ["What equipment is needed, and when will it be delivered?", "Does someone need to check the home before they come back, such as an occupational therapist?"]),
+    ("Medicines", ["What medicines are they going home with, and who will explain any changes?"]),
+    ("Getting home", ["Who is arranging transport, and what time?", "Will the GP get a discharge letter, and can we have a copy?",
+                      "Has the NHS continuing healthcare checklist been considered?", "Who do we call if something agreed doesn't happen?"]),
+]
+
+
+def discharge_sheet_page(updated):
+    """A printable sheet of questions for the ward before an older parent leaves hospital."""
+    path = "/printables/before-discharge-questions-for-the-ward/"
+    rows = "".join('<h2>%s</h2>%s' % (e(h), "".join('<div class="ds-q"><span class="ds-box"></span><span>%s<span class="ds-line"></span></span></div>' % e(q) for q in qs))
+                   for h, qs in DISCHARGE_SHEET)
+    body = ['<style>.ds{background:#fff;color:#18232e;border:1.5px solid var(--line);border-radius:18px;padding:24px 20px;max-width:720px}'
+            '.ds h2{font-size:17px;margin:18px 0 6px}.ds-q{display:flex;gap:10px;align-items:flex-start;margin:8px 0;font-size:15px}.ds-q>span:last-child{flex:1}'
+            '.ds-box{flex:none;width:16px;height:16px;border:1.5px solid #18232e;border-radius:3px;margin-top:3px}'
+            '.ds-line{display:block;border-bottom:1px solid #9aa5ad;height:26px}.ds-top{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;font-size:14px}'
+            '.ds-top span{border-bottom:1px solid #9aa5ad;padding-bottom:16px}.ds-fam{border:2px solid #e8772e;border-radius:12px;padding:12px 14px;margin-top:18px;font-size:15px}'
+            '@media print{@page{margin:12mm}.ds{border:0;padding:0;max-width:none}.ds h1{font-size:20px!important;margin-bottom:6px!important}.ds h2{font-size:14px;margin:8px 0 2px}.ds-q{font-size:12.5px;margin:2px 0}.ds-line{height:15px}.ds-top span{padding-bottom:10px}.ds-fam{margin-top:10px;padding:8px 12px;font-size:13px}}</style>',
+            '<div class="stack-sm noprint"><h1>Before they leave hospital: questions for the ward</h1>'
+            '<p class="lede">A one-page sheet to print and take to the ward, or to have by the phone. Write the answers as you go, '
+            'so nothing is missed and everyone in the family knows the plan.</p>'
+            '<p><button class="btn" type="button" onclick="print()">Print the sheet</button></p></div>',
+            '<div class="ds"><h1 style="font-size:24px;margin:0 0 12px">Before they leave hospital</h1>'
+            '<div class="ds-top"><span>Name:</span><span>Ward:</span><span>Hospital:</span><span>Date:</span></div>' + rows +
+            '<div class="ds-fam"><b>Please don\'t assume family can provide the care.</b><br>We can help with: <span class="ds-line"></span>We can\'t: <span class="ds-line"></span></div>'
+            '<p class="tiny" style="margin:6px 0 0">Free from kinav.co.uk · General information, not medical advice: ask the ward team about their health and medicines.</p></div>',
+            '<section class="panel noprint"><h2>More help when someone leaves hospital</h2>'
+            '<p><a href="/guides/leaving-hospital-discharge-checklist/">Leaving hospital: step-by-step checklist ›</a></p>'
+            '<p><a href="/letters/">Write to the ward or the council: free letter templates ›</a></p>'
+            '<p>If you can\'t give the care that\'s needed, say so clearly before the discharge date. The plan shouldn\'t rely on family who can\'t provide it.</p></section>']
+    return path, build_pages.page(path, "Before they leave hospital: printable questions for the ward | Kinav",
+                                  "A free printable sheet of questions to ask the ward before an older parent is discharged from hospital: the plan, care at home, equipment, medicines and transport.",
                                   "\n".join(body), updated, kind="guide")
 
 
@@ -445,7 +486,7 @@ def main(updated):
     today = _dt.date.today().isoformat()
     kc["articles"] = [a for a in kc["articles"] if not a.get("from") or a["from"] <= today]
     pages += [article_page(a, kc["plans"], updated) for a in kc["articles"]]
-    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated)]
+    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated), discharge_sheet_page(updated)]
     samples = letter_samples()
     pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
     for path, text in pages:

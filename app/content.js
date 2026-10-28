@@ -231,7 +231,8 @@ window.KC = {
       { t: "Tell carers about any cameras", d: "Let care workers and the agency know where cameras are and why. Recording people without telling them damages trust." },
       { t: "Keep the cameras private and secure", d: "Change the default password and turn on two-step login. If a camera films beyond their property, such as the street or a neighbour's garden, data protection law applies, so point cameras inside the home." }
     ]},
-    { id: "hospital", group: "Hospital and safety", name: "Leaving hospital", what: "Make sure the right help is in place at home.", steps: [
+    { id: "hospital", group: "Hospital and safety", name: "Leaving hospital", what: "Make sure the right help is in place at home.",
+      print: ["Questions for the ward, to print", "One page to take to the ward or keep by the phone, with space for the answers.", "/printables/before-discharge-questions-for-the-ward/"], steps: [
       { t: "Ask who is planning the discharge", d: "Ask the ward for the name of the person coordinating it, and for the discharge plan." },
       { t: "Be clear about what you can do", d: "If you can't provide care, say so. Don't let the plan assume family will cover. Ask for a carer's assessment for yourself too." },
       { t: "Ask to be their named contact", d: "Ask the ward to record you as their next of kin or main contact, so they keep you updated. Staff can only share details if they agree, or if it's in their best interests when they can't decide." },

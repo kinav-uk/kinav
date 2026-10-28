@@ -1637,6 +1637,9 @@
         '<span class="n" aria-hidden="true">' + (d ? tick() : i + 1) + '</span><span class="stack-sm" style="gap:2px"><span class="tt">' + esc(s.t) + '</span><span class="small muted">' + telLinks(esc(s.d)) + "</span></span></button>";
     }).join("");
     $("kitSteps").dataset.kit = id;
+    // Some kits have a one-page printable to take along.
+    $("kitPrint").innerHTML = k.print ? '<a class="nextstep" href="' + esc(k.print[2]) + '" target="_blank" rel="noopener" style="text-decoration:none;color:inherit"><span class="eyebrow">Free printable</span><b>' +
+      esc(k.print[0]) + '</b><span class="small muted">' + esc(k.print[1]) + "</span></a>" : "";
   }
   $("kitSteps").addEventListener("click", function (e) {
     var b = e.target.closest(".kitstep");
