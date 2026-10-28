@@ -556,26 +556,41 @@ def council_pages(kc, updated):
 
 
 def write_pins(pages):
-    """RSS feed for Pinterest: one item per page that has a picture in app/pins (made by make_pins.py)."""
+    """RSS feed for Pinterest: one item per page that has a picture in app/pins (made by make_pins.py).
+    Each item keeps the date it first appeared (update/pin_dates.json), so Pinterest can tell what's new."""
     import html
+    import datetime
     from email.utils import formatdate
+    dates_file = os.path.join(HOME, "update", "pin_dates.json")
+    try:
+        with open(dates_file, encoding="utf-8") as f:
+            dates = json.load(f)
+    except OSError:
+        dates = {}
+    now = datetime.datetime.now(datetime.timezone.utc)
     items = []
     for path, text in sorted(pages):
         slug = path.strip("/").split("/")[-1]
         img = os.path.join(APP, "pins", slug + ".jpg")
         if not os.path.exists(img):
             continue
+        # Spread first-time dates a minute apart, so a batch of new pins doesn't share one timestamp.
+        if slug not in dates:
+            dates[slug] = (now - datetime.timedelta(minutes=len(items))).timestamp()
         title = html.unescape(re.search(r"<title>(.*?)</title>", text).group(1)).replace(" | Kinav", "")
         desc = html.unescape(re.search(r'<meta name="description" content="(.*?)"', text).group(1))
         url = "https://kinav.co.uk" + path
-        items.append("<item><title>%s</title><link>%s</link><guid>%s</guid><description>%s</description>"
-                     '<enclosure url="https://kinav.co.uk/pins/%s.jpg" length="%d" type="image/jpeg"/></item>'
-                     % (e(title), url, url, e(desc), slug, os.path.getsize(img)))
+        pic = "https://kinav.co.uk/pins/%s.jpg" % slug
+        items.append((dates[slug], "<item><title>%s</title><link>%s</link><guid isPermaLink=\"true\">%s</guid><pubDate>%s</pubDate><description>%s</description>"
+                     '<enclosure url="%s" length="%d" type="image/jpeg"/><media:content url="%s" medium="image" type="image/jpeg" width="1000" height="1500"/></item>'
+                     % (e(title), url, url, formatdate(dates[slug], usegmt=True), e(desc), pic, os.path.getsize(img), pic)))
+    items.sort(key=lambda x: -x[0])
+    with open(dates_file, "w", encoding="utf-8") as f:
+        json.dump(dates, f, indent=0, sort_keys=True)
     with open(os.path.join(APP, "pins.xml"), "w", encoding="utf-8") as f:
-        f.write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>Kinav: guides and letters for family carers</title>'
+        f.write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title>Kinav: guides and letters for family carers</title>'
                 "<link>https://kinav.co.uk/</link><description>Free step-by-step guides, letters and plans for families caring for an older parent in England.</description>"
-                "<lastBuildDate>%s</lastBuildDate>%s</channel></rss>\n" % (formatdate(usegmt=True), "".join(items)))
-
+                "<language>en-gb</language><lastBuildDate>%s</lastBuildDate>%s</channel></rss>\n" % (formatdate(usegmt=True), "".join(x[1] for x in items)))
 
 def write_llms(pages):
     """A plain summary for AI assistants (llmstxt.org), listing every guide page."""
