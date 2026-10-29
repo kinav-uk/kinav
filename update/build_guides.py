@@ -358,6 +358,61 @@ def discharge_sheet_page(updated):
                                   "\n".join(body), updated, kind="guide")
 
 
+def cold_callers_page(updated):
+    """A printable "No cold callers" door sign, with tips on doorstep scams."""
+    path = "/printables/no-cold-callers-door-sign/"
+    body = ['<style>.sign{border:8px solid #1f5f7a;border-radius:32px;background:#fff;color:#18232e;text-align:center;padding:48px 20px;margin:0 auto;max-width:560px;box-sizing:border-box}'
+            '.sign .pk{width:96px;height:96px}.sign b{display:block;font-size:clamp(34px,10vw,60px);line-height:1.05;margin:20px 0 0}.sign span{display:block;font-size:22px;margin-top:18px;line-height:1.35}'
+            '@media print{.sign{max-width:none;padding:110px 40px;border-width:12px}.sign .pk{width:170px;height:170px}.sign b{font-size:110px}.sign span{font-size:34px}}</style>',
+            '<div class="stack-sm noprint"><h1>Free printable "No cold callers" door sign</h1>'
+            '<p class="lede">Doorstep sellers and scammers often target older people. A clear sign on the door helps them say no. Print it, then tape it to the door or a window by the door.</p>'
+            '<p><button class="btn" type="button" onclick="print()">Print the sign</button></p></div>',
+            '<div class="sign"><svg class="pk" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#c8102e"/><rect x="18" y="41" width="64" height="18" rx="3" fill="#fff"/></svg><b>No cold callers</b><span>We don\'t buy or sign up to anything at the door.<br>Please respect this notice and leave.</span></div>',
+            '<section class="panel noprint"><h2>Help them stay safe at the door</h2><ul>'
+            '<li>They never have to open the door to someone they aren\'t expecting. A door chain or a video doorbell helps them check first.</li>'
+            '<li>Genuine callers from gas, electricity and water companies carry ID and won\'t mind waiting while they phone the company on a number from a bill, not one the caller gives them.</li>'
+            '<li>No genuine bank, police officer or council will ask for their PIN, or send someone to collect cash or their bank card.</li>'
+            '<li>Be wary of anyone who knocks offering roof, driveway or garden work, especially if they want cash or to start today.</li>'
+            '<li>If it happens, report it to Citizens Advice on 0808 223 1133, who pass it to Trading Standards. If someone won\'t leave or they feel unsafe, call 999.</li></ul>'
+            '<p>More free help for families caring for an older parent: <a href="/guides/">guides</a>, <a href="/letters/">letters</a> and <a href="/">care near them</a>.</p></section>']
+    return path, build_pages.page(path, "Free printable \"No cold callers\" door sign for older people | Kinav",
+                                  "A free door sign to print for an older parent or neighbour, to stop doorstep sellers and scammers, with simple tips to stay safe at the door.",
+                                  tel("\n".join(body)), updated, kind="guide")
+
+
+PHONE_ROWS = [("Family", "", ""), ("Family", "", ""), ("Neighbour with a key", "", ""), ("GP surgery", "", ""), ("Pharmacy", "", ""),
+              ("Care agency or carer", "", ""), ("Their council's adult social care", "", ""),
+              ("NHS 111", "Urgent medical help when it isn't an emergency", "111"), ("Power cut", "Any electricity network", "105"),
+              ("Gas emergency", "If they smell gas", "0800 111 999"), ("Age UK Advice Line", "Free, for older people and families", "0800 678 1602"),
+              ("Samaritans", "Any time, if things feel too much", "116 123")]
+
+
+def phone_list_page(updated):
+    """A large-print list of important numbers to fill in on screen and print for beside the phone."""
+    path = "/printables/important-phone-numbers-list/"
+    rows = "".join('<div class="pl-row"><input class="pl-who" value="%s" aria-label="Who"><input class="pl-num" value="%s" placeholder="Number" aria-label="Number">%s</div>'
+                   % (e(w), e(n), '<small>%s</small>' % e(note) if note else "") for w, note, n in PHONE_ROWS)
+    body = ['<style>.pl{background:#fff;color:#18232e;border:1.5px solid var(--line);border-radius:18px;padding:20px;max-width:720px}'
+            '.pl h2{font-size:30px;margin:0 0 4px}.pl-999{font-size:26px;font-weight:800;color:#b42318;margin:6px 0 12px}'
+            '.pl-row{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;border-bottom:1.5px solid #c9d1d6;padding:8px 0}'
+            '.pl-row input{font:inherit;font-size:20px;border:0;border-bottom:1px dashed #c9d1d6;border-radius:0;padding:4px 2px;min-height:0;background:transparent;width:100%}'
+            '.pl-who{font-weight:700}.pl-row small{grid-column:1/-1;color:#5b6770;font-size:14px}'
+            '@media print{@page{margin:12mm}.pl{border:0;padding:0;max-width:none}.pl h2{font-size:34px}.pl-999{font-size:30px}'
+            '.pl-row{padding:5px 0}.pl-row input{font-size:22px;border-bottom:0}.pl-row input:placeholder-shown{border-bottom:1px solid #9aa5ad}.pl-row input::placeholder{color:transparent}.pl-row small{font-size:12px}}</style>',
+            '<div class="stack-sm noprint"><h1>Important phone numbers: a large-print list for by the phone</h1>'
+            '<p class="lede">Type the names and numbers in the boxes, then print. Big, clear and easy to find in a hurry. '
+            'What you type stays on this page: it isn\'t saved or sent anywhere.</p>'
+            '<p><button class="btn" type="button" onclick="print()">Print the list</button></p></div>',
+            '<div class="pl"><h2>Important numbers</h2><p class="pl-999">Emergency: 999</p>' + rows +
+            '<p class="tiny" style="margin:10px 0 0">Free from kinav.co.uk</p></div>',
+            '<section class="panel noprint"><h2>Tips</h2><ul><li>Put a copy by the phone, and another on the fridge.</li>'
+            '<li>Save the same numbers in their mobile, and yours.</li><li>Leave a row blank to write a number in by hand after printing.</li></ul>'
+            '<p>More free help for families caring for an older parent: <a href="/guides/">guides</a>, <a href="/letters/">letters</a> and <a href="/">care near them</a>.</p></section>']
+    return path, build_pages.page(path, "Important phone numbers list for an older parent: free large-print printable | Kinav",
+                                  "A free large-print list of important phone numbers to fill in and print for an older parent: family, GP, pharmacy, carers, NHS 111, power cut and gas emergency.",
+                                  "\n".join(body), updated, kind="guide")
+
+
 HOUSE_FAQS = [
     ("Will Mum have to sell her house to pay for care at home?", "No. In England, the home is never counted when someone gets care in their own home."),
     ("Is the house counted if they move into a care home?", "It can be, but not if their partner, a relative aged 60 or over, a relative who is disabled, or a child under 18 they support still lives there."),
@@ -486,7 +541,7 @@ def main(updated):
     today = _dt.date.today().isoformat()
     kc["articles"] = [a for a in kc["articles"] if not a.get("from") or a["from"] <= today]
     pages += [article_page(a, kc["plans"], updated) for a in kc["articles"]]
-    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated), discharge_sheet_page(updated)]
+    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated), discharge_sheet_page(updated), cold_callers_page(updated), phone_list_page(updated)]
     samples = letter_samples()
     pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
     for path, text in pages:
