@@ -413,6 +413,40 @@ def phone_list_page(updated):
                                   "\n".join(body), updated, kind="guide")
 
 
+EMERGENCY_ROWS = ["Full name", "Date of birth", "Address", "Call first (name and number)", "Call next (name and number)",
+                  "GP surgery and number", "NHS number", "Where their medicines list is kept", "Allergies",
+                  "Glasses, hearing aid or walking aid", "Lasting Power of Attorney (who)", "Spare key is with",
+                  "Care agency or carer", "Pets to look after"]
+
+
+def emergency_sheet_page(updated):
+    """A one-page emergency information sheet to fill in on screen and print for the fridge. Nothing is saved."""
+    path = "/printables/emergency-information-sheet/"
+    rows = "".join('<label class="es-row"><span>%s</span><input aria-label="%s"></label>' % (e(r), e(r)) for r in EMERGENCY_ROWS)
+    body = ['<style>.es{background:#fff;color:#18232e;border:1.5px solid var(--line);border-radius:18px;padding:20px;max-width:720px}'
+            '.es h2{font-size:28px;margin:0 0 2px}.es-999{font-size:22px;font-weight:800;color:#b42318;margin:4px 0 10px}'
+            '.es-row{display:grid;grid-template-columns:minmax(150px,40%) 1fr;gap:10px;align-items:end;border-bottom:1.5px solid #c9d1d6;padding:9px 0;font-weight:700;font-size:16px}'
+            '.es-row input{font:inherit;font-weight:400;font-size:18px;border:0;border-radius:0;padding:2px;min-height:0;background:transparent;width:100%}'
+            '@media(max-width:520px){.es-row{grid-template-columns:1fr}}'
+            '@media print{@page{margin:12mm}.es{border:0;padding:0;max-width:none}.es h2{font-size:30px}.es-row{padding:7px 0;font-size:15px;grid-template-columns:40% 1fr}.es-row input{font-size:17px}}</style>',
+            '<div class="stack-sm noprint"><h1>Emergency information sheet for an older parent: free printable</h1>'
+            '<p class="lede">One page with what paramedics, carers or a neighbour need to know in a hurry. Type in the details, print it, and keep it on the fridge. '
+            'What you type stays on this page: it isn\'t saved or sent anywhere.</p>'
+            '<p><button class="btn" type="button" onclick="print()">Print the sheet</button></p></div>',
+            '<div class="es"><h2>In an emergency</h2><p class="es-999">Call 999</p>' + rows +
+            '<p class="tiny" style="margin:10px 0 0">Free from kinav.co.uk · Check and update it every few months.</p></div>',
+            '<section class="panel noprint"><h2>Tips</h2><ul>'
+            '<li>Keep it on the fridge door, where paramedics are used to looking, and give a copy to whoever has a spare key.</li>'
+            '<li>Leave a box blank to fill in by hand after printing.</li>'
+            '<li>For medicines, write where the list is kept rather than copying it out, so there\'s only one list to keep up to date. The pharmacy can print one.</li>'
+            '<li>Some areas give out free "Message in a Bottle" kits from the Lions Clubs, with stickers that tell paramedics to look in the fridge.</li></ul>'
+            '<p>More free printables: <a href="/printables/important-phone-numbers-list/">important numbers for by the phone</a> and '
+            '<a href="/printables/before-discharge-questions-for-the-ward/">questions before they leave hospital</a>.</p></section>']
+    return path, build_pages.page(path, "Emergency information sheet for an older parent: free printable for the fridge | Kinav",
+                                  "A free one-page emergency information sheet to fill in and print for an older parent: who to call, GP, NHS number, where medicines are listed, allergies and spare keys.",
+                                  "\n".join(body), updated, kind="guide")
+
+
 HOUSE_FAQS = [
     ("Will Mum have to sell her house to pay for care at home?", "No. In England, the home is never counted when someone gets care in their own home."),
     ("Is the house counted if they move into a care home?", "It can be, but not if their partner, a relative aged 60 or over, a relative who is disabled, or a child under 18 they support still lives there."),
@@ -541,7 +575,7 @@ def main(updated):
     today = _dt.date.today().isoformat()
     kc["articles"] = [a for a in kc["articles"] if not a.get("from") or a["from"] <= today]
     pages += [article_page(a, kc["plans"], updated) for a in kc["articles"]]
-    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated), discharge_sheet_page(updated), cold_callers_page(updated), phone_list_page(updated)]
+    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated), discharge_sheet_page(updated), cold_callers_page(updated), phone_list_page(updated), emergency_sheet_page(updated)]
     samples = letter_samples()
     pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
     for path, text in pages:
