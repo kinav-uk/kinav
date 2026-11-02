@@ -198,8 +198,7 @@
       $("homePlanCount").textContent = "";
       $("homePlanNext").textContent = "Choose a condition or situation to get clear steps for your first 30 days.";
       fillPick($("homePick"), key);
-      var pc0 = store.get("area", "");
-      if (pc0 && !$("homePostcode").value) $("homePostcode").value = pc0;
+      $("homePostcode").value = store.get("area", "");
       return;
     }
     var st = planStats(key);
@@ -207,8 +206,7 @@
     $("homePlanBar").style.width = Math.round(st.count / st.total * 100) + "%";
     $("homePlanNext").textContent = st.next ? "Next: " + st.next.text + "." : "All " + st.total + " steps done. Well done.";
     fillPick($("homePick"), key);
-    var pc = store.get("area", "");
-    if (pc && !$("homePostcode").value) $("homePostcode").value = pc;
+    $("homePostcode").value = store.get("area", "");
   }
 
   $("homePick").addEventListener("change", function (e) {
@@ -666,6 +664,11 @@
   }
 
   $("careForm").addEventListener("submit", function (e) { e.preventDefault(); searchCare(); });
+  // Picking a council from the suggestions searches straight away, so the area is saved without tapping Search.
+  $("careQ").addEventListener("change", function () {
+    var low = $("careQ").value.trim().toLowerCase();
+    if (care.index && care.index.councils.some(function (c) { return c.n.toLowerCase() === low; })) searchCare();
+  });
   $("careTypes").addEventListener("click", function (e) {
     var b = e.target.closest(".chip");
     if (!b) return;
