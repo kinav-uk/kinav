@@ -447,6 +447,77 @@ def emergency_sheet_page(updated):
                                   "\n".join(body), updated, kind="guide")
 
 
+SHOP = "https://www.etsy.com/shop/KinavUK"
+# Kinav's printables on Etsy: picture name in app/shop-img, name, one line, and the words that find it in the shop's search.
+PLANNERS = [
+    ("Christmas", "christmas", [
+        ("christmas-gift-planner", "Christmas Gift Planner for carers", "Budgets, bought, wrapped and given, and gifts from the person you care for. An app plus a printable planner.", "christmas gift planner"),
+        ("christmas-activity-programme", "24 Days of December, for care homes", "A ready-to-run Christmas activity for every day of Advent, with three ways for every resident to join in.", "24 day december"),
+        ("retro-christmas-games", "Retro Christmas games", "1950s and 1970s Christmas quizzes, finish-the-carol cards, charades and bingo, in large print.", "retro christmas games"),
+        ("retro-christmas-games-care-home", "Retro Christmas games: care home edition", "The retro games, licensed for a care home or day centre.", "care home retro christmas"),
+        ("christmas-cards", "Christmas reminiscence pack", "Conversation cards, a quiz and word search to share Christmas memories.", "christmas reminiscence"),
+        ("christmas-cards-care-home", "Christmas activity pack: care home edition", "Christmas memory cards and activities, licensed for a care home.", "care home christmas activity pack")]),
+    ("Planners and calendars", "planners", [
+        ("calendar-2027", "2027 large-print calendar", "Big, clear months for appointments, visits and bin days. Print it or fill it in on screen.", "2027 calendar"),
+        ("care-binder", "Elderly parent care binder (UK)", "174 pages: every Kinav planner and kit in one binder, in three colour styles.", "care binder"),
+        ("care-planner", "Elderly parent care planner", "Contacts, medicines list, appointments and who does what.", "care planner"),
+        ("carers-budget-planner", "Carer's budget planner", "Monthly budget, caring costs and who pays what. Printable, plus an Excel spreadsheet.", "budget planner"),
+        ("care-spreadsheet", "Care organiser spreadsheet", "Medicines chart, health log, appointments and care costs that add themselves up. For Excel and Google Sheets.", "care organiser spreadsheet"),
+        ("daily-log", "Caregiver daily log", "Daily notes and handover sheets for the family or carers.", "daily log"),
+        ("dementia-planner", "Dementia care planner", "Routines, what helps, and planning ahead, for families caring for someone with dementia.", "dementia care planner"),
+        ("life-admin-binder", "Just-in-case binder", "Where everything is, who to call, accounts and wishes, in one place.", "just in case binder"),
+        ("bundle", "Complete carer's bundle", "The main planners and checklists together, for less.", "bundle")]),
+    ("Checklists and kits", "kits", [
+        ("attendance-allowance", "Attendance Allowance claim kit", "A care diary and prompts for the form, so you don't miss what matters.", "attendance allowance"),
+        ("needs-assessment", "Care needs assessment kit", "Get ready for the council's assessment, with a diary and letters.", "needs assessment"),
+        ("hospital-discharge", "Leaving hospital checklist", "Questions for the ward and getting the home ready.", "hospital discharge"),
+        ("care-home-visit-pack", "Care home visit checklist", "Questions to ask, a scorecard and a side-by-side comparison.", "care home visit"),
+        ("moving-into-a-care-home", "Moving into a care home", "Packing list, an 'About me' profile and the first weeks.", "moving into a care home"),
+        ("lpa-organiser", "Lasting Power of Attorney kit", "Step by step, with a record book for attorneys.", "power of attorney"),
+        ("household-paperwork", "Bills and paperwork kit", "Accounts, direct debits and paperwork, all in one place.", "bills and paperwork"),
+        ("carers-emergency-plan", "Carer's emergency plan", "An 'if I can't be there' plan and a wallet card.", "emergency plan"),
+        ("planning-ahead", "Planning ahead pack", "Wishes, will and power of attorney checklists.", "planning ahead"),
+        ("after-a-death", "After a death checklist", "What to do, who to tell, and funeral planning.", "after a death"),
+        ("later-life-divorce", "Divorce planner, over 60", "Money, pensions and the home, step by step.", "divorce planner"),
+        ("letter-pack", "Carer letter templates", "Editable letters for the council, employers and more.", "letter templates")]),
+    ("Activities", "activities", [
+        ("reminiscence-cards", "Reminiscence conversation cards", "120 cards to spark memories and conversation, at home or in a care home.", "reminiscence cards")]),
+]
+
+
+def planners_page(updated):
+    """Kinav's printable planners and calendars, with links to the Etsy shop. Free tools on kinav.co.uk stay free."""
+    from urllib.parse import quote_plus
+    path = "/planners/"
+    def card(k, name, line, q):
+        return ('<a class="pp" href="%s?search_query=%s" target="_blank" rel="noopener"><img src="/shop-img/%s.jpg" alt="" loading="lazy" width="420" height="420">'
+                '<span><b>%s</b><small>%s</small><em>See it on Etsy ›</em></span></a>' % (SHOP, quote_plus(q), k, e(name), e(line)))
+    jump = " · ".join('<a href="#%s">%s</a>' % (anchor, e(title)) for title, anchor, _ in PLANNERS)
+    body = ['<style>.pp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}'
+            '.pp{display:flex;flex-direction:column;background:var(--surface,#fff);border:1.5px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:inherit}'
+            '.pp img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;display:block;background:#eee}'
+            '.pp span{display:flex;flex-direction:column;gap:4px;padding:12px 14px 14px}.pp b{font-size:17px;line-height:1.25}.pp small{font-size:14px;color:var(--muted,#5b6770)}'
+            '.pp em{font-style:normal;font-weight:700;color:var(--accent,#1f5f7a);font-size:14px;margin-top:4px}.pp:hover{border-color:var(--accent,#1f5f7a)}'
+            '@media(max-width:560px){.pp-grid{gap:10px}.pp{flex-direction:row;align-items:center}.pp img{width:104px;height:104px;flex:none}.pp span{padding:10px 12px}.pp b{font-size:16px}}</style>',
+            crumbs(), '<div class="stack-sm"><h1>Printable planners and calendars for carers</h1>'
+            '<p class="lede">Planners, checklists and calendars to print or fill in on screen, made in the UK by Kinav for families caring for an older parent.</p>'
+            '<p class="small">%s</p></div>' % jump,
+            '<p class="panel small">Everything free on kinav.co.uk stays free. These printables are sold in the Kinav shop on Etsy, which helps keep Kinav running. '
+            'Links open Etsy in a new tab.</p>']
+    for title, anchor, items in PLANNERS:
+        body.append('<section class="stack-sm" id="%s"><h2>%s</h2><div class="pp-grid">%s</div></section>' % (anchor, e(title), "".join(card(*it) for it in items)))
+    body.append('<section class="panel"><h2>Free printables</h2><div class="grid">'
+                '<a href="/printables/emergency-information-sheet/">Emergency information sheet for the fridge</a>'
+                '<a href="/printables/important-phone-numbers-list/">Large-print phone numbers list</a>'
+                '<a href="/printables/before-discharge-questions-for-the-ward/">Questions before they leave hospital</a>'
+                '<a href="/printables/no-cold-callers-door-sign/">No cold callers door sign</a>'
+                '<a href="/letters/">Free letter templates</a></div></section>')
+    body.append('<p class="small"><a href="%s" target="_blank" rel="noopener">See everything in the Kinav shop on Etsy ›</a></p>' % SHOP)
+    return path, build_pages.page(path, "Printable planners and calendars for carers of older parents (UK) | Kinav",
+                                  "Printable planners, checklists and calendars for families caring for an older parent in the UK: care binder, budget planner, 2027 large-print calendar, Christmas gift planner and more.",
+                                  "\n".join(body), updated, kind="guide")
+
+
 HOUSE_FAQS = [
     ("Will Mum have to sell her house to pay for care at home?", "No. In England, the home is never counted when someone gets care in their own home."),
     ("Is the house counted if they move into a care home?", "It can be, but not if their partner, a relative aged 60 or over, a relative who is disabled, or a child under 18 they support still lives there."),
@@ -567,7 +638,7 @@ def letters_index(samples, updated):
 def main(updated):
     with open(CONTENT, encoding="utf-8") as f:
         kc = json.load(f)
-    for folder in ("guides", "plans", "articles", "care-cost-calculator", "benefits-calculator", "ask-a-specialist", "will-they-have-to-sell-the-house-to-pay-for-care", "letters", "printables"):
+    for folder in ("guides", "plans", "articles", "care-cost-calculator", "benefits-calculator", "ask-a-specialist", "will-they-have-to-sell-the-house-to-pay-for-care", "letters", "printables", "planners"):
         shutil.rmtree(os.path.join(APP, folder), ignore_errors=True)
     pages = [kit_page(k, updated) for k in kc["kits"] if k["id"] in KIT_PAGES]
     pages += [plan_page(key, p, updated) for key, p in kc["plans"].items() if key in PLAN_PAGES]
@@ -575,7 +646,7 @@ def main(updated):
     today = _dt.date.today().isoformat()
     kc["articles"] = [a for a in kc["articles"] if not a.get("from") or a["from"] <= today]
     pages += [article_page(a, kc["plans"], updated) for a in kc["articles"]]
-    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated), discharge_sheet_page(updated), cold_callers_page(updated), phone_list_page(updated), emergency_sheet_page(updated)]
+    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated), discharge_sheet_page(updated), cold_callers_page(updated), phone_list_page(updated), emergency_sheet_page(updated), planners_page(updated)]
     samples = letter_samples()
     pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
     for path, text in pages:
@@ -592,7 +663,7 @@ def main(updated):
             '<section class="panel"><h2>Tools</h2><div class="grid"><a href="/care-cost-calculator/">Care cost calculator</a>'
             '<a href="/benefits-calculator/">Benefits calculator</a><a href="/care/">Care homes and care at home by area</a>'
             '<a href="/ask-a-specialist/">Ask a nurse or specialist</a><a href="/will-they-have-to-sell-the-house-to-pay-for-care/">Will they have to sell the house?</a>'
-            '<a href="/letters/">Free letter templates</a></div></section>',
+            '<a href="/letters/">Free letter templates</a><a href="/planners/">Printable planners and calendars</a></div></section>',
             '<section class="panel" id="kits"><h2>Step-by-step guides</h2>%s</section>' % links("/guides/", kits),
             '<section class="panel" id="plans"><h2>30-day plans</h2>%s</section>' % links("/plans/", plans),
             '<section class="panel" id="articles"><h2>Articles for carers</h2>%s</section>' % links("/articles/", arts), NOT_ADVICE]
