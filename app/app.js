@@ -41,8 +41,8 @@
   /* ---------- Christmas ---------- */
   // The Christmas games button shows from 1 November to Twelfth Night (5 January).
   (function () {
-    var x = document.getElementById("homeXmas"), d = new Date(), m = d.getMonth();
-    if (x) x.hidden = !(m === 10 || m === 11 || (m === 0 && d.getDate() <= 5));
+    var d = new Date(), m = d.getMonth(), on = m === 10 || m === 11 || (m === 0 && d.getDate() <= 5);
+    document.querySelectorAll(".home-xmas").forEach(function (x) { x.hidden = !on; });
   })();
 
   /* ---------- Screens ---------- */
