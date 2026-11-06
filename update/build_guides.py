@@ -447,7 +447,7 @@ def emergency_sheet_page(updated):
                                   "\n".join(body), updated, kind="guide")
 
 
-SHOP = "https://www.etsy.com/shop/KinavUK"
+SHOP = "https://kinavuk.etsy.com"
 # Kinav's printables on Etsy: picture name in app/shop-img, name, one line, and the words that find it in the shop's search.
 PLANNERS = [
     ("Christmas games, activities and gifts", "christmas", [
