@@ -450,7 +450,7 @@ def emergency_sheet_page(updated):
 SHOP = "https://www.etsy.com/shop/KinavUK"
 # Kinav's printables on Etsy: picture name in app/shop-img, name, one line, and the words that find it in the shop's search.
 PLANNERS = [
-    ("Christmas", "christmas", [
+    ("Christmas games, activities and gifts", "christmas", [
         ("christmas-gift-planner", "Christmas Gift Planner for carers", "Budgets, bought, wrapped and given, and gifts from the person you care for. An app plus a printable planner.", "christmas gift planner"),
         ("christmas-activity-programme", "24 Days of December, for care homes", "A ready-to-run Christmas activity for every day of Advent, with three ways for every resident to join in.", "24 day december"),
         ("retro-christmas-games", "Retro Christmas games", "1950s and 1970s Christmas quizzes, finish-the-carol cards, charades and bingo, in large print.", "retro christmas games"),

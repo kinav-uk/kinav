@@ -38,6 +38,13 @@
     set: function (k, v) { mem[k] = v; try { localStorage.setItem("kc." + k, JSON.stringify(v)); } catch (e) {} }
   };
 
+  /* ---------- Christmas ---------- */
+  // The Christmas games button shows from 1 November to Twelfth Night (5 January).
+  (function () {
+    var x = document.getElementById("homeXmas"), d = new Date(), m = d.getMonth();
+    if (x) x.hidden = !(m === 10 || m === 11 || (m === 0 && d.getDate() <= 5));
+  })();
+
   /* ---------- Screens ---------- */
   var SCREENS = ["home", "plan", "appts", "care", "costs", "benefits", "help", "kit", "privacy", "terms", "articles", "article", "questions", "stayhome", "start", "house", "letters", "rota", "enquire", "support"];
   var TAB_FOR = { stayhome: "home", start: "home", house: "home", letters: "home", rota: "home", enquire: "care", costs: "home", benefits: "home", kit: "home", questions: "home", privacy: "home", terms: "home", articles: "home", article: "home", help: "home" };
