@@ -453,10 +453,10 @@ PLANNERS = [
     ("Christmas games, activities and gifts", "christmas", [
         ("christmas-gift-planner", "Christmas Gift Planner for carers", "Budgets, bought, wrapped and given, and gifts from the person you care for. An app plus a printable planner.", "christmas gift planner"),
         ("christmas-activity-programme", "24 Days of December, for care homes", "A ready-to-run Christmas activity for every day of Advent, with three ways for every resident to join in.", "24 day december"),
-        ("retro-christmas-games", "Retro Christmas games", "1950s and 1970s Christmas quizzes, finish-the-carol cards, charades and bingo, in large print.", "retro christmas games"),
-        ("retro-christmas-games-care-home", "Retro Christmas games: care home edition", "The retro games, licensed for a care home or day centre.", "care home retro christmas"),
         ("christmas-cards", "Christmas reminiscence pack", "Conversation cards, a quiz and word search to share Christmas memories.", "christmas reminiscence"),
-        ("christmas-cards-care-home", "Christmas activity pack: care home edition", "Christmas memory cards and activities, licensed for a care home.", "care home christmas activity pack")]),
+        ("christmas-cards-care-home", "Christmas activity pack: care home edition", "Christmas memory cards and activities, licensed for a care home.", "care home christmas activity pack"),
+        ("retro-christmas-games", "Retro Christmas games", "1950s and 1970s Christmas quizzes, finish-the-carol cards, charades and bingo, in large print.", "retro christmas games"),
+        ("retro-christmas-games-care-home", "Retro Christmas games: care home edition", "The retro games, licensed for a care home or day centre.", "care home retro christmas")]),
     ("Planners and calendars", "planners", [
         ("calendar-2027", "2027 large-print calendar", "Big, clear months for appointments, visits and bin days. Print it or fill it in on screen.", "2027 calendar"),
         ("care-binder", "Elderly parent care binder (UK)", "174 pages: every Kinav planner and kit in one binder, in three colour styles.", "care binder"),
