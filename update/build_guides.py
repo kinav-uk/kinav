@@ -454,8 +454,8 @@ PLANNERS = [
     ("Christmas games, activities and gifts", "christmas", [
         ("christmas-gift-planner", "Christmas Gift Planner for carers", "Budgets, bought, wrapped and given, and gifts from the person you care for. An app plus a printable planner.", "christmas gift planner"),
         ("christmas-activity-programme", "24 Days of December, for care homes", "A ready-to-run Christmas activity for every day of Advent, with three ways for every resident to join in.", "24 day december"),
-        ("christmas-cards", "Christmas reminiscence pack", "Conversation cards, a quiz and word search to share Christmas memories.", "christmas reminiscence"),
-        ("christmas-cards-care-home", "Christmas activity pack: care home edition", "Christmas memory cards and activities, licensed for a care home.", "care home christmas activity pack"),
+        ("christmas-cards", "Let's Talk Christmas pack", "Christmas reminiscence cards, a quiz and word search to share Christmas memories.", "christmas reminiscence"),
+        ("christmas-cards-care-home", "Let's Talk Christmas pack: care home edition", "Christmas memory cards and activities, licensed for a care home.", "care home christmas activity pack"),
         ("retro-christmas-games", "Retro Christmas games", "1950s and 1970s Christmas quizzes, finish-the-carol cards, charades and bingo, in large print.", "retro christmas games"),
         ("retro-christmas-games-care-home", "Retro Christmas games: care home edition", "The retro games, licensed for a care home or day centre.", "care home retro christmas")]),
     ("Planners and calendars", "planners", [
@@ -482,7 +482,7 @@ PLANNERS = [
         ("later-life-divorce", "Divorce planner, over 60", "Money, pensions and the home, step by step.", "divorce planner"),
         ("letter-pack", "Carer letter templates", "Editable letters for the council, employers and more.", "letter templates")]),
     ("Activities", "activities", [
-        ("reminiscence-cards", "Reminiscence conversation cards", "120 cards to spark memories and conversation, at home or in a care home.", "reminiscence cards")]),
+        ("reminiscence-cards", "Let's Talk reminiscence cards", "120 cards to spark memories and conversation, at home or in a care home.", "reminiscence cards")]),
 ]
 
 # Each product's own Etsy listing link (Share & Save links are best). Products not listed here open a search
