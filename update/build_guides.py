@@ -487,7 +487,9 @@ PLANNERS = [
 
 # Each product's own Etsy listing link (Share & Save links are best). Products not listed here open a search
 # inside the Kinav shop for that product, so only Kinav listings ever show.
-LISTING_LINKS = {}
+LISTING_LINKS = {
+    "christmas-gift-planner": "https://kinavuk.etsy.com/listing/4611384577/christmas-gift-planner-app-for-carers",
+}
 SHOP_SEARCH = "https://www.etsy.com/shop/KinavUK?search_query=%s"
 
 def planners_page(updated):
