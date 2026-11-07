@@ -147,6 +147,22 @@ def region_id(region):
     return "".join(c if c.isalnum() else "-" for c in region.lower()).strip("-")
 
 
+def towns(rows, n=4):
+    """The most common towns in a list of services, taken from the last part of each address."""
+    c = collections.Counter(r[1].rsplit(",", 1)[-1].strip() for r in rows if "," in r[1])
+    return [t for t, _ in c.most_common(n) if t and t != "London" and not any(ch.isdigit() for ch in t)]
+
+
+def and_list(xs):
+    return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
+
+
+def month(updated):
+    """'24 October 2026' -> 'Oct 2026'."""
+    d, m, y = updated.split()
+    return "%s %s" % (m[:3], y)
+
+
 def cta(council):
     return ('<div class="cta"><p><b>Search by miles from a postcode</b>, filter by specialist care and work out care costs in the free Kinav app for families.</p>'
             '<a class="btn" href="/#care">Open Kinav</a></div>')
@@ -207,8 +223,10 @@ def write(by_la, regions, out_dir, updated):
                     '<a href="/care/%s/needs-assessment/">How to ask, and what happens next ›</a></p></section>' % (e(council), slug))
         body.append(paying(council))
         body.append(day_centres(council))
-        title = "Care homes and care at home in %s: Good and Outstanding | Kinav" % council
-        desc = "%d care services in %s rated Good or Outstanding by CQC: nursing homes, residential homes, care at home and dementia care. Updated weekly." % (len(rows), council)
+        title = "Care homes and home care in %s: %d rated Good or Outstanding (CQC, %s)" % (council, len(rows), month(updated))
+        near = towns(rows)
+        desc = "%d care services in %s rated Good or Outstanding by CQC%s: nursing homes, residential homes, home care and dementia care, with phone numbers. Updated weekly." % (
+            len(rows), council, ", including " + and_list(near) if near else "")
         save(out_dir, slug, "", page("/care/%s/" % slug, title, desc, "\n".join(body), updated))
         urls.append("/care/%s/" % slug)
 
@@ -226,8 +244,14 @@ def write(by_la, regions, out_dir, updated):
             body.append('<div class="list">%s</div>' % "".join(card(r, path == "dementia-care") for r in items) if items
                         else '<p class="panel">No services of this type in %s are currently rated Good or Outstanding. Try a nearby area or search by postcode in the app.</p>' % e(council))
             body.append(paying(council))
-            title = "%s rated Good or Outstanding | Kinav" % h1
-            desc = "%s Contact details, CQC ratings for each key question and specialisms. Updated weekly." % lede
+            if items:
+                what = {"care-at-home": "Home care", "dementia-care": "Dementia care", "residential-homes": "Residential care homes"}.get(path, plural)
+                title = "%s in %s: %d rated Good or Outstanding (CQC, %s)" % (what, council, len(items), month(updated))
+            else:
+                title = "%s | Kinav" % h1
+            near = towns(items)
+            desc = "%s%s Phone numbers, CQC ratings for each key question and specialisms. Updated weekly." % (
+                lede, " Includes %s." % and_list(near) if near else "")
             save(out_dir, slug, path, page("/care/%s/%s/" % (slug, path), title, desc, "\n".join(body), updated))
             urls.append("/care/%s/%s/" % (slug, path))
 
