@@ -491,6 +491,7 @@ LISTING_LINKS = {
     "christmas-gift-planner": "https://kinavuk.etsy.com/listing/4611384577/christmas-gift-planner-app-for-carers",
     "christmas-activity-programme": "https://kinavuk.etsy.com/listing/4611376412/christmas-activities-for-care-homes-24",
     "care-spreadsheet": "https://kinavuk.etsy.com/listing/4611241685/care-organiser-spreadsheet-uk-medication",
+    "carers-budget-planner": "https://kinavuk.etsy.com/listing/4611074567/carers-budget-planner-uk-printable-pdf",
 }
 SHOP_SEARCH = "https://www.etsy.com/shop/KinavUK?search_query=%s"
 
