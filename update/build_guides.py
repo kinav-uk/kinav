@@ -497,6 +497,7 @@ LISTING_LINKS = {
     "retro-christmas-games": "https://kinavuk.etsy.com/listing/4610674187/printable-party-games-grandparent-gift",
     "christmas-cards-care-home": "https://kinavuk.etsy.com/listing/4610619702/care-home-christmas-activity-pack",
     "attendance-allowance": "https://kinavuk.etsy.com/listing/4610570617/attendance-allowance-claim-kit-uk",
+    "care-home-visit-pack": "https://kinavuk.etsy.com/listing/4610539380/care-home-visit-checklist-printable-and",
     "calendar-2027": "https://kinavuk.etsy.com/listing/4610543809/2027-large-print-calendar-printable",
     "daily-log": "https://kinavuk.etsy.com/listing/4610530561/caregiver-daily-log-printable-fillable",
     "life-admin-binder": "https://kinavuk.etsy.com/listing/4610527265/just-in-case-binder-uk-life-admin",
