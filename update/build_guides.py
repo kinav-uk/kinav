@@ -489,6 +489,7 @@ PLANNERS = [
 # inside the Kinav shop for that product, so only Kinav listings ever show.
 LISTING_LINKS = {
     "christmas-gift-planner": "https://kinavuk.etsy.com/listing/4611384577/christmas-gift-planner-app-for-carers",
+    "christmas-activity-programme": "https://kinavuk.etsy.com/listing/4611376412/christmas-activities-for-care-homes-24",
 }
 SHOP_SEARCH = "https://www.etsy.com/shop/KinavUK?search_query=%s"
 
