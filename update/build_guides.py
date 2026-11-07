@@ -517,17 +517,17 @@ LISTING_LINKS = {
 SHOP_SEARCH = "https://www.etsy.com/shop/KinavUK?search_query=%s"
 
 def about_page(updated):
-    """Why Kinav exists, in the founder's words. The founder stays anonymous: no name, place or details about their parent."""
+    """Why Kinav exists, in the founder's words. The founder stays anonymous: no name, place or other details about their father."""
     path = "/about/"
     body = ['<div class="stack-sm"><h1>Why I built Kinav</h1>'
-            '<p class="lede">Kinav was built by a family carer whose parent has dementia.</p></div>',
+            '<p class="lede">Kinav was built by a family carer whose father has dementia.</p></div>',
             '<section class="stack-sm">'
-            '<p>When my parent was diagnosed with dementia, I didn\'t know where to start.</p>'
+            '<p>When my father was diagnosed with dementia, I didn\'t know where to start.</p>'
             '<p>I was working full time. Overnight I was also learning a new language: needs assessments, Attendance Allowance, Lasting Power of Attorney, '
             'CQC ratings, care home fees. Every answer seemed to lead to three more questions, and each one was on a different website, behind a phone queue, '
             'or in a leaflet I couldn\'t find when I needed it.</p>'
-            '<p>The hardest part wasn\'t the forms. It was the feeling that I was always one step behind, and that one wrong decision could cost my parent '
-            'their home, their savings or their dignity.</p>'
+            '<p>The hardest part wasn\'t the forms. It was the feeling that I was always one step behind, and that one wrong decision could cost my father '
+            'his home, his savings or his dignity.</p>'
             '<p>So I started writing things down: the questions to ask, the letters that worked, which care homes near us were actually rated well, '
             'what the council had to do and what it didn\'t.</p>'
             '<p>Kinav is those notes, made into something anyone can use.</p></section>',
@@ -543,7 +543,7 @@ def about_page(updated):
             '<div class="cta"><p><b>Where do I start?</b> Answer 3 quick questions in the free Kinav app and get your first steps.</p>'
             '<a class="btn" href="/#start">Open Kinav</a></div>']
     return path, build_pages.page(path, "About Kinav: built by a family carer | Kinav",
-                                  "Why Kinav exists: free, independent help for families caring for an older parent in England, built by a carer whose parent has dementia.",
+                                  "Why Kinav exists: free, independent help for families caring for an older parent in England, built by a carer whose father has dementia.",
                                   "\n".join(body), updated, kind="guide")
 
 
