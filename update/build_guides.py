@@ -516,6 +516,37 @@ LISTING_LINKS = {
 }
 SHOP_SEARCH = "https://www.etsy.com/shop/KinavUK?search_query=%s"
 
+def about_page(updated):
+    """Why Kinav exists, in the founder's words. The founder stays anonymous: no name, place or details about their parent."""
+    path = "/about/"
+    body = ['<div class="stack-sm"><h1>Why I built Kinav</h1>'
+            '<p class="lede">Kinav was built by a family carer whose parent has dementia.</p></div>',
+            '<section class="stack-sm">'
+            '<p>When my parent was diagnosed with dementia, I didn\'t know where to start.</p>'
+            '<p>I was working full time. Overnight I was also learning a new language: needs assessments, Attendance Allowance, Lasting Power of Attorney, '
+            'CQC ratings, care home fees. Every answer seemed to lead to three more questions, and each one was on a different website, behind a phone queue, '
+            'or in a leaflet I couldn\'t find when I needed it.</p>'
+            '<p>The hardest part wasn\'t the forms. It was the feeling that I was always one step behind, and that one wrong decision could cost my parent '
+            'their home, their savings or their dignity.</p>'
+            '<p>So I started writing things down: the questions to ask, the letters that worked, which care homes near us were actually rated well, '
+            'what the council had to do and what it didn\'t.</p>'
+            '<p>Kinav is those notes, made into something anyone can use.</p></section>',
+            '<section class="panel"><h2>What I promised myself when I built it</h2><ul>'
+            '<li><b>Free where it matters.</b> Finding care, working out costs, checking benefits and writing to the council will always be free.</li>'
+            '<li><b>Only good care.</b> We only list care rated Good or Outstanding by CQC, and care homes can\'t pay to be listed.</li>'
+            '<li><b>Nothing about your family is stored.</b> No sign-up, no selling your details.</li>'
+            '<li><b>Plain English.</b> Written for a tired person at 11pm, not for a professional.</li></ul></section>',
+            '<section class="stack-sm"><p>Kinav doesn\'t give medical or legal advice. It points you to the people who can, like your GP, Citizens Advice, '
+            'Carers UK and Age UK. What it does is help you feel less alone, and a little more in control.</p>'
+            '<p>If you\'re caring for someone right now: you\'re doing better than you think.</p>'
+            '<p><b>The Kinav team</b></p></section>',
+            '<div class="cta"><p><b>Where do I start?</b> Answer 3 quick questions in the free Kinav app and get your first steps.</p>'
+            '<a class="btn" href="/#start">Open Kinav</a></div>']
+    return path, build_pages.page(path, "About Kinav: built by a family carer | Kinav",
+                                  "Why Kinav exists: free, independent help for families caring for an older parent in England, built by a carer whose parent has dementia.",
+                                  "\n".join(body), updated, kind="guide")
+
+
 def planners_page(updated):
     """Kinav's printable planners and calendars, with links to the Etsy shop. Free tools on kinav.co.uk stay free."""
     path = "/planners/"
@@ -679,7 +710,7 @@ def letters_index(samples, updated):
 def main(updated):
     with open(CONTENT, encoding="utf-8") as f:
         kc = json.load(f)
-    for folder in ("guides", "plans", "articles", "care-cost-calculator", "benefits-calculator", "ask-a-specialist", "will-they-have-to-sell-the-house-to-pay-for-care", "letters", "printables", "planners"):
+    for folder in ("guides", "plans", "articles", "care-cost-calculator", "benefits-calculator", "ask-a-specialist", "will-they-have-to-sell-the-house-to-pay-for-care", "letters", "printables", "planners", "about"):
         shutil.rmtree(os.path.join(APP, folder), ignore_errors=True)
     pages = [kit_page(k, updated) for k in kc["kits"] if k["id"] in KIT_PAGES]
     pages += [plan_page(key, p, updated) for key, p in kc["plans"].items() if key in PLAN_PAGES]
@@ -687,7 +718,7 @@ def main(updated):
     today = _dt.date.today().isoformat()
     kc["articles"] = [a for a in kc["articles"] if not a.get("from") or a["from"] <= today]
     pages += [article_page(a, kc["plans"], updated) for a in kc["articles"]]
-    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated), discharge_sheet_page(updated), cold_callers_page(updated), phone_list_page(updated), emergency_sheet_page(updated), planners_page(updated)]
+    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated), discharge_sheet_page(updated), cold_callers_page(updated), phone_list_page(updated), emergency_sheet_page(updated), planners_page(updated), about_page(updated)]
     samples = letter_samples()
     pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
     for path, text in pages:

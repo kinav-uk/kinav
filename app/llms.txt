@@ -8,6 +8,7 @@ Useful for people in England who want to know how to arrange or pay for care for
 
 - [Kinav app: find care by postcode](https://kinav.co.uk/)
 - [Care homes and home care by council area](https://kinav.co.uk/care/)
+- [About Kinav: built by a family carer](https://kinav.co.uk/about/)
 - [Ask a nurse or specialist: free UK helplines by condition](https://kinav.co.uk/ask-a-specialist/)
 - [Benefits calculator for carers and older people (UK)](https://kinav.co.uk/benefits-calculator/)
 - [Care cost calculator: how long will savings last? (England)](https://kinav.co.uk/care-cost-calculator/)
