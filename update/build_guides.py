@@ -490,6 +490,7 @@ PLANNERS = [
 LISTING_LINKS = {
     "christmas-gift-planner": "https://kinavuk.etsy.com/listing/4611384577/christmas-gift-planner-app-for-carers",
     "christmas-activity-programme": "https://kinavuk.etsy.com/listing/4611376412/christmas-activities-for-care-homes-24",
+    "christmas-cards": "https://kinavuk.etsy.com/listing/4610679958/christmas-activity-reminiscence-cards",
     "care-spreadsheet": "https://kinavuk.etsy.com/listing/4611241685/care-organiser-spreadsheet-uk-medication",
     "carers-budget-planner": "https://kinavuk.etsy.com/listing/4611074567/carers-budget-planner-uk-printable-pdf",
     "retro-christmas-games-care-home": "https://kinavuk.etsy.com/listing/4610697448/care-home-christmas-activities-retro",
