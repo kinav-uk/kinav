@@ -14,6 +14,7 @@ import os
 import re
 import shutil
 import subprocess
+import urllib.parse
 
 import build_pages
 from build_pages import e
@@ -484,16 +485,19 @@ PLANNERS = [
         ("reminiscence-cards", "Reminiscence conversation cards", "120 cards to spark memories and conversation, at home or in a care home.", "reminiscence cards")]),
 ]
 
-# Each product's own Etsy listing link (Share & Save links are best). Products not listed here link to the Kinav shop page.
+# Each product's own Etsy listing link (Share & Save links are best). Products not listed here open a search
+# inside the Kinav shop for that product, so only Kinav listings ever show.
 LISTING_LINKS = {}
+SHOP_SEARCH = "https://www.etsy.com/shop/KinavUK?search_query=%s"
 
 def planners_page(updated):
     """Kinav's printable planners and calendars, with links to the Etsy shop. Free tools on kinav.co.uk stay free."""
     path = "/planners/"
     def card(k, name, line, q):
-        # Straight to the listing when we have its link, otherwise the Kinav shop page, so only Kinav listings ever show.
+        # Straight to the listing when we have its link, otherwise a search for it inside the Kinav shop.
+        link = LISTING_LINKS.get(k) or SHOP_SEARCH % urllib.parse.quote_plus(q)
         return ('<a class="pp" href="%s" target="_blank" rel="noopener"><img src="/shop-img/%s.jpg" alt="" loading="lazy" width="420" height="420">'
-                '<span><b>%s</b><small>%s</small><em>See it in the Kinav Etsy shop ›</em></span></a>' % (e(LISTING_LINKS.get(k, SHOP)), k, e(name), e(line)))
+                '<span><b>%s</b><small>%s</small><em>See it in the Kinav Etsy shop ›</em></span></a>' % (e(link), k, e(name), e(line)))
     jump = " · ".join('<a href="#%s">%s</a>' % (anchor, e(title)) for title, anchor, _ in PLANNERS)
     body = ['<style>.pp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}'
             '.pp{display:flex;flex-direction:column;background:var(--surface,#fff);border:1.5px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:inherit}'
