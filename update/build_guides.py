@@ -492,6 +492,10 @@ LISTING_LINKS = {
     "christmas-activity-programme": "https://kinavuk.etsy.com/listing/4611376412/christmas-activities-for-care-homes-24",
     "care-spreadsheet": "https://kinavuk.etsy.com/listing/4611241685/care-organiser-spreadsheet-uk-medication",
     "carers-budget-planner": "https://kinavuk.etsy.com/listing/4611074567/carers-budget-planner-uk-printable-pdf",
+    "retro-christmas-games-care-home": "https://kinavuk.etsy.com/listing/4610697448/care-home-christmas-activities-retro",
+    "retro-christmas-games": "https://kinavuk.etsy.com/listing/4610674187/printable-party-games-grandparent-gift",
+    "christmas-cards-care-home": "https://kinavuk.etsy.com/listing/4610619702/care-home-christmas-activity-pack",
+    "attendance-allowance": "https://kinavuk.etsy.com/listing/4610570617/attendance-allowance-claim-kit-uk",
 }
 SHOP_SEARCH = "https://www.etsy.com/shop/KinavUK?search_query=%s"
 
