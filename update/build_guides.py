@@ -500,6 +500,7 @@ LISTING_LINKS = {
     "needs-assessment": "https://kinavuk.etsy.com/listing/4611923791/care-needs-assessment-kit-uk-pdf-and",
     "moving-into-a-care-home": "https://kinavuk.etsy.com/listing/4611943646/moving-into-a-care-home-checklist-pdf",
     "lpa-organiser": "https://kinavuk.etsy.com/listing/4611932219/lasting-power-of-attorney-kit-pdf-and",
+    "reminiscence-cards": "https://kinavuk.etsy.com/listing/4611935151/reminiscence-cards-for-elderly-128",
     "care-home-visit-pack": "https://kinavuk.etsy.com/listing/4610539380/care-home-visit-checklist-printable-and",
     "calendar-2027": "https://kinavuk.etsy.com/listing/4610543809/2027-large-print-calendar-printable",
     "daily-log": "https://kinavuk.etsy.com/listing/4610530561/caregiver-daily-log-printable-fillable",
