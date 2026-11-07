@@ -522,7 +522,7 @@ def planners_page(updated):
     def card(k, name, line, q):
         # Straight to the listing when we have its link, otherwise a search for it inside the Kinav shop.
         link = LISTING_LINKS.get(k) or SHOP_SEARCH % urllib.parse.quote_plus(q)
-        return ('<a class="pp" href="%s" target="_blank" rel="noopener"><img src="/shop-img/%s.jpg" alt="" loading="lazy" width="420" height="420">'
+        return ('<a class="pp" href="%s" rel="noopener"><img src="/shop-img/%s.jpg" alt="" loading="lazy" width="420" height="420">'
                 '<span><b>%s</b><small>%s</small><em>See it in the Kinav Etsy shop ›</em></span></a>' % (e(link), k, e(name), e(line)))
     jump = " · ".join('<a href="#%s">%s</a>' % (anchor, e(title)) for title, anchor, _ in PLANNERS)
     body = ['<style>.pp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}'
@@ -535,7 +535,7 @@ def planners_page(updated):
             '<p class="lede">Planners, checklists and calendars to print or fill in on screen, made in the UK by Kinav for families caring for an older parent.</p>'
             '<p class="small">%s</p></div>' % jump,
             '<p class="panel small">Everything free on kinav.co.uk stays free. These printables are sold in the Kinav shop on Etsy, which helps keep Kinav running. '
-            'Links open Etsy in a new tab.</p>']
+            'Links open Etsy. To come back to Kinav, use your back button or swipe back.</p>']
     for title, anchor, items in PLANNERS:
         body.append('<section class="stack-sm" id="%s"><h2>%s</h2><div class="pp-grid">%s</div></section>' % (anchor, e(title), "".join(card(*it) for it in items)))
     body.append('<section class="panel"><h2>Free printables</h2><div class="grid">'
@@ -544,7 +544,7 @@ def planners_page(updated):
                 '<a href="/printables/before-discharge-questions-for-the-ward/">Questions before they leave hospital</a>'
                 '<a href="/printables/no-cold-callers-door-sign/">No cold callers door sign</a>'
                 '<a href="/letters/">Free letter templates</a></div></section>')
-    body.append('<p class="small"><a href="%s" target="_blank" rel="noopener">See everything in the Kinav shop on Etsy ›</a></p>' % SHOP)
+    body.append('<p class="small"><a href="%s" rel="noopener">See everything in the Kinav shop on Etsy ›</a></p>' % SHOP)
     return path, build_pages.page(path, "Printable planners and calendars for carers of older parents (UK) | Kinav",
                                   "Printable planners, checklists and calendars for families caring for an older parent in the UK: care binder, budget planner, 2027 large-print calendar, Christmas gift planner and more.",
                                   "\n".join(body), updated, kind="guide")
