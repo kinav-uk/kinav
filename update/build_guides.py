@@ -611,6 +611,7 @@ LETTER_SOURCES = {
 }
 APP_JS = os.path.join(APP, "app.js")
 JSC = "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc"
+LETTER_CACHE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "letter_samples.json")
 SAMPLE_JS = r"""
 var out = LETTERS.map(function (l) {
   var v = {}, t = {};
@@ -627,11 +628,19 @@ print(JSON.stringify(out));
 
 
 def letter_samples():
+    """The letter texts, worked out from app.js with JavaScriptCore on a Mac and saved, so the weekly
+    update on GitHub (not a Mac) can rebuild the letter pages from the saved copy."""
+    if not os.path.exists(JSC):
+        with open(LETTER_CACHE, encoding="utf-8") as f:
+            return json.load(f)
     with open(APP_JS, encoding="utf-8") as f:
         js = f.read()
     start, end = js.index("  var LT_FIELDS = {"), js.index("\n  function ltState")
     out = subprocess.run([JSC, "-e", js[start:end] + SAMPLE_JS], check=True, capture_output=True, text=True).stdout
-    return json.loads(out)
+    samples = json.loads(out)
+    with open(LETTER_CACHE, "w", encoding="utf-8") as f:
+        json.dump(samples, f, ensure_ascii=False, indent=1)
+    return samples
 
 
 def letter_page(l, updated):

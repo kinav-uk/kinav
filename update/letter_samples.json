@@ -1,0 +1,110 @@
+[
+ {
+  "id": "needs",
+  "name": "Ask for a needs assessment",
+  "when": "When someone is struggling at home and may need care, equipment or changes to the home. It's free, whatever their savings.",
+  "ticks": [
+   "Ask for a home safety check by an occupational therapist",
+   "Ask for a carer's assessment for me too",
+   "They know I'm writing for them"
+  ],
+  "text": "[your name]\n[your phone or email]\n[date]\n\nAdult Social Care\n[council]\n\nDear Adult Social Care team,\n\nRequest for a needs assessment: [their name]\n\nI'm writing to ask for a needs assessment for [their name] under the Care Act 2014. [their name] lives at [their address].\n\n[their name] is finding it hard to manage with: [what they're finding hard].\n\nI understand the council must assess anyone who appears to need care and support, whatever their income or savings.\n\nPlease include a home safety check by an occupational therapist, so that equipment or small changes to the home can be considered.\n\nI'd also like a carer's assessment for myself.\n\n[their name] knows I'm writing and agrees.\n\nPlease contact me to arrange the assessment, and let me know roughly how long it will take.\n\nYours sincerely,\n\n[your name]"
+ },
+ {
+  "id": "carer",
+  "name": "Ask for a carer's assessment",
+  "when": "For you, if you help look after someone. It's free, whatever your income, and they don't need to be getting council help.",
+  "ticks": [],
+  "text": "[your name]\n[your phone or email]\n[date]\n\nAdult Social Care\n[council]\n\nDear Adult Social Care team,\n\nRequest for a carer's assessment: [their name]\n\nI'm writing to ask for a carer's assessment for myself under the Care Act 2014.\n\nI help look after [their name], and I'm their [daughter or son]. [their name] lives at [their address].\n\nI spend about [number] hours a week caring. This includes: [what you do for them].\n\nI understand the council must assess any carer who appears to need support, whatever their income, and whether or not the person they care for gets help from the council.\n\nI'd like to talk about how caring affects my health, work and time for myself, and what support is available.\n\nPlease contact me to arrange the assessment.\n\nYours sincerely,\n\n[your name]"
+ },
+ {
+  "id": "discharge",
+  "name": "Plan for leaving hospital",
+  "when": "Before someone comes home from hospital, so the right help is in place first.",
+  "ticks": [
+   "I can't give all the care they'll need myself"
+  ],
+  "text": "[your name]\n[your phone or email]\n[date]\n\nThe ward manager and discharge team\n[hospital and ward]\n\nDear ward manager,\n\nPlanning for leaving hospital: [their name]\n\n[their name] is a patient on [hospital and ward]. I'm their [daughter or son]. I'm writing about plans for them to leave hospital, which may be [when they may leave hospital].\n\nBefore they leave, please:\n- involve [their name] and me in planning their discharge\n- tell us what care and support they will need, and make sure it's arranged before they leave\n- make sure any equipment they need at home is in place\n- give us a written plan, with who to contact if there are problems after they leave\n\nPlease don't assume that I can provide their care. I can't do it all myself, and I'd like to agree what help will be in place before they leave.\n\nI understand that short-term care to help them recover after leaving hospital (reablement) is free for up to six weeks.\n\nPlease keep me updated.\n\nYours sincerely,\n\n[your name]"
+ },
+ {
+  "id": "review",
+  "name": "Challenge a council decision",
+  "when": "If you think an assessment, a care plan or a funding decision is wrong.",
+  "ticks": [
+   "They know I'm writing for them"
+  ],
+  "text": "[your name]\n[your phone or email]\n[date]\n\nAdult Social Care\n[council]\n\nDear Adult Social Care team,\n\nRequest to review a decision: [their name]\n\nI'm writing about a decision the council made on [date of the decision] about [their name] (I'm their [daughter or son]).\n\nThe council decided [what was decided].\n\nWe disagree because [why you disagree].\n\nPlease:\n- send me the decision and the reasons for it in writing, if you haven't already\n- send me a copy of the assessment and any care and support plan\n- review the decision, taking these points into account\n\n[their name] knows I'm writing and agrees.\n\nIf we can't sort this out, I'll make a formal complaint.\n\nYours sincerely,\n\n[your name]"
+ },
+ {
+  "id": "complaint",
+  "name": "Make a complaint to the council",
+  "when": "If things have gone wrong with the council's adult social care and asking hasn't fixed it.",
+  "ticks": [
+   "They know I'm writing for them"
+  ],
+  "text": "[your name]\n[your phone or email]\n[date]\n\nComplaints team, Adult Social Care\n[council]\n\nDear complaints team,\n\nFormal complaint: [their name]\n\nI'm making a formal complaint about the council's adult social care, about the care and support for [their name] (I'm their [daughter or son]).\n\nWhat happened:\n[what happened]\n\nWhat I'd like to happen:\n[what you'd like to happen]\n\n[their name] knows I'm writing and agrees.\n\nPlease acknowledge this complaint within 3 working days, tell me who is dealing with it, and let me know when to expect a full response.\n\nIf I'm still unhappy after your response, I understand I can ask the Local Government and Social Care Ombudsman to look into it.\n\nYours sincerely,\n\n[your name]"
+ },
+ {
+  "id": "short",
+  "name": "Care visits cut short or missed",
+  "when": "If home care visits are shorter than you pay for, late or missed. Send it to the agency's manager.",
+  "ticks": [
+   "Ask for a refund for the time we paid for and didn't get",
+   "I'm also telling the Care Quality Commission (CQC)",
+   "They know I'm writing for them"
+  ],
+  "text": "[your name]\n[your phone or email]\n[date]\n\nThe registered manager\n[name of the care home, agency or service]\n\nDear manager,\n\nComplaint: care visits cut short or missed: [their name]\n\nI'm writing about the home care [name of the care home, agency or service] provides for [their name] (I'm their [daughter or son]). [their name] lives at [their address].\n\nWe pay for visits of [visit length you pay for], but some visits have been much shorter, or missed. For example:\n[visits you know were short or missed]\n\nThis means [their name] hasn't had all the care they need, and we have paid for time that wasn't given.\n\nPlease:\n- explain why this has happened, and how you will make sure every visit lasts the full time\n- send me the visit records, care notes and electronic check-in and check-out times for these dates\n- tell me whether any care was missed, such as medicines, meals or washing\n- refund the time we paid for but didn't receive, showing how you worked it out\n\n[their name] knows I'm writing and agrees.\n\nI'm also letting the Care Quality Commission know.\n\nPlease treat this as a formal complaint under your complaints procedure, and reply in writing within 14 days.\n\nYours sincerely,\n\n[your name]"
+ },
+ {
+  "id": "provider",
+  "name": "Complain to a care home or agency",
+  "when": "If you're unhappy with the care a home or agency gives. Raise it with the manager first; this makes it formal.",
+  "ticks": [
+   "I'm also telling the Care Quality Commission (CQC)",
+   "They know I'm writing for them"
+  ],
+  "text": "[your name]\n[your phone or email]\n[date]\n\nThe registered manager\n[name of the care home, agency or service]\n\nDear manager,\n\nFormal complaint: [their name]\n\nI'm making a formal complaint about the care [name of the care home, agency or service] provides for [their name] (I'm their [daughter or son]).\n\nWhat happened:\n[what happened]\n\nWhat I'd like to happen:\n[what you'd like to happen]\n\n[their name] knows I'm writing and agrees.\n\nI'm also letting the Care Quality Commission know.\n\nPlease send me a copy of your complaints procedure, acknowledge this complaint within 3 working days, and tell me when to expect a full response.\n\nIf I'm still unhappy after your response, I understand I can ask the Local Government and Social Care Ombudsman to look into it, whether the council or the family pays for the care.\n\nYours sincerely,\n\n[your name]"
+ },
+ {
+  "id": "fee",
+  "name": "Question a care home fee rise",
+  "when": "If a care home puts its fees up and you don't think it's fair, or it wasn't explained.",
+  "ticks": [
+   "I'm their attorney under a Lasting Power of Attorney (copy attached)"
+  ],
+  "text": "[your name]\n[your phone or email]\n[date]\n\nThe registered manager\n[name of the care home, agency or service]\n\nDear manager,\n\nProposed fee increase: [their name]\n\nI'm writing about the fees for [their name] (I'm their [daughter or son]), a resident at [name of the care home, agency or service].\n\nYou've told us the fees will rise [the fee rise].\n\nPlease:\n- explain the reasons for the increase and how it was worked out\n- show me the part of the contract that allows it, and the notice it requires\n- confirm what the new fee includes\n- keep the current fee in place while we discuss this\n\nI understand from the Competition and Markets Authority's guidance for care homes that fee terms must be clear and fair, and that residents should be told about increases in good time, with the reasons.\n\nI'm writing as [their name]'s attorney under a Lasting Power of Attorney.\n\nPlease reply in writing within 14 days.\n\nYours sincerely,\n\n[your name]"
+ },
+ {
+  "id": "nhs",
+  "name": "Complain to the NHS (GP or hospital)",
+  "when": "If something went wrong with NHS care. You can complain up to 12 months after it happened.",
+  "ticks": [
+   "They know I'm writing for them"
+  ],
+  "text": "[your name]\n[your phone or email]\n[date]\n\nComplaints manager\n[name of the care home, agency or service]\n\nDear complaints manager,\n\nFormal complaint: [their name]\n\nI'm making a formal complaint about the care [their name] (I'm their [daughter or son]), received from [name of the care home, agency or service].\n\nWhat happened:\n[what happened]\n\nWhat I'd like to happen:\n[what you'd like to happen]\n\n[their name] knows I'm writing and agrees to their information being shared with me.\n\nPlease acknowledge this complaint within 3 working days, as the NHS complaints procedure requires, and agree with me how it will be handled and when I'll get a response.\n\nIf I'm still unhappy after your final response, I understand I can ask the Parliamentary and Health Service Ombudsman to look into it.\n\nYours sincerely,\n\n[your name]"
+ },
+ {
+  "id": "cqc",
+  "name": "Tell CQC about poor care",
+  "when": "CQC can't settle your complaint, but it uses what you tell it to decide when and where to inspect. Email it, or paste it into CQC's online form at cqc.org.uk/give-feedback-on-care.",
+  "ticks": [],
+  "text": "[your name]\n[your phone or email]\n[date]\n\nCare Quality Commission\nenquiries@cqc.org.uk\n\nDear Care Quality Commission,\n\nConcerns about care: [their name]\n\nI want to tell you about concerns with the care [name of the care home, agency or service] provides for [their name] (I'm their [daughter or son]).\n\nWhat I've seen:\n[what worries you]\n\nI've raised this with the provider. Please take it into account when you next look at this service.\n\nYou can contact me if you'd like more details.\n\nYours sincerely,\n\n[your name]"
+ },
+ {
+  "id": "safeguard",
+  "name": "Report a safeguarding concern",
+  "when": "If you think someone is being neglected or abused, including by carers. If anyone is in danger now, call 999.",
+  "ticks": [],
+  "text": "[your name]\n[your phone or email]\n[date]\n\nAdult Safeguarding team\n[council]\n\nDear safeguarding team,\n\nSafeguarding concern: [their name]\n\nI'm worried that [their name] (I'm their [daughter or son]) is at risk of neglect or abuse. [their name] lives at [their address].\n\nWhat I've seen or been told:\n[what worries you]\n\nI understand the council must make enquiries under section 42 of the Care Act 2014 when an adult with care needs may be at risk.\n\nPlease tell me who is dealing with this, what will happen next, and how [their name] will be kept safe in the meantime.\n\nYours sincerely,\n\n[your name]"
+ },
+ {
+  "id": "sar",
+  "name": "Ask for their care records",
+  "when": "A subject access request for their care plans, daily notes and visit records. It's free, and the reply is due within one month.",
+  "ticks": [
+   "They've agreed I can ask for their records (signed consent attached)",
+   "I'm their attorney under a Lasting Power of Attorney (copy attached)"
+  ],
+  "text": "[your name]\n[your phone or email]\n[date]\n\nData Protection Officer\n[name of the care home, agency or service]\n\nDear Data Protection Officer,\n\nSubject access request: [their name]\n\nI'm making a subject access request under the UK General Data Protection Regulation for the personal data [name of the care home, agency or service] holds about [their name], of [their address].\n\nI'm [their name]'s attorney under a Lasting Power of Attorney, and a copy is attached.\n\nPlease send everything from [records from (date, optional)] onwards, including:\n- care and support plans, and risk assessments\n- daily care notes and visit records\n- electronic call monitoring (check-in and check-out) times\n- incident, accident and medicines records\n- emails, messages and notes about [their name]\n\nI understand you must reply within one month, and that there's normally no fee.\n\nPlease send the information by email if you can.\n\nYours sincerely,\n\n[your name]"
+ }
+]
