@@ -501,6 +501,12 @@ LISTING_LINKS = {
     "life-admin-binder": "https://kinavuk.etsy.com/listing/4610527265/just-in-case-binder-uk-life-admin",
     "care-binder": "https://kinavuk.etsy.com/listing/4610544522/elderly-parent-care-binder-125-page",
     "dementia-planner": "https://kinavuk.etsy.com/listing/4610524094/dementia-care-planner-uk-printable",
+    "letter-pack": "https://kinavuk.etsy.com/listing/4610484887/carer-letter-templates-editable-word-and",
+    "bundle": "https://kinavuk.etsy.com/listing/4610501544/elderly-parent-care-bundle-care-planner",
+    "after-a-death": "https://kinavuk.etsy.com/listing/4610477309/after-a-death-checklist-printable",
+    "hospital-discharge": "https://kinavuk.etsy.com/listing/4610469119/hospital-discharge-checklist-printable",
+    "planning-ahead": "https://kinavuk.etsy.com/listing/4605940380/planning-ahead-pack-end-of-life-planner",
+    "care-planner": "https://kinavuk.etsy.com/listing/4606518980/care-planning",
 }
 SHOP_SEARCH = "https://www.etsy.com/shop/KinavUK?search_query=%s"
 
