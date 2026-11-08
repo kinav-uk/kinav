@@ -467,6 +467,7 @@ PLANNERS = [
         ("care-spreadsheet", "Care organiser spreadsheet", "Medicines chart, health log, appointments and care costs that add themselves up. For Excel and Google Sheets.", "care organiser spreadsheet"),
         ("daily-log", "Caregiver daily log", "Daily notes and handover sheets for the family or carers.", "daily log"),
         ("dementia-planner", "Dementia care planner", "Routines, what helps, and planning ahead, for families caring for someone with dementia.", "dementia care planner"),
+        ("adhd-carer-planner", "ADHD-friendly carer's planner", "Less writing, more ticking: a Today page with just 3 things, phone call scripts and reminders. Plus a spreadsheet.", "adhd carer planner"),
         ("life-admin-binder", "Just-in-case binder", "Where everything is, who to call, accounts and wishes, in one place.", "just in case binder"),
         ("bundle", "Complete carer's bundle", "The main planners and checklists together, for less.", "bundle")]),
     ("Checklists and kits", "kits", [
@@ -517,6 +518,50 @@ LISTING_LINKS = {
     "care-planner": "https://www.etsy.com/listing/4606518980/care-planning",
 }
 SHOP_SEARCH = "https://www.etsy.com/shop/KinavUK?search_query=%s"
+
+def adhd_page(updated):
+    """Practical tips for carers who have ADHD. Organising tips only: no advice about ADHD itself or anyone's health."""
+    path = "/articles/caring-with-adhd/"
+    tips = [
+        ("Put everything in one place", "One list, one notebook or one app, not sticky notes everywhere. Write each job down the moment you think of it, "
+         "even half a thought. Then you can stop holding it in your head."),
+        ("Let your phone do the remembering", "Set alarms for the times medicines are due, as on the pharmacy label, and a reminder a week before repeat "
+         "prescriptions run out. Name each alarm with the action, like \"Mum's evening tablets\", not just a time. Put every appointment in your "
+         "calendar with two alerts: the day before and two hours before. A shared family calendar means you're not the only one who knows."),
+        ("Make phone calls easier", "Have their name, date of birth and any reference number ready before you dial. Write down what you want to say "
+         "in a sentence or two. It's fine to tell people you're reading from notes. Afterwards, write down who you spoke to, the date and what happens next. "
+         "If phoning is hard, many councils and surgeries accept emails or letters too, and our free letter templates can help."),
+        ("Tame the paperwork pile", "Pick up one thing at a time and decide straight away: do it, file it or bin it. Keep one box for anything to keep. "
+         "Put a 10-minute paperwork slot in your calendar once a week, and stop when the timer goes."),
+        ("Shrink big jobs", "\"Fill in the Attendance Allowance form\" is hard to start. \"Find the form and put it on the table\" isn't. "
+         "Write down a tiny first step, do just that, then decide whether to carry on."),
+        ("Keep one page of the key facts", "Their NHS number, GP, pharmacy, social worker and who holds Power of Attorney, on one page by the phone. "
+         "Every form and phone call gets quicker."),
+        ("Share the load", "Write each job down once with a name next to it, and send the list to the family. You don't have to hold it all. "
+         "Kinav's free 'Share out the jobs' tool sends one clear list to your family group."),
+        ("Look after yourself too", "Ask the council for a free carer's assessment. It can lead to breaks and support. If you work, you can take a week "
+         "of unpaid carer's leave a year and ask for flexible working, from your first day in a job. And keep a 'done' list: on hard days it shows how much "
+         "you're already doing."),
+    ]
+    body = [crumbs(), '<div class="stack-sm"><h1>Caring for a parent when you have ADHD: practical tips</h1>'
+            '<p class="lede">Caring is full of the things ADHD can make hardest: remembering appointments, chasing paperwork, starting phone calls, '
+            'and juggling someone else\'s needs with your own. You\'re not failing. It\'s a lot. These tips make it easier to keep on top of.</p></div>']
+    for i, (h, t) in enumerate(tips, 1):
+        body.append('<section class="stack-sm"><h2>%d. %s</h2><p>%s</p></section>' % (i, e(h), e(t)))
+    body.append('<section class="panel"><h2>Support for you</h2><ul>'
+                '<li><b>Carers UK Helpline:</b> 0808 808 7777, for advice on benefits, work and support</li>'
+                '<li><b>Your local carers\' centre:</b> search carers.org for carer services near you</li>'
+                '<li><b>ADHD UK:</b> information about ADHD for adults at adhduk.co.uk</li>'
+                '<li><b>Your GP:</b> if you think you might have ADHD, or need support with it</li>'
+                '<li><b>Samaritans:</b> 116 123, free, any time, if things feel too much</li></ul></section>')
+    body.append('<div class="cta"><p><b>Want it all on paper?</b> Our ADHD-friendly carer\'s planner has a Today page with just 3 things, '
+                'phone call scripts, a reminders checklist and a reset card, plus a spreadsheet that shows what\'s urgent.</p>'
+                '<a class="btn" href="/planners/#planners">See the planner</a> <a class="btn btn-ghost" href="/#plan">Free Kinav tools</a></div>')
+    body.append(NOT_ADVICE)
+    return path, build_pages.page(path, "Caring for a parent when you have ADHD: practical tips (UK) | Kinav",
+                                  "Practical tips for carers with ADHD: one list, phone reminders, call scripts, the paperwork pile, tiny first steps and sharing the load.",
+                                  "\n".join(body), updated, kind="guide")
+
 
 def about_page(updated):
     """Why Kinav exists, in the founder's words. The founder stays anonymous: no name, place or other details about their father."""
@@ -720,7 +765,7 @@ def main(updated):
     today = _dt.date.today().isoformat()
     kc["articles"] = [a for a in kc["articles"] if not a.get("from") or a["from"] <= today]
     pages += [article_page(a, kc["plans"], updated) for a in kc["articles"]]
-    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated), discharge_sheet_page(updated), cold_callers_page(updated), phone_list_page(updated), emergency_sheet_page(updated), planners_page(updated), about_page(updated)]
+    pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated), discharge_sheet_page(updated), cold_callers_page(updated), phone_list_page(updated), emergency_sheet_page(updated), planners_page(updated), about_page(updated), adhd_page(updated)]
     samples = letter_samples()
     pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
     for path, text in pages:
@@ -731,7 +776,7 @@ def main(updated):
         return '<div class="grid">%s</div>' % "".join('<a href="%s">%s</a>' % (p, e(n)) for p, n in names if p.startswith(prefix))
     kits = [("/guides/%s/" % KIT_PAGES[k["id"]], k["name"]) for k in kc["kits"] if k["id"] in KIT_PAGES]
     plans = [("/plans/%s/" % PLAN_PAGES[k], p["title"]) for k, p in kc["plans"].items() if k in PLAN_PAGES]
-    arts = [("/articles/%s/" % a["id"], a["title"]) for a in kc["articles"]]
+    arts = [("/articles/%s/" % a["id"], a["title"]) for a in kc["articles"]] + [("/articles/caring-with-adhd/", "Caring for a parent when you have ADHD")]
     body = ['<div class="stack-sm"><h1>Guides for families caring for an older parent</h1>'
             '<p class="lede">Free step-by-step guides, 30-day plans and tools for carers in England.</p></div>',
             '<section class="panel"><h2>Tools</h2><div class="grid"><a href="/care-cost-calculator/">Care cost calculator</a>'
