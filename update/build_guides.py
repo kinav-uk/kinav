@@ -457,8 +457,8 @@ PLANNERS = [
         ("christmas-activity-programme", "24 Days of December, for care homes", "A ready-to-run Christmas activity for every day of Advent, with three ways for every resident to join in.", "24 day december"),
         ("christmas-cards", "Let's Talk Christmas pack", "Christmas reminiscence cards, a quiz and word search to share Christmas memories.", "christmas reminiscence"),
         ("christmas-cards-care-home", "Let's Talk Christmas pack: care home edition", "Christmas memory cards and activities, licensed for a care home.", "care home christmas activity pack"),
-        ("retro-christmas-games", "Retro Christmas games", "1950s and 1970s Christmas quizzes, finish-the-carol cards, charades and bingo, in large print.", "retro christmas games"),
-        ("retro-christmas-games-care-home", "Retro Christmas games: care home edition", "The retro games, licensed for a care home or day centre.", "care home retro christmas")]),
+        ("retro-christmas-games", "Retro Christmas games", "Christmas quizzes from the 1950s to the 1980s, so everyone plays their decade. Bingo, carols, charades and an easy mode.", "retro christmas games"),
+        ("retro-christmas-games-care-home", "Retro Christmas games: care home edition", "Four decades of Christmas quizzes, with an easy mode, licensed for a care home or day centre.", "care home retro christmas")]),
     ("Planners and calendars", "planners", [
         ("calendar-2027", "2027 large-print calendar", "Big, clear months for appointments, visits and bin days. Print it or fill it in on screen.", "2027 calendar"),
         ("care-binder", "Elderly parent care binder (UK)", "174 pages: every Kinav planner and kit in one binder, in three colour styles.", "care binder"),
