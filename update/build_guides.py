@@ -452,6 +452,7 @@ SHOP = "https://www.etsy.com/shop/KinavUK"
 # Kinav's printables on Etsy: picture name in app/shop-img, name, one line, and the words that find it in the shop's search.
 PLANNERS = [
     ("Christmas games, activities and gifts", "christmas", [
+        ("christmas-bundle", "The Kinav Christmas Bundle", "Retro Christmas games, Let's Talk Christmas cards and the gift planner, together. Save over 30%.", "christmas bundle"),
         ("christmas-gift-planner", "Christmas Gift Planner for carers", "Budgets, bought, wrapped and given, and gifts from the person you care for. An app plus a printable planner.", "christmas gift planner"),
         ("christmas-activity-programme", "24 Days of December, for care homes", "A ready-to-run Christmas activity for every day of Advent, with three ways for every resident to join in.", "24 day december"),
         ("christmas-cards", "Let's Talk Christmas pack", "Christmas reminiscence cards, a quiz and word search to share Christmas memories.", "christmas reminiscence"),
@@ -488,6 +489,7 @@ PLANNERS = [
 # Each product's own Etsy listing link (Share & Save links are best). Products not listed here open a search
 # inside the Kinav shop for that product, so only Kinav listings ever show.
 LISTING_LINKS = {
+    "christmas-bundle": "https://www.etsy.com/listing/4612582895/christmas-bundle-for-older-relatives",
     "christmas-gift-planner": "https://www.etsy.com/listing/4611384577/christmas-gift-planner-app-for-carers",
     "christmas-activity-programme": "https://www.etsy.com/listing/4611376412/christmas-activities-for-care-homes-24",
     "christmas-cards": "https://www.etsy.com/listing/4610679958/christmas-activity-reminiscence-cards",
