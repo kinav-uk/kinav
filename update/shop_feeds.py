@@ -32,6 +32,7 @@ def main(now=None):
                           '<enclosure url="%s" length="%d" type="image/jpeg"/><media:content url="%s" medium="image" type="image/jpeg" width="1000" height="1500"/></item>'
                           % (e(p["title"]), "https://kinav.co.uk/shop/%s/" % p["key"], guid, formatdate(when.timestamp(), usegmt=True), e(p["description"]), pic, os.path.getsize(img), pic)))
         items.sort(key=lambda x: x[0], reverse=True)
+        items = items[:100]   # Pinterest only needs the newest; keeps the feed small
         with open(os.path.join(APP, "shop-%s.xml" % feed), "w", encoding="utf-8") as f:
             f.write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel>'
                     "<title>Kinav on Etsy: %s</title><link>https://kinav.co.uk/planners/</link><description>Printables for families caring for an older parent, from Kinav's Etsy shop.</description>"
