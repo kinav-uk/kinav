@@ -468,6 +468,7 @@ PLANNERS = [
         ("daily-log", "Caregiver daily log", "Daily notes and handover sheets for the family or carers.", "daily log"),
         ("dementia-planner", "Dementia care planner", "Routines, what helps, and planning ahead, for families caring for someone with dementia.", "dementia care planner"),
         ("adhd-carer-planner", "ADHD-friendly carer's planner", "Less writing, more ticking: a Today page with just 3 things, phone call scripts and reminders. Plus a spreadsheet.", "adhd carer planner"),
+        ("adhd-digital-planner", "ADHD-friendly digital planner", "The ADHD planner for iPad and tablets: tap-to-go tabs, a page for every day, and stickers. For GoodNotes and Notability.", "adhd digital planner"),
         ("life-admin-binder", "Just-in-case binder", "Where everything is, who to call, accounts and wishes, in one place.", "just in case binder"),
         ("bundle", "Complete carer's bundle", "The main planners and checklists together, for less.", "bundle")]),
     ("Checklists and kits", "kits", [
@@ -511,6 +512,7 @@ LISTING_LINKS = {
     "care-binder": "https://www.etsy.com/listing/4610544522/elderly-parent-care-binder-125-page",
     "dementia-planner": "https://www.etsy.com/listing/4610524094/dementia-care-planner-uk-printable",
     "adhd-carer-planner": "https://www.etsy.com/listing/4612708355/adhd-friendly-carer-planner-uk-printable",
+    "adhd-digital-planner": "https://www.etsy.com/listing/4613210920/adhd-digital-planner-for-carers",
     "letter-pack": "https://www.etsy.com/listing/4610484887/carer-letter-templates-editable-word-and",
     "bundle": "https://www.etsy.com/listing/4610501544/elderly-parent-care-bundle-care-planner",
     "after-a-death": "https://www.etsy.com/listing/4610477309/after-a-death-checklist-printable",
@@ -556,7 +558,8 @@ def adhd_page(updated):
                 '<li><b>Your GP:</b> if you think you might have ADHD, or need support with it</li>'
                 '<li><b>Samaritans:</b> 116 123, free, any time, if things feel too much</li></ul></section>')
     body.append('<div class="cta"><p><b>Want it all on paper?</b> Our ADHD-friendly carer\'s planner has a Today page with just 3 things, '
-                'phone call scripts, a reminders checklist and a reset card, plus a spreadsheet that shows what\'s urgent.</p>'
+                'phone call scripts, a reminders checklist and a reset card, plus a spreadsheet that shows what\'s urgent. '
+                'Prefer your iPad? There\'s a <a href="/shop/adhd-digital-planner/">digital version</a> with tap-to-go tabs and stickers.</p>'
                 '<a class="btn" href="/planners/#planners">See the planner</a> <a class="btn btn-ghost" href="/#plan">Free Kinav tools</a></div>')
     body.append(NOT_ADVICE)
     return path, build_pages.page(path, "Caring for a parent when you have ADHD: practical tips (UK) | Kinav",
