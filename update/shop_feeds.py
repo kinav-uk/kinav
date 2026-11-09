@@ -1,4 +1,5 @@
-"""Pinterest product feeds: one RSS feed per Pinterest board (app/shop-<board>.xml), linking each pin to its Etsy listing.
+"""Pinterest product feeds: one RSS feed per Pinterest board (app/shop-<board>.xml), linking each pin to its product page on kinav.co.uk (Pinterest
+only auto-publishes links on the claimed domain), which has a button to the Etsy listing.
 The schedule is update/shop_pins.json (3 a day); a pin joins its feed once its publish time has passed, so Pinterest
 picks up a few new pins each day. Run by the publish job every day, and by app/build.py.
 Run: python3 update/shop_feeds.py"""
@@ -29,7 +30,7 @@ def main(now=None):
             guid = "https://kinav.co.uk/shop-pins/%s" % p["slug"]
             items.append((when, "<item><title>%s</title><link>%s</link><guid isPermaLink=\"false\">%s</guid><pubDate>%s</pubDate><description>%s</description>"
                           '<enclosure url="%s" length="%d" type="image/jpeg"/><media:content url="%s" medium="image" type="image/jpeg" width="1000" height="1500"/></item>'
-                          % (e(p["title"]), e(p["link"]), guid, formatdate(when.timestamp(), usegmt=True), e(p["description"]), pic, os.path.getsize(img), pic)))
+                          % (e(p["title"]), "https://kinav.co.uk/shop/%s/" % p["key"], guid, formatdate(when.timestamp(), usegmt=True), e(p["description"]), pic, os.path.getsize(img), pic)))
         items.sort(key=lambda x: x[0], reverse=True)
         with open(os.path.join(APP, "shop-%s.xml" % feed), "w", encoding="utf-8") as f:
             f.write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel>'

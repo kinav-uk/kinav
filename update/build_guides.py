@@ -629,6 +629,42 @@ def planners_page(updated):
                                   "\n".join(body), updated, kind="guide")
 
 
+def shop_pages(updated):
+    """One short page per Etsy product, so Pinterest pins can link to kinav.co.uk (Pinterest only auto-publishes links on
+    the claimed domain). Each page shows the product and a big button to its Etsy listing."""
+    try:
+        with open(os.path.join(HOME, "update", "shop_pins.json"), encoding="utf-8") as f:
+            about = {}
+            for p in json.load(f):
+                if p["slug"].endswith("-a") or p["key"] not in about:
+                    about[p["key"]] = p["description"].replace(" Instant download from Kinav on Etsy. Made in the UK.", "")
+    except OSError:
+        about = {}
+    names = {k: (n, l) for _, _, items in PLANNERS for k, n, l, _ in items}
+    pages = []
+    for k, link in LISTING_LINKS.items():
+        if k not in names:
+            continue
+        name, line = names[k]
+        path = "/shop/%s/" % k
+        body = ['<style>.shop-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center}'
+                '.shop-hero img{width:100%;height:auto;border-radius:16px;display:block}'
+                '.btn-etsy{display:inline-block;font-size:19px;padding:14px 26px}'
+                '@media(max-width:640px){.shop-hero{grid-template-columns:1fr}}</style>',
+                '<nav class="crumbs" aria-label="Breadcrumb"><a href="/planners/">Printable planners</a></nav>',
+                '<div class="shop-hero"><img src="/shop-img/%s.jpg" alt="%s" width="420" height="420">'
+                '<div class="stack-sm"><h1>%s</h1><p class="lede">%s</p>%s'
+                '<p><a class="btn btn-etsy" href="%s" rel="noopener">See it on Etsy ›</a></p>'
+                '<p class="small muted">Instant download from the Kinav shop on Etsy. Made in the UK. To come back here, use your back button.</p></div></div>'
+                % (k, e(name), e(name), e(line), ('<p>%s</p>' % e(about[k])) if about.get(k) else "", e(link)),
+                '<section class="panel"><h2>Free help from Kinav</h2><div class="grid">'
+                '<a href="/planners/">All printable planners and calendars</a><a href="/guides/">Free step-by-step guides</a>'
+                '<a href="/letters/">Free letter templates</a><a href="/benefits-calculator/">Benefits calculator</a></div></section>']
+        pages.append((path, build_pages.page(path, "%s: printable for carers (UK) | Kinav" % name, "%s %s" % (name + ".", line),
+                                             "\n".join(body), updated, kind="guide")))
+    return pages
+
+
 HOUSE_FAQS = [
     ("Will Mum have to sell her house to pay for care at home?", "No. In England, the home is never counted when someone gets care in their own home."),
     ("Is the house counted if they move into a care home?", "It can be, but not if their partner, a relative aged 60 or over, a relative who is disabled, or a child under 18 they support still lives there."),
@@ -758,7 +794,7 @@ def letters_index(samples, updated):
 def main(updated):
     with open(CONTENT, encoding="utf-8") as f:
         kc = json.load(f)
-    for folder in ("guides", "plans", "articles", "care-cost-calculator", "benefits-calculator", "ask-a-specialist", "will-they-have-to-sell-the-house-to-pay-for-care", "letters", "printables", "planners", "about"):
+    for folder in ("guides", "plans", "articles", "care-cost-calculator", "benefits-calculator", "ask-a-specialist", "will-they-have-to-sell-the-house-to-pay-for-care", "letters", "printables", "planners", "about", "shop"):
         shutil.rmtree(os.path.join(APP, folder), ignore_errors=True)
     pages = [kit_page(k, updated) for k in kc["kits"] if k["id"] in KIT_PAGES]
     pages += [plan_page(key, p, updated) for key, p in kc["plans"].items() if key in PLAN_PAGES]
@@ -767,6 +803,7 @@ def main(updated):
     kc["articles"] = [a for a in kc["articles"] if not a.get("from") or a["from"] <= today]
     pages += [article_page(a, kc["plans"], updated) for a in kc["articles"]]
     pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated), discharge_sheet_page(updated), cold_callers_page(updated), phone_list_page(updated), emergency_sheet_page(updated), planners_page(updated), about_page(updated), adhd_page(updated)]
+    pages += shop_pages(updated)
     samples = letter_samples()
     pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
     for path, text in pages:
