@@ -469,6 +469,7 @@ PLANNERS = [
         ("dementia-planner", "Dementia care planner", "Routines, what helps, and planning ahead, for families caring for someone with dementia.", "dementia care planner"),
         ("adhd-carer-planner", "ADHD-friendly carer's planner", "Less writing, more ticking: a Today page with just 3 things, phone call scripts and reminders. Plus a spreadsheet.", "adhd carer planner"),
         ("adhd-digital-planner", "ADHD-friendly digital planner", "The ADHD planner for iPad and tablets: tap-to-go tabs, a page for every day, and stickers. For GoodNotes and Notability.", "adhd digital planner"),
+        ("adhd-fridge-cards", "Fridge dashboard and grab cards", "The week at a glance on the fridge, key numbers by the phone, and checklist cards for the door, visits and the hospital bag.", "fridge dashboard"),
         ("life-admin-binder", "Just-in-case binder", "Where everything is, who to call, accounts and wishes, in one place.", "just in case binder"),
         ("bundle", "Complete carer's bundle", "The main planners and checklists together, for less.", "bundle")]),
     ("Checklists and kits", "kits", [
@@ -513,6 +514,7 @@ LISTING_LINKS = {
     "dementia-planner": "https://www.etsy.com/listing/4610524094/dementia-care-planner-uk-printable",
     "adhd-carer-planner": "https://www.etsy.com/listing/4612708355/adhd-friendly-carer-planner-uk-printable",
     "adhd-digital-planner": "https://www.etsy.com/listing/4613210920/adhd-digital-planner-for-carers",
+    "adhd-fridge-cards": "https://www.etsy.com/listing/4613198171/adhd-fridge-dashboard-and-checklist",
     "letter-pack": "https://www.etsy.com/listing/4610484887/carer-letter-templates-editable-word-and",
     "bundle": "https://www.etsy.com/listing/4610501544/elderly-parent-care-bundle-care-planner",
     "after-a-death": "https://www.etsy.com/listing/4610477309/after-a-death-checklist-printable",
