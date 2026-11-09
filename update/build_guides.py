@@ -670,6 +670,44 @@ def shop_pages(updated):
     return pages
 
 
+# Each free page points to the Kinav product that helps with the same job (exact paths first, then by section).
+CROSS_SELL = {
+    "/guides/how-to-claim-attendance-allowance/": "attendance-allowance", "/benefits-calculator/": "attendance-allowance",
+    "/guides/how-to-choose-a-care-home/": "care-home-visit-pack", "/guides/care-home-contract-checklist/": "moving-into-a-care-home",
+    "/guides/leaving-hospital-discharge-checklist/": "hospital-discharge", "/printables/before-discharge-questions-for-the-ward/": "hospital-discharge",
+    "/letters/hospital-discharge-planning-letter/": "hospital-discharge", "/plans/after-a-fall-or-hospital-stay/": "hospital-discharge",
+    "/guides/how-to-make-a-lasting-power-of-attorney/": "lpa-organiser", "/guides/no-lasting-power-of-attorney-deputyship/": "lpa-organiser",
+    "/guides/care-needs-assessment-how-to-prepare/": "needs-assessment", "/letters/letter-asking-the-council-for-a-care-needs-assessment/": "needs-assessment",
+    "/plans/caring-for-someone-with-dementia/": "dementia-planner", "/plans/end-of-life-care-for-a-parent/": "planning-ahead",
+    "/guides/how-to-claim-carers-allowance/": "carers-budget-planner", "/care-cost-calculator/": "carers-budget-planner",
+    "/will-they-have-to-sell-the-house-to-pay-for-care/": "bundle", "/articles/christmas-signs-parent-needs-help/": "bundle",
+    "/guides/how-to-apply-for-a-blue-badge/": "bundle", "/guides/nhs-continuing-healthcare-checklist-and-assessment/": "letter-pack",
+    "/printables/emergency-information-sheet/": "life-admin-binder", "/printables/important-phone-numbers-list/": "adhd-fridge-cards",
+    "/printables/no-cold-callers-door-sign/": "life-admin-binder", "/articles/day-centres/": "reminiscence-cards",
+}
+CROSS_SECTIONS = [("/letters/", "letter-pack"), ("/plans/", "care-planner"), ("/guides/", "care-planner"), ("/articles/", "bundle")]
+IN_BUNDLE = {"care-home-visit-pack", "care-planner", "letter-pack", "hospital-discharge"}
+
+
+def cross_sell(path, html_text):
+    """Adds a 'from the Kinav shop' card for the matching product, above the footer."""
+    k = CROSS_SELL.get(path) or next((v for pre, v in CROSS_SECTIONS if path.startswith(pre)), None)
+    names = {key: (n, l) for _, _, items in PLANNERS for key, n, l, _ in items}
+    if not k or k not in LISTING_LINKS or k not in names or "/shop/" in path or path in ("/planners/", "/about/"):
+        return html_text
+    name, line = names[k]
+    extra = ""
+    if k in IN_BUNDLE:
+        extra = '<p class="small">Or get it in the <a href="%s" rel="noopener">Elderly Parent Care Bundle</a>, with the care planner, letters and checklists, for less.</p>' % e(LISTING_LINKS["bundle"])
+    card = ('<section class="panel stack-sm"><h2>Make it easier</h2>'
+            '<a class="pp" href="%s" rel="noopener" style="display:flex;gap:14px;align-items:center;text-decoration:none;color:inherit">'
+            '<img src="/shop-img/%s.jpg" alt="" loading="lazy" width="110" height="110" style="width:110px;height:110px;border-radius:12px;flex:none">'
+            '<span><b>%s</b><br><small>%s</small><br><em style="font-style:normal;font-weight:700">See it in the Kinav shop on Etsy ›</em></span></a>%s'
+            '<p class="small muted">Everything on kinav.co.uk stays free. The shop helps keep Kinav running.</p></section>\n'
+            % (e(LISTING_LINKS[k]), k, e(name), e(line), extra))
+    return html_text.replace('<footer class="tiny muted">', card + '<footer class="tiny muted">', 1)
+
+
 HOUSE_FAQS = [
     ("Will Mum have to sell her house to pay for care at home?", "No. In England, the home is never counted when someone gets care in their own home."),
     ("Is the house counted if they move into a care home?", "It can be, but not if their partner, a relative aged 60 or over, a relative who is disabled, or a child under 18 they support still lives there."),
@@ -811,6 +849,7 @@ def main(updated):
     pages += shop_pages(updated)
     samples = letter_samples()
     pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
+    pages = [(path, cross_sell(path, text)) for path, text in pages]
     for path, text in pages:
         save(path.strip("/"), text)
 
