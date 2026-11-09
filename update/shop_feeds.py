@@ -11,7 +11,7 @@ from xml.sax.saxutils import escape as e
 
 HOME = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP = os.path.join(HOME, "app")
-BOARDS = {"christmas": "Christmas activities for older people and care homes", "planners": "Printable planners for carers",
+BOARDS = {"christmas": "Christmas with Grandma and Grandad", "carehome": "Christmas activities for care homes", "planners": "Printable planners for carers",
           "kits": "Caring for an elderly parent (UK)", "dementia": "Dementia activities and support"}
 
 
