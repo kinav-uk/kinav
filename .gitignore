@@ -5,3 +5,6 @@ update/*.log
 update/launchd.*
 __pycache__/
 .DS_Store
+
+# Pinterest product feeds: rebuilt at every publish from update/shop_pins.json
+app/shop-*.xml

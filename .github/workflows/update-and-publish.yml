@@ -1,10 +1,12 @@
 # Every Monday: download the latest CQC data, rebuild the app's care listings and
-# republish the website. Also republishes whenever app changes are pushed.
+# republish the website. Every other day: just republish, so the Pinterest product
+# feeds release that day's pins. Also republishes whenever app changes are pushed.
 name: Update CQC data and publish
 
 on:
   schedule:
-    - cron: "0 6 * * 1"   # Mondays 06:00 UTC
+    - cron: "0 6 * * 1"   # Mondays 06:00 UTC: CQC update, then publish
+    - cron: "0 7 * * *"   # Every day 07:00 UTC: publish only (Pinterest feeds)
   workflow_dispatch:       # "Run workflow" button on GitHub
   push:
     branches: [main]
@@ -20,7 +22,7 @@ concurrency:
 
 jobs:
   update:
-    if: github.event_name != 'push'
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 6 * * 1'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -55,6 +57,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+      - name: Release today's Pinterest product pins
+        run: python3 -I update/shop_feeds.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

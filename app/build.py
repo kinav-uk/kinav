@@ -36,3 +36,5 @@ if os.path.exists(JSC):
     import build_pages
     build_guides.main(today.strftime("%-d %B %Y"))
     print("Sitemap pages: %d" % build_pages.write_sitemap(HERE))
+    import shop_feeds
+    shop_feeds.main()
