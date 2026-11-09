@@ -30,7 +30,7 @@ def main(now=None):
             guid = "https://kinav.co.uk/shop-pins/%s" % p["slug"]
             items.append((when, "<item><title>%s</title><link>%s</link><guid isPermaLink=\"false\">%s</guid><pubDate>%s</pubDate><description>%s</description>"
                           '<enclosure url="%s" length="%d" type="image/jpeg"/><media:content url="%s" medium="image" type="image/jpeg" width="1000" height="1500"/></item>'
-                          % (e(p["title"]), "https://kinav.co.uk/shop/%s/" % p["key"], guid, formatdate(when.timestamp(), usegmt=True), e(p["description"]), pic, os.path.getsize(img), pic)))
+                          % (e(p["title"]), e(p.get("url") or "https://kinav.co.uk/shop/%s/" % p["key"]), guid, formatdate(when.timestamp(), usegmt=True), e(p["description"]), pic, os.path.getsize(img), pic)))
         items.sort(key=lambda x: x[0], reverse=True)
         items = items[:100]   # Pinterest only needs the newest; keeps the feed small
         with open(os.path.join(APP, "shop-%s.xml" % feed), "w", encoding="utf-8") as f:
