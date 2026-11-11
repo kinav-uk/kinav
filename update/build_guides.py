@@ -630,6 +630,14 @@ def planners_page(updated):
                 '<a href="/printables/before-discharge-questions-for-the-ward/">Questions before they leave hospital</a>'
                 '<a href="/printables/no-cold-callers-door-sign/">No cold callers door sign</a>'
                 '<a href="/activities/christmas/">24 free Christmas activities</a>'
+                '<a href="/activities/">Activity ideas for every month</a>'
+                '<a href="/printables/large-print-calendar-2027/">Large-print 2027 calendar</a>'
+                '<a href="/printables/day-and-date-clock/">Big day and date clock</a>'
+                '<a href="/printables/daily-routine-chart/">Daily routine chart</a>'
+                '<a href="/printables/family-care-handover-sheet/">Family care handover sheet</a>'
+                '<a href="/printables/monthly-caring-costs-sheet/">Monthly caring costs sheet</a>'
+                '<a href="/printables/reminiscence-questions/">10 reminiscence questions</a>'
+                '<a href="/printables/what-to-talk-about-in-a-care-home-visit/">What to talk about on a care home visit</a>'
                 '<a href="/letters/">Free letter templates</a></div></section>')
     body.append('<p class="small"><a href="%s" rel="noopener">See everything in the Kinav shop on Etsy ›</a></p>' % SHOP)
     return path, build_pages.page(path, "Printable planners and calendars for carers of older parents (UK) | Kinav",
@@ -694,6 +702,36 @@ def details_html(k, link):
         out.append('<section class="panel shop-lists">%s<p><a class="btn btn-etsy" href="%s" rel="noopener">See it on Etsy ›</a></p></section>'
                    % ("".join("<div><h2>%s</h2><ul>%s</ul></div>" % (t, "".join("<li>%s</li>" % e(x) for x in xs)) for t, xs in lists), e(link)))
     return "\n".join(out)
+
+
+# Free printables and activities that help with the same job, shown as a short list near the end of a page.
+F = {"remi": ("10 reminiscence questions", "/printables/reminiscence-questions/"), "visit": ("What to talk about on a care home visit", "/printables/what-to-talk-about-in-a-care-home-visit/"),
+     "routine": ("Daily routine chart", "/printables/daily-routine-chart/"), "handover": ("Family care handover sheet", "/printables/family-care-handover-sheet/"),
+     "costs": ("Monthly caring costs sheet", "/printables/monthly-caring-costs-sheet/"), "cal": ("Large-print 2027 calendar", "/printables/large-print-calendar-2027/"),
+     "clock": ("Big day and date clock", "/printables/day-and-date-clock/"), "acts": ("Activity ideas for every month", "/activities/"),
+     "xmas": ("24 free Christmas activities", "/activities/christmas/"), "emergency": ("Emergency information sheet", "/printables/emergency-information-sheet/"),
+     "phones": ("Important phone numbers list", "/printables/important-phone-numbers-list/")}
+RELATED = {
+    "/plans/caring-for-someone-with-dementia/": ["routine", "clock", "remi", "acts"], "/plans/sudden-confusion-delirium-in-older-people/": ["clock", "routine"],
+    "/plans/caring-for-someone-with-sight-or-hearing-loss/": ["cal", "clock", "phones"], "/plans/caring-for-someone-with-parkinsons/": ["routine", "handover"],
+    "/plans/after-a-fall-or-hospital-stay/": ["handover", "routine"], "/plans/caring-for-someone-after-a-stroke/": ["handover", "routine"],
+    "/plans/end-of-life-care-for-a-parent/": ["handover", "remi"],
+    "/guides/how-to-choose-a-care-home/": ["visit", "acts"], "/guides/care-home-contract-checklist/": ["visit", "costs"], "/guides/setting-up-care-at-home/": ["handover", "routine", "costs"],
+    "/guides/arranging-live-in-care/": ["routine", "handover"], "/guides/how-to-claim-carers-allowance/": ["costs"], "/guides/how-to-claim-attendance-allowance/": ["costs", "cal"],
+    "/guides/care-needs-assessment-how-to-prepare/": ["routine", "handover"], "/care-cost-calculator/": ["costs"], "/benefits-calculator/": ["costs"],
+    "/articles/day-centres/": ["acts", "remi"], "/articles/christmas-signs-parent-needs-help/": ["xmas", "cal"],
+    "/printables/emergency-information-sheet/": ["handover", "routine", "clock"], "/printables/important-phone-numbers-list/": ["cal", "clock"],
+    "/printables/no-cold-callers-door-sign/": ["emergency", "clock"], "/printables/before-discharge-questions-for-the-ward/": ["handover", "routine"],
+}
+
+
+def related(path, html_text):
+    keys = RELATED.get(path)
+    if not keys:
+        return html_text
+    box = ('<section class="panel noprint"><h2>Free printables that help</h2><div class="grid">%s</div></section>\n'
+           % "".join('<a href="%s">%s</a>' % (F[k][1], e(F[k][0])) for k in keys))
+    return html_text.replace('<footer class="tiny muted">', box + '<footer class="tiny muted">', 1)
 
 
 # Each free page points to the Kinav product that helps with the same job (exact paths first, then by section).
@@ -879,7 +917,7 @@ def main(updated):
     pages += build_activities.pages(updated) + build_months.pages(updated) + build_free.pages(updated)
     samples = letter_samples()
     pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
-    pages = [(path, cross_sell(path, text)) for path, text in pages]
+    pages = [(path, cross_sell(path, related(path, text))) for path, text in pages]
     for path, text in pages:
         save(path.strip("/"), text)
 
@@ -894,7 +932,9 @@ def main(updated):
             '<section class="panel"><h2>Tools</h2><div class="grid"><a href="/care-cost-calculator/">Care cost calculator</a>'
             '<a href="/benefits-calculator/">Benefits calculator</a><a href="/care/">Care homes and care at home by area</a>'
             '<a href="/ask-a-specialist/">Ask a nurse or specialist</a><a href="/will-they-have-to-sell-the-house-to-pay-for-care/">Will they have to sell the house?</a>'
-            '<a href="/letters/">Free letter templates</a><a href="/planners/">Printable planners and calendars</a></div></section>',
+            '<a href="/letters/">Free letter templates</a><a href="/planners/">Printable planners and calendars</a>'
+            '<a href="/activities/">Activity ideas for every month</a><a href="/printables/daily-routine-chart/">Free daily routine chart</a>'
+            '<a href="/printables/monthly-caring-costs-sheet/">Free caring costs sheet</a></div></section>',
             '<section class="panel" id="kits"><h2>Step-by-step guides</h2>%s</section>' % links("/guides/", kits),
             '<section class="panel" id="plans"><h2>30-day plans</h2>%s</section>' % links("/plans/", plans),
             '<section class="panel" id="articles"><h2>Articles for carers</h2>%s</section>' % links("/articles/", arts), NOT_ADVICE]
