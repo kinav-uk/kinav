@@ -87,24 +87,16 @@ def clock_page(updated):
 
 REMI = "/printables/reminiscence-questions/"
 VISIT = "/printables/what-to-talk-about-in-a-care-home-visit/"
-REMI_Q = [
- ("Growing up", ["Where did you grow up, and what was the house like?", "What games did you play outside?", "Who were your best friends?", "What jobs did you do at home?", "What was a real treat when you were small?"]),
- ("School", ["What was your school like?", "Who was your favourite teacher?", "What did you do at playtime?", "What were you good at?", "How did you get to school?"]),
- ("Work", ["What was your first job?", "What did you spend your first wage on?", "Who was the best person you worked with?", "What are you proud of from work?", "What job would you have liked to do?"]),
- ("Love and family", ["How did you meet someone special?", "What was your wedding day like?", "What do you remember about your children being small?", "What family sayings do you remember?", "Who do you take after?"]),
- ("Home and everyday life", ["What was wash day like?", "What did the kitchen look like?", "When did you first have a TV or a phone?", "What did you have for Sunday dinner?", "Which shops did you go to?"]),
- ("Music, films and dancing", ["What was the first record you bought?", "Where did you go dancing?", "Which film stars did you like?", "What did you listen to on the radio?", "Which song takes you straight back?"]),
- ("Holidays and days out", ["Where did you go on holiday as a child?", "What was your best day out?", "Did you go to the seaside?", "Where's the furthest you've travelled?", "Where would you go tomorrow if you could?"]),
- ("Celebrations", ["What was Christmas like when you were young?", "How did you celebrate birthdays?", "What's the best present you've had?", "Which street parties do you remember?", "What traditions did your family have?"]),
- ("The world changing", ["What's the biggest change you've seen?", "What do you miss from the old days?", "What's better now?", "Which news events do you remember?", "How much did things cost when you were young?"]),
- ("You", ["What makes you laugh?", "What's the best advice you've been given?", "What are you proudest of?", "What would you tell your younger self?", "What's your favourite season, and why?"]),
-]
+REMI_Q = ["Where did you grow up, and what was the house like?", "What games did you play outside as a child?", "Who was your favourite teacher?",
+          "What was your first job, and what did you spend your first wage on?", "How did you meet someone special?", "What was the first record you bought?",
+          "Where did you go on holiday as a child?", "What was Christmas like when you were young?", "What's the biggest change you've seen in your lifetime?",
+          "What's the best advice you've ever been given?"]
 
 
 def remi_page(updated):
-    groups = "".join('<section class="panel rq"><h2>%s</h2><ol>%s</ol></section>' % (h, "".join("<li>%s</li>" % q for q in qs)) for h, qs in REMI_Q)
+    groups = '<section class="panel rq"><h2>10 questions to start with</h2><ol>%s</ol></section>' % "".join("<li>%s</li>" % q for q in REMI_Q)
     body = ['<style>.rq li{font-size:19px;margin:6px 0}@media print{.rq{break-inside:avoid}.rq li{font-size:18px}}</style>',
-            '<div class="stack-sm"><h1>50 reminiscence questions for older people</h1>'
+            '<div class="stack-sm"><h1>10 reminiscence questions for older people</h1>'
             '<p class="lede">Gentle questions to start conversations about a long life: growing up, work, love, music, holidays and more. '
             'For visits, care home groups or a cup of tea at home. Free to print.</p>'
             '<p class="noprint"><button class="btn" type="button" onclick="print()">Print the questions</button></p></div>',
@@ -113,8 +105,8 @@ def remi_page(updated):
             '<li>If a question doesn\'t feel right, move on. "Pass" is always fine.</li><li>Write down or record the best stories for the family.</li></ul></section>',
             groups,
             '<section class="panel noprint"><p class="small">More free ideas: <a href="%s">what to talk about on a care home visit</a> and <a href="/activities/">activity ideas for every month</a>.</p></section>' % VISIT]
-    return REMI, build_pages.page(REMI, "50 reminiscence questions for older people: free printable conversation starters | Kinav",
-                                  "50 free reminiscence questions for older people and people in care homes: conversation starters about childhood, school, work, love, music, holidays and celebrations.",
+    return REMI, build_pages.page(REMI, "10 reminiscence questions for older people: free printable conversation starters | Kinav",
+                                  "10 free reminiscence questions for older people and people in care homes: easy conversation starters about childhood, work, love, music, holidays and Christmas.",
                                   "\n".join(body), updated, kind="guide")
 
 
@@ -140,7 +132,7 @@ def visit_page(updated):
             '<section class="panel"><h2>8 ideas that help</h2><ol class="steps">%s</ol></section>' % tips,
             '<section class="panel vq"><h2>15 conversation starters</h2><ol>%s</ol>'
             '<p class="noprint"><button class="btn btn-ghost" type="button" onclick="print()">Print this page</button></p></section>' % qs,
-            '<section class="panel noprint"><p class="small">More free help: <a href="%s">50 reminiscence questions</a>, <a href="/activities/">activity ideas for every month</a> '
+            '<section class="panel noprint"><p class="small">More free help: <a href="%s">10 reminiscence questions</a>, <a href="/activities/">activity ideas for every month</a> '
             'and <a href="/guides/how-to-choose-a-care-home/">how to choose a care home</a>.</p></section>' % REMI]
     return VISIT, build_pages.page(VISIT, "What to talk about when visiting someone in a care home: 15 conversation starters | Kinav",
                                    "What to talk about when you visit a parent or grandparent in a care home: 8 ideas that help, and 15 free conversation starters to print.",
