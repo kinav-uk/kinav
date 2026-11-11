@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Free large-print calendar 2027: printable monthly calendar for older people | Kinav</title>
+<meta name="description" content="Free large-print 2027 calendar to print any month on A4: big dates, room to write appointments and visits, with UK bank holidays and clock changes marked.">
+<link rel="canonical" href="https://kinav.co.uk/printables/large-print-calendar-2027/">
+<meta property="og:title" content="Free large-print calendar 2027: printable monthly calendar for older people | Kinav">
+<meta property="og:description" content="Free large-print 2027 calendar to print any month on A4: big dates, room to write appointments and visits, with UK bank holidays and clock changes marked.">
+<meta property="og:url" content="https://kinav.co.uk/printables/large-print-calendar-2027/">
+<meta property="og:image" content="https://kinav.co.uk/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1f5f7a">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/site.css">
+</head>
+<body>
+<div class="page">
+<header class="top">
+  <a class="brand" href="/" aria-label="Kinav home"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="112" fill="#1f5f7a"/><circle cx="256" cy="256" r="140" fill="none" stroke="#f2c14e" stroke-width="40"/><circle cx="256" cy="116" r="38" fill="#ffffff"/><circle cx="377" cy="326" r="38" fill="#ffffff"/><circle cx="135" cy="326" r="38" fill="#ffffff"/></svg><b>Kinav</b></a>
+  <a class="btn btn-ghost" href="/#care">Search by postcode</a>
+</header>
+<style>.cal-pick{display:flex;flex-wrap:wrap;gap:6px}.cal-pick button{font:inherit;font-weight:700;border:1.5px solid var(--line);background:var(--surface,#fff);border-radius:999px;padding:6px 12px;cursor:pointer;color:inherit}.cal-pick button[aria-pressed=true]{background:#1f5f7a;color:#fff;border-color:#1f5f7a}.cal{background:#fff;color:#18232e;border:1.5px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}.cal h2{font-size:clamp(30px,7vw,48px);margin:0 0 10px;text-align:center}.cal table{width:100%;border-collapse:collapse;table-layout:fixed}.cal th{font-size:clamp(12px,2.6vw,20px);padding:6px 2px;border-bottom:3px solid #18232e}.cal td{border:1.5px solid #9aa5ad;height:clamp(54px,11vw,104px);vertical-align:top;padding:4px 6px}.cal td b{font-size:clamp(20px,5vw,40px);line-height:1}.cal td small{display:block;font-size:clamp(9px,1.8vw,13px);line-height:1.2;margin-top:2px;color:#b42318;font-weight:700}.cal th .s{display:none}@media(max-width:640px){.cal th .l{display:none}.cal th .s{display:inline}}.cal td.x{background:#f2f4f5}.cal .foot{font-size:12px;margin:8px 0 0;text-align:right}@media print{@page{size:A4 landscape;margin:9mm}.cal th .l{display:inline!important}.cal th .s{display:none!important}.cal{border:0;padding:0;margin:0}.cal h2{font-size:44px}.cal th{font-size:18px}.cal td{height:27mm}.cal td b{font-size:34px}.cal td small{font-size:12px}}</style>
+<div class="stack-sm noprint"><h1>Free large-print calendar for 2027: print any month</h1><p class="lede">Big, clear dates with room to write appointments, visits and bin days. Pick a month, then print it on A4. England and Wales bank holidays and the clock changes are marked.</p><div class="cal-pick" role="group" aria-label="Choose a month"></div><p><button class="btn" type="button" onclick="print()">Print this month</button></p></div>
+<div class="cal" id="cal" aria-live="polite"></div>
+<section class="panel noprint"><h2>Tips</h2><ul><li>Print next month as well, and keep it behind this one on the wall or fridge.</li><li>Cross off each day at bedtime, so the next morning it's easy to see what day it is.</li><li>Use one colour for visits from family, and another for appointments.</li></ul><p>More free printables: <a href="/printables/day-and-date-clock/">a big day and date clock</a>, <a href="/printables/important-phone-numbers-list/">important phone numbers</a> and <a href="/printables/emergency-information-sheet/">an emergency information sheet</a>.</p></section>
+<script>(function(){var M={"2027-01-01": "New Year's Day (bank holiday)", "2027-03-26": "Good Friday (bank holiday)", "2027-03-28": "Clocks go forward 1 hour", "2027-03-29": "Easter Monday (bank holiday)", "2027-05-03": "Early May bank holiday", "2027-05-31": "Spring bank holiday", "2027-08-30": "Summer bank holiday", "2027-10-31": "Clocks go back 1 hour", "2027-12-25": "Christmas Day", "2027-12-26": "Boxing Day", "2027-12-27": "Bank holiday (for Christmas Day)", "2027-12-28": "Bank holiday (for Boxing Day)"},N=["January","February","March","April","May","June","July","August","September","October","November","December"],D=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],pick=document.querySelector(".cal-pick"),cal=document.getElementById("cal");function p(n){return(n<10?"0":"")+n}function show(m){var first=new Date(2027,m,1),start=(first.getDay()+6)%7,days=new Date(2027,m+1,0).getDate(),h="<h2>"+N[m]+" 2027</h2><table><tr>";D.forEach(function(d){h+="<th><span class=l>"+d+"</span><span class=s>"+d.slice(0,3)+"</span></th>"});h+="</tr><tr>";for(var i=0;i<start;i++)h+="<td class=x></td>";for(var d=1;d<=days;d++){var k="2027-"+p(m+1)+"-"+p(d),c=(start+d-1)%7;h+="<td"+(c>4?" class=x":"")+"><b>"+d+"</b>"+(M[k]?"<small>"+M[k]+"</small>":"")+"</td>";if(c==6&&d<days)h+="</tr><tr>"}var end=(start+days)%7;if(end)for(i=end;i<7;i++)h+="<td class=x></td>";cal.innerHTML=h+"</tr></table><p class=foot>Free from kinav.co.uk</p>";pick.querySelectorAll("button").forEach(function(b,i){b.setAttribute("aria-pressed",i==m)})}N.forEach(function(n,i){var b=document.createElement("button");b.type="button";b.textContent=n.slice(0,3);b.setAttribute("aria-label",n+" 2027");b.onclick=function(){show(i)};pick.appendChild(b)});var now=new Date();show(now.getFullYear()==2027?now.getMonth():0)})();</script>
+<section class="panel stack-sm"><h2>Make it easier</h2><a class="pp" href="https://kinavuk.etsy.com/uk/listing/4610543809/2027-large-print-calendar-printable" rel="noopener" style="display:flex;gap:14px;align-items:center;text-decoration:none;color:inherit"><img src="/shop-img/calendar-2027.jpg" alt="" loading="lazy" width="110" height="110" style="width:110px;height:110px;border-radius:12px;flex:none"><span><b>2027 large-print calendar</b><br><small>Big, clear months for appointments, visits and bin days. Print it or fill it in on screen.</small><br><em style="font-style:normal;font-weight:700">See it in the Kinav shop on Etsy ›</em></span></a><p class="small muted">Everything on kinav.co.uk stays free. The shop helps keep Kinav running.</p></section>
+<footer class="tiny muted">
+  <p>Kinav gives general information about care in England. It doesn't give health, medical, legal or financial advice. For health questions, speak to the GP, a pharmacist or NHS 111. In an emergency, call 999. Last updated 11 November 2026.</p>
+  <p><a href="/">Kinav app</a> · <a href="/care/">Care by area</a> · <a href="/guides/">Guides</a> · <a href="/planners/">Printable planners</a> · <a href="/ask-a-specialist/">Ask a specialist</a> · <a href="/about/">About Kinav</a> · <a href="/#privacy">Privacy</a> · <a href="/#terms">Terms</a></p>
+  <p>Follow us on <a href="https://www.instagram.com/ukkinav/" rel="noopener">Instagram</a> and <a href="https://www.facebook.com/kinavhelp" rel="noopener">Facebook</a></p>
+  <p>© 2026 Kinav</p>
+</footer>
+</div>
+<script data-goatcounter="https://kinav.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Big day and date clock for older people: free, for any tablet | Kinav</title>
+<meta name="description" content="A free large day and date clock for an older parent: shows the day, morning or afternoon, the date and time in big letters on an old tablet. Plus a &#x27;Today is&#x27; sign to print.">
+<link rel="canonical" href="https://kinav.co.uk/printables/day-and-date-clock/">
+<meta property="og:title" content="Big day and date clock for older people: free, for any tablet | Kinav">
+<meta property="og:description" content="A free large day and date clock for an older parent: shows the day, morning or afternoon, the date and time in big letters on an old tablet. Plus a &#x27;Today is&#x27; sign to print.">
+<meta property="og:url" content="https://kinav.co.uk/printables/day-and-date-clock/">
+<meta property="og:image" content="https://kinav.co.uk/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1f5f7a">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/site.css">
+</head>
+<body>
+<div class="page">
+<header class="top">
+  <a class="brand" href="/" aria-label="Kinav home"><svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="112" fill="#1f5f7a"/><circle cx="256" cy="256" r="140" fill="none" stroke="#f2c14e" stroke-width="40"/><circle cx="256" cy="116" r="38" fill="#ffffff"/><circle cx="377" cy="326" r="38" fill="#ffffff"/><circle cx="135" cy="326" r="38" fill="#ffffff"/></svg><b>Kinav</b></a>
+  <a class="btn btn-ghost" href="/#care">Search by postcode</a>
+</header>
+<style>.clk{background:#fff;color:#18232e;border:1.5px solid var(--line);border-radius:22px;padding:28px 16px;text-align:center}.clk .d{font-size:clamp(40px,12vw,128px);overflow-wrap:anywhere;font-weight:800;line-height:1.05}.clk .p{font-size:clamp(28px,7vw,72px);margin-top:6px}.clk .dt{font-size:clamp(28px,7vw,72px);font-weight:700;margin-top:14px}.clk .t{font-size:clamp(24px,5vw,56px);margin-top:8px;color:#1f5f7a;font-weight:700}.clk.full{position:fixed;inset:0;z-index:50;border-radius:0;border:0;display:flex;flex-direction:column;justify-content:center}.sign{display:none}@media print{@page{size:A4;margin:12mm}.clk{display:none}.sign{display:block;text-align:center;color:#18232e}.sign h2{font-size:64px;margin:0 0 30px}.sign p{font-size:34px;border-bottom:3px solid #18232e;padding:28px 0 6px;text-align:left;margin:0 0 18px}}</style>
+<div class="stack-sm noprint"><h1>Big day and date clock for older people</h1><p class="lede">Shows the day, morning or afternoon, the date and the time in very large letters. Open this page on an old tablet or phone, tap "Full screen" and leave it on a stand where they can see it. There's also a "Today is" sign to print and fill in by hand.</p><p><button class="btn" type="button" id="fs">Full screen</button> <button class="btn btn-ghost" type="button" onclick="print()">Print the sign</button></p></div>
+<div class="clk" id="clk" aria-live="polite"><div class="d" id="d"></div><div class="p" id="p"></div><div class="dt" id="dt"></div><div class="t" id="t"></div></div>
+<div class="sign" aria-hidden="true"><h2>Today is</h2><p>Day:</p><p>Date:</p><p>The weather is:</p><p>Who is coming:</p><p>What's happening:</p></div>
+<section class="panel noprint"><h2>Tips</h2><ul><li>Set the tablet so the screen doesn't switch off: Settings, Display, Auto-Lock (iPad) or Screen timeout (Android), then Never, and keep it plugged in.</li><li>Tap the clock to leave full screen.</li><li>Everything happens on the tablet itself. Nothing is saved or sent.</li></ul><p>More free printables: <a href="/printables/large-print-calendar-2027/">a large-print 2027 calendar</a> and <a href="/printables/important-phone-numbers-list/">important phone numbers</a>.</p></section>
+<script>(function(){var D=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],M=["January","February","March","April","May","June","July","August","September","October","November","December"];function part(h){return h<12?"Morning":h<17?"Afternoon":h<21?"Evening":"Night"}function tick(){var n=new Date(),h=n.getHours(),m=n.getMinutes();document.getElementById("d").textContent=D[n.getDay()];document.getElementById("p").textContent=part(h);document.getElementById("dt").textContent=n.getDate()+" "+M[n.getMonth()]+" "+n.getFullYear();document.getElementById("t").textContent=((h%12)||12)+":"+(m<10?"0":"")+m+(h<12?" am":" pm")}tick();setInterval(tick,10000);var c=document.getElementById("clk");document.getElementById("fs").onclick=function(){c.classList.add("full");if(c.requestFullscreen)c.requestFullscreen().catch(function(){})};c.onclick=function(){if(!c.classList.contains("full"))return;c.classList.remove("full");if(document.fullscreenElement)document.exitFullscreen()}})();</script>
+<section class="panel stack-sm"><h2>Make it easier</h2><a class="pp" href="https://kinavuk.etsy.com/uk/listing/4610543809/2027-large-print-calendar-printable" rel="noopener" style="display:flex;gap:14px;align-items:center;text-decoration:none;color:inherit"><img src="/shop-img/calendar-2027.jpg" alt="" loading="lazy" width="110" height="110" style="width:110px;height:110px;border-radius:12px;flex:none"><span><b>2027 large-print calendar</b><br><small>Big, clear months for appointments, visits and bin days. Print it or fill it in on screen.</small><br><em style="font-style:normal;font-weight:700">See it in the Kinav shop on Etsy ›</em></span></a><p class="small muted">Everything on kinav.co.uk stays free. The shop helps keep Kinav running.</p></section>
+<footer class="tiny muted">
+  <p>Kinav gives general information about care in England. It doesn't give health, medical, legal or financial advice. For health questions, speak to the GP, a pharmacist or NHS 111. In an emergency, call 999. Last updated 11 November 2026.</p>
+  <p><a href="/">Kinav app</a> · <a href="/care/">Care by area</a> · <a href="/guides/">Guides</a> · <a href="/planners/">Printable planners</a> · <a href="/ask-a-specialist/">Ask a specialist</a> · <a href="/about/">About Kinav</a> · <a href="/#privacy">Privacy</a> · <a href="/#terms">Terms</a></p>
+  <p>Follow us on <a href="https://www.instagram.com/ukkinav/" rel="noopener">Instagram</a> and <a href="https://www.facebook.com/kinavhelp" rel="noopener">Facebook</a></p>
+  <p>© 2026 Kinav</p>
+</footer>
+</div>
+<script data-goatcounter="https://kinav.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>

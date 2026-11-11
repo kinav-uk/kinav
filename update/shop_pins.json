@@ -411,6 +411,16 @@
   "publish": "2026-11-14T17:00:00Z"
  },
  {
+  "slug": "act-free-1115",
+  "key": "act-free-1115",
+  "feed": "planners",
+  "title": "Free large-print 2027 calendar",
+  "link": "https://kinav.co.uk/printables/large-print-calendar-2027/",
+  "url": "https://kinav.co.uk/printables/large-print-calendar-2027/",
+  "description": "Free large-print 2027 calendar. Print any month on A4. Big dates, room to write. Bank holidays marked. Free from Kinav, for families caring for an older parent in the UK.",
+  "publish": "2026-11-15T06:00:00Z"
+ },
+ {
   "slug": "xmas-1115-0",
   "key": "christmas-activity-programme",
   "feed": "carehome",
@@ -639,6 +649,16 @@
   "url": "https://kinav.co.uk/guides/how-to-choose-a-care-home/",
   "description": "3 things to notice on a care home visit How staff talk to residents. Is it calm, clean and fresh?. Ask: how many staff are on at night?. Free guide to choosing a care home, free from Kinav: help for families caring for an older parent in the UK.",
   "publish": "2026-11-18T17:00:00Z"
+ },
+ {
+  "slug": "act-free-1119",
+  "key": "act-free-1119",
+  "feed": "planners",
+  "title": "A big day and date clock for Mum or Dad",
+  "link": "https://kinav.co.uk/printables/day-and-date-clock/",
+  "url": "https://kinav.co.uk/printables/day-and-date-clock/",
+  "description": "A big day and date clock for Mum or Dad. Day, date and time in big letters. Runs on an old tablet. Free, nothing to install. Free from Kinav, for families caring for an older parent in the UK.",
+  "publish": "2026-11-19T06:00:00Z"
  },
  {
   "slug": "xmas-1119-0",
@@ -1594,6 +1614,16 @@
   "publish": "2026-12-05T06:00:00Z"
  },
  {
+  "slug": "act-free-1205",
+  "key": "act-free-1205",
+  "feed": "planners",
+  "title": "Print a big calendar for 2027",
+  "link": "https://kinav.co.uk/printables/large-print-calendar-2027/",
+  "url": "https://kinav.co.uk/printables/large-print-calendar-2027/",
+  "description": "Print a big calendar for 2027. Large print, one month a page. For the fridge or the wall. Free on kinav.co.uk. Free from Kinav, for families caring for an older parent in the UK.",
+  "publish": "2026-12-05T06:00:00Z"
+ },
+ {
   "slug": "xmas-1205-0",
   "key": "christmas-cards-care-home",
   "feed": "carehome",
@@ -1848,6 +1878,16 @@
   "link": "https://kinav.co.uk/activities/christmas/classic-christmas-films/",
   "url": "https://kinav.co.uk/activities/christmas/classic-christmas-films/",
   "description": "Old favourites, a blanket and a mince pie. Then a chat about the films people loved. Free Christmas activity idea for day 9 of December, for care homes, day centres and families with older relatives.",
+  "publish": "2026-12-09T06:00:00Z"
+ },
+ {
+  "slug": "act-free-1209",
+  "key": "act-free-1209",
+  "feed": "planners",
+  "title": "Not sure what day it is?",
+  "link": "https://kinav.co.uk/printables/day-and-date-clock/",
+  "url": "https://kinav.co.uk/printables/day-and-date-clock/",
+  "description": "Not sure what day it is?. A free big-letter day clock. Morning, afternoon or evening. Plus a 'Today is' sign to print. Free from Kinav, for families caring for an older parent in the UK.",
   "publish": "2026-12-09T06:00:00Z"
  },
  {
@@ -2584,5 +2624,25 @@
   "link": "https://kinavuk.etsy.com/uk/listing/4611384577/christmas-gift-planner-app-for-carers",
   "description": "Christmas list for carers Every gift, every budget, in one place. Print tonight: Christmas Gift Planner for carers. Instant download from Kinav on Etsy, made in the UK. Print at home, no postage.",
   "publish": "2026-12-25T11:00:00Z"
+ },
+ {
+  "slug": "act-free-1228",
+  "key": "act-free-1228",
+  "feed": "planners",
+  "title": "Your free large-print January",
+  "link": "https://kinav.co.uk/printables/large-print-calendar-2027/",
+  "url": "https://kinav.co.uk/printables/large-print-calendar-2027/",
+  "description": "Your free large-print January. Big clear dates. Bank holidays and clock changes. Print any month of 2027. Free from Kinav, for families caring for an older parent in the UK.",
+  "publish": "2026-12-28T06:00:00Z"
+ },
+ {
+  "slug": "act-free-0108",
+  "key": "act-free-0108",
+  "feed": "planners",
+  "title": "A day clock from an old tablet",
+  "link": "https://kinav.co.uk/printables/day-and-date-clock/",
+  "url": "https://kinav.co.uk/printables/day-and-date-clock/",
+  "description": "A day clock from an old tablet. Free, in big letters. Day, date and time. Leave it on a stand. Free from Kinav, for families caring for an older parent in the UK.",
+  "publish": "2027-01-08T06:00:00Z"
  }
 ]

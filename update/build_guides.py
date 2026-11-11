@@ -686,7 +686,7 @@ CROSS_SELL = {
     "/will-they-have-to-sell-the-house-to-pay-for-care/": "bundle", "/articles/christmas-signs-parent-needs-help/": "bundle",
     "/guides/how-to-apply-for-a-blue-badge/": "bundle", "/guides/nhs-continuing-healthcare-checklist-and-assessment/": "letter-pack",
     "/printables/emergency-information-sheet/": "life-admin-binder", "/printables/important-phone-numbers-list/": "adhd-fridge-cards",
-    "/printables/no-cold-callers-door-sign/": "life-admin-binder", "/articles/day-centres/": "reminiscence-cards",
+    "/printables/no-cold-callers-door-sign/": "life-admin-binder", "/printables/large-print-calendar-2027/": "calendar-2027", "/printables/day-and-date-clock/": "calendar-2027", "/articles/day-centres/": "reminiscence-cards",
 }
 CROSS_SECTIONS = [("/letters/", "letter-pack"), ("/plans/", "care-planner"), ("/guides/", "care-planner"), ("/articles/", "bundle")]
 IN_BUNDLE = {"care-home-visit-pack", "care-planner", "letter-pack", "hospital-discharge"}
@@ -851,7 +851,8 @@ def main(updated):
     pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated), discharge_sheet_page(updated), cold_callers_page(updated), phone_list_page(updated), emergency_sheet_page(updated), planners_page(updated), about_page(updated), adhd_page(updated)]
     pages += shop_pages(updated)
     import build_activities
-    pages += build_activities.pages(updated)
+    import build_free
+    pages += build_activities.pages(updated) + build_free.pages(updated)
     samples = letter_samples()
     pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
     pages = [(path, cross_sell(path, text)) for path, text in pages]
