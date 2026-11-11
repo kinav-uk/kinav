@@ -837,7 +837,7 @@ def letters_index(samples, updated):
 def main(updated):
     with open(CONTENT, encoding="utf-8") as f:
         kc = json.load(f)
-    for folder in ("guides", "plans", "articles", "care-cost-calculator", "benefits-calculator", "ask-a-specialist", "will-they-have-to-sell-the-house-to-pay-for-care", "letters", "printables", "planners", "about", "shop"):
+    for folder in ("guides", "plans", "articles", "care-cost-calculator", "benefits-calculator", "ask-a-specialist", "will-they-have-to-sell-the-house-to-pay-for-care", "letters", "printables", "planners", "about", "shop", "activities"):
         shutil.rmtree(os.path.join(APP, folder), ignore_errors=True)
     pages = [kit_page(k, updated) for k in kc["kits"] if k["id"] in KIT_PAGES]
     pages += [plan_page(key, p, updated) for key, p in kc["plans"].items() if key in PLAN_PAGES]
@@ -847,6 +847,8 @@ def main(updated):
     pages += [article_page(a, kc["plans"], updated) for a in kc["articles"]]
     pages += [costs_page(updated), benefits_page(updated), specialist_page(updated), house_page(updated), door_sign_page(updated), discharge_sheet_page(updated), cold_callers_page(updated), phone_list_page(updated), emergency_sheet_page(updated), planners_page(updated), about_page(updated), adhd_page(updated)]
     pages += shop_pages(updated)
+    import build_activities
+    pages += build_activities.pages(updated)
     samples = letter_samples()
     pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
     pages = [(path, cross_sell(path, text)) for path, text in pages]
