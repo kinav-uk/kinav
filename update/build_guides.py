@@ -658,19 +658,42 @@ def shop_pages(updated):
         body = ['<style>.shop-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center}'
                 '.shop-hero img{width:100%;height:auto;border-radius:16px;display:block}'
                 '.btn-etsy{display:inline-block;font-size:19px;padding:14px 26px}'
-                '@media(max-width:640px){.shop-hero{grid-template-columns:1fr}}</style>',
+                '.shop-pics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.shop-pics img{width:100%;height:auto;border-radius:12px;display:block;border:1.5px solid var(--line)}'
+                '.shop-lists{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 24px}.shop-lists p{grid-column:1/-1}'
+                '@media(max-width:640px){.shop-hero{grid-template-columns:1fr}.shop-pics{grid-template-columns:1fr}.shop-lists{grid-template-columns:1fr}}</style>',
                 '<nav class="crumbs" aria-label="Breadcrumb"><a href="/planners/">Printable planners</a></nav>',
                 '<div class="shop-hero"><img src="/shop-img/%s.jpg" alt="%s" width="420" height="420">'
                 '<div class="stack-sm"><h1>%s</h1><p class="lede">%s</p>%s'
                 '<p><a class="btn btn-etsy" href="%s" rel="noopener">See it on Etsy ›</a></p>'
                 '<p class="small muted">Instant download from the Kinav shop on Etsy. Made in the UK. To come back here, use your back button.</p></div></div>'
                 % (k, e(name), e(name), e(line), ('<p>%s</p>' % e(about[k])) if about.get(k) else "", e(link)),
+                details_html(k, link),
                 '<section class="panel"><h2>Free help from Kinav</h2><div class="grid">'
                 '<a href="/planners/">All printable planners and calendars</a><a href="/guides/">Free step-by-step guides</a>'
                 '<a href="/letters/">Free letter templates</a><a href="/benefits-calculator/">Benefits calculator</a></div></section>']
         pages.append((path, build_pages.page(path, "%s: printable for carers (UK) | Kinav" % name, "%s %s" % (name + ".", line),
                                              "\n".join(body), updated, kind="guide")))
     return pages
+
+
+def details_html(k, link):
+    """Preview pictures, what's inside and how it works, from update/shop_details.json (made by Kinav-Etsy/tools/shop_previews.py)."""
+    try:
+        with open(os.path.join(HOME, "update", "shop_details.json"), encoding="utf-8") as f:
+            d = json.load(f).get(k)
+    except OSError:
+        d = None
+    if not d:
+        return ""
+    out = []
+    if d["pics"]:
+        out.append('<section class="stack-sm"><h2>A look inside</h2><div class="shop-pics">%s</div></section>'
+                   % "".join('<img src="/shop-img/inside/%s" alt="" loading="lazy" width="%d" height="%d">' % (n, w, h) for n, w, h in d["pics"]))
+    lists = [(t, d[key]) for t, key in (("What's inside", "inside"), ("How it works", "how")) if d[key]]
+    if lists:
+        out.append('<section class="panel shop-lists">%s<p><a class="btn btn-etsy" href="%s" rel="noopener">See it on Etsy ›</a></p></section>'
+                   % ("".join("<div><h2>%s</h2><ul>%s</ul></div>" % (t, "".join("<li>%s</li>" % e(x) for x in xs)) for t, xs in lists), e(link)))
+    return "\n".join(out)
 
 
 # Each free page points to the Kinav product that helps with the same job (exact paths first, then by section).
