@@ -448,7 +448,7 @@ def emergency_sheet_page(updated):
                                   "\n".join(body), updated, kind="guide")
 
 
-SHOP = "https://www.etsy.com/shop/KinavUK"
+SHOP = "https://kinavuk.etsy.com"
 # Kinav's printables on Etsy: picture name in app/shop-img, name, one line, and the words that find it in the shop's search.
 PLANNERS = [
     ("Christmas games, activities and gifts", "christmas", [
@@ -492,37 +492,37 @@ PLANNERS = [
 # Each product's own Etsy listing link (Share & Save links are best). Products not listed here open a search
 # inside the Kinav shop for that product, so only Kinav listings ever show.
 LISTING_LINKS = {
-    "christmas-bundle": "https://www.etsy.com/listing/4612582895/christmas-bundle-for-older-relatives",
-    "christmas-gift-planner": "https://www.etsy.com/listing/4611384577/christmas-gift-planner-app-for-carers",
-    "christmas-activity-programme": "https://www.etsy.com/listing/4611376412/christmas-activities-for-care-homes-24",
-    "christmas-cards": "https://www.etsy.com/listing/4610679958/christmas-activity-reminiscence-cards",
-    "care-spreadsheet": "https://www.etsy.com/listing/4611241685/care-organiser-spreadsheet-uk-medication",
-    "carers-budget-planner": "https://www.etsy.com/listing/4611074567/carers-budget-planner-uk-printable-pdf",
-    "retro-christmas-games-care-home": "https://www.etsy.com/listing/4610697448/care-home-christmas-activities-retro",
-    "retro-christmas-games": "https://www.etsy.com/listing/4610674187/printable-party-games-grandparent-gift",
-    "christmas-cards-care-home": "https://www.etsy.com/listing/4610619702/care-home-christmas-activity-pack",
-    "attendance-allowance": "https://www.etsy.com/listing/4610570617/attendance-allowance-claim-kit-uk",
-    "needs-assessment": "https://www.etsy.com/listing/4611923791/care-needs-assessment-kit-uk-pdf-and",
-    "moving-into-a-care-home": "https://www.etsy.com/listing/4611943646/moving-into-a-care-home-checklist-pdf",
-    "lpa-organiser": "https://www.etsy.com/listing/4611932219/lasting-power-of-attorney-kit-pdf-and",
-    "reminiscence-cards": "https://www.etsy.com/listing/4611935151/reminiscence-cards-for-elderly-128",
-    "care-home-visit-pack": "https://www.etsy.com/listing/4610539380/care-home-visit-checklist-printable-and",
-    "calendar-2027": "https://www.etsy.com/listing/4610543809/2027-large-print-calendar-printable",
-    "daily-log": "https://www.etsy.com/listing/4610530561/caregiver-daily-log-printable-fillable",
-    "life-admin-binder": "https://www.etsy.com/listing/4610527265/just-in-case-binder-uk-life-admin",
-    "care-binder": "https://www.etsy.com/listing/4610544522/elderly-parent-care-binder-125-page",
-    "dementia-planner": "https://www.etsy.com/listing/4610524094/dementia-care-planner-uk-printable",
-    "adhd-carer-planner": "https://www.etsy.com/listing/4612708355/adhd-friendly-carer-planner-uk-printable",
-    "adhd-digital-planner": "https://www.etsy.com/listing/4613210920/adhd-digital-planner-for-carers",
-    "adhd-fridge-cards": "https://www.etsy.com/listing/4613198171/adhd-fridge-dashboard-and-checklist",
-    "letter-pack": "https://www.etsy.com/listing/4610484887/carer-letter-templates-editable-word-and",
-    "bundle": "https://www.etsy.com/listing/4610501544/elderly-parent-care-bundle-care-planner",
-    "after-a-death": "https://www.etsy.com/listing/4610477309/after-a-death-checklist-printable",
-    "hospital-discharge": "https://www.etsy.com/listing/4610469119/hospital-discharge-checklist-printable",
-    "planning-ahead": "https://www.etsy.com/listing/4605940380/planning-ahead-pack-end-of-life-planner",
-    "care-planner": "https://www.etsy.com/listing/4606518980/care-planning",
+    "christmas-bundle": "https://kinavuk.etsy.com/uk/listing/4612582895/christmas-bundle-for-older-relatives",
+    "christmas-gift-planner": "https://kinavuk.etsy.com/uk/listing/4611384577/christmas-gift-planner-app-for-carers",
+    "christmas-activity-programme": "https://kinavuk.etsy.com/uk/listing/4611376412/christmas-activities-for-care-homes-24",
+    "christmas-cards": "https://kinavuk.etsy.com/uk/listing/4610679958/christmas-activity-reminiscence-cards",
+    "care-spreadsheet": "https://kinavuk.etsy.com/uk/listing/4611241685/care-organiser-spreadsheet-uk-medication",
+    "carers-budget-planner": "https://kinavuk.etsy.com/uk/listing/4611074567/carers-budget-planner-uk-printable-pdf",
+    "retro-christmas-games-care-home": "https://kinavuk.etsy.com/uk/listing/4610697448/care-home-christmas-activities-retro",
+    "retro-christmas-games": "https://kinavuk.etsy.com/uk/listing/4610674187/printable-party-games-grandparent-gift",
+    "christmas-cards-care-home": "https://kinavuk.etsy.com/uk/listing/4610619702/care-home-christmas-activity-pack",
+    "attendance-allowance": "https://kinavuk.etsy.com/uk/listing/4610570617/attendance-allowance-claim-kit-uk",
+    "needs-assessment": "https://kinavuk.etsy.com/uk/listing/4611923791/care-needs-assessment-kit-uk-pdf-and",
+    "moving-into-a-care-home": "https://kinavuk.etsy.com/uk/listing/4611943646/moving-into-a-care-home-checklist-pdf",
+    "lpa-organiser": "https://kinavuk.etsy.com/uk/listing/4611932219/lasting-power-of-attorney-kit-pdf-and",
+    "reminiscence-cards": "https://kinavuk.etsy.com/uk/listing/4611935151/reminiscence-cards-for-elderly-128",
+    "care-home-visit-pack": "https://kinavuk.etsy.com/uk/listing/4610539380/care-home-visit-checklist-printable-and",
+    "calendar-2027": "https://kinavuk.etsy.com/uk/listing/4610543809/2027-large-print-calendar-printable",
+    "daily-log": "https://kinavuk.etsy.com/uk/listing/4610530561/caregiver-daily-log-printable-fillable",
+    "life-admin-binder": "https://kinavuk.etsy.com/uk/listing/4610527265/just-in-case-binder-uk-life-admin",
+    "care-binder": "https://kinavuk.etsy.com/uk/listing/4610544522/elderly-parent-care-binder-125-page",
+    "dementia-planner": "https://kinavuk.etsy.com/uk/listing/4610524094/dementia-care-planner-uk-printable",
+    "adhd-carer-planner": "https://kinavuk.etsy.com/uk/listing/4612708355/adhd-friendly-carer-planner-uk-printable",
+    "adhd-digital-planner": "https://kinavuk.etsy.com/uk/listing/4613210920/adhd-digital-planner-for-carers",
+    "adhd-fridge-cards": "https://kinavuk.etsy.com/uk/listing/4613198171/adhd-fridge-dashboard-and-checklist",
+    "letter-pack": "https://kinavuk.etsy.com/uk/listing/4610484887/carer-letter-templates-editable-word-and",
+    "bundle": "https://kinavuk.etsy.com/uk/listing/4610501544/elderly-parent-care-bundle-care-planner",
+    "after-a-death": "https://kinavuk.etsy.com/uk/listing/4610477309/after-a-death-checklist-printable",
+    "hospital-discharge": "https://kinavuk.etsy.com/uk/listing/4610469119/hospital-discharge-checklist-printable",
+    "planning-ahead": "https://kinavuk.etsy.com/uk/listing/4605940380/planning-ahead-pack-end-of-life-planner",
+    "care-planner": "https://kinavuk.etsy.com/uk/listing/4606518980/care-planning",
 }
-SHOP_SEARCH = "https://www.etsy.com/shop/KinavUK?search_query=%s"
+SHOP_SEARCH = "https://kinavuk.etsy.com?search_query=%s"
 
 def adhd_page(updated):
     """Practical tips for carers who have ADHD. Organising tips only: no advice about ADHD itself or anyone's health."""
