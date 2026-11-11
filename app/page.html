@@ -669,6 +669,7 @@ a.chip { display: inline-flex; align-items: center; text-decoration: none; }
   <div class="stack-sm">
     <h1>Will they have to sell the house to pay for care?</h1>
     <p class="lede">Often not, and never straight away. Here are England's rules in plain English.</p>
+    <p class="small muted">For England only: Wales, Scotland and Northern Ireland have different rules. General information, not financial advice. The council's financial assessment decides.</p>
   </div>
   <div class="card stack-sm">
     <h2>Care at home</h2>
@@ -716,6 +717,7 @@ a.chip { display: inline-flex; align-items: center; text-decoration: none; }
   <div class="stack-sm">
     <h1>Care costs</h1>
     <p class="lede">What care might cost, and how long savings may last before the council helps.</p>
+    <p class="small"><b>For England only.</b> Wales, Scotland and Northern Ireland have different rules and limits.</p>
   </div>
   <form class="card stack" id="cmp" novalidate>
     <h2>Home or care home?</h2>
@@ -731,7 +733,8 @@ a.chip { display: inline-flex; align-items: center; text-decoration: none; }
     <div class="field"><label for="cmpSavings">Their savings (£)</label><input type="number" id="cmpSavings" min="0" step="1000" value="60000" inputmode="numeric"></div>
     <div class="cmp-out" id="cmpOut" aria-live="polite"></div>
     <button class="btn btn-ghost btn-sm" type="button" data-share="costs">Send to family</button>
-    <p class="tiny muted">Income means pensions and benefits such as Attendance Allowance. Savings above £23,250 are used before the council helps. An estimate, not financial advice: the council and providers decide the real figures.</p>
+    <p class="small"><b>An estimate for planning, not financial advice. The council's financial assessment and the care provider decide the real figures.</b></p>
+    <p class="tiny muted">Income means pensions and benefits such as Attendance Allowance. Savings above £23,250 are used before the council helps.</p>
   </form>
   <details class="more" id="calcMore">
     <summary>Detailed calculator: include their home and the council's rules</summary>
@@ -788,6 +791,7 @@ a.chip { display: inline-flex; align-items: center; text-decoration: none; }
       <p class="small" style="font-weight:600">Counted savings over the next 10 years</p>
       <svg id="chart" viewBox="0 0 520 220" width="100%" role="img" aria-label="Chart of counted savings over time"></svg>
     </div>
+    <p class="small"><b>An estimate for planning, not financial advice. The council's financial assessment and the care provider decide the real figures.</b></p>
     <div class="stack-sm"><h3>What to do next</h3><ol class="steps small" id="steps"></ol></div>
   </div>
     </div>
@@ -796,7 +800,7 @@ a.chip { display: inline-flex; align-items: center; text-decoration: none; }
     <summary>When does the council help pay?</summary>
     <div class="card stack">
     <h2>When the council helps pay</h2>
-    <p class="small muted">England's savings limits. The council looks at the savings of the person who needs care, not yours.</p>
+    <p class="small muted">England's savings limits for 2026 to 2027 (<a href="https://www.gov.uk/government/publications/social-care-charging-for-local-authorities-2026-to-2027" rel="noopener" target="_blank">GOV.UK</a>, checked November 2026). The council looks at the savings of the person who needs care, not yours. For care at home, some councils use higher limits, so ask yours.</p>
     <div class="stack-sm">
       <div class="head"><h3>Over £23,250</h3><span class="pill pill-sun">Pays in full</span></div>
       <p class="small">They pay the full cost of their care themselves.</p>
