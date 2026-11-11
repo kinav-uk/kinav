@@ -606,6 +606,16 @@
   "publish": "2026-11-17T17:00:00Z"
  },
  {
+  "slug": "act-routine-a",
+  "key": "act-routine-a",
+  "feed": "dementia",
+  "title": "A daily routine chart for Mum or Dad",
+  "link": "https://kinav.co.uk/printables/daily-routine-chart/",
+  "url": "https://kinav.co.uk/printables/daily-routine-chart/",
+  "description": "A daily routine chart for Mum or Dad. Wake up to bedtime. What happens, and what helps. Free to fill in and print. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2026-11-18T06:00:00Z"
+ },
+ {
   "slug": "xmas-1118-0",
   "key": "christmas-activity-programme",
   "feed": "carehome",
@@ -856,6 +866,16 @@
   "publish": "2026-11-21T17:00:00Z"
  },
  {
+  "slug": "act-handover-a",
+  "key": "act-handover-a",
+  "feed": "kits",
+  "title": "Sharing Mum's care with family?",
+  "link": "https://kinav.co.uk/printables/family-care-handover-sheet/",
+  "url": "https://kinav.co.uk/printables/family-care-handover-sheet/",
+  "description": "Sharing Mum's care with family?. A free handover sheet. Who was here, what was done. What the next person needs to know. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2026-11-22T06:00:00Z"
+ },
+ {
   "slug": "flat-christmas-cards-care-home-5",
   "key": "christmas-cards-care-home",
   "feed": "carehome",
@@ -1094,6 +1114,16 @@
   "url": "https://kinav.co.uk/guides/",
   "description": "Working and caring for a parent? From day one: a week of unpaid carer's leave a year. And the right to ask for flexible working. Tell your manager what you need. Free guides on kinav.co.uk, free from Kinav: help for families caring for an older parent in the UK.",
   "publish": "2026-11-25T17:00:00Z"
+ },
+ {
+  "slug": "act-costs-a",
+  "key": "act-costs-a",
+  "feed": "planners",
+  "title": "What does caring for Mum cost each month?",
+  "link": "https://kinav.co.uk/printables/monthly-caring-costs-sheet/",
+  "url": "https://kinav.co.uk/printables/monthly-caring-costs-sheet/",
+  "description": "What does caring for Mum cost each month?. A free caring costs sheet. Adds itself up as you type. Share costs fairly. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2026-11-26T06:00:00Z"
  },
  {
   "slug": "xmas-1126-0",
@@ -2758,6 +2788,16 @@
   "publish": "2027-01-05T09:00:00Z"
  },
  {
+  "slug": "act-routine-b",
+  "key": "act-routine-b",
+  "feed": "dementia",
+  "title": "Free daily routine chart",
+  "link": "https://kinav.co.uk/printables/daily-routine-chart/",
+  "url": "https://kinav.co.uk/printables/daily-routine-chart/",
+  "description": "Free daily routine chart. So everyone does it the same way. Print it for the fridge. Free on kinav.co.uk. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-01-06T06:00:00Z"
+ },
+ {
   "slug": "jan-daily-log-0",
   "key": "daily-log",
   "feed": "planners",
@@ -2860,6 +2900,16 @@
   "publish": "2027-01-15T09:00:00Z"
  },
  {
+  "slug": "act-handover-b",
+  "key": "act-handover-b",
+  "feed": "kits",
+  "title": "\"What happened yesterday?\"",
+  "link": "https://kinav.co.uk/printables/family-care-handover-sheet/",
+  "url": "https://kinav.co.uk/printables/family-care-handover-sheet/",
+  "description": "\"What happened yesterday?\". A free care handover sheet. For families sharing the care. Fill in and print. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-01-16T06:00:00Z"
+ },
+ {
   "slug": "jan-care-binder-1",
   "key": "care-binder",
   "feed": "planners",
@@ -2922,6 +2972,16 @@
   "link": "https://kinavuk.etsy.com/uk/listing/4610524094/dementia-care-planner-uk-printable",
   "description": "One planner for routines and the people who help For families caring for someone with dementia. Dementia care planner: an instant download from Kinav on Etsy, made in the UK for families caring for an older parent.",
   "publish": "2027-01-23T09:00:00Z"
+ },
+ {
+  "slug": "act-costs-b",
+  "key": "act-costs-b",
+  "feed": "planners",
+  "title": "Who's paying for Mum's care?",
+  "link": "https://kinav.co.uk/printables/monthly-caring-costs-sheet/",
+  "url": "https://kinav.co.uk/printables/monthly-caring-costs-sheet/",
+  "description": "Who's paying for Mum's care?. Track costs and who paid. A free monthly sheet. Adds itself up. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-01-24T06:00:00Z"
  },
  {
   "slug": "jan-daily-log-1",

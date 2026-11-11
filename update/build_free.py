@@ -139,5 +139,71 @@ def visit_page(updated):
                                    "\n".join(body), updated, kind="guide")
 
 
+ROUTINE = "/printables/daily-routine-chart/"
+HANDOVER = "/printables/family-care-handover-sheet/"
+COSTS = "/printables/monthly-caring-costs-sheet/"
+SHEET_CSS = ('<style>.sh{background:#fff;color:#18232e;border:1.5px solid var(--line);border-radius:18px;padding:18px;max-width:900px;overflow-x:auto}'
+             '.sh h2{font-size:28px;margin:0 0 10px}.sh table{width:100%;border-collapse:collapse;table-layout:fixed}'
+             '.sh th{background:#1f5f7a;color:#fff;text-align:left;padding:8px;font-size:15px}.sh td{border:1.5px solid #c9d1d6;padding:0;height:42px;font-size:16px}'
+             '.sh th:first-child{width:32%}.sh td.l{padding:6px 8px;font-weight:700;background:#f4f6f7;hyphens:auto}@media(max-width:520px){.sh th{font-size:13px;padding:6px 4px}.sh td,.sh td.l{font-size:14px}}.sh input{font:inherit;border:0;width:100%;height:100%;padding:6px 8px;background:transparent;box-sizing:border-box}'
+             '.sh .note{font-size:12px;margin:8px 0 0}'
+             '@media print{@page{margin:10mm}.sh{border:0;padding:0;max-width:none}.sh th{background:#ddd!important;color:#000;-webkit-print-color-adjust:exact;print-color-adjust:exact}.sh td{height:38px}}</style>')
+
+
+def sheet(title, cols, rows, note, label_first=True):
+    head = "".join("<th>%s</th>" % c for c in cols)
+    body = ""
+    for r in rows:
+        cells = ('<td class="l">%s</td>' % r if label_first else "") + "".join('<td><input aria-label="%s %s"></td>' % (r, c) for c in cols[1 if label_first else 0:])
+        body += "<tr>%s</tr>" % cells
+    return '<div class="sh"><h2>%s</h2><table><tr>%s</tr>%s</table><p class="note">%s · Free from kinav.co.uk</p></div>' % (title, head, body, note)
+
+
+def free_page(path, h1, lede, sheet_html, tips, more, title, desc, updated, button="Print the sheet"):
+    body = [SHEET_CSS, '<div class="stack-sm noprint"><h1>%s</h1><p class="lede">%s What you type stays on this page: it isn\'t saved or sent anywhere.</p>'
+            '<p><button class="btn" type="button" onclick="print()">%s</button></p></div>' % (h1, lede, button), sheet_html,
+            '<section class="panel noprint"><h2>Tips</h2><ul>%s</ul><p>%s</p></section>' % ("".join("<li>%s</li>" % x for x in tips), more)]
+    return path, build_pages.page(path, title, desc, "\n".join(body), updated, kind="guide")
+
+
+def routine_page(updated):
+    times = ["Wake up", "Breakfast", "Morning", "Lunch", "Afternoon", "Tea", "Evening", "Bedtime"]
+    s = sheet("Our daily routine", ["Time of day", "What happens", "What helps"], times, "Keep it where everyone can see it")
+    return free_page(ROUTINE, "Free daily routine chart for an older parent",
+                     "A simple chart of the day, from waking up to bedtime, so family, carers and visitors all do things the same way.",
+                     s, ["Write what usually happens, not what should happen.", "\"What helps\" is for the little things: a favourite mug, the radio on, a walk after lunch.",
+                         "Give a copy to anyone who helps, and update it when things change."],
+                     'More free printables: <a href="%s">a family care handover sheet</a> and <a href="%s">a big day and date clock</a>.' % (HANDOVER, CLOCK),
+                     "Free daily routine chart for an older parent: printable and fillable | Kinav",
+                     "A free daily routine chart to fill in and print for an older parent or someone with dementia: what happens at each time of day, and what helps.", updated)
+
+
+def handover_page(updated):
+    rows = ["Date and time", "Who was here", "How they seemed today", "Eating and drinking", "Out and about, visitors", "Done today", "Still to do", "Anything to tell the next person"]
+    s = sheet("Care handover", ["", "Notes"], rows, "One sheet per visit or per day")
+    return free_page(HANDOVER, "Free family care handover sheet",
+                     "When several people help Mum or Dad, a handover sheet means nobody has to ask \"what happened yesterday?\". Fill one in at the end of each visit.",
+                     s, ["Keep the sheets in a folder by the door or on the fridge.", "Write facts, not worries: what happened, and what's still to do.",
+                         "For anything about their health, speak to the GP or call NHS 111. This sheet is a record, not medical advice."],
+                     'More free printables: <a href="%s">a daily routine chart</a> and <a href="/printables/emergency-information-sheet/">an emergency information sheet</a>.' % ROUTINE,
+                     "Free family care handover sheet for carers: printable and fillable | Kinav",
+                     "A free care handover sheet for families sharing the care of an older parent: who was there, what was done, and what the next person needs to know.", updated)
+
+
+def costs_page(updated):
+    rows = ["Care at home", "Care home or day centre", "Travel and parking", "Food and shopping", "Equipment and aids", "Bills paid for them", "Other", "Total"]
+    s = sheet("Caring costs this month", ["What for", "Cost (£)", "Who paid", "Paid back?"], rows, "The total adds itself up as you type")
+    s += ('<script>(function(){var r=document.querySelectorAll(".sh tr"),tot=r[r.length-1].querySelectorAll("input")[0];tot.readOnly=true;tot.style.fontWeight="700";'
+          'function add(){var s=0;for(var i=1;i<r.length-1;i++){var v=parseFloat((r[i].querySelectorAll("input")[0].value||"").replace(/[£,\\s]/g,""));if(!isNaN(v))s+=v}'
+          'tot.value=s?"£"+s.toFixed(2):""}for(var i=1;i<r.length-1;i++){var x=r[i].querySelectorAll("input")[0];x.inputMode="decimal";x.addEventListener("input",add)}})();</script>')
+    return free_page(COSTS, "Free monthly caring costs sheet",
+                     "Write down what caring for an older parent costs each month, and who paid, so the family can share costs fairly.",
+                     s, ["Keep receipts in an envelope with the sheet.", "Share the totals with brothers and sisters each month, so nobody is left out of pocket.",
+                         "Check what they could claim with the free <a href=\"/benefits-calculator/\">benefits calculator</a>."],
+                     'More free help: <a href="/care-cost-calculator/">care cost calculator</a> and <a href="/printables/emergency-information-sheet/">emergency information sheet</a>.',
+                     "Free monthly caring costs sheet: track care costs and who paid | Kinav",
+                     "A free printable sheet to track the monthly cost of caring for an older parent and who paid, so the family can share care costs fairly. UK.", updated)
+
+
 def pages(updated):
-    return [calendar_page(updated), clock_page(updated), remi_page(updated), visit_page(updated)]
+    return [calendar_page(updated), clock_page(updated), remi_page(updated), visit_page(updated), routine_page(updated), handover_page(updated), costs_page(updated)]
