@@ -891,6 +891,16 @@
   "publish": "2026-11-22T17:00:00Z"
  },
  {
+  "slug": "act-month-root",
+  "key": "act-month-root",
+  "feed": "dementia",
+  "title": "Care home activity ideas for every month",
+  "link": "https://kinav.co.uk/activities/",
+  "url": "https://kinav.co.uk/activities/",
+  "description": "Care home activity ideas for every month. 12 months of free ideas. Dates to plan around in 2027. Easy for everyone to join in. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2026-11-23T06:00:00Z"
+ },
+ {
   "slug": "xmas-1123-0",
   "key": "christmas-cards-care-home",
   "feed": "carehome",
@@ -2498,6 +2508,16 @@
   "publish": "2026-12-22T06:00:00Z"
  },
  {
+  "slug": "act-month-january-a",
+  "key": "act-month-january-a",
+  "feed": "dementia",
+  "title": "Care home activity ideas for January",
+  "link": "https://kinav.co.uk/activities/january/",
+  "url": "https://kinav.co.uk/activities/january/",
+  "description": "Care home activity ideas for January. New Year memories. A Burns Night afternoon. Winter warmers taste test. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2026-12-22T06:00:00Z"
+ },
+ {
   "slug": "xmas-1222-0",
   "key": "retro-christmas-games-care-home",
   "feed": "carehome",
@@ -2644,5 +2664,215 @@
   "url": "https://kinav.co.uk/printables/day-and-date-clock/",
   "description": "A day clock from an old tablet. Free, in big letters. Day, date and time. Leave it on a stand. Free from Kinav, for families caring for an older parent in the UK.",
   "publish": "2027-01-08T06:00:00Z"
+ },
+ {
+  "slug": "act-month-january-b",
+  "key": "act-month-january-b",
+  "feed": "dementia",
+  "title": "January activities for older people",
+  "link": "https://kinav.co.uk/activities/january/",
+  "url": "https://kinav.co.uk/activities/january/",
+  "description": "January activities for older people. The year ahead calendar. Snow memories. Indoor bowls. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-01-13T06:00:00Z"
+ },
+ {
+  "slug": "act-month-february-a",
+  "key": "act-month-february-a",
+  "feed": "dementia",
+  "title": "Care home activity ideas for February",
+  "link": "https://kinav.co.uk/activities/february/",
+  "url": "https://kinav.co.uk/activities/february/",
+  "description": "Care home activity ideas for February. Pancake party. Love stories. Valentine's cards. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-01-22T06:00:00Z"
+ },
+ {
+  "slug": "act-month-february-b",
+  "key": "act-month-february-b",
+  "feed": "dementia",
+  "title": "February activities for older people",
+  "link": "https://kinav.co.uk/activities/february/",
+  "url": "https://kinav.co.uk/activities/february/",
+  "description": "February activities for older people. Love songs sing-along. Snowdrop spotting. Wedding photos afternoon. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-02-13T06:00:00Z"
+ },
+ {
+  "slug": "act-month-march-a",
+  "key": "act-month-march-a",
+  "feed": "dementia",
+  "title": "Care home activity ideas for March",
+  "link": "https://kinav.co.uk/activities/march/",
+  "url": "https://kinav.co.uk/activities/march/",
+  "description": "Care home activity ideas for March. Mother's Day memories. Daffodil crafts. A St Patrick's Day afternoon. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-02-19T06:00:00Z"
+ },
+ {
+  "slug": "act-month-march-b",
+  "key": "act-month-march-b",
+  "feed": "dementia",
+  "title": "March activities for older people",
+  "link": "https://kinav.co.uk/activities/march/",
+  "url": "https://kinav.co.uk/activities/march/",
+  "description": "March activities for older people. Easter bonnets. Egg decorating. Spring planting. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-03-13T06:00:00Z"
+ },
+ {
+  "slug": "act-month-april-a",
+  "key": "act-month-april-a",
+  "feed": "dementia",
+  "title": "Care home activity ideas for April",
+  "link": "https://kinav.co.uk/activities/april/",
+  "url": "https://kinav.co.uk/activities/april/",
+  "description": "Care home activity ideas for April. April Fools' stories. A St George's Day tea. Spring flower arranging. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-03-22T06:00:00Z"
+ },
+ {
+  "slug": "act-month-april-b",
+  "key": "act-month-april-b",
+  "feed": "dementia",
+  "title": "April activities for older people",
+  "link": "https://kinav.co.uk/activities/april/",
+  "url": "https://kinav.co.uk/activities/april/",
+  "description": "April activities for older people. Bird watching. Spring cleaning memories. Garden centre trip or catalogue. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-04-13T06:00:00Z"
+ },
+ {
+  "slug": "act-month-may-a",
+  "key": "act-month-may-a",
+  "feed": "dementia",
+  "title": "Care home activity ideas for May",
+  "link": "https://kinav.co.uk/activities/may/",
+  "url": "https://kinav.co.uk/activities/may/",
+  "description": "Care home activity ideas for May. A May Day ribbon dance. Garden afternoon. Seaside day trip memories. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-04-21T06:00:00Z"
+ },
+ {
+  "slug": "act-month-may-b",
+  "key": "act-month-may-b",
+  "feed": "dementia",
+  "title": "May activities for older people",
+  "link": "https://kinav.co.uk/activities/may/",
+  "url": "https://kinav.co.uk/activities/may/",
+  "description": "May activities for older people. Flower crowns. Cream tea. Old adverts quiz. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-05-13T06:00:00Z"
+ },
+ {
+  "slug": "act-month-june-a",
+  "key": "act-month-june-a",
+  "feed": "dementia",
+  "title": "Care home activity ideas for June",
+  "link": "https://kinav.co.uk/activities/june/",
+  "url": "https://kinav.co.uk/activities/june/",
+  "description": "Care home activity ideas for June. Father's Day memories. A garden party. Strawberries and cream. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-05-22T06:00:00Z"
+ },
+ {
+  "slug": "act-month-june-b",
+  "key": "act-month-june-b",
+  "feed": "dementia",
+  "title": "June activities for older people",
+  "link": "https://kinav.co.uk/activities/june/",
+  "url": "https://kinav.co.uk/activities/june/",
+  "description": "June activities for older people. Armed Forces Day. Summer holidays then. Garden games. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-06-13T06:00:00Z"
+ },
+ {
+  "slug": "act-month-july-a",
+  "key": "act-month-july-a",
+  "feed": "dementia",
+  "title": "Care home activity ideas for July",
+  "link": "https://kinav.co.uk/activities/july/",
+  "url": "https://kinav.co.uk/activities/july/",
+  "description": "Care home activity ideas for July. Seaside afternoon. Sports day games. Ice cream tasting. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-06-21T06:00:00Z"
+ },
+ {
+  "slug": "act-month-july-b",
+  "key": "act-month-july-b",
+  "feed": "dementia",
+  "title": "July activities for older people",
+  "link": "https://kinav.co.uk/activities/july/",
+  "url": "https://kinav.co.uk/activities/july/",
+  "description": "July activities for older people. School days memories. Summer songs. Outdoor painting. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-07-13T06:00:00Z"
+ },
+ {
+  "slug": "act-month-august-a",
+  "key": "act-month-august-a",
+  "feed": "dementia",
+  "title": "Care home activity ideas for August",
+  "link": "https://kinav.co.uk/activities/august/",
+  "url": "https://kinav.co.uk/activities/august/",
+  "description": "Care home activity ideas for August. A beach in a box. Holiday camp memories. A talent show. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-07-22T06:00:00Z"
+ },
+ {
+  "slug": "act-month-august-b",
+  "key": "act-month-august-b",
+  "feed": "dementia",
+  "title": "August activities for older people",
+  "link": "https://kinav.co.uk/activities/august/",
+  "url": "https://kinav.co.uk/activities/august/",
+  "description": "August activities for older people. Summer fete. Cricket afternoon. Lavender bags. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-08-13T06:00:00Z"
+ },
+ {
+  "slug": "act-month-september-a",
+  "key": "act-month-september-a",
+  "feed": "dementia",
+  "title": "Care home activity ideas for September",
+  "link": "https://kinav.co.uk/activities/september/",
+  "url": "https://kinav.co.uk/activities/september/",
+  "description": "Care home activity ideas for September. Harvest festival. Back to school memories. Blackberry picking. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-08-22T06:00:00Z"
+ },
+ {
+  "slug": "act-month-september-b",
+  "key": "act-month-september-b",
+  "feed": "dementia",
+  "title": "September activities for older people",
+  "link": "https://kinav.co.uk/activities/september/",
+  "url": "https://kinav.co.uk/activities/september/",
+  "description": "September activities for older people. Battle of Britain memories. Apple tasting. Autumn leaf art. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-09-13T06:00:00Z"
+ },
+ {
+  "slug": "act-month-october-a",
+  "key": "act-month-october-a",
+  "feed": "dementia",
+  "title": "Care home activity ideas for October",
+  "link": "https://kinav.co.uk/activities/october/",
+  "url": "https://kinav.co.uk/activities/october/",
+  "description": "Care home activity ideas for October. Pumpkin decorating. Halloween memories. Autumn walk. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-09-21T06:00:00Z"
+ },
+ {
+  "slug": "act-month-october-b",
+  "key": "act-month-october-b",
+  "feed": "dementia",
+  "title": "October activities for older people",
+  "link": "https://kinav.co.uk/activities/october/",
+  "url": "https://kinav.co.uk/activities/october/",
+  "description": "October activities for older people. Conkers. Soup making. Spooky stories. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-10-13T06:00:00Z"
+ },
+ {
+  "slug": "act-month-november-a",
+  "key": "act-month-november-a",
+  "feed": "dementia",
+  "title": "Care home activity ideas for November",
+  "link": "https://kinav.co.uk/activities/november/",
+  "url": "https://kinav.co.uk/activities/november/",
+  "description": "Care home activity ideas for November. Bonfire Night memories. Firework pictures. Remembrance. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-10-22T06:00:00Z"
+ },
+ {
+  "slug": "act-month-november-b",
+  "key": "act-month-november-b",
+  "feed": "dementia",
+  "title": "November activities for older people",
+  "link": "https://kinav.co.uk/activities/november/",
+  "url": "https://kinav.co.uk/activities/november/",
+  "description": "November activities for older people. Poppy crafts. Christmas card making. A St Andrew's Day afternoon. Free activity ideas from Kinav for care homes, day centres and families with older relatives.",
+  "publish": "2027-11-13T06:00:00Z"
  }
 ]

@@ -852,7 +852,8 @@ def main(updated):
     pages += shop_pages(updated)
     import build_activities
     import build_free
-    pages += build_activities.pages(updated) + build_free.pages(updated)
+    import build_months
+    pages += build_activities.pages(updated) + build_months.pages(updated) + build_free.pages(updated)
     samples = letter_samples()
     pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
     pages = [(path, cross_sell(path, text)) for path, text in pages]
