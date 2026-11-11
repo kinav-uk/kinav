@@ -85,5 +85,67 @@ def clock_page(updated):
                                    "\n".join(body), updated, kind="guide")
 
 
+REMI = "/printables/reminiscence-questions/"
+VISIT = "/printables/what-to-talk-about-in-a-care-home-visit/"
+REMI_Q = [
+ ("Growing up", ["Where did you grow up, and what was the house like?", "What games did you play outside?", "Who were your best friends?", "What jobs did you do at home?", "What was a real treat when you were small?"]),
+ ("School", ["What was your school like?", "Who was your favourite teacher?", "What did you do at playtime?", "What were you good at?", "How did you get to school?"]),
+ ("Work", ["What was your first job?", "What did you spend your first wage on?", "Who was the best person you worked with?", "What are you proud of from work?", "What job would you have liked to do?"]),
+ ("Love and family", ["How did you meet someone special?", "What was your wedding day like?", "What do you remember about your children being small?", "What family sayings do you remember?", "Who do you take after?"]),
+ ("Home and everyday life", ["What was wash day like?", "What did the kitchen look like?", "When did you first have a TV or a phone?", "What did you have for Sunday dinner?", "Which shops did you go to?"]),
+ ("Music, films and dancing", ["What was the first record you bought?", "Where did you go dancing?", "Which film stars did you like?", "What did you listen to on the radio?", "Which song takes you straight back?"]),
+ ("Holidays and days out", ["Where did you go on holiday as a child?", "What was your best day out?", "Did you go to the seaside?", "Where's the furthest you've travelled?", "Where would you go tomorrow if you could?"]),
+ ("Celebrations", ["What was Christmas like when you were young?", "How did you celebrate birthdays?", "What's the best present you've had?", "Which street parties do you remember?", "What traditions did your family have?"]),
+ ("The world changing", ["What's the biggest change you've seen?", "What do you miss from the old days?", "What's better now?", "Which news events do you remember?", "How much did things cost when you were young?"]),
+ ("You", ["What makes you laugh?", "What's the best advice you've been given?", "What are you proudest of?", "What would you tell your younger self?", "What's your favourite season, and why?"]),
+]
+
+
+def remi_page(updated):
+    groups = "".join('<section class="panel rq"><h2>%s</h2><ol>%s</ol></section>' % (h, "".join("<li>%s</li>" % q for q in qs)) for h, qs in REMI_Q)
+    body = ['<style>.rq li{font-size:19px;margin:6px 0}@media print{.rq{break-inside:avoid}.rq li{font-size:18px}}</style>',
+            '<div class="stack-sm"><h1>50 reminiscence questions for older people</h1>'
+            '<p class="lede">Gentle questions to start conversations about a long life: growing up, work, love, music, holidays and more. '
+            'For visits, care home groups or a cup of tea at home. Free to print.</p>'
+            '<p class="noprint"><button class="btn" type="button" onclick="print()">Print the questions</button></p></div>',
+            '<section class="panel noprint"><h2>How to use them</h2><ul><li>Pick one question, not a list. Let the answer lead where it wants to go.</li>'
+            '<li>Share a memory of your own, so it feels like a chat, not a quiz.</li><li>Photos, music and old objects help memories come.</li>'
+            '<li>If a question doesn\'t feel right, move on. "Pass" is always fine.</li><li>Write down or record the best stories for the family.</li></ul></section>',
+            groups,
+            '<section class="panel noprint"><p class="small">More free ideas: <a href="%s">what to talk about on a care home visit</a> and <a href="/activities/">activity ideas for every month</a>.</p></section>' % VISIT]
+    return REMI, build_pages.page(REMI, "50 reminiscence questions for older people: free printable conversation starters | Kinav",
+                                  "50 free reminiscence questions for older people and people in care homes: conversation starters about childhood, school, work, love, music, holidays and celebrations.",
+                                  "\n".join(body), updated, kind="guide")
+
+
+VISIT_TIPS = [("Bring something to look at", "Photos, a magazine, post from home, a newspaper or something from the garden. Things to look at make it easy to start talking."),
+              ("Talk about now, too", "What the family are up to, what's on TV, the weather, the football. Everyday news matters."),
+              ("Ask open questions", "\"Tell me about…\" works better than questions with a yes or no answer."),
+              ("Do something together", "A crossword, a card game, a jigsaw, nails or hair, a walk round the garden. Talking is easier side by side."),
+              ("Play music", "Their favourite songs on your phone. Sing along if they want to."),
+              ("Silence is fine", "Sitting together quietly, holding hands or watching the birds still counts as a good visit."),
+              ("Keep it short and regular", "Shorter, more frequent visits often go better than long ones."),
+              ("Say when you'll be back", "Write it on their calendar, so they can look forward to it.")]
+VISIT_Q = ["What have you been up to this week?", "Who's been in to see you?", "What was lunch like today?", "What's the best thing about living here?", "Is there anything you'd like me to bring next time?",
+           "What did you think of the weather this week?", "Which of the staff makes you laugh?", "What's on the telly that you're enjoying?", "Shall we look at some photos?", "What were you doing at my age?",
+           "Can you tell me again how you met Grandad (or Grandma)?", "What was your favourite holiday?", "What should I cook this weekend? How did you make it?", "Which song shall we put on?", "What would you like to do next time I come?"]
+
+
+def visit_page(updated):
+    tips = "".join("<li><b>%s</b><br><span class=\"muted\">%s</span></li>" % (a, b) for a, b in VISIT_TIPS)
+    qs = "".join("<li>%s</li>" % q for q in VISIT_Q)
+    body = ['<style>.vq li{font-size:19px;margin:6px 0}</style>',
+            '<div class="stack-sm"><h1>What to talk about when visiting someone in a care home</h1>'
+            '<p class="lede">Easy ideas and 15 conversation starters for visiting a parent or grandparent in a care home, so visits feel less awkward and more like time together.</p></div>',
+            '<section class="panel"><h2>8 ideas that help</h2><ol class="steps">%s</ol></section>' % tips,
+            '<section class="panel vq"><h2>15 conversation starters</h2><ol>%s</ol>'
+            '<p class="noprint"><button class="btn btn-ghost" type="button" onclick="print()">Print this page</button></p></section>' % qs,
+            '<section class="panel noprint"><p class="small">More free help: <a href="%s">50 reminiscence questions</a>, <a href="/activities/">activity ideas for every month</a> '
+            'and <a href="/guides/how-to-choose-a-care-home/">how to choose a care home</a>.</p></section>' % REMI]
+    return VISIT, build_pages.page(VISIT, "What to talk about when visiting someone in a care home: 15 conversation starters | Kinav",
+                                   "What to talk about when you visit a parent or grandparent in a care home: 8 ideas that help, and 15 free conversation starters to print.",
+                                   "\n".join(body), updated, kind="guide")
+
+
 def pages(updated):
-    return [calendar_page(updated), clock_page(updated)]
+    return [calendar_page(updated), clock_page(updated), remi_page(updated), visit_page(updated)]

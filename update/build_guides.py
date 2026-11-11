@@ -621,8 +621,8 @@ def planners_page(updated):
             '<p class="panel small">Everything free on kinav.co.uk stays free. These printables are sold in the Kinav shop on Etsy, which helps keep Kinav running. '
             'Links open Etsy. To come back to Kinav, use your back button or swipe back.</p>']
     for title, anchor, items in PLANNERS:
-        free = ('<p class="panel"><b>Free:</b> <a href="/activities/christmas/">24 Christmas activities for care homes and older relatives</a>, '
-                'one for every day of December, with lists to print.</p>') if anchor == "christmas" else ""
+        free = ('<div class="panel"><p><b>Free:</b> <a href="/activities/christmas/">24 Christmas activities for care homes and older relatives</a>, '
+                'one for every day of December, with lists to print.</p></div>') if anchor == "christmas" else ""
         body.append('<section class="stack-sm" id="%s"><h2>%s</h2>%s<div class="pp-grid">%s</div></section>' % (anchor, e(title), free, "".join(card(*it) for it in items)))
     body.append('<section class="panel"><h2>Free printables</h2><div class="grid">'
                 '<a href="/printables/emergency-information-sheet/">Emergency information sheet for the fridge</a>'
@@ -686,7 +686,7 @@ CROSS_SELL = {
     "/will-they-have-to-sell-the-house-to-pay-for-care/": "bundle", "/articles/christmas-signs-parent-needs-help/": "bundle",
     "/guides/how-to-apply-for-a-blue-badge/": "bundle", "/guides/nhs-continuing-healthcare-checklist-and-assessment/": "letter-pack",
     "/printables/emergency-information-sheet/": "life-admin-binder", "/printables/important-phone-numbers-list/": "adhd-fridge-cards",
-    "/printables/no-cold-callers-door-sign/": "life-admin-binder", "/printables/large-print-calendar-2027/": "calendar-2027", "/printables/day-and-date-clock/": "calendar-2027", "/articles/day-centres/": "reminiscence-cards",
+    "/printables/no-cold-callers-door-sign/": "life-admin-binder", "/printables/large-print-calendar-2027/": "calendar-2027", "/printables/day-and-date-clock/": "calendar-2027", "/printables/reminiscence-questions/": "reminiscence-cards", "/printables/what-to-talk-about-in-a-care-home-visit/": "reminiscence-cards", "/articles/day-centres/": "reminiscence-cards",
 }
 CROSS_SECTIONS = [("/letters/", "letter-pack"), ("/plans/", "care-planner"), ("/guides/", "care-planner"), ("/articles/", "bundle")]
 IN_BUNDLE = {"care-home-visit-pack", "care-planner", "letter-pack", "hospital-discharge"}
