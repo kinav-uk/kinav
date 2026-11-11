@@ -218,6 +218,7 @@ def hub_page(updated, nm, links):
             '<p id="today" class="small" hidden></p></div>',
             '<section class="panel"><h2>The activities</h2><div class="grid">%s</div></section>' % cards,
             '<section class="panel stack-sm"><h2>Want it all done for you?</h2>%s%s%s'
+            '<p><a href="/planners/#christmas">See all Kinav Christmas games and gifts ›</a></p>'
             '<p class="small muted">Everything on kinav.co.uk stays free. The shop helps keep Kinav running.</p></section>'
             % (card("christmas-activity-programme", "For care homes: a ready-to-run plan for every day of Advent", nm, links),
                card("retro-christmas-games-care-home", "For care homes and day centres", nm, links),

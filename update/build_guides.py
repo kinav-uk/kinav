@@ -621,12 +621,15 @@ def planners_page(updated):
             '<p class="panel small">Everything free on kinav.co.uk stays free. These printables are sold in the Kinav shop on Etsy, which helps keep Kinav running. '
             'Links open Etsy. To come back to Kinav, use your back button or swipe back.</p>']
     for title, anchor, items in PLANNERS:
-        body.append('<section class="stack-sm" id="%s"><h2>%s</h2><div class="pp-grid">%s</div></section>' % (anchor, e(title), "".join(card(*it) for it in items)))
+        free = ('<p class="panel"><b>Free:</b> <a href="/activities/christmas/">24 Christmas activities for care homes and older relatives</a>, '
+                'one for every day of December, with lists to print.</p>') if anchor == "christmas" else ""
+        body.append('<section class="stack-sm" id="%s"><h2>%s</h2>%s<div class="pp-grid">%s</div></section>' % (anchor, e(title), free, "".join(card(*it) for it in items)))
     body.append('<section class="panel"><h2>Free printables</h2><div class="grid">'
                 '<a href="/printables/emergency-information-sheet/">Emergency information sheet for the fridge</a>'
                 '<a href="/printables/important-phone-numbers-list/">Large-print phone numbers list</a>'
                 '<a href="/printables/before-discharge-questions-for-the-ward/">Questions before they leave hospital</a>'
                 '<a href="/printables/no-cold-callers-door-sign/">No cold callers door sign</a>'
+                '<a href="/activities/christmas/">24 free Christmas activities</a>'
                 '<a href="/letters/">Free letter templates</a></div></section>')
     body.append('<p class="small"><a href="%s" rel="noopener">See everything in the Kinav shop on Etsy ›</a></p>' % SHOP)
     return path, build_pages.page(path, "Printable planners and calendars for carers of older parents (UK) | Kinav",
