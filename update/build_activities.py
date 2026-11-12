@@ -210,13 +210,19 @@ def day_page(i, d, updated, nm, links):
 
 
 def hub_page(updated, nm, links):
-    cards = "".join('<a href="%s%s/" data-day="%d"><small class="muted">Day %d</small><br>%s</a>' % (HUB, d[0], i + 1, i + 1, e(d[1])) for i, d in enumerate(DAYS))
-    body = ['<style>.today{outline:3px solid var(--sun,#f2b705);border-radius:12px}</style>',
+    # An advent calendar of tiles: big day number, short name; the name stays the last child for the "today" script.
+    cards = "".join('<a href="%s%s/" data-day="%d"><b>%d</b><span>%s</span></a>' % (HUB, d[0], i + 1, i + 1, e(d[1])) for i, d in enumerate(DAYS))
+    body = ['<style>.today{outline:4px solid var(--sun,#f2b705);outline-offset:2px}'
+            '.advent{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}'
+            '.advent a{display:flex;flex-direction:column;gap:6px;padding:12px;border-radius:14px;min-height:118px;text-decoration:none;color:#fff;background:#1e5b3f;border:2px solid #e9c46a}'
+            '.advent a:nth-child(even){background:#a3262a}.advent a:hover{filter:brightness(1.12)}'
+            '.advent b{font-size:32px;line-height:1;color:#e9c46a}.advent span{font-size:15px;line-height:1.3;font-weight:600}'
+            '@media(max-width:560px){.advent{grid-template-columns:repeat(3,1fr);gap:8px}.advent a{padding:9px;min-height:104px}.advent b{font-size:26px}.advent span{font-size:13px}}</style>',
             '<div class="stack-sm"><h1>24 free Christmas activities for care homes and older relatives</h1>'
             '<p class="lede">One easy activity for every day from 1 to 24 December. Each has what you need, how to run it and how to make it easier, '
             'with lists to print. For care homes, day centres and families.</p>'
             '<p id="today" class="small" hidden></p></div>',
-            '<section class="panel"><h2>The activities</h2><div class="grid">%s</div></section>' % cards,
+            '<section class="panel"><h2>The activities</h2><div class="advent">%s</div></section>' % cards,
             '<section class="panel stack-sm"><h2>Want it all done for you?</h2>%s%s%s'
             '<p><a href="/planners/#christmas">See all Kinav Christmas games and gifts ›</a><br><a href="/activities/">Activity ideas for every month of the year ›</a></p>'
             '<p class="small muted">Everything on kinav.co.uk stays free. The shop helps keep Kinav running.</p></section>'
