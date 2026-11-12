@@ -629,9 +629,11 @@ def planners_page(updated):
             '<p class="panel small">Everything free on kinav.co.uk stays free. These printables are sold in the Kinav shop on Etsy, which helps keep Kinav running. '
             'Links open Etsy. To come back to Kinav, use your back button or swipe back.</p>']
     for title, anchor, items in PLANNERS:
-        free = ('<div class="panel"><p><b>Free:</b> <a href="/activities/christmas/">24 Christmas activities for care homes and older relatives</a>, '
-                'one for every day of December, with lists to print.</p></div>') if anchor == "christmas" else ""
-        body.append('<section class="stack-sm" id="%s"><h2>%s</h2>%s<div class="pp-grid">%s</div></section>' % (anchor, e(title), free, "".join(card(*it) for it in items)))
+        # The free Christmas activities sit first among the Christmas packs, as a tile like the rest, but stay on kinav.co.uk.
+        free = ('<a class="pp" href="/activities/christmas/"><img src="/shop-img/free-christmas-activities.jpg" alt="" loading="lazy" width="420" height="420">'
+                '<span><b>24 free Christmas activities</b><small>One for every day of December, for care homes and older relatives, with lists to print.</small>'
+                '<em>Free on Kinav ›</em></span></a>') if anchor == "christmas" else ""
+        body.append('<section class="stack-sm" id="%s"><h2>%s</h2><div class="pp-grid">%s%s</div></section>' % (anchor, e(title), free, "".join(card(*it) for it in items)))
     body.append('<section class="panel"><h2>Free printables</h2><div class="grid">'
                 '<a href="/printables/emergency-information-sheet/">Emergency information sheet for the fridge</a>'
                 '<a href="/printables/important-phone-numbers-list/">Large-print phone numbers list</a>'
