@@ -66,6 +66,37 @@
    ]
   ]
  },
+ "christmas-dinner-planner": {
+  "inside": [
+   "Who's coming: arriving and how, food needs, and help or comfort needs (a chair with arms, a quiet corner)",
+   "The menu, and who's making what",
+   "Shopping list",
+   "Cooking timetable: every job against its time",
+   "Seating plan",
+   "Christmas week countdown"
+  ],
+  "how": [
+   "Instant download: one A4 PDF, 7 pages",
+   "Print it, or type into it on a computer or tablet"
+  ],
+  "pics": [
+   [
+    "christmas-dinner-planner-1.jpg",
+    900,
+    675
+   ],
+   [
+    "christmas-dinner-planner-2.jpg",
+    900,
+    675
+   ],
+   [
+    "christmas-dinner-planner-3.jpg",
+    900,
+    675
+   ]
+  ]
+ },
  "christmas-gift-planner": {
   "inside": [
    "Home: budget, spent and left to spend, a countdown to Christmas, and how far you've got: bought, wrapped and given",
