@@ -755,6 +755,16 @@
   "publish": "2026-11-18T17:00:00Z"
  },
  {
+  "slug": "extra-council-tax-alone-disabled",
+  "key": "extra-council-tax-alone-disabled",
+  "feed": "kits",
+  "title": "Council tax: help if Mum lives alone or is disabled",
+  "link": "https://kinav.co.uk/benefits-calculator/",
+  "url": "https://kinav.co.uk/benefits-calculator/",
+  "publish": "2026-11-18T18:00:00Z",
+  "description": "Council tax: help if Mum lives alone or is disabled. Living alone: 25% off the bill. A home adapted for a disability can drop a band. Dementia can mean a discount, or no bill at all. England, Scotland and Wales: ask the local council. Free benefits calculator, free from Kinav: help for families caring for an older parent in the UK."
+ },
+ {
   "slug": "act-free-1119",
   "key": "act-free-1119",
   "feed": "planners",
@@ -1271,6 +1281,16 @@
   "url": "https://kinav.co.uk/guides/",
   "description": "Working and caring for a parent? From day one: a week of unpaid carer's leave a year. And the right to ask for flexible working. Tell your manager what you need. Free guides on kinav.co.uk, free from Kinav: help for families caring for an older parent in the UK.",
   "publish": "2026-11-25T17:00:00Z"
+ },
+ {
+  "slug": "extra-council-tax-alone",
+  "key": "extra-council-tax-alone",
+  "feed": "kits",
+  "title": "Does Dad live on his own? Check his council tax",
+  "link": "https://kinav.co.uk/benefits-calculator/",
+  "url": "https://kinav.co.uk/benefits-calculator/",
+  "publish": "2026-11-25T18:00:00Z",
+  "description": "Does Dad live on his own? Check his council tax. The only adult at home: 25% off. It doesn't depend on income or savings. Ask the council. It's quick to apply. England, Scotland and Wales: ask the local council. More help to check, free from Kinav: help for families caring for an older parent in the UK."
  },
  {
   "slug": "act-costs-a",
@@ -1820,6 +1840,16 @@
   "url": "https://kinav.co.uk/printables/important-phone-numbers-list/",
   "description": "Before Christmas, check: Prescriptions collected. Numbers by the phone. Who's with them each day. Free large-print phone list, free from Kinav: help for families caring for an older parent in the UK.",
   "publish": "2026-12-03T17:00:00Z"
+ },
+ {
+  "slug": "extra-council-tax-disabled",
+  "key": "extra-council-tax-disabled",
+  "feed": "kits",
+  "title": "Council tax help for disabled people",
+  "link": "https://kinav.co.uk/benefits-calculator/",
+  "url": "https://kinav.co.uk/benefits-calculator/",
+  "publish": "2026-12-03T18:00:00Z",
+  "description": "Council tax help for disabled people. Space for a wheelchair: the bill can drop a band. Dementia: they may not count for council tax. Ask about Disabled Band Reduction. England, Scotland and Wales: ask the local council. Free benefits calculator, free from Kinav: help for families caring for an older parent in the UK."
  },
  {
   "slug": "act-04-paper-chains",
