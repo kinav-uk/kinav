@@ -12,6 +12,7 @@ BINGO = "/printables/large-print-christmas-bingo/"
 DINNER = "/printables/christmas-dinner-cooking-timetable/"
 CARDS = "/printables/christmas-card-list/"
 COUNTDOWN = "/printables/christmas-countdown-for-carers/"
+GRANDKIDS = "/printables/christmas-activities-with-grandparents/"
 XMAS_CSS = ('<style>.xm{background:#fff;color:#18232e;border:3px solid #1e5b3f;border-radius:18px;padding:18px;max-width:760px}'
             '.xm h2{font-size:28px;margin:0 0 6px;color:#a3262a}.xm .note{font-size:12px;margin:10px 0 0}'
             '.shopnote{border:2px solid #e9c46a;background:#fdf6e3;border-radius:16px;padding:16px}'
@@ -202,6 +203,48 @@ def countdown_page(updated, links):
                                        "\n".join(body), updated, kind="guide")
 
 
+GK_IDEAS = [("Ask Grandma", "Take turns asking questions about Christmas long ago. Print the free cards below."),
+            ("Then or now?", "Name something Christmassy: black and white telly, video calls, crackers. Was it then, now, or both?"),
+            ("Teach me, I'll teach you", "Grandad teaches a card game like Snap, and the grandchild teaches him a selfie or an emoji."),
+            ("Bake together", "Chocolate cornflake nests need no oven: grandparents stir, children spoon and decorate."),
+            ("A paper chain of love", "On each strip, write something you love about each other, then loop them together for the tree."),
+            ("A memory jar", "Write a Christmas memory on a slip of paper each visit, and read them all out next year."),
+            ("Picture bingo", "Pictures and big words, so non-readers and anyone with poor eyesight can join in."),
+            ("Say it, draw it", "One describes a Christmas thing without saying it, the other draws it."),
+            ("Carols and old songs", "Ask which carol they sang at school, and sing it together. Music often brings back the best stories."),
+            ("Make a keepsake", "A photo, a handprint each and \"Our Christmas\" written underneath. Keep it with the decorations.")]
+GK_CARDS = ["What was Christmas like when you were my age?", "What was the best present you ever got?", "What did you find in your stocking?",
+            "What games did you play at Christmas?", "Did it snow when you were little?", "What Christmas tradition should we keep?"]
+
+
+def grandkids_page(updated, links):
+    ideas = "".join("<li><b>%s</b> %s</li>" % (h if h.endswith("?") else h + ".", t) for h, t in GK_IDEAS)
+    cards = "".join('<div class="gkc">%s</div>' % q for q in GK_CARDS)
+    body = [XMAS_CSS, '<style>.gkg{display:grid;grid-template-columns:repeat(2,1fr);gap:0;margin-top:8px}'
+            '.gkc{border:2px dashed #b9b2a3;border-top:8px solid #a3262a;min-height:120px;display:flex;align-items:center;justify-content:center;'
+            'text-align:center;font-weight:700;font-size:clamp(17px,4.4vw,24px);padding:14px;line-height:1.25}'
+            '.gkc:nth-child(4n+2),.gkc:nth-child(4n+3){border-top-color:#1e5b3f}@media print{.gkc{min-height:200px;font-size:24px}}</style>',
+            '<div class="stack-sm noprint"><h1>10 things to do with Grandma and Grandad at Christmas</h1>'
+            '<p class="lede">Visiting grandparents over Christmas? Here are 10 easy activities for grandchildren and grandparents to do together, for ages 6 to 96. '
+            'Plus 6 free \"Ask Grandma\" question cards to print.</p></div>',
+            '<section class="panel noprint"><h2>10 ideas</h2><ol>%s</ol></section>' % ideas,
+            '<div class="stack-sm noprint"><h2>Free \"Ask Grandma\" cards</h2><p>Print, cut out and put them in a bowl. Take turns to pick one.</p>'
+            '<p><button class="btn" type="button" onclick="print()">Print the cards</button></p></div>',
+            '<div class="xm"><h2>Ask Grandma, ask Grandad</h2><div class="gkg">%s</div><p class="note">Free from kinav.co.uk</p></div>' % cards,
+            shop("grandkids-christmas", "Want the whole pack?", "<b>Grandma, Grandad and Me</b><br>22 large-print pages: 24 question cards, interview pages, "
+                 "then or now, picture bingo, say it draw it, a no-bake recipe and a Christmas keepsake page.", links),
+            '<section class="panel noprint"><h2>If Grandma or Grandad has memory problems</h2><ul>'
+            '<li>Follow their lead: if a question doesn\'t spark anything, move on. There are no wrong answers.</li>'
+            '<li>Pictures, music and making things together often work better than questions.</li>'
+            '<li>Keep it short, and stop while it\'s still fun.</li>'
+            '<li>Explain gently to children beforehand that Grandma might repeat things or forget names.</li></ul>'
+            '<p>More: <a href="/articles/christmas-when-a-parent-has-dementia/">Christmas when a parent has dementia</a> · '
+            '<a href="/printables/large-print-christmas-bingo/">free large-print Christmas bingo</a> · <a href="/activities/christmas/">24 free Christmas activities</a></p></section>']
+    return GRANDKIDS, build_pages.page(GRANDKIDS, "10 Christmas activities for grandchildren and grandparents, with free printable cards | Kinav",
+                                       "Easy Christmas activities for grandchildren and grandparents to do together, ages 6 to 96, with free \"Ask Grandma\" question cards to print.",
+                                       "\n".join(body), updated, kind="guide")
+
+
 def _free(html, h1, lede, tips, shopbox):
     return [SHEET_CSS, '<div class="stack-sm noprint"><h1>%s</h1><p class="lede">%s What you type stays on this page: it isn\'t saved or sent anywhere.</p>'
             '<p><button class="btn" type="button" onclick="print()">Print it</button></p></div>' % (h1, lede), html, shopbox,
@@ -212,4 +255,4 @@ def _free(html, h1, lede, tips, shopbox):
 def pages(updated):
     import build_guides as bg
     links = bg.LISTING_LINKS
-    return [ws_page(updated, links), bingo_page(updated, links), dinner_page(updated, links), cards_page(updated, links), countdown_page(updated, links)]
+    return [ws_page(updated, links), bingo_page(updated, links), dinner_page(updated, links), cards_page(updated, links), countdown_page(updated, links), grandkids_page(updated, links)]
