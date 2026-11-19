@@ -11,6 +11,7 @@ WS = "/printables/large-print-christmas-word-search/"
 BINGO = "/printables/large-print-christmas-bingo/"
 DINNER = "/printables/christmas-dinner-cooking-timetable/"
 CARDS = "/printables/christmas-card-list/"
+COUNTDOWN = "/printables/christmas-countdown-for-carers/"
 XMAS_CSS = ('<style>.xm{background:#fff;color:#18232e;border:3px solid #1e5b3f;border-radius:18px;padding:18px;max-width:760px}'
             '.xm h2{font-size:28px;margin:0 0 6px;color:#a3262a}.xm .note{font-size:12px;margin:10px 0 0}'
             '.shopnote{border:2px solid #e9c46a;background:#fdf6e3;border-radius:16px;padding:16px}'
@@ -142,6 +143,65 @@ def cards_page(updated, links):
                                    updated, kind="guide")
 
 
+# Christmas countdown for carers: (when, [(job, [(link label, Etsy pack key or free page path)])]). Packs link to Etsy, paths to free pages.
+WEEKS = [
+ ("Late November", [("Agree who's with Mum or Dad on each day over Christmas, and who's hosting.", [("Free family handover sheet", "/printables/family-care-handover-sheet/")]),
+                    ("Write the gift list and a budget.", [("Christmas gift planner", "christmas-gift-planner")]),
+                    ("Start the Christmas card list.", [("Free card list", CARDS), ("Card list and gift tags", "christmas-card-list-tags")]),
+                    ("Check when pensions and benefits are paid over Christmas: they're often paid early.", [])]),
+ ("1 to 7 December", [("Order repeat prescriptions early, and check the pharmacy's holiday opening hours.", []),
+                      ("Ask the care agency or care home about visits and plans over Christmas.", []),
+                      ("Plan Christmas dinner: who's coming and what each guest needs.", [("Christmas dinner planner", "christmas-dinner-planner")]),
+                      ("Book any travel or taxis for older relatives.", [])]),
+ ("8 to 14 December", [("Write and post the cards.", [("Card list and gift tags", "christmas-card-list-tags")]),
+                       ("Buy and wrap the presents, with gift tags everyone can read.", [("Large-print gift tags", "christmas-card-list-tags")]),
+                       ("Choose games for Christmas Day that everyone can join.", [("Retro Christmas games", "retro-christmas-games"), ("Christmas bingo", "christmas-bingo"), ("Free bingo cards", BINGO)]),
+                       ("Visiting a care home? Take something to talk about.", [("Let's Talk Christmas cards", "christmas-cards")])]),
+ ("15 to 21 December", [("Book a food delivery slot, or plan the big shop.", []),
+                        ("Write the Christmas Day cooking timetable.", [("Free cooking timetable", DINNER)]),
+                        ("Put an emergency information sheet on the fridge.", [("Free emergency sheet", "/printables/emergency-information-sheet/")]),
+                        ("Check the heating works, and the numbers to call in a power cut.", [("Free phone numbers list", "/printables/important-phone-numbers-list/")])]),
+ ("Christmas week", [("Collect the prescriptions.", []),
+                     ("Set up a quiet room and a comfortable chair for older guests.", []),
+                     ("Print the puzzles and games: no postage needed.", [("Christmas word searches", "christmas-word-search"), ("Free word search", WS)]),
+                     ("Make a plan for who drives older relatives home.", [])]),
+ ("Christmas Day", [("Keep to usual mealtimes and rest times where you can.", []),
+                    ("Play a game everyone can join, from Grandma to the grandchildren.", [("Christmas bingo", "christmas-bingo"), ("Retro Christmas games", "retro-christmas-games")]),
+                    ("Take a few minutes for yourself.", [])]),
+ ("After Christmas", [("Note what worked, and what to change next year.", []),
+                      ("Put a big, clear calendar up for the new year.", [("2027 large-print calendar", "calendar-2027"), ("Free 2027 calendar", "/printables/large-print-calendar-2027/")]),
+                      ("Feeling worn out? Ask the council for a free carer's assessment.", [("Free letter to ask", "/letters/carers-assessment-request-letter/")])]),
+]
+
+
+def countdown_page(updated, links):
+    def link(label, k):
+        if k.startswith("/"):
+            return '<a href="%s">%s</a>' % (k, label)
+        return '<a href="%s" rel="noopener">%s <span class="muted">(Kinav shop on Etsy)</span></a>' % (links[k], label) if k in links else ""
+    weeks = ""
+    for when, jobs in WEEKS:
+        items = "".join('<li><label><input type="checkbox"> %s</label>%s</li>' % (
+            job, ('<span class="cdl noprint">Helps: %s</span>' % " · ".join(x for x in (link(l, k) for l, k in ls) if x)) if ls else "") for job, ls in jobs)
+        weeks += '<div class="cdw"><h2>%s</h2><ul>%s</ul></div>' % (when, items)
+    body = [XMAS_CSS, '<style>.cdw h2{font-size:22px;margin:14px 0 6px;color:#1e5b3f}.cdw ul{list-style:none;padding:0;margin:0}'
+            '.cdw li{padding:8px 0;border-bottom:1px solid #e6e1d6;font-size:18px}.cdw input{width:22px;height:22px;vertical-align:-4px;margin-right:6px}'
+            '.cdl{display:block;font-size:14px;margin:4px 0 0 34px}@media print{.cdw li{font-size:14px;padding:4px 0}.cdw h2{font-size:16px;color:#000}}</style>',
+            '<div class="stack-sm noprint"><h1>Christmas countdown for carers: a free to-do list</h1>'
+            '<p class="lede">Caring for an older parent and getting ready for Christmas? Here\'s what to do and when, week by week, so nothing gets missed. '
+            'Tick things off here, or print it. Nothing you tick is saved or sent anywhere.</p>'
+            '<p><button class="btn" type="button" onclick="print()">Print the list</button></p></div>',
+            '<div class="xm">%s<p class="note">Christmas countdown for carers · Free from kinav.co.uk</p></div>' % weeks,
+            shop("christmas-bundle", "Want it all in one go?", "<b>The Kinav Christmas bundle</b><br>Christmas games, a gift planner and conversation cards "
+                 "for older relatives, in one instant download.", links),
+            '<section class="panel noprint"><h2>More free Christmas help</h2><ul><li><a href="/articles/christmas-signs-parent-needs-help/">Visiting at Christmas: signs a parent may need more help</a></li>'
+            '<li><a href="/articles/christmas-when-a-parent-has-dementia/">Christmas when a parent has dementia</a></li>'
+            '<li><a href="/activities/christmas/">24 free Christmas activities</a></li></ul></section>']
+    return COUNTDOWN, build_pages.page(COUNTDOWN, "Christmas countdown checklist for carers: free printable to-do list | Kinav",
+                                       "A free week-by-week Christmas to-do list for families caring for an older parent: prescriptions, visits, presents, dinner and games. Tick it off or print it.",
+                                       "\n".join(body), updated, kind="guide")
+
+
 def _free(html, h1, lede, tips, shopbox):
     return [SHEET_CSS, '<div class="stack-sm noprint"><h1>%s</h1><p class="lede">%s What you type stays on this page: it isn\'t saved or sent anywhere.</p>'
             '<p><button class="btn" type="button" onclick="print()">Print it</button></p></div>' % (h1, lede), html, shopbox,
@@ -152,4 +212,4 @@ def _free(html, h1, lede, tips, shopbox):
 def pages(updated):
     import build_guides as bg
     links = bg.LISTING_LINKS
-    return [ws_page(updated, links), bingo_page(updated, links), dinner_page(updated, links), cards_page(updated, links)]
+    return [ws_page(updated, links), bingo_page(updated, links), dinner_page(updated, links), cards_page(updated, links), countdown_page(updated, links)]
