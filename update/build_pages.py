@@ -153,6 +153,31 @@ def towns(rows, n=4):
     return [t for t, _ in c.most_common(n) if t and t != "London" and not any(ch.isdigit() for ch in t)]
 
 
+
+def town_of(r):
+    return r[1].rsplit(",", 1)[-1].strip() if "," in r[1] else ""
+
+
+def by_town(items, show_type, what):
+    """Cards grouped under a heading per town (most services first, best rated first within each), so families,
+    and searches like "nursing homes in Sidmouth", find their town. Flat list when the addresses don't name enough towns."""
+    groups = collections.OrderedDict()
+    for r in items:
+        t = town_of(r)
+        groups.setdefault(t if t and t != "London" and not any(ch.isdigit() for ch in t) else "", []).append(r)
+    named = [t for t in groups if t]
+    if len(items) < 8 or len(named) < 3:
+        return '<div class="list">%s</div>' % "".join(card(r, show_type) for r in items)
+    order = sorted(named, key=lambda t: (-len(groups[t]), t)) + ([""] if "" in groups else [])
+    tid = lambda t: "town-" + region_id(t or "other")
+    jump = '<nav class="tabs towns" aria-label="Jump to a town">%s</nav>' % "".join(
+        '<a href="#%s">%s (%d)</a>' % (tid(t), e(t or "Other areas"), len(groups[t])) for t in order)
+    secs = "".join('<section class="stack-sm" id="%s"><h2>%s in %s</h2><div class="list">%s</div></section>' % (
+        tid(t), e(what), e(t), "".join(card(r, show_type) for r in groups[t])) if t else
+        '<section class="stack-sm" id="%s"><h2>Other areas</h2><div class="list">%s</div></section>' % (
+        tid(t), "".join(card(r, show_type) for r in groups[t])) for t in order)
+    return '<div class="stack"><p class="small"><b>Jump to a town:</b></p>%s%s</div>' % (jump, secs)
+
 def and_list(xs):
     return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
 
@@ -241,7 +266,7 @@ def write(by_la, regions, out_dir, updated):
                 lede = "%d %s in %s are rated Good or Outstanding by CQC, best rated first." % (len(items), plural.lower(), council)
             body = [crumbs(region, council, slug), '<div class="stack-sm"><h1>%s</h1><p class="lede">%s</p></div>' % (e(h1), e(lede)),
                     tabs(slug, path, counts), cta(council)]
-            body.append('<div class="list">%s</div>' % "".join(card(r, path == "dementia-care") for r in items) if items
+            body.append(by_town(items, path == "dementia-care", h1.split(" in ")[0]) if items
                         else '<p class="panel">No services of this type in %s are currently rated Good or Outstanding. Try a nearby area or search by postcode in the app.</p>' % e(council))
             body.append(paying(council))
             if items:

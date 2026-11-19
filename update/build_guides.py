@@ -87,6 +87,9 @@ PLAN_CHARITY = {
 TEL = re.compile(r"(^|[^\u00a3\d.,])(0\d{3}(?: ?\d){6,7}|116 123|NHS 111|999)(?![\d,])")
 
 
+# Titles that match how people search, where it differs from the kit name.
+KIT_TITLES = {"aa": "How to apply for Attendance Allowance: step-by-step guide | Kinav"}
+
 def tel(html_text):
     """Make UK phone numbers in already-escaped text tappable (same rule as the app)."""
     return TEL.sub(lambda m: '%s<a href="tel:%s">%s</a>' % (m.group(1), re.sub(r"\D", "", m.group(2)), m.group(2)), html_text)
@@ -194,7 +197,7 @@ def kit_page(k, updated):
             '<section class="panel"><h2>Step by step</h2><ol class="steps">%s</ol>'
             '<p class="noprint"><button class="btn btn-ghost" type="button" onclick="print()">Print this checklist</button></p></section>' % steps,
             sources_html(KIT_SOURCES.get(k["id"], [GOV_CARE])), NOT_ADVICE]
-    title = "%s: step-by-step checklist | Kinav" % k["name"]
+    title = KIT_TITLES.get(k["id"], "%s: step-by-step checklist | Kinav" % k["name"])
     desc = "%s A free step-by-step checklist for families caring for an older parent in England." % k["what"]
     return path, build_pages.page(path, title, desc, "\n".join(body), updated, kind="guide")
 
