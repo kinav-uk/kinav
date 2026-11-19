@@ -729,7 +729,7 @@ RELATED = {
     "/guides/how-to-choose-a-care-home/": ["visit", "acts"], "/guides/care-home-contract-checklist/": ["visit", "costs"], "/guides/setting-up-care-at-home/": ["handover", "routine", "costs"],
     "/guides/arranging-live-in-care/": ["routine", "handover"], "/guides/how-to-claim-carers-allowance/": ["costs"], "/guides/how-to-claim-attendance-allowance/": ["costs", "cal"],
     "/guides/care-needs-assessment-how-to-prepare/": ["routine", "handover"], "/care-cost-calculator/": ["costs"], "/benefits-calculator/": ["costs"],
-    "/articles/day-centres/": ["acts", "remi"], "/articles/christmas-signs-parent-needs-help/": ["xmas", "cal"],
+    "/articles/day-centres/": ["acts", "remi"], "/articles/christmas-when-a-parent-has-dementia/": ["xmas", "routine", "remi"], "/articles/keeping-an-older-parent-warm-winter/": ["phones", "emergency"], "/articles/christmas-signs-parent-needs-help/": ["xmas", "cal"], "/articles/council-tax-discounts-older-people/": ["costs"], "/articles/council-tax-dementia-discount/": ["costs", "routine"],
     "/printables/emergency-information-sheet/": ["handover", "routine", "clock"], "/printables/important-phone-numbers-list/": ["cal", "clock"],
     "/printables/no-cold-callers-door-sign/": ["emergency", "clock"], "/printables/before-discharge-questions-for-the-ward/": ["handover", "routine"],
 }
@@ -757,7 +757,7 @@ CROSS_SELL = {
     "/will-they-have-to-sell-the-house-to-pay-for-care/": "bundle", "/articles/christmas-signs-parent-needs-help/": "bundle",
     "/guides/how-to-apply-for-a-blue-badge/": "bundle", "/guides/nhs-continuing-healthcare-checklist-and-assessment/": "letter-pack",
     "/printables/emergency-information-sheet/": "life-admin-binder", "/printables/important-phone-numbers-list/": "adhd-fridge-cards",
-    "/printables/no-cold-callers-door-sign/": "life-admin-binder", "/printables/large-print-calendar-2027/": "calendar-2027", "/printables/day-and-date-clock/": "calendar-2027", "/printables/reminiscence-questions/": "reminiscence-cards", "/printables/daily-routine-chart/": "dementia-planner", "/printables/family-care-handover-sheet/": "daily-log", "/printables/monthly-caring-costs-sheet/": "carers-budget-planner", "/printables/what-to-talk-about-in-a-care-home-visit/": "reminiscence-cards", "/articles/day-centres/": "reminiscence-cards",
+    "/printables/no-cold-callers-door-sign/": "life-admin-binder", "/printables/large-print-calendar-2027/": "calendar-2027", "/printables/day-and-date-clock/": "calendar-2027", "/printables/reminiscence-questions/": "reminiscence-cards", "/printables/daily-routine-chart/": "dementia-planner", "/printables/family-care-handover-sheet/": "daily-log", "/printables/monthly-caring-costs-sheet/": "carers-budget-planner", "/printables/what-to-talk-about-in-a-care-home-visit/": "reminiscence-cards", "/articles/day-centres/": "reminiscence-cards", "/articles/christmas-when-a-parent-has-dementia/": "retro-christmas-games", "/articles/help-with-heating-costs-winter/": "household-paperwork", "/articles/keeping-an-older-parent-warm-winter/": "carers-emergency-plan", "/articles/council-tax-discounts-older-people/": "household-paperwork", "/articles/council-tax-dementia-discount/": "dementia-planner",
 }
 CROSS_SECTIONS = [("/letters/", "letter-pack"), ("/plans/", "care-planner"), ("/guides/", "care-planner"), ("/articles/", "bundle")]
 IN_BUNDLE = {"care-home-visit-pack", "care-planner", "letter-pack", "hospital-discharge"}
