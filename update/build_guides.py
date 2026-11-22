@@ -500,6 +500,7 @@ PLANNERS = [
 # inside the Kinav shop for that product, so only Kinav listings ever show.
 LISTING_LINKS = {
     "christmas-bundle": "https://kinavuk.etsy.com/uk/listing/4612582895/christmas-bundle-for-older-relatives",
+    "year-of-activities": "https://kinavuk.etsy.com/uk/listing/4623375590/care-home-activities-2027-12-month",
     "christmas-word-search": "https://kinavuk.etsy.com/uk/listing/4614953975/large-print-christmas-word-search-for",
     "christmas-dinner-planner": "https://kinavuk.etsy.com/uk/listing/4615744072/christmas-dinner-planner-printable",
     "christmas-card-list-tags": "https://kinavuk.etsy.com/uk/listing/4615739639/christmas-card-list-printable-and-large",
