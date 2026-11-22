@@ -13,6 +13,7 @@ DINNER = "/printables/christmas-dinner-cooking-timetable/"
 CARDS = "/printables/christmas-card-list/"
 COUNTDOWN = "/printables/christmas-countdown-for-carers/"
 GRANDKIDS = "/printables/christmas-activities-with-grandparents/"
+CAREHOMES = "/for-care-homes/"
 XMAS_CSS = ('<style>.xm{background:#fff;color:#18232e;border:3px solid #1e5b3f;border-radius:18px;padding:18px;max-width:760px}'
             '.xm h2{font-size:28px;margin:0 0 6px;color:#a3262a}.xm .note{font-size:12px;margin:10px 0 0}'
             '.shopnote{border:2px solid #e9c46a;background:#fdf6e3;border-radius:16px;padding:16px}'
@@ -245,6 +246,45 @@ def grandkids_page(updated, links):
                                        "\n".join(body), updated, kind="guide")
 
 
+CH_FREE = [("/activities/christmas/", "24 free Christmas activities", "one for every day of December"),
+           ("/activities/", "Activity ideas for every month", "with dates to plan around in 2027"),
+           (BINGO, "Large-print Christmas bingo", "2 free cards and the calling words"),
+           (WS, "Large-print Christmas word search", "words across and down only, with answers"),
+           ("/printables/reminiscence-questions/", "Reminiscence questions", "to start a conversation"),
+           ("/printables/large-print-calendar-2027/", "Large-print 2027 calendar", "for a resident's room"),
+           ("/printables/what-to-talk-about-in-a-care-home-visit/", "What to talk about on a visit", "to share with families")]
+# (product key, name, one line)
+CH_PACKS = [("christmas-activity-programme", "24 Days of December", "A ready-to-run Christmas activity for every day of Advent."),
+            ("retro-christmas-games-care-home", "Retro Christmas games for care homes", "1950s to 1980s Christmas quiz, bingo and charades, in large print."),
+            ("christmas-cards-care-home", "Care home Christmas activity pack", "Christmas conversation cards, a quiz and a word search."),
+            ("christmas-bingo", "Large-print Christmas bingo", "20 bingo cards with big, clear words, and the calling words."),
+            ("reminiscence-cards", "Let's Talk reminiscence cards", "128 conversation cards, with blank ones to write your own."),
+            ("calendar-2027", "2027 large-print calendar", "Big, clear dates with UK bank holidays.")]
+
+
+def carehomes_page(updated, links):
+    free = "".join('<li><a href="%s">%s</a>: %s</li>' % (u, t, d) for u, t, d in CH_FREE)
+    packs = "".join('<a class="chp" href="%s" rel="noopener">%s<span><b>%s</b><br>%s</span></a>' % (links[k], SHOP_IMG % k, n, d)
+                    for k, n, d in CH_PACKS if k in links)
+    body = [XMAS_CSS, '<style>.chg{display:grid;gap:12px}.chp{display:flex;gap:14px;align-items:center;text-decoration:none;color:inherit;'
+            'background:#fff;border:2px solid #e6e1d6;border-radius:16px;padding:12px}.chp:hover{border-color:#e9c46a}</style>',
+            '<div class="stack-sm"><h1>Kinav for care homes</h1>'
+            '<p class="lede">Free, large-print activities and printables for activity coordinators in care homes and day centres. '
+            'Easy to run, easy to read, and made in the UK.</p></div>',
+            '<section class="panel"><h2>Free to print</h2><ul>%s</ul></section>' % free,
+            '<section class="shopnote stack-sm"><h2>Care home packs in the Kinav shop on Etsy</h2>'
+            '<p>Ready-made packs to print. Instant download, no postage.</p><div class="chg">%s</div>'
+            '<p class="small muted">Everything on kinav.co.uk stays free.</p></section>' % packs,
+            '<section class="panel"><h2>Tips for running an activity</h2><ul>'
+            '<li>Print in large type on plain paper, and keep each sheet to a few big items.</li>'
+            '<li>Let everyone join in their own way: watching and listening counts.</li>'
+            '<li>Music, photos and objects to hold often start the best conversations.</li>'
+            '<li>Keep it short, and stop while it\'s still fun.</li></ul></section>']
+    return CAREHOMES, build_pages.page(CAREHOMES, "Kinav for care homes: free large-print activities and printables for activity coordinators | Kinav",
+                                       "Free large-print activities and printables for care homes and day centres: Christmas activities, bingo, word search, reminiscence questions and monthly ideas.",
+                                       "\n".join(body), updated, kind="guide")
+
+
 def _free(html, h1, lede, tips, shopbox):
     return [SHEET_CSS, '<div class="stack-sm noprint"><h1>%s</h1><p class="lede">%s What you type stays on this page: it isn\'t saved or sent anywhere.</p>'
             '<p><button class="btn" type="button" onclick="print()">Print it</button></p></div>' % (h1, lede), html, shopbox,
@@ -255,4 +295,5 @@ def _free(html, h1, lede, tips, shopbox):
 def pages(updated):
     import build_guides as bg
     links = bg.LISTING_LINKS
-    return [ws_page(updated, links), bingo_page(updated, links), dinner_page(updated, links), cards_page(updated, links), countdown_page(updated, links), grandkids_page(updated, links)]
+    return [ws_page(updated, links), bingo_page(updated, links), dinner_page(updated, links), cards_page(updated, links), countdown_page(updated, links), grandkids_page(updated, links),
+            carehomes_page(updated, links)]
