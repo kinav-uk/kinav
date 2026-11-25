@@ -540,6 +540,7 @@ LISTING_LINKS = {
     "journey-to-90": "https://kinavuk.etsy.com/uk/listing/4625414901/90th-birthday-poster-for-her-or-him-born",
     "christmas-express-card": "https://kinavuk.etsy.com/uk/listing/4625429131/vintage-christmas-card-printable-1950s",
     "celebrating-every-culture": "https://kinavuk.etsy.com/uk/listing/4625433291/care-home-activities-england-diwali-eid",
+    "christmas-tree-card": "https://kinavuk.etsy.com/uk/listing/4625444095/vintage-christmas-card-printable-1950s",
 }
 # Birthday posters: shop pages (for their Pinterest pins) but not yet on /planners/. Pins: Kinav-Etsy/tools/birthday_pins.py
 BIRTHDAY = {"journey-to-%d" % a: ("%dth Birthday Poster, Born %d" % (a, 2027 - a),
@@ -547,7 +548,8 @@ BIRTHDAY = {"journey-to-%d" % a: ("%dth Birthday Poster, Born %d" % (a, 2027 - a
             for a in (70, 75, 80, 85, 90, 95, 100)}
 # Other products with a shop page (for their pins) that aren't on /planners/ yet
 SHOP_ONLY = dict(BIRTHDAY)
-SHOP_ONLY.update({"christmas-express-card": ("Vintage Christmas Card to Print", "A 1950s-style Christmas card with a steam train, and Christmas through the decades inside. Print at home, fold, and write your message."),
+SHOP_ONLY.update({"christmas-tree-card": ("Oh Christmas Tree: Vintage Christmas Card to Print", "A 1950s-style Christmas card with a retro tree, glass baubles and tinsel, and Christmas in the 1950s inside. Print at home, fold, and write your message."),
+                  "christmas-express-card": ("Vintage Christmas Card to Print", "A 1950s-style Christmas card with a steam train, and Christmas through the decades inside. Print at home, fold, and write your message."),
                   "year-of-activities": ("A Year of Activities: Care Home Activities 2027", "A calendar for every month of 2027 with an activity for every weekday, and 48 ready-to-run care home sessions. England edition."),
                   "celebrating-every-culture": ("Celebrating Every Culture: Care Home Festival Activities", "10 ready-to-run sessions for the festivals and traditions that matter to your residents, from Diwali and Eid to Hanukkah and Windrush Day. England edition.")})
 SHOP_SEARCH = "https://kinavuk.etsy.com?search_query=%s"
@@ -710,7 +712,7 @@ def shop_pages(updated):
                 '<section class="panel"><h2>Free help from Kinav</h2><div class="grid">'
                 '<a href="/planners/">All printable planners and calendars</a><a href="/guides/">Free step-by-step guides</a>'
                 '<a href="/letters/">Free letter templates</a><a href="/benefits-calculator/">Benefits calculator</a></div></section>']
-        pages.append((path, build_pages.page(path, ("%s: printable gift (UK) | Kinav" if k in BIRTHDAY or k == "christmas-express-card" else "%s | Kinav" if k in SHOP_ONLY else "%s: printable for carers (UK) | Kinav") % name, "%s %s" % (name + ".", line),
+        pages.append((path, build_pages.page(path, ("%s: printable gift (UK) | Kinav" if k in BIRTHDAY or k in ("christmas-express-card", "christmas-tree-card") else "%s | Kinav" if k in SHOP_ONLY else "%s: printable for carers (UK) | Kinav") % name, "%s %s" % (name + ".", line),
                                              "\n".join(body), updated, kind="guide")))
     return pages
 
