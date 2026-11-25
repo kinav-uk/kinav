@@ -538,11 +538,13 @@ LISTING_LINKS = {
     "journey-to-80": "https://kinavuk.etsy.com/uk/listing/4625379967/80th-birthday-poster-for-her-or-him-born",
     "journey-to-85": "https://kinavuk.etsy.com/uk/listing/4625381803/85th-birthday-timeline-poster-born-1942",
     "journey-to-90": "https://kinavuk.etsy.com/uk/listing/4625414901/90th-birthday-poster-for-her-or-him-born",
+    "christmas-express-card": "https://kinavuk.etsy.com/uk/listing/4625429131/vintage-christmas-card-printable-1950s",
 }
 # Birthday posters: shop pages (for their Pinterest pins) but not yet on /planners/. Pins: Kinav-Etsy/tools/birthday_pins.py
 BIRTHDAY = {"journey-to-%d" % a: ("%dth Birthday Poster, Born %d" % (a, 2027 - a),
                                   "A vintage-style timeline of happy UK moments from the year they were born to their %dth, for her or for him." % a)
             for a in (70, 75, 80, 85, 90, 95, 100)}
+BIRTHDAY["christmas-express-card"] = ("Vintage Christmas Card to Print", "A 1950s-style Christmas card with a steam train, and Christmas through the decades inside. Print at home, fold, and write your message.")
 SHOP_SEARCH = "https://kinavuk.etsy.com?search_query=%s"
 
 def adhd_page(updated):
