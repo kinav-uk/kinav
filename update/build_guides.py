@@ -541,6 +541,7 @@ LISTING_LINKS = {
     "christmas-express-card": "https://kinavuk.etsy.com/uk/listing/4625429131/vintage-christmas-card-printable-1950s",
     "celebrating-every-culture": "https://kinavuk.etsy.com/uk/listing/4625433291/care-home-activities-england-diwali-eid",
     "christmas-tree-card": "https://kinavuk.etsy.com/uk/listing/4625444095/vintage-christmas-card-printable-1950s",
+    "talking-cards": "https://kinavuk.etsy.com/uk/listing/4625477728/communication-cards-for-elderly-large",
 }
 # Birthday posters: shop pages (for their Pinterest pins) but not yet on /planners/. Pins: Kinav-Etsy/tools/birthday_pins.py
 BIRTHDAY = {"journey-to-%d" % a: ("%dth Birthday Poster, Born %d" % (a, 2027 - a),
@@ -548,7 +549,8 @@ BIRTHDAY = {"journey-to-%d" % a: ("%dth Birthday Poster, Born %d" % (a, 2027 - a
             for a in (70, 75, 80, 85, 90, 95, 100)}
 # Other products with a shop page (for their pins) that aren't on /planners/ yet
 SHOP_ONLY = dict(BIRTHDAY)
-SHOP_ONLY.update({"christmas-tree-card": ("Oh Christmas Tree: Vintage Christmas Card to Print", "A 1950s-style Christmas card with a retro tree, glass baubles and tinsel, and Christmas in the 1950s inside. Print at home, fold, and write your message."),
+SHOP_ONLY.update({"talking-cards": ("Talking Cards: Large-Print Communication Cards", "Picture cards an older person can point at to say what they need, how they feel and what they'd like. With a yes and no sheet, a bedside board and blank cards to make your own."),
+                  "christmas-tree-card": ("Oh Christmas Tree: Vintage Christmas Card to Print", "A 1950s-style Christmas card with a retro tree, glass baubles and tinsel, and Christmas in the 1950s inside. Print at home, fold, and write your message."),
                   "christmas-express-card": ("Vintage Christmas Card to Print", "A 1950s-style Christmas card with a steam train, and Christmas through the decades inside. Print at home, fold, and write your message."),
                   "year-of-activities": ("A Year of Activities: Care Home Activities 2027", "A calendar for every month of 2027 with an activity for every weekday, and 48 ready-to-run care home sessions. England edition."),
                   "celebrating-every-culture": ("Celebrating Every Culture: Care Home Festival Activities", "10 ready-to-run sessions for the festivals and traditions that matter to your residents, from Diwali and Eid to Hanukkah and Windrush Day. England edition.")})
