@@ -534,6 +534,7 @@ LISTING_LINKS = {
     "planning-ahead": "https://kinavuk.etsy.com/uk/listing/4605940380/planning-ahead-pack-end-of-life-planner",
     "care-planner": "https://kinavuk.etsy.com/uk/listing/4606518980/care-planning",
     "journey-to-70": "https://kinavuk.etsy.com/uk/listing/4625375369/70th-birthday-timeline-poster-born-1957",
+    "journey-to-75": "https://kinavuk.etsy.com/uk/listing/4625377923/75th-birthday-poster-for-her-or-him-born",
     "journey-to-80": "https://kinavuk.etsy.com/uk/listing/4625379967/80th-birthday-poster-for-her-or-him-born",
     "journey-to-85": "https://kinavuk.etsy.com/uk/listing/4625381803/85th-birthday-timeline-poster-born-1942",
     "journey-to-90": "https://kinavuk.etsy.com/uk/listing/4625414901/90th-birthday-poster-for-her-or-him-born",
