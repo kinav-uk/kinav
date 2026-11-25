@@ -536,6 +536,7 @@ LISTING_LINKS = {
     "journey-to-70": "https://kinavuk.etsy.com/uk/listing/4625375369/70th-birthday-timeline-poster-born-1957",
     "journey-to-80": "https://kinavuk.etsy.com/uk/listing/4625379967/80th-birthday-poster-for-her-or-him-born",
     "journey-to-85": "https://kinavuk.etsy.com/uk/listing/4625381803/85th-birthday-timeline-poster-born-1942",
+    "journey-to-90": "https://kinavuk.etsy.com/uk/listing/4625414901/90th-birthday-poster-for-her-or-him-born",
 }
 # Birthday posters: shop pages (for their Pinterest pins) but not yet on /planners/. Pins: Kinav-Etsy/tools/birthday_pins.py
 BIRTHDAY = {"journey-to-%d" % a: ("%dth Birthday Poster, Born %d" % (a, 2027 - a),
