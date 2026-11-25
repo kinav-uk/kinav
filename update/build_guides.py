@@ -456,6 +456,8 @@ SHOP = "https://kinavuk.etsy.com"
 PLANNERS = [
     ("Christmas games, activities and gifts", "christmas", [
         ("christmas-bundle", "The Kinav Christmas Bundle", "Retro Christmas games, Let's Talk Christmas cards and the gift planner, together. Save over 30%.", "christmas bundle"),
+        ("christmas-tree-card", "Oh Christmas Tree card", "A 1950s-style Christmas card to print at home, with Christmas in the 1950s inside. Type your message or write it by hand.", "christmas tree card"),
+        ("christmas-express-card", "Christmas Express card", "A vintage steam-train Christmas card to print at home, with Christmas through the decades inside.", "christmas express card"),
         ("christmas-word-search", "Large-print Christmas word searches", "12 Christmas puzzles in big, clear letters, with the answers. For older relatives and care homes.", "christmas word search"),
         ("christmas-dinner-planner", "Christmas Dinner Planner", "Who's coming and what they need, the menu, shopping, a cooking timetable and seating. Print it or fill it in.", "christmas dinner planner"),
         ("christmas-card-list-tags", "Christmas card list and gift tags", "Keep track of cards sent and received, plus 16 large-print gift tags to print.", "christmas card list"),
@@ -492,8 +494,15 @@ PLANNERS = [
         ("after-a-death", "After a death checklist", "What to do, who to tell, and funeral planning.", "after a death"),
         ("later-life-divorce", "Divorce planner, over 60", "Money, pensions and the home, step by step.", "divorce planner"),
         ("letter-pack", "Carer letter templates", "Editable letters for the council, employers and more.", "letter templates")]),
-    ("Activities", "activities", [
+    ("Birthday gifts", "birthday", [
+        ("journey-to-%d" % a, "%dth birthday poster, born %d" % (a, 2027 - a), "Their life in happy UK moments, from the year they were born to their %dth. For her or for him, with an editable copy." % a,
+         "%dth birthday poster" % a) for a in (70, 75, 80, 85, 90)]),
+    ("Activities and games", "activities", [
+        ("talking-cards", "Talking Cards", "Large-print picture cards to point at when words are hard: I need, I feel, I'd like, with a yes and no sheet.", "communication cards"),
         ("reminiscence-cards", "Let's Talk reminiscence cards", "120 cards to spark memories and conversation, at home or in a care home.", "reminiscence cards")]),
+    ("For care homes", "care-homes", [
+        ("year-of-activities", "A Year of Activities 2027", "An activity for every weekday of 2027 and 48 ready-to-run sessions, one page each. England edition.", "year of activities"),
+        ("celebrating-every-culture", "Celebrating Every Culture", "10 ready-to-run festival sessions, from Diwali and Eid to Hanukkah and Windrush Day. England edition.", "celebrating every culture")]),
 ]
 
 # Each product's own Etsy listing link (Share & Save links are best). Products not listed here open a search
@@ -647,8 +656,8 @@ def planners_page(updated):
             '.pp span{display:flex;flex-direction:column;gap:4px;padding:12px 14px 14px}.pp b{font-size:17px;line-height:1.25}.pp small{font-size:14px;color:var(--muted,#5b6770)}'
             '.pp em{font-style:normal;font-weight:700;color:var(--accent,#1f5f7a);font-size:14px;margin-top:4px}.pp:hover{border-color:var(--accent,#1f5f7a)}'
             '@media(max-width:560px){.pp-grid{gap:10px}.pp{flex-direction:row;align-items:center}.pp img{width:104px;height:104px;flex:none}.pp span{padding:10px 12px}.pp b{font-size:16px}}</style>',
-            crumbs(), '<div class="stack-sm"><h1>Printable planners and calendars for carers</h1>'
-            '<p class="lede">Planners, checklists and calendars to print or fill in on screen, made in the UK by Kinav for families caring for an older parent.</p>'
+            crumbs(), '<div class="stack-sm"><h1>The Kinav Shop</h1>'
+            '<p class="lede">Planners, games, cards and gifts to print or fill in on screen, made in the UK by Kinav for families and care homes looking after older people.</p>'
             '<p class="small">%s</p></div>' % jump,
             '<p class="panel small">Everything free on kinav.co.uk stays free. These printables are sold in the Kinav shop on Etsy, which helps keep Kinav running. '
             'Links open Etsy. To come back to Kinav, use your back button or swipe back.</p>']
@@ -674,8 +683,8 @@ def planners_page(updated):
                 '<a href="/printables/what-to-talk-about-in-a-care-home-visit/">What to talk about on a care home visit</a>'
                 '<a href="/letters/">Free letter templates</a></div></section>')
     body.append('<p class="small"><a href="%s" rel="noopener">See everything in the Kinav shop on Etsy ›</a></p>' % SHOP)
-    return path, build_pages.page(path, "Printable planners and calendars for carers of older parents (UK) | Kinav",
-                                  "Printable planners, checklists and calendars for families caring for an older parent in the UK: care binder, budget planner, 2027 large-print calendar, Christmas gift planner and more.",
+    return path, build_pages.page(path, "The Kinav Shop: printable planners, games and gifts for older people (UK) | Kinav",
+                                  "The Kinav Shop: printable planners, Christmas games and cards, birthday posters, picture cards and care home activities, for families and care homes looking after older people in the UK.",
                                   "\n".join(body), updated, kind="guide")
 
 
@@ -704,7 +713,7 @@ def shop_pages(updated):
                 '.shop-pics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.shop-pics img{width:100%;height:auto;border-radius:12px;display:block;border:1.5px solid var(--line)}'
                 '.shop-lists{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 24px}.shop-lists p{grid-column:1/-1}'
                 '@media(max-width:640px){.shop-hero{grid-template-columns:1fr}.shop-pics{grid-template-columns:1fr}.shop-lists{grid-template-columns:1fr}}</style>',
-                '<nav class="crumbs" aria-label="Breadcrumb"><a href="/planners/">Printable planners</a></nav>',
+                '<nav class="crumbs" aria-label="Breadcrumb"><a href="/planners/">Kinav Shop</a></nav>',
                 '<div class="shop-hero"><img src="/shop-img/%s.jpg" alt="%s" width="420" height="420">'
                 '<div class="stack-sm"><h1>%s</h1><p class="lede">%s</p>%s'
                 '<p><a class="btn btn-etsy" href="%s" rel="noopener">See it on Etsy ›</a></p>'
@@ -712,7 +721,7 @@ def shop_pages(updated):
                 % (k, e(name), e(name), e(line), ('<p>%s</p>' % e(about[k])) if about.get(k) else "", e(link)),
                 details_html(k, link),
                 '<section class="panel"><h2>Free help from Kinav</h2><div class="grid">'
-                '<a href="/planners/">All printable planners and calendars</a><a href="/guides/">Free step-by-step guides</a>'
+                '<a href="/planners/">Everything in the Kinav Shop</a><a href="/guides/">Free step-by-step guides</a>'
                 '<a href="/letters/">Free letter templates</a><a href="/benefits-calculator/">Benefits calculator</a></div></section>']
         pages.append((path, build_pages.page(path, ("%s: printable gift (UK) | Kinav" if k in BIRTHDAY or k in ("christmas-express-card", "christmas-tree-card") else "%s | Kinav" if k in SHOP_ONLY else "%s: printable for carers (UK) | Kinav") % name, "%s %s" % (name + ".", line),
                                              "\n".join(body), updated, kind="guide")))
@@ -968,7 +977,7 @@ def main(updated):
             '<section class="panel"><h2>Tools</h2><div class="grid"><a href="/care-cost-calculator/">Care cost calculator</a>'
             '<a href="/benefits-calculator/">Benefits calculator</a><a href="/care/">Care homes and care at home by area</a>'
             '<a href="/ask-a-specialist/">Ask a nurse or specialist</a><a href="/will-they-have-to-sell-the-house-to-pay-for-care/">Will they have to sell the house?</a>'
-            '<a href="/letters/">Free letter templates</a><a href="/planners/">Printable planners and calendars</a>'
+            '<a href="/letters/">Free letter templates</a><a href="/planners/">The Kinav Shop</a>'
             '<a href="/activities/">Activity ideas for every month</a><a href="/printables/daily-routine-chart/">Free daily routine chart</a>'
             '<a href="/printables/monthly-caring-costs-sheet/">Free caring costs sheet</a></div></section>',
             '<section class="panel" id="kits"><h2>Step-by-step guides</h2>%s</section>' % links("/guides/", kits),
