@@ -533,7 +533,14 @@ LISTING_LINKS = {
     "hospital-discharge": "https://kinavuk.etsy.com/uk/listing/4610469119/hospital-discharge-checklist-printable",
     "planning-ahead": "https://kinavuk.etsy.com/uk/listing/4605940380/planning-ahead-pack-end-of-life-planner",
     "care-planner": "https://kinavuk.etsy.com/uk/listing/4606518980/care-planning",
+    "journey-to-70": "https://kinavuk.etsy.com/uk/listing/4625375369/70th-birthday-timeline-poster-born-1957",
+    "journey-to-80": "https://kinavuk.etsy.com/uk/listing/4625379967/80th-birthday-poster-for-her-or-him-born",
+    "journey-to-85": "https://kinavuk.etsy.com/uk/listing/4625381803/85th-birthday-timeline-poster-born-1942",
 }
+# Birthday posters: shop pages (for their Pinterest pins) but not yet on /planners/. Pins: Kinav-Etsy/tools/birthday_pins.py
+BIRTHDAY = {"journey-to-%d" % a: ("%dth Birthday Poster, Born %d" % (a, 2027 - a),
+                                  "A vintage-style timeline of happy UK moments from the year they were born to their %dth, for her or for him." % a)
+            for a in (70, 75, 80, 85, 90, 95, 100)}
 SHOP_SEARCH = "https://kinavuk.etsy.com?search_query=%s"
 
 def adhd_page(updated):
@@ -671,6 +678,7 @@ def shop_pages(updated):
     except OSError:
         about = {}
     names = {k: (n, l) for _, _, items in PLANNERS for k, n, l, _ in items}
+    names.update(BIRTHDAY)
     pages = []
     for k, link in LISTING_LINKS.items():
         if k not in names:
@@ -693,7 +701,7 @@ def shop_pages(updated):
                 '<section class="panel"><h2>Free help from Kinav</h2><div class="grid">'
                 '<a href="/planners/">All printable planners and calendars</a><a href="/guides/">Free step-by-step guides</a>'
                 '<a href="/letters/">Free letter templates</a><a href="/benefits-calculator/">Benefits calculator</a></div></section>']
-        pages.append((path, build_pages.page(path, "%s: printable for carers (UK) | Kinav" % name, "%s %s" % (name + ".", line),
+        pages.append((path, build_pages.page(path, ("%s: printable gift (UK) | Kinav" if k in BIRTHDAY else "%s: printable for carers (UK) | Kinav") % name, "%s %s" % (name + ".", line),
                                              "\n".join(body), updated, kind="guide")))
     return pages
 
