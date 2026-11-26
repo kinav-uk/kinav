@@ -14,6 +14,8 @@ CARDS = "/printables/christmas-card-list/"
 COUNTDOWN = "/printables/christmas-countdown-for-carers/"
 GRANDKIDS = "/printables/christmas-activities-with-grandparents/"
 CAREHOMES = "/for-care-homes/"
+QUIZ = "/printables/christmas-quiz-for-older-people/"
+GIFTS = "/articles/christmas-gifts-for-elderly-parents/"
 XMAS_CSS = ('<style>.xm{background:#fff;color:#18232e;border:3px solid #1e5b3f;border-radius:18px;padding:18px;max-width:760px}'
             '.xm h2{font-size:28px;margin:0 0 6px;color:#a3262a}.xm .note{font-size:12px;margin:10px 0 0}'
             '.shopnote{border:2px solid #e9c46a;background:#fdf6e3;border-radius:16px;padding:16px}'
@@ -285,6 +287,108 @@ def carehomes_page(updated, links):
                                        "\n".join(body), updated, kind="guide")
 
 
+# Free Christmas quiz (added 26 Nov 2026): well-known answers only, two choices each so everyone can have a go.
+QUIZ_QS = [("Which bird is the traditional centrepiece of a British Christmas dinner?", "Turkey", "Duck"),
+           ("What was hidden in the Christmas pudding for luck?", "A silver sixpence", "A button"),
+           ("In which year was the Queen's Christmas message first shown on television?", "1957", "1967"),
+           ("Who sang White Christmas?", "Bing Crosby", "Frank Sinatra"),
+           ("Which band had a Christmas hit with Merry Xmas Everybody in 1973?", "Slade", "Wizzard"),
+           ("Which group sang I Wish It Could Be Christmas Everyday?", "Wizzard", "Mud"),
+           ("Which double act's Christmas shows were a must-watch in the 1970s?", "Morecambe and Wise", "Cannon and Ball"),
+           ("In which film does a boy fly through the night sky with a snowman?", "The Snowman", "Frosty"),
+           ("What was Band Aid's 1984 Christmas single called?", "Do They Know It's Christmas?", "Last Christmas"),
+           ("Who had the Christmas number one with Mistletoe and Wine in 1988?", "Cliff Richard", "Shakin' Stevens"),
+           ("Which Pogues song with Kirsty MacColl came out in 1987?", "Fairytale of New York", "Stop the Cavalry"),
+           ("Who made Christmas trees popular in Victorian Britain?", "Prince Albert", "Charles Dickens"),
+           ("Which Charles Dickens story features Ebenezer Scrooge?", "A Christmas Carol", "Great Expectations"),
+           ("What did mince pies once contain that they usually don't today?", "Meat", "Cheese"),
+           ("Which reindeer has a very shiny red nose?", "Rudolph", "Dasher"),
+           ("What do you call the day after Christmas Day?", "Boxing Day", "Twelfth Night"),
+           ("What goes bang when two people pull it at the dinner table?", "A Christmas cracker", "A party popper"),
+           ("Which magazine's Christmas double issue did families circle the TV programmes in?", "Radio Times", "The Beano"),
+           ("What did children traditionally leave out for Father Christmas?", "A mince pie and a glass of sherry", "A cheese sandwich"),
+           ("What was tinsel first made from, hundreds of years ago?", "Real silver", "Paper")]
+
+
+def quiz_page(updated, links):
+    rnd = random.Random(2512)
+    items = ""
+    for i, (q, right, wrong) in enumerate(QUIZ_QS, 1):
+        a, b = (right, wrong) if rnd.random() < 0.5 else (wrong, right)
+        items += '<li><b>%s</b><br>A: %s &nbsp; or &nbsp; B: %s</li>' % (q, a, b)
+    answers = " · ".join("%d %s" % (i, r) for i, (q, r, w) in enumerate(QUIZ_QS, 1))
+    body = [XMAS_CSS, '<style>.xm ol{font-size:20px;line-height:1.45;padding-left:28px}.xm li{margin:0 0 12px}.ans{font-size:14px;color:#5a6773;margin-top:14px}'
+            '@media print{.xm ol{font-size:16px}.xm li{margin:0 0 6px}}</style>',
+            '<div class="stack-sm noprint"><h1>Christmas quiz for older people: 20 questions with answers</h1>'
+            '<p class="lede">A free large-print Christmas quiz for older relatives, care homes and family gatherings. Every question has two answers to choose from, '
+            'so everyone can have a go. Print it, or read it out from your phone.</p>'
+            '<p><button class="btn" type="button" onclick="print()">Print the quiz</button></p></div>',
+            '<div class="xm"><h2>The Christmas memories quiz</h2><ol>%s</ol><p class="ans"><b>Answers:</b> %s</p><p class="note">Free from kinav.co.uk</p></div>' % (items, answers),
+            shop("retro-christmas-games", "Want a quiz for every decade?", "<b>Retro Christmas Games</b><br>Christmas quizzes from the 1950s, 60s, 70s and 80s, "
+                 "so everyone plays their own decade. With bingo, carols, charades and an easy mode.", links),
+            shop("retro-christmas-games-care-home", "Running it in a care home?", "<b>Retro Christmas Games: care home edition</b><br>Four decades of quizzes, bingo and carols, "
+                 "licensed for your home.", links),
+            '<section class="panel noprint"><h2>Tips for a happy quiz</h2><ul>'
+            '<li>Read each question twice, slowly, and give both answers.</li>'
+            '<li>Play in teams, so nobody is put on the spot.</li>'
+            '<li>Let the questions lead to stories: "Did you have a sixpence in your pudding?"</li>'
+            '<li>Stop while it\'s still fun. Ten questions is plenty for some people.</li></ul>'
+            '<p>More free ideas: <a href="/printables/large-print-christmas-bingo/">large-print Christmas bingo</a> · '
+            '<a href="/printables/large-print-christmas-word-search/">Christmas word search</a> · <a href="/activities/christmas/">24 free Christmas activities</a></p></section>']
+    return QUIZ, build_pages.page(QUIZ, "Christmas quiz for older people: 20 large-print questions with answers (free) | Kinav",
+                                  "A free large-print Christmas quiz for older people, care homes and families: 20 nostalgic questions, each with two answers to choose from, and the answers.",
+                                  "\n".join(body), updated, kind="guide")
+
+
+# Christmas gift guide (added 26 Nov 2026): plain ideas, no affiliate links; Kinav printables shown where they fit.
+GIFT_GROUPS = [("Time together", "Often the best present of all.", [
+                   ("An afternoon of games", "A quiz from their own decade, bingo and carols, with the family round the table.", "retro-christmas-games"),
+                   ("A trip out", "Afternoon tea, a garden centre, a pantomime or a favourite place from years ago. Make it a voucher with a date on it."),
+                   ("A regular visit or call", "A handwritten promise for a call every Sunday or a monthly lunch can mean more than anything in a box.")]),
+               ("Memories", "For the parent who says they don't need anything.", [
+                   ("A memory conversation pack", "Picture and question cards that get the stories flowing over Christmas.", "christmas-cards"),
+                   ("A photo book or framed photo", "Old family photos, labelled with names and years, so the stories aren't lost."),
+                   ("A life story book", "A book of questions about their life, to fill in together over a few visits.")]),
+               ("Easy everyday help", "Small things that make each day a little easier.", [
+                   ("A large-print calendar", "Big, clear dates for appointments, visits and birthdays.", "calendar-2027"),
+                   ("A big-button phone or a digital clock with the day", "Easier to use, and handy for keeping track of the days."),
+                   ("A cosy throw and warm slippers", "Something soft and warm for winter evenings.")]),
+               ("A card they'll keep", "Because the card often stays on the mantelpiece longest.", [
+                   ("A vintage Christmas card", "A 1950s-style card with Christmas in the 1950s inside. Print it tonight, no postage.", "christmas-tree-card"),
+                   ("Or the Christmas Express card", "A steam train card with Christmas through the decades inside.", "christmas-express-card")])]
+
+
+def gifts_page(updated, links):
+    body = [XMAS_CSS, '<style>.gg{display:grid;gap:12px}.gi{background:#fff;border:2px solid #e6e1d6;border-radius:16px;padding:14px}'
+            '.gi h3{margin:0 0 4px;font-size:19px}.gi a.k{display:flex;gap:12px;align-items:center;text-decoration:none;color:inherit;margin-top:8px}'
+            '.gi a.k img{width:80px;height:80px;border-radius:10px;flex:none}.gi a.k b{color:#a3262a}</style>',
+            '<div class="stack-sm"><h1>Christmas gifts for elderly parents and grandparents (UK)</h1>'
+            '<p class="lede">Stuck for a present for Mum, Dad, Nan or Grandad, especially one who "doesn\'t need anything"? '
+            'Here are thoughtful gift ideas that bring people together, bring back memories and make everyday life a little easier.</p></div>']
+    for title, sub, items in GIFT_GROUPS:
+        cards = ""
+        for it in items:
+            name, line = it[0], it[1]
+            k = it[2] if len(it) > 2 else None
+            extra = ""
+            if k and k in links:
+                extra = ('<a class="k" href="%s" rel="noopener"><img src="/shop-img/%s.jpg" alt="" loading="lazy" width="80" height="80">'
+                         '<span>From the Kinav shop on Etsy: an instant download to print at home.<br><b>See it on Etsy ›</b></span></a>' % (links[k], k))
+            cards += '<div class="gi"><h3>%s</h3><p>%s</p>%s</div>' % (name, line, extra)
+        body.append('<section class="stack-sm"><h2>%s</h2><p>%s</p><div class="gg">%s</div></section>' % (title, sub, cards))
+    body.append('<section class="panel"><h2>Tips for choosing</h2><ul>'
+                '<li>Think about what they enjoy now, not just what they used to do.</li>'
+                '<li>For someone in a care home, ask the staff what\'s allowed and what space there is.</li>'
+                '<li>Label photos and gifts clearly, with big writing.</li>'
+                '<li>If they really don\'t want things, give your time: it\'s usually what they want most.</li></ul>'
+                '<p>More free Christmas ideas: <a href="%s">a free Christmas quiz for older people</a> · '
+                '<a href="/printables/christmas-activities-with-grandparents/">10 things to do with Grandma and Grandad</a> · '
+                '<a href="/activities/christmas/">24 free Christmas activities</a> · <a href="/planners/">The Kinav Shop</a></p></section>' % QUIZ)
+    return GIFTS, build_pages.page(GIFTS, "Christmas gifts for elderly parents and grandparents (UK): thoughtful ideas | Kinav",
+                                   "Thoughtful Christmas gift ideas for elderly parents and grandparents in the UK, including those who don't need anything: time together, memories and everyday help.",
+                                   "\n".join(body), updated, kind="guide")
+
+
 def _free(html, h1, lede, tips, shopbox):
     return [SHEET_CSS, '<div class="stack-sm noprint"><h1>%s</h1><p class="lede">%s What you type stays on this page: it isn\'t saved or sent anywhere.</p>'
             '<p><button class="btn" type="button" onclick="print()">Print it</button></p></div>' % (h1, lede), html, shopbox,
@@ -296,4 +400,4 @@ def pages(updated):
     import build_guides as bg
     links = bg.LISTING_LINKS
     return [ws_page(updated, links), bingo_page(updated, links), dinner_page(updated, links), cards_page(updated, links), countdown_page(updated, links), grandkids_page(updated, links),
-            carehomes_page(updated, links)]
+            carehomes_page(updated, links), quiz_page(updated, links), gifts_page(updated, links)]
