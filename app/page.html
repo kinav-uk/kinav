@@ -92,6 +92,11 @@ a { color: var(--accent); }
 .brand-mark { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .brand-mark svg { width: 40px; height: 40px; flex: none; }
 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sun-fg); }
+.procard { border: 2px solid var(--sun); }
+.proli { margin: 8px 0 12px; padding: 0; list-style: none; display: grid; gap: 8px; }
+.proli li { display: flex; flex-direction: column; gap: 1px; padding-left: 14px; border-left: 3px solid var(--accent); }
+.proli b { font-size: 15px; }
+.proli span { font-size: 13.5px; color: var(--muted); line-height: 1.35; }
 .lede { color: var(--muted); font-size: 17px; }
 
 button, .btn { font: inherit; cursor: pointer; }
@@ -376,6 +381,19 @@ a.chip { display: inline-flex; align-items: center; text-decoration: none; }
     <a class="stile s-xmas home-xmas" href="/planners/#christmas"><span class="sico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 5h-2l3 5h-2l4 6H6l4-6H8l3-5H9z"/><path d="M12 18v4"/></svg></span><b>Christmas games, gifts and activities</b><span>Large-print bingo, word searches, games and planners for older relatives and care homes</span></a>
     <a class="stile s-plan" href="/planners/"><span class="sico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4M16 3v4M4 10h16M8 14h2M14 14h2M8 17h2"/></svg></span><b>The Kinav Shop</b><span>Planners, Christmas games and cards, birthday posters and picture cards</span></a>
   </nav>
+  <div class="card procard" id="proCard">
+    <span class="eyebrow">Coming in 2027</span>
+    <h2>Kinav Pro</h2>
+    <p class="small">Less admin, more time with them.</p>
+    <ul class="proli">
+      <li><b>My Care Plan</b><span>Their next steps, with your council's links and deadlines in your calendar</span></li>
+      <li><b>Money finder</b><span>Check 15 entitlements and keep a running total of what you've found</span></li>
+      <li><b>Family Organiser</b><span>Who's doing what and what's due, shared with the family</span></li>
+    </ul>
+    <div class="actions"><button class="btn btn-primary btn-sm" type="button" id="proWant">I'd like this</button></div>
+    <p class="small" id="proThanks" hidden><b>Thanks!</b> We'll announce it here first.</p>
+    <p class="tiny muted">Everything free on Kinav stays free.</p>
+  </div>
   <div class="card" id="areaCard" hidden>
     <label class="label" for="homePostcode">Where does the person you care for live?</label>
     <div class="row2">

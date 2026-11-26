@@ -90,6 +90,19 @@
     var gc = window.goatcounter;
     if (gc && gc.count) gc.count({ path: name, title: name, event: true });
   }
+  // "Kinav Pro is coming" card: counts interest (an anonymous tap, nothing stored about anyone) to test demand before launch.
+  (function () {
+    var btn = $("proWant"), thanks = $("proThanks");
+    if (!btn) return;
+    var said = false;
+    try { said = localStorage.getItem("kinavProInterest") === "1"; } catch (e) {}
+    if (said) { btn.hidden = true; thanks.hidden = false; }
+    btn.addEventListener("click", function () {
+      countEvent("pro-interest");
+      try { localStorage.setItem("kinavProInterest", "1"); } catch (e) {}
+      btn.hidden = true; thanks.hidden = false;
+    });
+  })();
   var gcScript = document.getElementById("gcScript");
   if (gcScript) gcScript.addEventListener("load", function () { if (pendingVisit) track(pendingVisit); });
 
