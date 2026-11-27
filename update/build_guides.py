@@ -816,6 +816,29 @@ def cross_sell(path, html_text):
     return html_text.replace('<footer class="tiny muted">', card + '<footer class="tiny muted">', 1)
 
 
+
+# "Kinav Pro is coming" box at the end of the guides people read most, as on the app's home screen (added 27 Nov 2026).
+# A tap is counted anonymously in GoatCounter as 'pro-interest'; nothing is stored about anyone.
+PRO_PATHS = ("/guides/", "/plans/", "/articles/", "/letters/", "/care-cost-calculator/", "/benefits-calculator/", "/will-they-have-to-sell-the-house-to-pay-for-care/")
+PRO_BOX = ('<section class="panel stack-sm noprint procard"><p class="tiny muted" style="margin:0">COMING IN 2027</p><h2>Kinav Pro</h2>'
+           '<p class="small">Less admin, more time with them.</p><ul class="proli">'
+           "<li><b>My Care Plan</b><span>Their next steps, with your council's links and deadlines in your calendar</span></li>"
+           "<li><b>Money finder</b><span>Check 15 entitlements and keep a running total of what you've found</span></li>"
+           "<li><b>Family Organiser</b><span>Who's doing what and what's due, shared with the family</span></li></ul>"
+           '<p><button class="btn" type="button" id="proWant">I\'d like this</button></p>'
+           '<p class="small" id="proThanks" hidden><b>Thanks!</b> We\'ll announce it on kinav.co.uk first.</p>'
+           '<p class="tiny muted">Everything free on Kinav stays free.</p></section>\n'
+           '<script>(function(){var b=document.getElementById("proWant"),t=document.getElementById("proThanks"),s=false;'
+           'try{s=localStorage.getItem("kinavProInterest")==="1"}catch(e){}if(s){b.hidden=true;t.hidden=false}'
+           'b.addEventListener("click",function(){var g=window.goatcounter;if(location.hostname==="kinav.co.uk"&&g&&g.count)g.count({path:"pro-interest",title:"pro-interest",event:true});'
+           'try{localStorage.setItem("kinavProInterest","1")}catch(e){}b.hidden=true;t.hidden=false})})()</script>\n')
+
+
+def pro_box(path, html_text):
+    if not path.startswith(PRO_PATHS):
+        return html_text
+    return html_text.replace('<footer class="tiny muted">', PRO_BOX + '<footer class="tiny muted">', 1)
+
 HOUSE_FAQS = [
     ("Will Mum have to sell her house to pay for care at home?", "No. In England, the home is never counted when someone gets care in their own home."),
     ("Is the house counted if they move into a care home?", "It can be, but not if their partner, a relative aged 60 or over, a relative who is disabled, or a child under 18 they support still lives there."),
@@ -962,7 +985,7 @@ def main(updated):
     pages += build_activities.pages(updated) + build_months.pages(updated) + build_free.pages(updated) + build_xmas_free.pages(updated)
     samples = letter_samples()
     pages += [letter_page(l, updated) for l in samples if l["id"] in LETTER_PAGES] + [letters_index(samples, updated)]
-    pages = [(path, cross_sell(path, related(path, text))) for path, text in pages]
+    pages = [(path, pro_box(path, cross_sell(path, related(path, text)))) for path, text in pages]
     for path, text in pages:
         save(path.strip("/"), text)
 

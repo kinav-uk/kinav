@@ -94,3 +94,8 @@ details.panel[open] summary { margin-bottom: 8px; }
   body, .panel { background: #fff !important; color: #000 !important; box-shadow: none !important; }
   a { color: inherit; text-decoration: none; }
 }
+/* Kinav Pro is coming (guide pages) */
+.procard { border: 2px solid #f2c14e; }
+.proli { margin: 4px 0 4px; padding: 0 !important; list-style: none; display: grid !important; gap: 8px; }
+.proli li { display: flex; flex-direction: column; gap: 1px; padding-left: 14px; border-left: 3px solid var(--accent); }
+.proli span { font-size: 14px; opacity: .8; line-height: 1.35; }
